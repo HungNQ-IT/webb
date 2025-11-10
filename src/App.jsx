@@ -36,8 +36,12 @@ function App() {
     )
   }
 
+  // Get base path from Vite config (for GitHub Pages)
+  const basePath = import.meta.env.BASE_URL || '/'
+  const basename = basePath.endsWith('/') ? basePath.slice(0, -1) : basePath || '/'
+
   return (
-    <BrowserRouter basename="/Gia-su-10-diem">
+    <BrowserRouter basename={basename}>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/subjects" element={<SubjectList quizzes={quizzes} />} />
