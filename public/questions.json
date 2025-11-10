@@ -1,0 +1,127 @@
+[
+  {
+    "id": 1,
+    "subject": "Toán",
+    "title": "Phương trình bậc hai",
+    "type": "tracnghiem",
+    "description": "Bài tập về phương trình bậc hai và công thức nghiệm",
+    "timeLimit": 15,
+    "questions": [
+      {
+        "q": "Công thức tính Δ (delta) trong phương trình bậc hai ax² + bx + c = 0 là gì?",
+        "choices": ["b² - 4ac", "2a + c", "b² + 4ac", "a² - bc"],
+        "answer": 0,
+        "explain": "Công thức Δ = b² - 4ac là công thức cơ bản để tính biệt thức trong phương trình bậc hai."
+      },
+      {
+        "q": "Nếu Δ > 0, phương trình bậc hai có bao nhiêu nghiệm?",
+        "choices": ["0 nghiệm", "1 nghiệm", "2 nghiệm phân biệt", "Vô số nghiệm"],
+        "answer": 2,
+        "explain": "Khi Δ > 0, phương trình có hai nghiệm phân biệt: x₁ = (-b + √Δ)/(2a) và x₂ = (-b - √Δ)/(2a)"
+      },
+      {
+        "q": "Phương trình x² - 5x + 6 = 0 có nghiệm là:",
+        "choices": ["x = 2 và x = 3", "x = 1 và x = 6", "x = -2 và x = -3", "x = 0 và x = 5"],
+        "answer": 0,
+        "explain": "Phân tích: x² - 5x + 6 = (x - 2)(x - 3) = 0, nên x = 2 hoặc x = 3"
+      },
+      {
+        "q": "Nếu Δ = 0, phương trình có:",
+        "choices": ["Hai nghiệm phân biệt", "Một nghiệm kép", "Không có nghiệm", "Vô số nghiệm"],
+        "answer": 1,
+        "explain": "Khi Δ = 0, phương trình có một nghiệm kép: x = -b/(2a)"
+      },
+      {
+        "q": "Công thức nghiệm của phương trình bậc hai khi Δ ≥ 0 là:",
+        "choices": ["x = (-b ± √Δ)/(2a)", "x = b ± √Δ", "x = (-b ± Δ)/(2a)", "x = b/(2a) ± √Δ"],
+        "answer": 0,
+        "explain": "Công thức nghiệm tổng quát: x = (-b ± √Δ)/(2a), áp dụng khi Δ ≥ 0"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "subject": "Toán",
+    "title": "Hàm số bậc nhất",
+    "type": "tracnghiem",
+    "description": "Bài tập về hàm số y = ax + b",
+    "timeLimit": 10,
+    "questions": [
+      {
+        "q": "Hàm số y = 2x + 3 có hệ số góc là:",
+        "choices": ["2", "3", "5", "1"],
+        "answer": 0,
+        "explain": "Trong hàm số y = ax + b, hệ số góc là a. Ở đây a = 2"
+      },
+      {
+        "q": "Đồ thị hàm số y = -x + 2 cắt trục tung tại điểm:",
+        "choices": ["(0, 2)", "(2, 0)", "(0, -2)", "(-2, 0)"],
+        "answer": 0,
+        "explain": "Khi x = 0, ta có y = 2. Vậy đồ thị cắt trục tung tại điểm (0, 2)"
+      },
+      {
+        "q": "Hàm số nào sau đây là hàm số nghịch biến?",
+        "choices": ["y = 3x + 1", "y = -2x + 5", "y = x", "y = 5x - 2"],
+        "answer": 1,
+        "explain": "Hàm số nghịch biến khi hệ số a < 0. Hàm số y = -2x + 5 có a = -2 < 0 nên là hàm số nghịch biến"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "subject": "Vật Lý",
+    "title": "Chuyển động thẳng đều",
+    "type": "tracnghiem",
+    "description": "Bài tập về chuyển động thẳng đều",
+    "timeLimit": 12,
+    "questions": [
+      {
+        "q": "Công thức tính quãng đường trong chuyển động thẳng đều là:",
+        "choices": ["s = vt", "s = v/t", "s = v²t", "s = at²"],
+        "answer": 0,
+        "explain": "Trong chuyển động thẳng đều, quãng đường được tính bằng công thức s = v.t (vận tốc nhân thời gian)"
+      },
+      {
+        "q": "Một vật chuyển động với vận tốc 5 m/s trong 10 giây. Quãng đường vật đi được là:",
+        "choices": ["50 m", "15 m", "5 m", "10 m"],
+        "answer": 0,
+        "explain": "s = v.t = 5 m/s × 10 s = 50 m"
+      },
+      {
+        "q": "Trong chuyển động thẳng đều, vận tốc có đặc điểm gì?",
+        "choices": ["Thay đổi theo thời gian", "Không đổi", "Tăng dần", "Giảm dần"],
+        "answer": 1,
+        "explain": "Chuyển động thẳng đều là chuyển động có vận tốc không đổi theo thời gian"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "subject": "Hóa Học",
+    "title": "Bảng tuần hoàn các nguyên tố",
+    "type": "tracnghiem",
+    "description": "Kiến thức cơ bản về bảng tuần hoàn",
+    "timeLimit": 10,
+    "questions": [
+      {
+        "q": "Nguyên tố nào có ký hiệu hóa học là 'H'?",
+        "choices": ["Heli", "Hydro", "Hafni", "Hafnium"],
+        "answer": 1,
+        "explain": "H là ký hiệu của nguyên tố Hydro, nguyên tố đầu tiên trong bảng tuần hoàn"
+      },
+      {
+        "q": "Số nguyên tố trong chu kỳ 1 của bảng tuần hoàn là:",
+        "choices": ["2", "8", "18", "32"],
+        "answer": 0,
+        "explain": "Chu kỳ 1 chỉ có 2 nguyên tố: Hydro (H) và Heli (He)"
+      },
+      {
+        "q": "Nhóm nào trong bảng tuần hoàn chứa các nguyên tố khí hiếm?",
+        "choices": ["Nhóm IA", "Nhóm IIA", "Nhóm VIIA", "Nhóm VIIIA"],
+        "answer": 3,
+        "explain": "Nhóm VIIIA (hay nhóm 18) chứa các nguyên tố khí hiếm như He, Ne, Ar, Kr, Xe, Rn"
+      }
+    ]
+  }
+]
+

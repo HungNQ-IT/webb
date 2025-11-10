@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gia Sư 10 Điểm</title>
+    <script>
+      // Simple redirect for React Router on GitHub Pages
+      // Update BASE_PATH to match your repository name
+      var BASE_PATH = '/Gia-su-10-diem';
+      
+      var path = window.location.pathname;
+      var search = window.location.search;
+      var hash = window.location.hash;
+      
+      // Redirect to index.html with the current path for React Router
+      var redirectUrl = BASE_PATH + '/index.html';
+      
+      // If path is not already index.html, append the path for React Router
+      if (path && !path.endsWith('index.html') && path !== BASE_PATH && path !== BASE_PATH + '/') {
+        // Extract path after base
+        var pathAfterBase = path;
+        if (path.startsWith(BASE_PATH)) {
+          pathAfterBase = path.substring(BASE_PATH.length);
+        }
+        redirectUrl = BASE_PATH + '/index.html' + pathAfterBase;
+      }
+      
+      redirectUrl += search + hash;
+      window.location.replace(redirectUrl);
+    </script>
+  </head>
+  <body>
+    <p>Đang chuyển hướng...</p>
+  </body>
+</html>
