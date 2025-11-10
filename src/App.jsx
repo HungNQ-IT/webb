@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Home from './components/Home'
 import SubjectList from './components/SubjectList'
+import GradeList from './components/GradeList'
 import QuizList from './components/QuizList'
 import Quiz from './components/Quiz'
 import Result from './components/Result'
@@ -45,6 +46,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/subjects" element={<SubjectList quizzes={quizzes} />} />
+        <Route path="/subject/:subject/grades" element={<GradeList />} />
+        <Route path="/subject/:subject/grade/:grade" element={<QuizList quizzes={quizzes} />} />
         <Route path="/subject/:subject" element={<QuizList quizzes={quizzes} />} />
         <Route path="/quiz/:id" element={<Quiz quizzes={quizzes} />} />
         <Route path="/result/:id" element={<Result quizzes={quizzes} />} />

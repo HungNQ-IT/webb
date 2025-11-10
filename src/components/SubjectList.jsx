@@ -30,10 +30,15 @@ function SubjectList({ quizzes }) {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {subjects.map((subject) => {
               const subjectQuizzes = quizzes.filter(q => q.subject === subject)
+              // Vật Lý sẽ đi đến trang chọn lớp, các môn khác đi thẳng đến bài tập
+              const linkTo = subject === 'Vật Lý' 
+                ? `/subject/${encodeURIComponent(subject)}/grades`
+                : `/subject/${encodeURIComponent(subject)}`
+              
               return (
                 <Link
                   key={subject}
-                  to={`/subject/${encodeURIComponent(subject)}`}
+                  to={linkTo}
                   className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow border-2 border-transparent hover:border-indigo-500"
                 >
                   <div className="text-4xl mb-4">

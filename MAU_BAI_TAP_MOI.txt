@@ -1,0 +1,33 @@
+--- COPY ĐOẠN NÀY VÀ PASTE VÀO CUỐI FILE questions.json (trước dấu ] cuối cùng) ---
+
+,
+{
+  "id": 5,
+  "subject": "Toán",
+  "title": "Tên bài tập của bạn",
+  "type": "tracnghiem",
+  "description": "Mô tả bài tập",
+  "timeLimit": 15,
+  "questions": [
+    {
+      "q": "Câu hỏi số 1?",
+      "choices": ["Đáp án A", "Đáp án B", "Đáp án C", "Đáp án D"],
+      "answer": 0,
+      "explain": "Giải thích tại sao đáp án này đúng"
+    },
+    {
+      "q": "Câu hỏi số 2?",
+      "choices": ["Đáp án A", "Đáp án B", "Đáp án C", "Đáp án D"],
+      "answer": 1,
+      "explain": "Giải thích tại sao đáp án này đúng"
+    }
+  ]
+}
+
+--- LƯU Ý:
+- id: Phải khác với các bài tập cũ (hiện tại có id: 1, 2, 3, 4)
+- subject: Môn học (Toán, Vật Lý, Hóa Học, Sinh Học, ...)
+- answer: 0 = đáp án thứ nhất, 1 = đáp án thứ hai, 2 = đáp án thứ ba, 3 = đáp án thứ tư
+- Mỗi câu hỏi phải có đủ 4 đáp án
+- Có thể thêm bao nhiêu câu hỏi cũng được
+

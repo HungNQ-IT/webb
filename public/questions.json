@@ -70,6 +70,7 @@
   {
     "id": 3,
     "subject": "Vật Lý",
+    "grade": 10,
     "title": "Chuyển động thẳng đều",
     "type": "tracnghiem",
     "description": "Bài tập về chuyển động thẳng đều",

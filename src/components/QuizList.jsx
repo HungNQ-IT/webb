@@ -2,28 +2,44 @@ import { Link, useParams } from 'react-router-dom'
 import { useMemo } from 'react'
 
 function QuizList({ quizzes }) {
-  const { subject } = useParams()
+  const { subject, grade } = useParams()
   const decodedSubject = decodeURIComponent(subject)
 
   const subjectQuizzes = useMemo(() => {
-    return quizzes.filter(q => q.subject === decodedSubject)
-  }, [quizzes, decodedSubject])
+    let filtered = quizzes.filter(q => q.subject === decodedSubject)
+    
+    // Nếu có grade (lớp), lọc theo grade
+    if (grade) {
+      filtered = filtered.filter(q => q.grade === parseInt(grade))
+    }
+    
+    return filtered
+  }, [quizzes, decodedSubject, grade])
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <div className="mb-8">
-            <Link
-              to="/subjects"
-              className="text-indigo-600 hover:text-indigo-800 font-medium"
-            >
-              ← Về danh sách môn học
-            </Link>
+            {grade ? (
+              <Link
+                to={`/subject/${encodeURIComponent(decodedSubject)}/grades`}
+                className="text-indigo-600 hover:text-indigo-800 font-medium"
+              >
+                ← Về chọn lớp
+              </Link>
+            ) : (
+              <Link
+                to="/subjects"
+                className="text-indigo-600 hover:text-indigo-800 font-medium"
+              >
+                ← Về danh sách môn học
+              </Link>
+            )}
           </div>
 
           <h1 className="text-4xl font-bold text-gray-800 mb-2">
-            {decodedSubject}
+            {decodedSubject} {grade && `- Lớp ${grade}`}
           </h1>
           <p className="text-gray-600 mb-8">
             Chọn bài tập bạn muốn làm
