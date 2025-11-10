@@ -123,6 +123,24 @@
         "explain": "Nhóm VIIIA (hay nhóm 18) chứa các nguyên tố khí hiếm như He, Ne, Ar, Kr, Xe, Rn"
       }
     ]
-  }
+  },
+  {
+  "id": 5,
+  "subject": "Vật Lý",
+  "grade": 11,
+  "title": "Điện trường",
+  "type": "tracnghiem",
+  "description": "Bài tập về điện trường",
+  "timeLimit": 15,
+  "questions": [
+    {
+      "q": "Câu hỏi về điện trường?",
+      "choices": ["A", "B", "C", "D"],
+      "answer": 0,
+      "explain": "Giải thích"
+    }
+  ]
+}
 ]
+
 
