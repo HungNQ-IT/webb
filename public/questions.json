@@ -154,7 +154,7 @@
     {
       "q": "Cho quả cầu kim loại A nhiễm điện dương lại gần đầu M của thanh kim loại MN trung hòa về điện. Hiện tượng gì sẽ xảy ra trên thanh MN?",
       "choices": ["Đầu M nhiễm điện âm, đầu N nhiễm điện dương", "Đầu M nhiễm điện dương, đầu N nhiễm điện âm", "Thanh MN nhiễm điện âm", "Thanh MN nhiễm điện dương"],
-      "image": "./assets/100-cau-trac-nghiem-dien-tich-dien-truong-co-ban-9.png",
+      "image": "asset/100-cau-trac-nghiem-dien-tich-dien-truong-co-ban-9.png",
       "answer": 0,
       "explain": "Đậy là hiện tượng nhiễm điện do hưởng ứng: Quả cầu nhiễm điện dương sẽ hút electron về đầu M nên đầu M nhiễm điện âm."
     }
