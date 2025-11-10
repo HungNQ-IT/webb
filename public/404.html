@@ -5,32 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gia Sư 10 Điểm</title>
     <script>
-      // Simple redirect for React Router on GitHub Pages
-      // Update BASE_PATH to match your repository name
-      var BASE_PATH = '/Gia-su-10-diem';
+      // GitHub Pages 404.html - Redirect to index.html for React Router
+      // IMPORTANT: Update BASE_PATH to match your repository name
+      var BASE_PATH = '/webb';
       
       var path = window.location.pathname;
-      var search = window.location.search;
-      var hash = window.location.hash;
+      var search = window.location.search || '';
+      var hash = window.location.hash || '';
       
-      // Redirect to index.html with the current path for React Router
-      var redirectUrl = BASE_PATH + '/index.html';
-      
-      // If path is not already index.html, append the path for React Router
-      if (path && !path.endsWith('index.html') && path !== BASE_PATH && path !== BASE_PATH + '/') {
-        // Extract path after base
-        var pathAfterBase = path;
-        if (path.startsWith(BASE_PATH)) {
-          pathAfterBase = path.substring(BASE_PATH.length);
-        }
-        redirectUrl = BASE_PATH + '/index.html' + pathAfterBase;
+      // Remove BASE_PATH prefix if present
+      var cleanPath = path;
+      if (path.indexOf(BASE_PATH) === 0) {
+        cleanPath = path.substring(BASE_PATH.length);
       }
       
-      redirectUrl += search + hash;
-      window.location.replace(redirectUrl);
+      // Build redirect URL
+      var redirectTo = BASE_PATH + '/index.html';
+      
+      // If we have a path beyond the base, add it (React Router will handle it)
+      if (cleanPath && cleanPath !== '/' && cleanPath !== '/index.html') {
+        redirectTo += cleanPath;
+      }
+      
+      // Add query string and hash
+      redirectTo += search + hash;
+      
+      // Perform redirect
+      window.location.replace(redirectTo);
     </script>
   </head>
   <body>
-    <p>Đang chuyển hướng...</p>
+    <noscript>
+      <p>JavaScript is required. Please enable JavaScript and refresh the page.</p>
+      <p><a href="/webb/">Go to homepage</a></p>
+    </noscript>
+    <p>Redirecting...</p>
+    <script>
+      // Fallback after 1 second
+      setTimeout(function() {
+        window.location.replace('/webb/index.html');
+      }, 1000);
+    </script>
   </body>
 </html>
