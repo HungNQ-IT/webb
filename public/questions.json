@@ -150,6 +150,13 @@
       "choices": ["2,4.105 V/m", "-2,4.105V/M", "15.10-9V/m", "-15.10-9V/m"],
       "answer": 0,
       "explain": "Điện trường là môi trường (dạng vật chất) bao quanh điện tích và gắn liền với Điện tích; Điện trường tác dụng lực điện lên điện tích khác đặt trong nó."
+    },
+    {
+      "q": "Cho quả cầu kim loại A nhiễm điện dương lại gần đầu M của thanh kim loại MN trung hòa về điện. Hiện tượng gì sẽ xảy ra trên thanh MN?",
+      "choices": ["Đầu M nhiễm điện âm, đầu N nhiễm điện dương", "Đầu M nhiễm điện dương, đầu N nhiễm điện âm", "Thanh MN nhiễm điện âm", "Thanh MN nhiễm điện dương"],
+      "image": "https://vietjack.com/vat-ly-lop-11/images/100-cau-trac-nghiem-dien-tich-dien-truong-co-ban-9.PNG",
+      "answer": 0,
+      "explain": "Đậy là hiện tượng nhiễm điện do hưởng ứng: Quả cầu nhiễm điện dương sẽ hút electron về đầu M nên đầu M nhiễm điện âm."
     }
   ]
 }
