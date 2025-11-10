@@ -134,10 +134,10 @@
   "timeLimit": 15,
   "questions": [
     {
-      "q": "Câu hỏi về điện trường?",
-      "choices": ["A", "B", "C", "D"],
-      "answer": 0,
-      "explain": "Giải thích"
+      "q": "Tìm phát biểu sai về điện trường?",
+      "choices": ["Điện trường tồn tại xung quanh điện tích", "Điện trường tác dụng lực điện lên các điện tích khác đặt trong nó", " Điện trường của điện tích Q ở các điểm càng xa Q càng yếu", " Xung quanh một hệ hai điện tích điểm đặt gần nhau chỉ có điện trường do một điện tích gây ra"],
+      "answer": 3,
+      "explain": "Điện trường là môi trường (dạng vật chất) bao quanh điện tích và gắn liền với Điện tích; Điện trường tác dụng lực điện lên điện tích khác đặt trong nó."
     }
   ]
 },
@@ -151,10 +151,10 @@
   "timeLimit": 15,
   "questions": [
     {
-      "q": "Câu hỏi về điện trường?",
-      "choices": ["A", "B", "C", "D"],
-      "answer": 0,
-      "explain": "Giải thích"
+      "q": "Kết luận nào sau đây là sai?",
+      "choices": [" Đường sức điện trường là những đường có hướng", "Đường sức điện đi ra từ điện tích dương và kết thúc là điện tích âm", "Đường sức điện của điện trường tĩnh điện là đường khép kín", "Qua mỗi điểm trong điện trường chỉ có một đường sức điện"],
+      "answer": 2,
+      "explain": ""
     }
   ]
 }
