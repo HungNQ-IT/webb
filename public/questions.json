@@ -131,7 +131,7 @@
   "title": "Điện trường",
   "type": "tracnghiem",
   "description": "Bài tập về điện trường",
-  "timeLimit": 15,
+  "timeLimit": 30,
   "questions": [
     {
       "q": "Tìm phát biểu sai về điện trường?",
