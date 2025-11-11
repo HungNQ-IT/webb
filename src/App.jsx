@@ -58,4 +58,7 @@ function App() {
 }
 
 export default App
+import MathGradeList from './MathGradeList'
 
+// ...
+<Route path="/subject/Toán/grades" element={<MathGradeList />} />
