@@ -195,7 +195,7 @@
   {
         "q": "Cho tập hợp A = {0}. Hãy chọn khẳng định đúng?",
         "choices": ["Hình (H2)", " Hình (H1).", "Hình (H4).", "Hình (H3)."],
-        "image" : "asset/Ảnh màn hình 2025-11-11 lúc 18.30.35.png",
+        "image" : "asset/1.png",
         "answer": 0,
         "explain": ""
   }
