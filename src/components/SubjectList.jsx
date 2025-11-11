@@ -30,11 +30,12 @@ function SubjectList({ quizzes }) {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {subjects.map((subject) => {
               const subjectQuizzes = quizzes.filter(q => q.subject === subject)
-              // Vật Lý sẽ đi đến trang chọn lớp, các môn khác đi thẳng đến bài tập
-              const linkTo = subject === 'Vật Lý' 
+              // Các môn có phân lớp: Toán, Vật Lý, Hóa Học, Sinh Học, Tiếng Anh
+              const subjectsWithGrades = ['Toán', 'Vật Lý', 'Hóa Học', 'Sinh Học', 'Tiếng Anh']
+              const linkTo = subjectsWithGrades.includes(subject)
                 ? `/subject/${encodeURIComponent(subject)}/grades`
                 : `/subject/${encodeURIComponent(subject)}`
-              
+
               return (
                 <Link
                   key={subject}
@@ -46,7 +47,8 @@ function SubjectList({ quizzes }) {
                     {subject === 'Vật Lý' && '⚛️'}
                     {subject === 'Hóa Học' && '🧪'}
                     {subject === 'Sinh Học' && '🔬'}
-                    {!['Toán', 'Vật Lý', 'Hóa Học', 'Sinh Học'].includes(subject) && '📚'}
+                    {subject === 'Tiếng Anh' && '🗣️'}
+                    {!['Toán', 'Vật Lý', 'Hóa Học', 'Sinh Học', 'Tiếng Anh'].includes(subject) && '📚'}
                   </div>
                   <h2 className="text-2xl font-semibold text-gray-800 mb-2">
                     {subject}
