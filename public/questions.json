@@ -42,6 +42,7 @@
   {
     "id": 2,
     "subject": "Toán",
+    "grade": 10,
     "title": "Hàm số bậc nhất",
     "type": "tracnghiem",
     "description": "Bài tập về hàm số y = ax + b",
