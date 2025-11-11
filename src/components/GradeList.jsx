@@ -5,7 +5,7 @@ function GradeList() {
   const decodedSubject = decodeURIComponent(subject)
 
   // Danh sách các lớp (chỉ áp dụng cho Vật Lý)
-  const grades = [10, 11, 12]
+  const grades = [6,7,8,9,10, 11, 12]
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12">
