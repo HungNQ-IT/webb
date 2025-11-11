@@ -176,6 +176,30 @@
       "explain": "Đậy là hiện tượng nhiễm điện do hưởng ứng: Quả cầu nhiễm điện dương sẽ hút electron về đầu M nên đầu M nhiễm điện âm."
     }
   ]
+},
+{
+  "id": 6,
+  "subject": "Toán",
+  "grade": 6,
+  "title": "Đề tham khảo giữa kì 1",
+  "type": "tracnghiem",
+  "description": "THCS REVICE",
+  "timeLimit": 30,
+  "questions": [
+    {
+        "q": "Cho tập hợp A = {0}. Hãy chọn khẳng định đúng?",
+        "choices": ["A không phải là tập hợp.", "A là tập hợp có hai phần tử.", "A là tập hợp không có phần tử nào", "A là tập hợp có một phần tử là 0."],
+        "answer": 0,
+        "explain": ""
+  },
+  {
+        "q": "Cho tập hợp A = {0}. Hãy chọn khẳng định đúng?",
+        "choices": ["Hình (H2)", " Hình (H1).", "Hình (H4).", "Hình (H3)."],
+        "image" : "asset/Ảnh màn hình 2025-11-11 lúc 18.30.35.png",
+        "answer": 0,
+        "explain": ""
+  }
+]
 }
 ]
 
