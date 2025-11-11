@@ -37,6 +37,21 @@
         "choices": ["x = (-b ± √Δ)/(2a)", "x = b ± √Δ", "x = (-b ± Δ)/(2a)", "x = b/(2a) ± √Δ"],
         "answer": 0,
         "explain": "Công thức nghiệm tổng quát: x = (-b ± √Δ)/(2a), áp dụng khi Δ ≥ 0"
+      },
+      {
+        "q": "Tính nghiệm phương trình (xem hình minh họa)",
+        "eq": "x = \\frac{-b \\pm \\sqrt{b^2-4ac}}{2a}",
+        "image": "images/ptb2.png",
+        "choices": [
+          { "text": "2", "eq": "x=2" },
+          { "text": "3", "eq": "x=3" },
+          { "text": "2 hoặc 3", "eq": "x=2,3" },
+          { "text": "Không có nghiệm" }
+        ],
+        "answer": 2,
+        "explain": "Áp dụng công thức nghiệm tổng quát",
+        "explainEq": "x = \\frac{-b \\pm \\sqrt{b^2-4ac}}{2a}",
+        "explainImage": "images/giai-thich.png"
       }
     ]
   },

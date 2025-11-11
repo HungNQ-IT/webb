@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { saveQuizResult } from '../utils/storage'
+import RichContent from './RichContent'
 
 function Quiz({ quizzes }) {
   const { id } = useParams()
@@ -119,27 +120,28 @@ function Quiz({ quizzes }) {
 
           {/* Question */}
           <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
-            <h2 className="text-xl font-semibold text-gray-800 mb-6">
-              {question.q}
-            </h2>
-            <div className="space-y-3">
-              {question.choices.map((choice, index) => (
-                <button
-                  key={index}
-                  onClick={() => handleAnswerSelect(currentQuestion, index)}
-                  disabled={isSubmitted}
-                  className={`w-full text-left p-4 rounded-lg border-2 transition-all ${
-                    answers[currentQuestion] === index
-                      ? 'border-indigo-600 bg-indigo-50 text-indigo-900'
-                      : 'border-gray-200 hover:border-indigo-300 hover:bg-gray-50'
-                  } ${isSubmitted ? 'cursor-not-allowed' : 'cursor-pointer'}`}
-                >
-                  <span className="font-medium mr-2">
-                    {String.fromCharCode(65 + index)}.
-                  </span>
-                  {choice}
-                </button>
-              ))}
+            <RichContent text={question.q} eq={question.eq} image={question.image} className="text-xl font-semibold" />
+            <div className="space-y-3 mt-6">
+              {question.choices.map((choice, index) => {
+                const choiceObj = typeof choice === 'string' ? { text: choice } : choice
+                return (
+                  <button
+                    key={index}
+                    onClick={() => handleAnswerSelect(currentQuestion, index)}
+                    disabled={isSubmitted}
+                    className={`w-full text-left p-4 rounded-lg border-2 transition-all ${
+                      answers[currentQuestion] === index
+                        ? 'border-indigo-600 bg-indigo-50 text-indigo-900'
+                        : 'border-gray-200 hover:border-indigo-300 hover:bg-gray-50'
+                    } ${isSubmitted ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+                  >
+                    <span className="font-medium mr-2">
+                      {String.fromCharCode(65 + index)}.
+                    </span>
+                    <RichContent text={choiceObj.text} eq={choiceObj.eq} image={choiceObj.image} />
+                  </button>
+                )
+              })}
             </div>
           </div>
 

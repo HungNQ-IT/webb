@@ -1,6 +1,7 @@
 import { useParams, Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { getQuizResult } from '../utils/storage'
+import RichContent from './RichContent'
 
 function Result({ quizzes }) {
   const { id } = useParams()
@@ -101,9 +102,10 @@ function Result({ quizzes }) {
                     }`}
                   >
                     <div className="flex items-start justify-between mb-3">
-                      <h3 className="font-semibold text-gray-800">
-                        Câu {index + 1}: {question.q}
-                      </h3>
+                      <div className="font-semibold text-gray-800">
+                        <span className="mr-2">Câu {index + 1}:</span>
+                        <RichContent text={question.q} eq={question.eq} image={question.image} />
+                      </div>
                       {isCorrect ? (
                         <span className="text-green-600 font-bold">✓ Đúng</span>
                       ) : (
@@ -114,6 +116,7 @@ function Result({ quizzes }) {
                       {question.choices.map((choice, choiceIndex) => {
                         const isUserAnswer = userAnswer === choiceIndex
                         const isCorrectAnswer = choiceIndex === question.answer
+                        const choiceObj = typeof choice === 'string' ? { text: choice } : choice
                         
                         return (
                           <div
@@ -129,7 +132,7 @@ function Result({ quizzes }) {
                             <span className="font-medium mr-2">
                               {String.fromCharCode(65 + choiceIndex)}.
                             </span>
-                            {choice}
+                            <RichContent text={choiceObj.text} eq={choiceObj.eq} image={choiceObj.image} />
                             {isCorrectAnswer && (
                               <span className="ml-2 text-green-700">(Đáp án đúng)</span>
                             )}
@@ -140,11 +143,17 @@ function Result({ quizzes }) {
                         )
                       })}
                     </div>
-                    {question.explain && (
+                    {(question.explain || question.explainEq || question.explainImage) && (
                       <div className="bg-blue-50 border-l-4 border-blue-500 p-3 rounded">
-                        <p className="text-sm text-gray-700">
-                          <strong>Giải thích:</strong> {question.explain}
-                        </p>
+                        <div className="text-sm text-gray-700">
+                          <strong>Giải thích:</strong>
+                          <RichContent 
+                            text={question.explain}
+                            eq={question.explainEq}
+                            image={question.explainImage}
+                            className="mt-1"
+                          />
+                        </div>
                       </div>
                     )}
                   </div>
