@@ -31,7 +31,7 @@ function SubjectList({ quizzes }) {
             {subjects.map((subject) => {
               const subjectQuizzes = quizzes.filter(q => q.subject === subject)
               // Vật Lý sẽ đi đến trang chọn lớp, các môn khác đi thẳng đến bài tập
-              const linkTo = subject === 'Vật Lý'
+              const linkTo = subject === 'Vật Lý' 
                 ? `/subject/${encodeURIComponent(subject)}/grades`
                 : `/subject/${encodeURIComponent(subject)}`
               
@@ -63,5 +63,6 @@ function SubjectList({ quizzes }) {
     </div>
   )
 }
+
 export default SubjectList
 
