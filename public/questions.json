@@ -2,6 +2,7 @@
   {
     "id": 1,
     "subject": "Toán",
+    "grade": 10,
     "title": "Phương trình bậc hai",
     "type": "tracnghiem",
     "description": "Bài tập về phương trình bậc hai và công thức nghiệm",
