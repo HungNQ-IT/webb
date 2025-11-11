@@ -63,46 +63,5 @@ function SubjectList({ quizzes }) {
     </div>
   )
 }
-return (
-<div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12">
-      <div className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto">
-          <div className="mb-8">
-            <Link
-              to="/subjects"
-              className="text-indigo-600 hover:text-indigo-800 font-medium"
-            >
-              ← Quay lại chọn môn
-            </Link>
-          </div>
-
-          <h1 className="text-4xl font-bold text-gray-800 mb-4">
-            Chọn khối lớp Toán
-          </h1>
-          <p className="text-gray-600 mb-8">
-            Chọn lớp bạn muốn luyện tập các bài tập Toán
-          </p>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {grades.map((grade) => (
-              <Link
-                key={grade}
-                to={`/subject/Toán/grade/${grade}`}
-                className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow border-2 border-transparent hover:border-indigo-500"
-              >
-                <div className="text-4xl mb-4">📘</div>
-                <h2 className="text-2xl font-semibold text-gray-800 mb-2">
-                  Lớp {grade}
-                </h2>
-                <p className="text-gray-600 text-sm">
-                  Bài tập Toán lớp {grade}
-                </p>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </div>
-    </div>
-  )
 export default SubjectList
 
