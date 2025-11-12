@@ -193,7 +193,7 @@
         "explain": ""
   },
   {
-        "q": "Cho tập hợp A = {0}. Hãy chọn khẳng định đúng?",
+        "q": "Trong các hình sau, hình nào là lục giác đều?",
         "choices": ["Hình (H2)", " Hình (H1).", "Hình (H4).", "Hình (H3)."],
         "image" : "asset/1.png",
         "answer": 0,
