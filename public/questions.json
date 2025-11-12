@@ -233,7 +233,7 @@
   },
   {
     "q": "Cho lục giác đều ABCDEF. Kết luận nào sau đây là sai?",
-        "choices": ["AB = BC = CD = EF = DE = FA.", " AD = BE = CF.", "AD = BE = CF = AE = BD.", "Góc đỉnh A bằng góc đỉnh E"],
+        "choices": ["AB = BC = CD = EF = DE = FA", " AD = BE = CF.", "AD = BE = CF = AE = BD.", "Góc đỉnh A bằng góc đỉnh E"],
         "image" : "asset/3.png",
         "answer": 0,
         "explain": ""
