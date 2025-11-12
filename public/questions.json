@@ -218,6 +218,25 @@
         "image" : "asset/2.png",
         "answer": 0,
         "explain": ""
+  },
+  {
+    "q": "Hình thoi có tính chất nào dưới đây?",
+        "choices": ["Bốn góc bằng nhau.", "Hai đường chéo bằng nhau.", "Bốn cạnh không bằng nhau.", "Hai đường chéo vuông góc với nhau"],
+        "answer": 0,
+        "explain": ""
+  },
+  {
+    "q": "Cho tam giác đều ABC. Kết luận nào sau đây là đúng nhất?",
+        "choices": ["AB < AC < BC", "AB < AC.", "AB = BC.", "AB = BC = AC."],
+        "answer": 0,
+        "explain": ""
+  },
+  {
+    "q": "Cho lục giác đều ABCDEF. Kết luận nào sau đây là sai?",
+        "choices": ["AB = BC = CD = EF = DE = FA.", " AD = BE = CF.", "AD = BE = CF = AE = BD.", "Góc đỉnh A bằng góc đỉnh E"],
+        "image" : "asset/3.png",
+        "answer": 0,
+        "explain": ""
   }
 ]
 },
