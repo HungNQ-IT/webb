@@ -200,16 +200,17 @@
         "explain": ""
   },
   {
-    "q": "Chọn kết quả đúng của phép tính \\a^m \\cdot a^n\\ với a ≠ 0?",
+    "q": "Chọn kết quả đúng của phép tính với a ≠ 0?",
     "eq": "a^m \\cdot a^n",
     "choices": [
-      {"eq": "a^{m \\cdot n}" },
-      {"eq": "a^{m+n}" },
-      {"eq": "a^{m-n}" },
-      {"eq": "a^{m:n}" }
+      { "text": "a^(m.n)", "eq": "a^{m \\cdot n}" },
+      { "text": "a^(m+n)", "eq": "a^{m+n}" },
+      { "text": "a^(m-n)", "eq": "a^{m-n}" },
+      { "text": "a^(m:n)", "eq": "a^{m:n}" }
     ],
     "answer": 1,
-    "explain": "Khi nhân hai lũy thừa cùng cơ số, ta giữ nguyên cơ số và cộng các số mũ: a^m \\cdot a^n = a^{m+n}"
+    "explain": "Khi nhân hai lũy thừa cùng cơ số, ta giữ nguyên cơ số và cộng các số mũ",
+    "explainEq": "a^m \\cdot a^n = a^{m+n}"
   }
 ]
 },
