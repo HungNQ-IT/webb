@@ -177,15 +177,15 @@
     }
   ]
 },
-{
-  "id": 6,
-  "subject": "Toán",
-  "grade": 6,
-  "title": "Đề tham khảo giữa kì 1",
-  "type": "tracnghiem",
-  "description": "THCS REVICE",
-  "timeLimit": 30,
-  "questions": [
+  {
+    "id": 6,
+    "subject": "Toán",
+    "grade": 6,
+    "title": "Đề tham khảo giữa kì 1",
+    "type": "tracnghiem",
+    "description": "THCS REVICE",
+    "timeLimit": 30,
+    "questions": [
     {
         "q": "Cho tập hợp A = {0}. Hãy chọn khẳng định đúng?",
         "choices": ["A không phải là tập hợp.", "A là tập hợp có hai phần tử.", "A là tập hợp không có phần tử nào", "A là tập hợp có một phần tử là 0."],
@@ -200,6 +200,293 @@
         "explain": ""
   }
 ]
+},
+{
+  "id": 7,
+  "subject": "Tiếng Anh",
+  "grade": 6,
+  "title": "Từ vựng và ngữ pháp cơ bản",
+  "type": "tracnghiem",
+  "description": "Bài tập Tiếng Anh lớp 6 - Từ vựng và thì hiện tại đơn",
+  "timeLimit": 15,
+  "questions": [
+    {
+      "q": "Choose the correct word: I _____ to school every day.",
+      "choices": ["go", "goes", "going", "went"],
+      "answer": 0,
+      "explain": "Với chủ ngữ 'I', ta dùng động từ nguyên mẫu 'go' trong thì hiện tại đơn."
+    },
+    {
+      "q": "What is the plural form of 'child'?",
+      "choices": ["childs", "children", "childrens", "child"],
+      "answer": 1,
+      "explain": "'Children' là dạng số nhiều bất quy tắc của 'child'."
+    },
+    {
+      "q": "Choose the correct answer: She _____ her homework in the evening.",
+      "choices": ["do", "does", "did", "doing"],
+      "answer": 1,
+      "explain": "Với chủ ngữ số ít 'She', ta dùng 'does' trong thì hiện tại đơn."
+    },
+    {
+      "q": "What does 'library' mean in Vietnamese?",
+      "choices": ["Thư viện", "Trường học", "Bệnh viện", "Nhà sách"],
+      "answer": 0,
+      "explain": "'Library' có nghĩa là 'thư viện' trong tiếng Việt."
+    },
+    {
+      "q": "Choose the correct preposition: I go to school _____ Monday.",
+      "choices": ["in", "on", "at", "for"],
+      "answer": 1,
+      "explain": "Ta dùng giới từ 'on' với các ngày trong tuần."
+    }
+  ]
+},
+{
+  "id": 8,
+  "subject": "Tiếng Anh",
+  "grade": 7,
+  "title": "Thì hiện tại tiếp diễn và từ vựng",
+  "type": "tracnghiem",
+  "description": "Bài tập Tiếng Anh lớp 7 - Thì hiện tại tiếp diễn",
+  "timeLimit": 15,
+  "questions": [
+    {
+      "q": "Choose the correct form: They _____ football now.",
+      "choices": ["play", "plays", "are playing", "played"],
+      "answer": 2,
+      "explain": "Với từ 'now', ta dùng thì hiện tại tiếp diễn: 'are playing'."
+    },
+    {
+      "q": "What is the negative form of 'I am studying'?",
+      "choices": ["I am not studying", "I not am studying", "I don't studying", "I isn't studying"],
+      "answer": 0,
+      "explain": "Dạng phủ định của thì hiện tại tiếp diễn: 'am not + V-ing'."
+    },
+    {
+      "q": "Choose the correct word: My sister is _____ a book.",
+      "choices": ["read", "reads", "reading", "readed"],
+      "answer": 2,
+      "explain": "Sau 'is', ta dùng động từ dạng V-ing trong thì hiện tại tiếp diễn."
+    },
+    {
+      "q": "What does 'neighborhood' mean?",
+      "choices": ["Hàng xóm", "Khu phố", "Thành phố", "Quốc gia"],
+      "answer": 1,
+      "explain": "'Neighborhood' có nghĩa là 'khu phố' hoặc 'vùng lân cận'."
+    },
+    {
+      "q": "Choose the correct answer: _____ you watching TV?",
+      "choices": ["Do", "Does", "Are", "Is"],
+      "answer": 2,
+      "explain": "Câu hỏi thì hiện tại tiếp diễn với 'you' dùng 'Are'."
+    }
+  ]
+},
+{
+  "id": 9,
+  "subject": "Tiếng Anh",
+  "grade": 8,
+  "title": "Thì quá khứ đơn và so sánh",
+  "type": "tracnghiem",
+  "description": "Bài tập Tiếng Anh lớp 8 - Thì quá khứ đơn và cấu trúc so sánh",
+  "timeLimit": 20,
+  "questions": [
+    {
+      "q": "Choose the correct past tense: Yesterday, I _____ to the cinema.",
+      "choices": ["go", "goes", "went", "going"],
+      "answer": 2,
+      "explain": "'Went' là dạng quá khứ của 'go'. Với 'yesterday', ta dùng thì quá khứ đơn."
+    },
+    {
+      "q": "What is the past participle of 'see'?",
+      "choices": ["saw", "seen", "see", "seeing"],
+      "answer": 1,
+      "explain": "'Seen' là quá khứ phân từ của 'see' (see - saw - seen)."
+    },
+    {
+      "q": "Choose the correct comparative: This book is _____ than that one.",
+      "choices": ["interesting", "more interesting", "most interesting", "interestinger"],
+      "answer": 1,
+      "explain": "Tính từ dài (3+ âm tiết) dùng 'more' trong so sánh hơn: 'more interesting'."
+    },
+    {
+      "q": "Choose the correct form: She _____ her keys last night.",
+      "choices": ["lose", "loses", "lost", "losing"],
+      "answer": 2,
+      "explain": "Với 'last night', ta dùng thì quá khứ đơn: 'lost'."
+    },
+    {
+      "q": "What does 'environment' mean?",
+      "choices": ["Môi trường", "Giáo dục", "Kinh tế", "Văn hóa"],
+      "answer": 0,
+      "explain": "'Environment' có nghĩa là 'môi trường' trong tiếng Việt."
+    }
+  ]
+},
+{
+  "id": 10,
+  "subject": "Tiếng Anh",
+  "grade": 9,
+  "title": "Thì tương lai và câu điều kiện",
+  "type": "tracnghiem",
+  "description": "Bài tập Tiếng Anh lớp 9 - Thì tương lai và câu điều kiện loại 1",
+  "timeLimit": 20,
+  "questions": [
+    {
+      "q": "Choose the correct future form: I _____ visit my grandparents next week.",
+      "choices": ["will", "am", "was", "have"],
+      "answer": 0,
+      "explain": "Với 'next week', ta dùng 'will' để diễn tả tương lai: 'will visit'."
+    },
+    {
+      "q": "Complete the conditional sentence: If it rains, I _____ stay at home.",
+      "choices": ["will", "would", "am", "was"],
+      "answer": 0,
+      "explain": "Câu điều kiện loại 1: If + present simple, S + will + V."
+    },
+    {
+      "q": "Choose the correct form: They _____ to the beach tomorrow.",
+      "choices": ["go", "goes", "will go", "went"],
+      "answer": 2,
+      "explain": "Với 'tomorrow', ta dùng thì tương lai đơn: 'will go'."
+    },
+    {
+      "q": "What is the meaning of 'pollution'?",
+      "choices": ["Ô nhiễm", "Bảo vệ", "Làm sạch", "Tái chế"],
+      "answer": 0,
+      "explain": "'Pollution' có nghĩa là 'ô nhiễm' trong tiếng Việt."
+    },
+    {
+      "q": "Choose the correct answer: What _____ you do if you win the lottery?",
+      "choices": ["do", "does", "will", "did"],
+      "answer": 2,
+      "explain": "Câu hỏi về tương lai dùng 'will'."
+    }
+  ]
+},
+{
+  "id": 11,
+  "subject": "Tiếng Anh",
+  "grade": 10,
+  "title": "Câu bị động và ngữ pháp nâng cao",
+  "type": "tracnghiem",
+  "description": "Bài tập Tiếng Anh lớp 10 - Câu bị động và các cấu trúc ngữ pháp phức tạp",
+  "timeLimit": 25,
+  "questions": [
+    {
+      "q": "Choose the correct passive form: The book _____ by many people.",
+      "choices": ["read", "reads", "is read", "are read"],
+      "answer": 2,
+      "explain": "Câu bị động thì hiện tại đơn: 'is/are + past participle'. 'Book' là số ít nên dùng 'is read'."
+    },
+    {
+      "q": "What is the passive form of 'They built this house in 2020'?",
+      "choices": ["This house was built in 2020", "This house is built in 2020", "This house built in 2020", "This house were built in 2020"],
+      "answer": 0,
+      "explain": "Câu bị động thì quá khứ: 'was/were + past participle'. 'House' là số ít nên dùng 'was built'."
+    },
+    {
+      "q": "Choose the correct modal verb: You _____ study hard to pass the exam.",
+      "choices": ["can", "should", "will", "may"],
+      "answer": 1,
+      "explain": "'Should' diễn tả lời khuyên: 'Bạn nên học chăm chỉ'."
+    },
+    {
+      "q": "What does 'sustainable' mean?",
+      "choices": ["Bền vững", "Nguy hiểm", "Tạm thời", "Phức tạp"],
+      "answer": 0,
+      "explain": "'Sustainable' có nghĩa là 'bền vững' trong tiếng Việt."
+    },
+    {
+      "q": "Choose the correct relative pronoun: The man _____ lives next door is a doctor.",
+      "choices": ["which", "who", "where", "when"],
+      "answer": 1,
+      "explain": "'Who' dùng để thay thế cho danh từ chỉ người làm chủ ngữ."
+    }
+  ]
+},
+{
+  "id": 12,
+  "subject": "Tiếng Anh",
+  "grade": 11,
+  "title": "Câu tường thuật và ngữ pháp nâng cao",
+  "type": "tracnghiem",
+  "description": "Bài tập Tiếng Anh lớp 11 - Câu tường thuật và các cấu trúc ngữ pháp phức tạp",
+  "timeLimit": 25,
+  "questions": [
+    {
+      "q": "Choose the correct reported speech: She said, 'I am tired.' → She said that _____ tired.",
+      "choices": ["she is", "she was", "I am", "I was"],
+      "answer": 1,
+      "explain": "Trong câu tường thuật, thì hiện tại đơn chuyển thành quá khứ đơn: 'am' → 'was', và đổi 'I' → 'she'."
+    },
+    {
+      "q": "What is the reported speech of 'He said, \"I will come tomorrow\"'?",
+      "choices": ["He said that he will come tomorrow", "He said that he would come the next day", "He said that I will come tomorrow", "He said that he comes tomorrow"],
+      "answer": 1,
+      "explain": "Trong câu tường thuật: 'will' → 'would', 'tomorrow' → 'the next day', 'I' → 'he'."
+    },
+    {
+      "q": "Choose the correct form: I wish I _____ speak English fluently.",
+      "choices": ["can", "could", "will", "am"],
+      "answer": 1,
+      "explain": "Sau 'wish', ta dùng thì quá khứ để diễn tả điều ước ở hiện tại: 'could'."
+    },
+    {
+      "q": "What does 'phenomenon' mean?",
+      "choices": ["Hiện tượng", "Vấn đề", "Giải pháp", "Nguyên nhân"],
+      "answer": 0,
+      "explain": "'Phenomenon' có nghĩa là 'hiện tượng' trong tiếng Việt."
+    },
+    {
+      "q": "Choose the correct answer: If I _____ you, I would study harder.",
+      "choices": ["am", "was", "were", "be"],
+      "answer": 2,
+      "explain": "Câu điều kiện loại 2: If + S + were (cho tất cả các ngôi), S + would + V."
+    }
+  ]
+},
+{
+  "id": 13,
+  "subject": "Tiếng Anh",
+  "grade": 12,
+  "title": "Ôn tập thi tốt nghiệp THPT",
+  "type": "tracnghiem",
+  "description": "Bài tập Tiếng Anh lớp 12 - Ôn tập cho kỳ thi tốt nghiệp THPT",
+  "timeLimit": 30,
+  "questions": [
+    {
+      "q": "Choose the correct answer: Not only _____ the exam, but he also got the highest score.",
+      "choices": ["he passed", "did he pass", "he did pass", "passed he"],
+      "answer": 1,
+      "explain": "Với 'Not only' ở đầu câu, ta phải đảo ngữ: 'did he pass'."
+    },
+    {
+      "q": "What is the correct form: I would rather you _____ here on time.",
+      "choices": ["come", "came", "coming", "to come"],
+      "answer": 1,
+      "explain": "Sau 'would rather', ta dùng thì quá khứ đơn: 'came'."
+    },
+    {
+      "q": "Choose the correct answer: The harder you study, _____ you will get.",
+      "choices": ["the better results", "better results", "the best results", "best results"],
+      "answer": 0,
+      "explain": "Cấu trúc so sánh kép: 'The + comparative, the + comparative'."
+    },
+    {
+      "q": "What does 'accomplish' mean?",
+      "choices": ["Hoàn thành", "Bắt đầu", "Trì hoãn", "Hủy bỏ"],
+      "answer": 0,
+      "explain": "'Accomplish' có nghĩa là 'hoàn thành', 'đạt được' trong tiếng Việt."
+    },
+    {
+      "q": "Choose the correct answer: Had I known about the test, I _____ more carefully.",
+      "choices": ["study", "studied", "would study", "would have studied"],
+      "answer": 3,
+      "explain": "Câu điều kiện loại 3 đảo ngữ: Had + S + past participle, S + would have + past participle."
+    }
+  ]
 }
 ]
 
