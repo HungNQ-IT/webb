@@ -200,7 +200,7 @@
         "explain": ""
   },
   {
-    "q": "Chọn kết quả đúng của phép tính với a ≠ 0?",
+    "q": "Chọn kết quả đúng của phép tính \\a^m \\cdot a^n\\ với a ≠ 0?",
     "eq": "a^m \\cdot a^n",
     "choices": [
       {"eq": "a^{m \\cdot n}" },
