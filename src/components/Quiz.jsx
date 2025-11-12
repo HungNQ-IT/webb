@@ -17,7 +17,12 @@ function Quiz({ quizzes }) {
     if (!quiz) return
     
     // Initialize answers array
-    setAnswers(new Array(quiz.questions.length).fill(null))
+    setAnswers(
+      quiz.questions.map(question => {
+        const hasChoices = Array.isArray(question.choices) && question.choices.length > 0
+        return hasChoices ? null : ''
+      })
+    )
     
     // Initialize timer if timeLimit exists
     if (quiz.timeLimit) {
@@ -43,8 +48,18 @@ function Quiz({ quizzes }) {
 
   const handleAnswerSelect = (questionIndex, answerIndex) => {
     if (isSubmitted) return
+    const question = quiz.questions[questionIndex]
+    const hasChoices = Array.isArray(question.choices) && question.choices.length > 0
+    if (!hasChoices) return
     const newAnswers = [...answers]
     newAnswers[questionIndex] = answerIndex
+    setAnswers(newAnswers)
+  }
+
+  const handleEssayChange = (questionIndex, value) => {
+    if (isSubmitted) return
+    const newAnswers = [...answers]
+    newAnswers[questionIndex] = value
     setAnswers(newAnswers)
   }
 
@@ -56,7 +71,8 @@ function Quiz({ quizzes }) {
     // Calculate score
     let score = 0
     quiz.questions.forEach((question, index) => {
-      if (answers[index] === question.answer) {
+      const hasChoices = Array.isArray(question.choices) && question.choices.length > 0
+      if (hasChoices && answers[index] === question.answer) {
         score++
       }
     })
@@ -92,6 +108,14 @@ function Quiz({ quizzes }) {
 
   const question = quiz.questions[currentQuestion]
   const progress = ((currentQuestion + 1) / quiz.questions.length) * 100
+  const hasChoices = Array.isArray(question.choices) && question.choices.length > 0
+  const canSubmit = quiz.questions.every((q, index) => {
+    const hasChoice = Array.isArray(q.choices) && q.choices.length > 0
+    if (hasChoice) {
+      return answers[index] !== null
+    }
+    return true
+  })
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12">
@@ -121,28 +145,43 @@ function Quiz({ quizzes }) {
           {/* Question */}
           <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
             <RichContent text={question.q} eq={question.eq} image={question.image} className="text-xl font-semibold" />
-            <div className="space-y-3 mt-6">
-              {question.choices.map((choice, index) => {
-                const choiceObj = typeof choice === 'string' ? { text: choice } : choice
-                return (
-                  <button
-                    key={index}
-                    onClick={() => handleAnswerSelect(currentQuestion, index)}
-                    disabled={isSubmitted}
-                    className={`w-full text-left p-4 rounded-lg border-2 transition-all ${
-                      answers[currentQuestion] === index
-                        ? 'border-indigo-600 bg-indigo-50 text-indigo-900'
-                        : 'border-gray-200 hover:border-indigo-300 hover:bg-gray-50'
-                    } ${isSubmitted ? 'cursor-not-allowed' : 'cursor-pointer'}`}
-                  >
-                    <span className="font-medium mr-2">
-                      {String.fromCharCode(65 + index)}.
-                    </span>
-                    <RichContent text={choiceObj.text} eq={choiceObj.eq} image={choiceObj.image} />
-                  </button>
-                )
-              })}
-            </div>
+            {hasChoices ? (
+              <div className="space-y-3 mt-6">
+                {question.choices.map((choice, index) => {
+                  const choiceObj = typeof choice === 'string' ? { text: choice } : choice
+                  return (
+                    <button
+                      key={index}
+                      onClick={() => handleAnswerSelect(currentQuestion, index)}
+                      disabled={isSubmitted}
+                      className={`w-full text-left p-4 rounded-lg border-2 transition-all ${
+                        answers[currentQuestion] === index
+                          ? 'border-indigo-600 bg-indigo-50 text-indigo-900'
+                          : 'border-gray-200 hover:border-indigo-300 hover:bg-gray-50'
+                      } ${isSubmitted ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+                    >
+                      <span className="font-medium mr-2">
+                        {String.fromCharCode(65 + index)}.
+                      </span>
+                      <RichContent text={choiceObj.text} eq={choiceObj.eq} image={choiceObj.image} />
+                    </button>
+                  )
+                })}
+              </div>
+            ) : (
+              <div className="mt-6">
+                <label className="block text-sm font-medium text-gray-600 mb-2">
+                  Trả lời
+                </label>
+                <textarea
+                  value={answers[currentQuestion] ?? ''}
+                  onChange={(e) => handleEssayChange(currentQuestion, e.target.value)}
+                  disabled={isSubmitted}
+                  className="w-full min-h-[150px] p-4 border-2 border-gray-200 rounded-lg focus:border-indigo-400 focus:outline-none resize-y"
+                  placeholder="Nhập câu trả lời của bạn tại đây..."
+                />
+              </div>
+            )}
           </div>
 
           {/* Navigation */}
@@ -166,7 +205,7 @@ function Quiz({ quizzes }) {
               ) : (
                 <button
                   onClick={handleSubmit}
-                  disabled={isSubmitted || answers.some(a => a === null)}
+                  disabled={isSubmitted || !canSubmit}
                   className="px-6 py-2 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Nộp bài

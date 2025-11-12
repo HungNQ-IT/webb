@@ -274,6 +274,31 @@
     "q": "Thực hiện phép tính:\na) 39 * 2023 + 86 * 2023 - 2023 * 25",
     "eq": "b)\\;5^3 - 8^8 + 9\\cdot 3^2 = ?",
     "choices": []
+  },
+  {
+    "q": "Câu 2 (1,5 điểm): Tìm x, biết",
+    "eq": "\\begin{aligned} &a)\\;2015 - x = 1000\\\\ &b)\\;320 - 15x = 200\\\\ &c)\\;2^{x+3} - 2^x = 224\\end{aligned}",
+    "choices": []
+  },
+  {
+    "q": "Câu 3 (1 điểm): An được mẹ mua cho 9 quyển vở, 5 cây bút bi và 2 cục tẩy. Mẹ An đã trả tổng cộng hết số tiền là 91.000 đồng. Mẹ An nhớ giá tiền của một quyển vở là 6.500 đồng, của cục tẩy là 5.000 đồng nhưng mẹ An lại không nhớ số tiền của một cây bút bi là bao nhiêu. Em hãy giúp mẹ An tính giá tiền của một cây bút bi là bao nhiêu nhé?",
+    "choices": []
+  },
+  {
+    "q": "Câu 4 (1,25 điểm): Vẽ hình chữ nhật ABCD có chiều dài bằng 8cm, chiều rộng bằng 4cm. Tính:\na) Diện tích của hình chữ nhật ABCD.\nb) Chu vi của hình chữ nhật ABCD.\nc) Giả sử có một hình vuông có chu vi bằng chu vi hình chữ nhật ABCD ở trên. Tính diện tích hình vuông đó.",
+    "choices": []
+  },
+  {
+    "q": "Câu 5 (1,25 điểm): Hãy vẽ hình vuông ABCD có cạnh AB = 7cm.\na) Hãy kể tên các cạnh, các đường chéo của hình vuông ABCD.\nb) Tính chu vi và diện tích của hình vuông ABCD.",
+    "choices": []
+  },
+  {
+    "q": "Câu 6 (0,5 điểm): Vào tết Trung thu, lớp của Bình đã chuẩn bị các phần quà như nhau từ 90 thanh socola nhỏ và 120 chiếc bánh trung thu để tặng các bạn nhỏ trong một trung tâm trại trẻ em khuyết tật. Hỏi các bạn trong lớp của Bình đã chuẩn bị được nhiều nhất bao nhiêu phần quà và khi đó, mỗi phần quà bao gồm mấy thanh socola và mấy chiếc bánh trung thu? Biết mỗi phần quà có số socola và bánh trung thu đều bằng nhau.",
+    "choices": []
+  },
+  {
+    "q": "Câu 7 (0,5 điểm): Cho A = 2 + 2^2 + 2^3 + \\dots + 2^{19} + 2^{20}. Chứng minh A chia hết cho 3.",
+    "choices": []
   }
 ]
 },
