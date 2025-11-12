@@ -203,10 +203,10 @@
     "q": "Chọn kết quả đúng của phép tính với a ≠ 0?",
     "eq": "a^m \\cdot a^n",
     "choices": [
-      { "text": "a^(m.n)", "eq": "a^{m \\cdot n}" },
-      { "text": "a^(m+n)", "eq": "a^{m+n}" },
-      { "text": "a^(m-n)", "eq": "a^{m-n}" },
-      { "text": "a^(m:n)", "eq": "a^{m:n}" }
+      { "eq": "a^{m \\cdot n}" },
+      { "eq": "a^{m+n}" },
+      { "eq": "a^{m-n}" },
+      { "eq": "a^{m:n}" }
     ],
     "answer": 1,
     "explain": "Khi nhân hai lũy thừa cùng cơ số, ta giữ nguyên cơ số và cộng các số mũ",
