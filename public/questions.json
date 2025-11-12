@@ -211,6 +211,13 @@
     "answer": 1,
     "explain": "Khi nhân hai lũy thừa cùng cơ số, ta giữ nguyên cơ số và cộng các số mũ",
     "explainEq": "a^m \\cdot a^n = a^{m+n}"
+  },
+  {
+    "q": "Hãy chỉ ra các cặp góc bằng nhau trong hình thoi EFGH sau:",
+        "choices": ["Góc đỉnh E bằng góc đỉnh F.", "Góc đỉnh E bằng góc đỉnh H.", "Góc đỉnh G bằng góc đỉnh H.", "Góc đỉnh E bằng góc đỉnh G."],
+        "image" : "asset/2.png",
+        "answer": 0,
+        "explain": ""
   }
 ]
 },
