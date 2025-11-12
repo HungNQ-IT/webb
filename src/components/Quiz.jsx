@@ -17,12 +17,7 @@ function Quiz({ quizzes }) {
     if (!quiz) return
     
     // Initialize answers array
-    setAnswers(
-      quiz.questions.map(question => {
-        const hasChoices = Array.isArray(question.choices) && question.choices.length > 0
-        return hasChoices ? null : ''
-      })
-    )
+    setAnswers(new Array(quiz.questions.length).fill(null))
     
     // Initialize timer if timeLimit exists
     if (quiz.timeLimit) {
@@ -53,13 +48,6 @@ function Quiz({ quizzes }) {
     if (!hasChoices) return
     const newAnswers = [...answers]
     newAnswers[questionIndex] = answerIndex
-    setAnswers(newAnswers)
-  }
-
-  const handleEssayChange = (questionIndex, value) => {
-    if (isSubmitted) return
-    const newAnswers = [...answers]
-    newAnswers[questionIndex] = value
     setAnswers(newAnswers)
   }
 
@@ -169,17 +157,8 @@ function Quiz({ quizzes }) {
                 })}
               </div>
             ) : (
-              <div className="mt-6">
-                <label className="block text-sm font-medium text-gray-600 mb-2">
-                  Trả lời
-                </label>
-                <textarea
-                  value={answers[currentQuestion] ?? ''}
-                  onChange={(e) => handleEssayChange(currentQuestion, e.target.value)}
-                  disabled={isSubmitted}
-                  className="w-full min-h-[150px] p-4 border-2 border-gray-200 rounded-lg focus:border-indigo-400 focus:outline-none resize-y"
-                  placeholder="Nhập câu trả lời của bạn tại đây..."
-                />
+              <div className="mt-6 bg-indigo-50 border border-indigo-200 text-indigo-900 rounded-lg p-4">
+                <p>Đây là câu hỏi tự luận. Hãy làm bài và nộp theo hướng dẫn của giáo viên.</p>
               </div>
             )}
           </div>
