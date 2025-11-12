@@ -200,8 +200,8 @@
         "explain": ""
   },
   {
-    "q": "Chọn kết quả đúng của phép tính \\a^m.a^n\\ với a ≠ 0?",
-        "choices": ["\\a^(m.n)\\", " \\a^(m+n)\\", "\\a^(m-n)\\", "\\a^(m:n)\\"],
+    "q": "Chọn kết quả đúng của phép tính \\a^m.a^n với a ≠ 0?",
+        "choices": ["\\a^(m.n)", " \\a^(m+n)", "\\a^(m-n)", "\\a^(m:n)"],
         "answer": 1,
         "explain": ""
   }
