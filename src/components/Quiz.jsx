@@ -56,19 +56,23 @@ function Quiz({ quizzes }) {
     
     setIsSubmitted(true)
     
-    // Calculate score
+    // Calculate score for trắc nghiệm questions only
     let score = 0
+    let autoGradedCount = 0
     quiz.questions.forEach((question, index) => {
       const hasChoices = Array.isArray(question.choices) && question.choices.length > 0
-      if (hasChoices && answers[index] === question.answer) {
-        score++
+      if (hasChoices) {
+        autoGradedCount++
+        if (answers[index] === question.answer) {
+          score++
+        }
       }
     })
 
     // Save result to localStorage
     const result = {
       score,
-      total: quiz.questions.length,
+      total: autoGradedCount,
       answers: [...answers],
       questions: quiz.questions
     }

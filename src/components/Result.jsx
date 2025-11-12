@@ -43,14 +43,17 @@ function Result({ quizzes }) {
     )
   }
 
-  const percentage = Math.round((result.score / result.total) * 100)
+  const hasAutoGraded = result.total > 0
+  const percentage = hasAutoGraded ? Math.round((result.score / result.total) * 100) : null
   const getScoreColor = () => {
+    if (!hasAutoGraded) return 'text-indigo-600'
     if (percentage >= 80) return 'text-green-600'
     if (percentage >= 60) return 'text-yellow-600'
     return 'text-red-600'
   }
 
   const getScoreBgColor = () => {
+    if (!hasAutoGraded) return 'bg-indigo-100 border-indigo-500'
     if (percentage >= 80) return 'bg-green-100 border-green-500'
     if (percentage >= 60) return 'bg-yellow-100 border-yellow-500'
     return 'bg-red-100 border-red-500'
@@ -67,19 +70,24 @@ function Result({ quizzes }) {
                 {quiz.title}
               </h1>
               <div className={`text-6xl font-bold mb-2 ${getScoreColor()}`}>
-                {result.score}/{result.total}
+                {hasAutoGraded ? `${result.score}/${result.total}` : 'Tự luận'}
               </div>
               <div className={`text-2xl font-semibold ${getScoreColor()}`}>
-                {percentage}%
+                {hasAutoGraded ? `${percentage}%` : 'Giáo viên sẽ chấm điểm'}
               </div>
-              {percentage >= 80 && (
+              {hasAutoGraded && percentage >= 80 && (
                 <p className="text-green-600 font-medium mt-2">🎉 Xuất sắc!</p>
               )}
-              {percentage >= 60 && percentage < 80 && (
+              {hasAutoGraded && percentage >= 60 && percentage < 80 && (
                 <p className="text-yellow-600 font-medium mt-2">👍 Tốt!</p>
               )}
-              {percentage < 60 && (
+              {hasAutoGraded && percentage < 60 && (
                 <p className="text-red-600 font-medium mt-2">💪 Cố gắng thêm nhé!</p>
+              )}
+              {!hasAutoGraded && (
+                <p className="text-indigo-600 font-medium mt-2">
+                  Bài này chỉ gồm câu tự luận. Hãy nộp cho giáo viên để chấm.
+                </p>
               )}
             </div>
           </div>
@@ -92,13 +100,18 @@ function Result({ quizzes }) {
             <div className="space-y-6">
               {result.questions.map((question, index) => {
                 const userAnswer = result.answers[index]
-                const isCorrect = userAnswer === question.answer
+                const questionHasChoices = Array.isArray(question.choices) && question.choices.length > 0
+                const isCorrect = questionHasChoices && userAnswer === question.answer
                 
                 return (
                   <div
                     key={index}
                     className={`border-2 rounded-lg p-4 ${
-                      isCorrect ? 'border-green-500 bg-green-50' : 'border-red-500 bg-red-50'
+                      questionHasChoices
+                        ? isCorrect
+                          ? 'border-green-500 bg-green-50'
+                          : 'border-red-500 bg-red-50'
+                        : 'border-indigo-400 bg-indigo-50'
                     }`}
                   >
                     <div className="flex items-start justify-between mb-3">
@@ -106,43 +119,53 @@ function Result({ quizzes }) {
                         <span className="mr-2">Câu {index + 1}:</span>
                         <RichContent text={question.q} eq={question.eq} image={question.image} />
                       </div>
-                      {isCorrect ? (
-                        <span className="text-green-600 font-bold">✓ Đúng</span>
+                      {questionHasChoices ? (
+                        isCorrect ? (
+                          <span className="text-green-600 font-bold">✓ Đúng</span>
+                        ) : (
+                          <span className="text-red-600 font-bold">✗ Sai</span>
+                        )
                       ) : (
-                        <span className="text-red-600 font-bold">✗ Sai</span>
+                        <span className="text-indigo-600 font-bold">Câu tự luận</span>
                       )}
                     </div>
-                    <div className="space-y-2 mb-3">
-                      {question.choices.map((choice, choiceIndex) => {
-                        const isUserAnswer = userAnswer === choiceIndex
-                        const isCorrectAnswer = choiceIndex === question.answer
-                        const choiceObj = typeof choice === 'string' ? { text: choice } : choice
-                        
-                        return (
-                          <div
-                            key={choiceIndex}
-                            className={`p-2 rounded ${
-                              isCorrectAnswer
-                                ? 'bg-green-200 font-semibold'
-                                : isUserAnswer && !isCorrect
-                                ? 'bg-red-200'
-                                : 'bg-gray-100'
-                            }`}
-                          >
-                            <span className="font-medium mr-2">
-                              {String.fromCharCode(65 + choiceIndex)}.
-                            </span>
-                            <RichContent text={choiceObj.text} eq={choiceObj.eq} image={choiceObj.image} />
-                            {isCorrectAnswer && (
-                              <span className="ml-2 text-green-700">(Đáp án đúng)</span>
-                            )}
-                            {isUserAnswer && !isCorrect && (
-                              <span className="ml-2 text-red-700">(Bạn chọn)</span>
-                            )}
-                          </div>
-                        )
-                      })}
-                    </div>
+                    {questionHasChoices ? (
+                      <div className="space-y-2 mb-3">
+                        {question.choices.map((choice, choiceIndex) => {
+                          const isUserAnswer = userAnswer === choiceIndex
+                          const isCorrectAnswer = choiceIndex === question.answer
+                          const choiceObj = typeof choice === 'string' ? { text: choice } : choice
+                          
+                          return (
+                            <div
+                              key={choiceIndex}
+                              className={`p-2 rounded ${
+                                isCorrectAnswer
+                                  ? 'bg-green-200 font-semibold'
+                                  : isUserAnswer && !isCorrect
+                                  ? 'bg-red-200'
+                                  : 'bg-gray-100'
+                              }`}
+                            >
+                              <span className="font-medium mr-2">
+                                {String.fromCharCode(65 + choiceIndex)}.
+                              </span>
+                              <RichContent text={choiceObj.text} eq={choiceObj.eq} image={choiceObj.image} />
+                              {isCorrectAnswer && (
+                                <span className="ml-2 text-green-700">(Đáp án đúng)</span>
+                              )}
+                              {isUserAnswer && !isCorrect && (
+                                <span className="ml-2 text-red-700">(Bạn chọn)</span>
+                              )}
+                            </div>
+                          )
+                        })}
+                      </div>
+                    ) : (
+                      <p className="mb-3 text-sm text-indigo-700">
+                        Câu hỏi này không được chấm tự động. Hãy đối chiếu với lời giải hoặc nhờ giáo viên chấm.
+                      </p>
+                    )}
                     {(question.explain || question.explainEq || question.explainImage) && (
                       <div className="bg-blue-50 border-l-4 border-blue-500 p-3 rounded">
                         <div className="text-sm text-gray-700">
