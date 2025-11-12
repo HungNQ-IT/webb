@@ -4,7 +4,15 @@ import { useMemo } from 'react'
 function SubjectList({ quizzes }) {
   const subjects = useMemo(() => {
     const uniqueSubjects = [...new Set(quizzes.map(q => q.subject))]
-    return uniqueSubjects
+    // Sắp xếp các môn học: ưu tiên các môn chính trước
+    const prioritySubjects = ['Toán', 'Vật Lý', 'Hóa Học', 'Sinh Học', 'Tiếng Anh']
+    const sortedSubjects = [
+      ...uniqueSubjects.filter(s => prioritySubjects.includes(s)).sort((a, b) => {
+        return prioritySubjects.indexOf(a) - prioritySubjects.indexOf(b)
+      }),
+      ...uniqueSubjects.filter(s => !prioritySubjects.includes(s)).sort()
+    ]
+    return sortedSubjects
   }, [quizzes])
 
   return (

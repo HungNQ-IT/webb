@@ -15,9 +15,26 @@ function App() {
     // Load questions from JSON file
     const baseUrl = import.meta.env.BASE_URL || '/'
     fetch(`${baseUrl}questions.json`)
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`)
+        }
+        return res.json()
+      })
       .then(data => {
-        setQuizzes(data)
+        // Đảm bảo data là một mảng
+        if (Array.isArray(data)) {
+          setQuizzes(data)
+          // Debug: log số lượng bài tập theo môn
+          const subjectsCount = {}
+          data.forEach(q => {
+            subjectsCount[q.subject] = (subjectsCount[q.subject] || 0) + 1
+          })
+          console.log('Loaded quizzes by subject:', subjectsCount)
+        } else {
+          console.error('Invalid data format:', data)
+          setQuizzes([])
+        }
         setLoading(false)
       })
       .catch(err => {
