@@ -237,6 +237,46 @@
         "image" : "asset/3.png",
         "answer": 0,
         "explain": ""
+  }, 
+  {
+    "q": "Tính chu vi của hình tam giác đều có độ dài cạnh là 5 m?",
+        "choices": ["6 m", "15 m", "8 m", "10 m"],
+        "answer": 0,
+        "explain": ""
+  },
+  {
+    "q": "Trong các số tự nhiên sau, số nào là số nguyên tố?",
+        "choices": ["16", "17", "1", "33"],
+        "answer": 0,
+        "explain": ""
+  },
+  {
+    "q": "Trong các hình sau, hình nào là hình thoi?",
+        "choices": ["Hình B", "Hình C", "Hình A", "Hình D"],
+        "image" : "asset/4.png",
+        "answer": 2,
+        "explain": ""
+  },
+  {
+    "q": "Phân tích số 20 ra thừa số nguyên tố, ta được kết quả nào sau đây là đúng?",
+        "choices": ["20 = 4.5", "20 = 2.10", "20 = 2.2.5", "20 = 2.5.5"],
+        "image" : "asset/4.png",
+        "answer": 2,
+        "explain": ""
+  },
+  {
+    "q": "Trong các số sau, số nào là hợp số?",
+        "choices": ["3", "5", "7", "9"],
+        "answer": 3,
+        "explain": ""
+  },
+  {
+    "q": [
+      {"q" : "Thực hiện phép tính"},
+      {"q" : "a/ 39.2023 + 86.2023 - 2023.25"},
+      {"q" : "b/ 5^3 - 8^8 + 9.3^2"}
+    ]
+
   }
 ]
 },
