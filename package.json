@@ -8,7 +8,9 @@
     "build": "vite build",
     "build:local": "vite build --mode development",
     "preview": "vite preview --port 4173",
-    "preview:prod": "vite preview --port 4173 --host"
+    "preview:prod": "vite preview --port 4173 --host",
+    "server": "npm run dev --prefix server",
+    "server:start": "npm run start --prefix server"
   },
   "dependencies": {
     "react": "^18.2.0",

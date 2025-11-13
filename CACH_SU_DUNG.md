@@ -20,6 +20,42 @@ Sau đó mở: **http://localhost:5173**
 
 ---
 
+## 🔐 BẬT BACKEND (Đăng nhập & lưu kết quả)
+
+### Bước 1: Tạo file cấu hình
+
+```bash
+cp server/env.example server/.env
+```
+
+Sau đó mở `server/.env` và điền:
+
+- `JWT_SECRET`: chuỗi bí mật bất kỳ (dài > 16 ký tự)
+- `CLIENT_ORIGINS`: mặc định `http://localhost:5173`
+- `ADMIN_EMAILS`: danh sách email quản trị (ví dụ: `admin@gmail.com`)
+
+### Bước 2: Chạy server
+
+```bash
+npm run server
+```
+
+Server sẽ chạy tại **http://localhost:5000**. Giữ cửa sổ terminal này mở.
+
+> Muốn build/deploy server miễn phí có thể dùng Render/Railway. Khi đó cập nhật `VITE_API_BASE_URL` ở bước tiếp theo.
+
+### Bước 3: Cho frontend biết URL API
+
+Tạo file `.env` ở thư mục gốc (cùng cấp `package.json`):
+
+```
+VITE_API_BASE_URL=http://localhost:5000
+```
+
+Sau đó chạy lại `npm run dev` để Vite đọc biến môi trường.
+
+---
+
 ### 2️⃣ Preview Production Build (Test trước khi deploy)
 
 ```bash

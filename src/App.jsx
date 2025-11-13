@@ -6,6 +6,12 @@ import GradeList from './components/GradeList'
 import QuizList from './components/QuizList'
 import Quiz from './components/Quiz'
 import Result from './components/Result'
+import Login from './components/Login'
+import Register from './components/Register'
+import AdminDashboard from './components/AdminDashboard'
+import RequireAuth from './components/RequireAuth'
+import Layout from './components/Layout'
+import { AuthProvider } from './context/AuthContext'
 
 function App() {
   const [quizzes, setQuizzes] = useState([])
@@ -60,16 +66,30 @@ function App() {
 
   return (
     <BrowserRouter basename={basename}>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/subjects" element={<SubjectList quizzes={quizzes} />} />
-        <Route path="/subject/:subject/grades" element={<GradeList />} />
-        <Route path="/subject/:subject/grade/:grade" element={<QuizList quizzes={quizzes} />} />
-        <Route path="/subject/:subject" element={<QuizList quizzes={quizzes} />} />
-        <Route path="/quiz/:id" element={<Quiz quizzes={quizzes} />} />
-        <Route path="/result/:id" element={<Result quizzes={quizzes} />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
+      <AuthProvider>
+        <Routes>
+          <Route element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="/subjects" element={<SubjectList quizzes={quizzes} />} />
+            <Route path="/subject/:subject/grades" element={<GradeList />} />
+            <Route path="/subject/:subject/grade/:grade" element={<QuizList quizzes={quizzes} />} />
+            <Route path="/subject/:subject" element={<QuizList quizzes={quizzes} />} />
+            <Route path="/quiz/:id" element={<Quiz quizzes={quizzes} />} />
+            <Route path="/result/:id" element={<Result quizzes={quizzes} />} />
+            <Route
+              path="/admin"
+              element={
+                <RequireAuth roles={['admin']}>
+                  <AdminDashboard />
+                </RequireAuth>
+              }
+            />
+          </Route>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </AuthProvider>
     </BrowserRouter>
   )
 }

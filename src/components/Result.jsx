@@ -75,6 +75,11 @@ function Result({ quizzes }) {
               <div className={`text-2xl font-semibold ${getScoreColor()}`}>
                 {hasAutoGraded ? `${percentage}%` : 'Giáo viên sẽ chấm điểm'}
               </div>
+              {typeof result.questionCount === 'number' && (
+                <p className="text-gray-600 mt-2">
+                  Tổng số câu hỏi: {result.questionCount}
+                </p>
+              )}
               {hasAutoGraded && percentage >= 80 && (
                 <p className="text-green-600 font-medium mt-2">🎉 Xuất sắc!</p>
               )}

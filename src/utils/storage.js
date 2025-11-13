@@ -6,9 +6,10 @@ export const saveQuizResult = (quizId, result) => {
   
   const newResult = {
     quizId,
-    timestamp: new Date().toISOString(),
+    timestamp: result.submittedAt || new Date().toISOString(),
     score: result.score,
     total: result.total,
+    questionCount: result.questionCount,
     answers: result.answers,
     questions: result.questions
   };

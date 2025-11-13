@@ -2,16 +2,20 @@ import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { saveQuizResult } from '../utils/storage'
 import RichContent from './RichContent'
+import { useAuth } from '../context/AuthContext'
+import { apiRequest } from '../utils/api/client'
 
 function Quiz({ quizzes }) {
   const { id } = useParams()
   const navigate = useNavigate()
   const quiz = quizzes.find(q => q.id === parseInt(id))
+  const { isAuthenticated, token } = useAuth()
   
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [answers, setAnswers] = useState([])
   const [timeRemaining, setTimeRemaining] = useState(null)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [submissionError, setSubmissionError] = useState('')
 
   useEffect(() => {
     if (!quiz) return
@@ -73,10 +77,33 @@ function Quiz({ quizzes }) {
     const result = {
       score,
       total: autoGradedCount,
+      questionCount: quiz.questions.length,
+      submittedAt: new Date().toISOString(),
       answers: [...answers],
       questions: quiz.questions
     }
     saveQuizResult(quiz.id, result)
+
+    setSubmissionError('')
+
+    if (isAuthenticated) {
+      apiRequest('/submissions', {
+        method: 'POST',
+        token,
+        body: {
+          quizId: quiz.id,
+          score,
+          total: autoGradedCount,
+          details: {
+            questionCount: quiz.questions.length,
+            answers: [...answers]
+          }
+        }
+      }).catch(err => {
+        console.error('Failed to sync submission:', err)
+        setSubmissionError('Không thể đồng bộ kết quả lên máy chủ. Vui lòng thử lại sau.')
+      })
+    }
 
     // Navigate to result page
     navigate(`/result/${quiz.id}`)
@@ -132,6 +159,11 @@ function Quiz({ quizzes }) {
             <p className="text-sm text-gray-600 mt-2">
               Câu {currentQuestion + 1} / {quiz.questions.length}
             </p>
+            {!isAuthenticated && (
+              <div className="mt-4 bg-amber-50 border border-amber-200 text-amber-700 px-4 py-2 rounded">
+                Bạn đang làm bài với tư cách khách. Hãy <span className="font-semibold">đăng nhập</span> để lưu kết quả cho giáo viên.
+              </div>
+            )}
           </div>
 
           {/* Question */}
@@ -196,6 +228,12 @@ function Quiz({ quizzes }) {
               )}
             </div>
           </div>
+
+          {submissionError && (
+            <div className="mt-6 bg-red-100 border border-red-300 text-red-700 px-4 py-3 rounded">
+              {submissionError}
+            </div>
+          )}
 
           {/* Question Navigation Dots */}
           <div className="mt-6 flex flex-wrap gap-2 justify-center">
