@@ -18,6 +18,25 @@ export default defineConfig(({ command, mode }) => {
     preview: {
       port: 4173,
       host: true
+    },
+    build: {
+      // Tối ưu chunking để tải nhanh hơn
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+            'katex-vendor': ['katex']
+          }
+        }
+      },
+      // Tăng chunk size limit
+      chunkSizeWarningLimit: 1000,
+      // Tối ưu minify (esbuild nhanh hơn terser)
+      minify: 'esbuild',
+      // Xóa console.log trong production
+      esbuild: {
+        drop: ['console', 'debugger']
+      }
     }
   }
 })
