@@ -84,12 +84,21 @@ Khi deploy lên GitHub Pages, file `.env` không hoạt động. Bạn cần c�
    - Name: `VITE_ADMIN_EMAILS`
    - Value: `admin@example.com` (hoặc danh sách email, phân cách bằng dấu phẩy)
 
-### Bước 2: Cấu hình CORS trong Supabase
+### Bước 2: Cấu hình Authentication trong Supabase
 
-1. Vào Supabase Dashboard → **Project Settings** → **API**
-2. Trong phần **CORS**, thêm domain GitHub Pages:
-   - `https://hungnq-it.github.io`
-   - Hoặc để `*` để cho phép tất cả (không khuyến khích cho production)
+**Lưu ý**: Supabase không còn phần CORS riêng nữa. Thay vào đó, bạn cần cấu hình Site URL và Redirect URLs trong Authentication.
+
+1. Vào Supabase Dashboard → **Authentication** → **URL Configuration**
+2. Trong phần **Site URL**, thêm:
+   - `https://hungnq-it.github.io` (cho GitHub Pages)
+   - Hoặc `http://localhost:5173` (cho local development)
+3. Trong phần **Redirect URLs**, thêm các URL sau (mỗi URL một dòng):
+   ```
+   https://hungnq-it.github.io/webb/**
+   https://hungnq-it.github.io/**
+   http://localhost:5173/**
+   ```
+4. Click **Save** để lưu lại
 
 ### Bước 3: Deploy lại
 
@@ -131,7 +140,10 @@ Khi deploy lên GitHub Pages, file `.env` không hoạt động. Bạn cần c�
   4. Kiểm tra console trong browser (F12) để xem lỗi chi tiết
 
 ### Lỗi CORS trên GitHub Pages
-- Vào Supabase Dashboard → Settings → API → CORS
-- Thêm: `https://hungnq-it.github.io`
-- Lưu và thử lại
+- **Lưu ý**: Supabase không còn phần CORS riêng nữa
+- Thay vào đó, cấu hình **Authentication** → **URL Configuration**:
+  - Thêm Site URL: `https://hungnq-it.github.io`
+  - Thêm Redirect URLs: `https://hungnq-it.github.io/webb/**` và `https://hungnq-it.github.io/**`
+  - Lưu và thử lại
+- Nếu vẫn lỗi, kiểm tra URL Supabase và Anon Key có đúng không
 
