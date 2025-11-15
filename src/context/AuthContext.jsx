@@ -69,59 +69,93 @@ export function AuthProvider({ children }) {
   }, [])
 
   const login = async (email, password) => {
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email: email.toLowerCase(),
-      password,
-    })
-
-    if (error) {
-      throw new Error(error.message || 'Đăng nhập thất bại')
+    // Kiểm tra xem Supabase đã được cấu hình chưa
+    if (!isSupabaseConfigured) {
+      throw new Error('Supabase chưa được cấu hình. Vui lòng kiểm tra file .env hoặc liên hệ admin.')
     }
+    
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: email.toLowerCase(),
+        password,
+      })
 
-    if (data.user && data.session) {
-      const mappedUser = mapSupabaseUser(data.user)
-      setUser(mappedUser)
-      setSession(data.session)
-      return mappedUser
+      if (error) {
+        // Xử lý các lỗi phổ biến
+        if (error.message.includes('fetch') || error.message.includes('network')) {
+          throw new Error('Không thể kết nối tới Supabase. Vui lòng kiểm tra cấu hình hoặc thử lại sau.')
+        }
+        throw new Error(error.message || 'Đăng nhập thất bại')
+      }
+
+      if (data.user && data.session) {
+        const mappedUser = mapSupabaseUser(data.user)
+        setUser(mappedUser)
+        setSession(data.session)
+        return mappedUser
+      }
+
+      throw new Error('Đăng nhập thất bại')
+    } catch (error) {
+      // Bắt lỗi network hoặc CORS
+      if (error.message.includes('fetch') || error.message.includes('Failed to fetch')) {
+        throw new Error('Không thể kết nối tới máy chủ. Kiểm tra: 1) Supabase URL/Key đã đúng chưa, 2) CORS đã được cấu hình trong Supabase chưa, 3) Kết nối mạng có ổn định không.')
+      }
+      throw error
     }
-
-    throw new Error('Đăng nhập thất bại')
   }
 
   const register = async (payload) => {
     const { email, password, name, grade } = payload
     
-    // Đăng ký user với Supabase Auth
-    const { data: authData, error: authError } = await supabase.auth.signUp({
-      email: email.toLowerCase(),
-      password,
-      options: {
-        data: {
-          name: name || null,
-          grade: grade || null,
-          role: 'student'
+    // Kiểm tra xem Supabase đã được cấu hình chưa
+    if (!isSupabaseConfigured) {
+      throw new Error('Supabase chưa được cấu hình. Vui lòng kiểm tra file .env hoặc liên hệ admin.')
+    }
+    
+    try {
+      // Đăng ký user với Supabase Auth
+      const { data: authData, error: authError } = await supabase.auth.signUp({
+        email: email.toLowerCase(),
+        password,
+        options: {
+          data: {
+            name: name || null,
+            grade: grade || null,
+            role: 'student'
+          }
+        }
+      })
+
+      if (authError) {
+        // Xử lý các lỗi phổ biến
+        if (authError.message.includes('fetch') || authError.message.includes('network')) {
+          throw new Error('Không thể kết nối tới Supabase. Vui lòng kiểm tra cấu hình hoặc thử lại sau.')
+        }
+        throw new Error(authError.message || 'Đăng ký thất bại')
+      }
+
+      if (authData.user) {
+        // Nếu có session (email confirmation tắt), tự động đăng nhập
+        if (authData.session) {
+          const mappedUser = mapSupabaseUser(authData.user)
+          setUser(mappedUser)
+          setSession(authData.session)
+          return mappedUser
+        } else {
+          // Nếu không có session (cần xác nhận email), chỉ thông báo
+          throw new Error('Vui lòng kiểm tra email để xác nhận tài khoản trước khi đăng nhập')
         }
       }
-    })
 
-    if (authError) {
-      throw new Error(authError.message || 'Đăng ký thất bại')
-    }
-
-    if (authData.user) {
-      // Nếu có session (email confirmation tắt), tự động đăng nhập
-      if (authData.session) {
-        const mappedUser = mapSupabaseUser(authData.user)
-        setUser(mappedUser)
-        setSession(authData.session)
-        return mappedUser
-      } else {
-        // Nếu không có session (cần xác nhận email), chỉ thông báo
-        throw new Error('Vui lòng kiểm tra email để xác nhận tài khoản trước khi đăng nhập')
+      throw new Error('Đăng ký thất bại')
+    } catch (error) {
+      // Bắt lỗi network hoặc CORS
+      if (error.message.includes('fetch') || error.message.includes('Failed to fetch')) {
+        throw new Error('Không thể kết nối tới máy chủ. Kiểm tra: 1) Supabase URL/Key đã đúng chưa, 2) CORS đã được cấu hình trong Supabase chưa, 3) Kết nối mạng có ổn định không.')
       }
+      throw error
     }
-
-    throw new Error('Đăng ký thất bại')
   }
 
   const logout = async () => {
