@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
-import { supabase } from '../utils/supabase'
+import { supabase, isSupabaseConfigured } from '../utils/supabase'
 
 const AuthContext = createContext(null)
 
@@ -26,14 +26,30 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Kiểm tra session hiện tại
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session?.user) {
-        setUser(mapSupabaseUser(session.user))
-        setSession(session)
-      }
+    if (!isSupabaseConfigured) {
+      // Nếu chưa cấu hình Supabase, bỏ qua và không làm gì
       setLoading(false)
-    })
+      return
+    }
+
+    // Kiểm tra session hiện tại
+    supabase.auth.getSession()
+      .then(({ data: { session }, error }) => {
+        if (error) {
+          console.error('Lỗi khi lấy session:', error)
+          setLoading(false)
+          return
+        }
+        if (session?.user) {
+          setUser(mapSupabaseUser(session.user))
+          setSession(session)
+        }
+        setLoading(false)
+      })
+      .catch((error) => {
+        console.error('Lỗi khi kiểm tra session:', error)
+        setLoading(false)
+      })
 
     // Lắng nghe thay đổi auth state
     const {
