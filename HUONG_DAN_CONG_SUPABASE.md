@@ -25,15 +25,25 @@ Supabase **đã loại bỏ phần CORS** trong dashboard. Thay vào đó, bạn
 
    **Site URL:**
    ```
-   https://hungnq-it.github.io
+   https://hungnq-it.github.io/webb
    ```
-   (Hoặc `http://localhost:5173` nếu test local)
+   ⚠️ **Quan trọng**: Phải có `/webb` ở cuối vì repository name là `webb`
+   
+   💡 **Nếu test local**, có thể đặt:
+   ```
+   http://localhost:5173
+   ```
+   Nhưng khi deploy lên GitHub Pages, nhớ đổi lại thành `https://hungnq-it.github.io/webb`
 
    **Redirect URLs:**
-   Thêm các URL sau, mỗi URL một dòng:
+   Thêm các URL sau, mỗi URL một dòng (đảm bảo có `/webb`):
    ```
    https://hungnq-it.github.io/webb/**
+   https://hungnq-it.github.io/webb
    https://hungnq-it.github.io/**
+   ```
+   💡 **Nếu test local**, có thể thêm thêm:
+   ```
    http://localhost:5173/**
    http://localhost:5173
    ```

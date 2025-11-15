@@ -89,14 +89,21 @@ Khi deploy lên GitHub Pages, file `.env` không hoạt động. Bạn cần c�
 **Lưu ý**: Supabase không còn phần CORS riêng nữa. Thay vào đó, bạn cần cấu hình Site URL và Redirect URLs trong Authentication.
 
 1. Vào Supabase Dashboard → **Authentication** → **URL Configuration**
-2. Trong phần **Site URL**, thêm:
-   - `https://hungnq-it.github.io` (cho GitHub Pages)
-   - Hoặc `http://localhost:5173` (cho local development)
+2. Trong phần **Site URL**, đặt:
+   ```
+   https://hungnq-it.github.io/webb
+   ```
+   ⚠️ **Quan trọng**: Phải có `/webb` ở cuối vì repository name là `webb`
 3. Trong phần **Redirect URLs**, thêm các URL sau (mỗi URL một dòng):
    ```
    https://hungnq-it.github.io/webb/**
+   https://hungnq-it.github.io/webb
    https://hungnq-it.github.io/**
+   ```
+   💡 **Nếu test local**, có thể thêm thêm:
+   ```
    http://localhost:5173/**
+   http://localhost:5173
    ```
 4. Click **Save** để lưu lại
 
