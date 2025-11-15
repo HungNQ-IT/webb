@@ -52,12 +52,50 @@ Nếu bạn muốn lưu thêm dữ liệu vào Supabase Database (như submissio
 2. Tạo bảng mới nếu cần
 3. Vào **Authentication** > **Policies** để cấu hình quyền truy cập
 
-## 6. Chạy ứng dụng
+## 6. Chạy ứng dụng (Local Development)
 
 ```bash
 npm install
 npm run dev
 ```
+
+**Lưu ý quan trọng**: Nếu bạn đã cập nhật file `.env`, cần **restart dev server** (dừng và chạy lại `npm run dev`) để Vite load lại biến môi trường.
+
+## 7. Cấu hình cho GitHub Pages (Production)
+
+Khi deploy lên GitHub Pages, file `.env` không hoạt động. Bạn cần cấu hình biến môi trường qua **GitHub Secrets**:
+
+### Bước 1: Thêm Secrets vào GitHub
+
+1. Vào repository trên GitHub: `https://github.com/HungNQ-IT/webb`
+2. Vào **Settings** → **Secrets and variables** → **Actions**
+3. Click **New repository secret**
+4. Thêm 3 secrets sau:
+
+   **Secret 1:**
+   - Name: `VITE_SUPABASE_URL`
+   - Value: `https://xxxxx.supabase.co` (URL Supabase của bạn)
+   
+   **Secret 2:**
+   - Name: `VITE_SUPABASE_ANON_KEY`
+   - Value: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...` (Anon key của bạn)
+   
+   **Secret 3 (tùy chọn):**
+   - Name: `VITE_ADMIN_EMAILS`
+   - Value: `admin@example.com` (hoặc danh sách email, phân cách bằng dấu phẩy)
+
+### Bước 2: Cấu hình CORS trong Supabase
+
+1. Vào Supabase Dashboard → **Project Settings** → **API**
+2. Trong phần **CORS**, thêm domain GitHub Pages:
+   - `https://hungnq-it.github.io`
+   - Hoặc để `*` để cho phép tất cả (không khuyến khích cho production)
+
+### Bước 3: Deploy lại
+
+1. Push code lên GitHub (nếu đã cập nhật code)
+2. GitHub Actions sẽ tự động build và deploy với biến môi trường từ Secrets
+3. Kiểm tra trong tab **Actions** để xem build có thành công không
 
 ## Lưu ý
 
@@ -83,4 +121,17 @@ npm run dev
 ### Session không được lưu
 - Kiểm tra localStorage trong browser DevTools
 - Đảm bảo không có extension chặn cookies/localStorage
+
+### Lỗi "Failed to fetch" trên GitHub Pages
+- ⚠️ **Nguyên nhân phổ biến**: Chưa cấu hình GitHub Secrets
+- **Giải pháp**: 
+  1. Kiểm tra đã thêm Secrets vào GitHub chưa (Settings → Secrets → Actions)
+  2. Kiểm tra CORS trong Supabase Dashboard đã cho phép domain GitHub Pages chưa
+  3. Deploy lại sau khi thêm Secrets (push code hoặc chạy workflow lại)
+  4. Kiểm tra console trong browser (F12) để xem lỗi chi tiết
+
+### Lỗi CORS trên GitHub Pages
+- Vào Supabase Dashboard → Settings → API → CORS
+- Thêm: `https://hungnq-it.github.io`
+- Lưu và thử lại
 
