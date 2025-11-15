@@ -1,72 +1,131 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
-import { apiRequest } from '../utils/api/client'
+import { supabase } from '../utils/supabase'
 
 const AuthContext = createContext(null)
-const STORAGE_KEY = 'gia_su_auth_token'
+
+// Hàm chuyển đổi Supabase user thành format app cần
+function mapSupabaseUser(supabaseUser) {
+  if (!supabaseUser) return null
+  
+  const metadata = supabaseUser.user_metadata || {}
+  const adminEmails = (import.meta.env.VITE_ADMIN_EMAILS || '').split(',').map(s => s.trim()).filter(Boolean)
+  
+  return {
+    id: supabaseUser.id,
+    email: supabaseUser.email,
+    name: metadata.name || null,
+    grade: metadata.grade || null,
+    role: adminEmails.includes(supabaseUser.email?.toLowerCase()) ? 'admin' : (metadata.role || 'student'),
+    createdAt: supabaseUser.created_at
+  }
+}
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
-  const [token, setToken] = useState(null)
+  const [session, setSession] = useState(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const storedToken = localStorage.getItem(STORAGE_KEY)
-    if (!storedToken) {
+    // Kiểm tra session hiện tại
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session?.user) {
+        setUser(mapSupabaseUser(session.user))
+        setSession(session)
+      }
       setLoading(false)
-      return
-    }
-    setToken(storedToken)
-    apiRequest('/auth/me', { token: storedToken })
-      .then((data) => {
-        setUser(data.user)
-      })
-      .catch(() => {
-        localStorage.removeItem(STORAGE_KEY)
-        setToken(null)
+    })
+
+    // Lắng nghe thay đổi auth state
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session?.user) {
+        setUser(mapSupabaseUser(session.user))
+        setSession(session)
+      } else {
         setUser(null)
-      })
-      .finally(() => setLoading(false))
+        setSession(null)
+      }
+      setLoading(false)
+    })
+
+    return () => subscription.unsubscribe()
   }, [])
 
-  const handleAuthSuccess = (data) => {
-    setUser(data.user)
-    setToken(data.token)
-    localStorage.setItem(STORAGE_KEY, data.token)
-  }
-
   const login = async (email, password) => {
-    const data = await apiRequest('/auth/login', {
-      method: 'POST',
-      body: { email, password }
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: email.toLowerCase(),
+      password,
     })
-    handleAuthSuccess(data)
-    return data.user
+
+    if (error) {
+      throw new Error(error.message || 'Đăng nhập thất bại')
+    }
+
+    if (data.user && data.session) {
+      const mappedUser = mapSupabaseUser(data.user)
+      setUser(mappedUser)
+      setSession(data.session)
+      return mappedUser
+    }
+
+    throw new Error('Đăng nhập thất bại')
   }
 
   const register = async (payload) => {
-    const data = await apiRequest('/auth/register', {
-      method: 'POST',
-      body: payload
+    const { email, password, name, grade } = payload
+    
+    // Đăng ký user với Supabase Auth
+    const { data: authData, error: authError } = await supabase.auth.signUp({
+      email: email.toLowerCase(),
+      password,
+      options: {
+        data: {
+          name: name || null,
+          grade: grade || null,
+          role: 'student'
+        }
+      }
     })
-    handleAuthSuccess(data)
-    return data.user
+
+    if (authError) {
+      throw new Error(authError.message || 'Đăng ký thất bại')
+    }
+
+    if (authData.user) {
+      // Nếu có session (email confirmation tắt), tự động đăng nhập
+      if (authData.session) {
+        const mappedUser = mapSupabaseUser(authData.user)
+        setUser(mappedUser)
+        setSession(authData.session)
+        return mappedUser
+      } else {
+        // Nếu không có session (cần xác nhận email), chỉ thông báo
+        throw new Error('Vui lòng kiểm tra email để xác nhận tài khoản trước khi đăng nhập')
+      }
+    }
+
+    throw new Error('Đăng ký thất bại')
   }
 
-  const logout = () => {
-    localStorage.removeItem(STORAGE_KEY)
+  const logout = async () => {
+    const { error } = await supabase.auth.signOut()
+    if (error) {
+      console.error('Logout error:', error)
+    }
     setUser(null)
-    setToken(null)
+    setSession(null)
   }
 
   const value = useMemo(() => ({
     user,
-    token,
+    token: session?.access_token || null, // Supabase access token để tương thích với code hiện tại
     loading,
     login,
     register,
     logout,
-    isAuthenticated: Boolean(user && token)
-  }), [user, token, loading])
+    isAuthenticated: Boolean(user && session)
+  }), [user, session, loading])
 
   return (
     <AuthContext.Provider value={value}>

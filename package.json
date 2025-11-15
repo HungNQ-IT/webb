@@ -13,10 +13,11 @@
     "server:start": "npm run start --prefix server"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.81.1",
+    "katex": "^0.16.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.20.0",
-    "katex": "^0.16.10"
+    "react-router-dom": "^6.20.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.43",
@@ -28,4 +29,3 @@
     "vite": "^5.0.8"
   }
 }
-
