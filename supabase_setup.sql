@@ -37,17 +37,14 @@ TO authenticated
 USING (auth.uid() = user_id);
 
 -- Policy 3: Admin có thể xem tất cả submissions
--- Thay email admin của bạn vào đây
+-- Kiểm tra role từ user_metadata thay vì query auth.users
 CREATE POLICY "Admins can view all submissions"
 ON submissions
 FOR SELECT
 TO authenticated
 USING (
-  EXISTS (
-    SELECT 1 FROM auth.users 
-    WHERE auth.users.id = auth.uid() 
-    AND auth.users.email = 'hungquocnguyen252@gmail.com'
-  )
+  (auth.jwt() ->> 'email')::text = 'hungquocnguyen252@gmail.com'
+  OR (auth.jwt() -> 'user_metadata' ->> 'role')::text = 'admin'
 );
 
 -- Bước 5: Bật realtime cho bảng submissions (nếu chưa có)

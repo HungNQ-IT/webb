@@ -114,6 +114,10 @@ export function AuthProvider({ children }) {
     }
     
     try {
+      // Kiểm tra email có phải admin không
+      const adminEmails = (import.meta.env.VITE_ADMIN_EMAILS || '').split(',').map(s => s.trim()).filter(Boolean)
+      const userRole = adminEmails.includes(email.toLowerCase()) ? 'admin' : 'student'
+      
       // Đăng ký user với Supabase Auth
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email: email.toLowerCase(),
@@ -122,7 +126,7 @@ export function AuthProvider({ children }) {
           data: {
             name: name || null,
             grade: grade || null,
-            role: 'student'
+            role: userRole  // Lưu role vào metadata
           }
         }
       })
