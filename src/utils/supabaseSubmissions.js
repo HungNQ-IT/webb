@@ -13,27 +13,46 @@ export async function saveSubmission(quizId, score, total, details) {
   // Lấy thông tin user từ metadata
   const userMeta = user.user_metadata || {}
   
+  const submissionData = {
+    user_id: user.id,
+    quiz_id: quizId,
+    score,
+    total,
+    details: details || null,
+    // Lưu thêm thông tin user để dễ query sau này
+    user_email: user.email,
+    user_name: userMeta.name || null,
+    user_grade: userMeta.grade || null
+  }
+
+  console.log('Inserting submission:', submissionData)
+
   const { data, error } = await supabase
     .from('submissions')
-    .insert({
-      user_id: user.id,
-      quiz_id: quizId,
-      score,
-      total,
-      details: details || null,
-      // Lưu thêm thông tin user để dễ query sau này
-      user_email: user.email,
-      user_name: userMeta.name || null,
-      user_grade: userMeta.grade || null
-    })
+    .insert(submissionData)
     .select()
     .single()
 
   if (error) {
     console.error('Error saving submission:', error)
-    throw new Error(error.message || 'Không thể lưu kết quả')
+    console.error('Error code:', error.code)
+    console.error('Error details:', error.details)
+    console.error('Error hint:', error.hint)
+    
+    // Thông báo lỗi chi tiết hơn
+    let errorMessage = error.message || 'Không thể lưu kết quả'
+    if (error.code === '42501') {
+      errorMessage = 'Không có quyền lưu submission. Vui lòng kiểm tra RLS policies.'
+    } else if (error.code === '42703') {
+      errorMessage = 'Cột không tồn tại. Vui lòng chạy script SUPABASE_ADD_USER_COLUMNS.sql'
+    } else if (error.message?.includes('column') && error.message?.includes('does not exist')) {
+      errorMessage = 'Bảng chưa có đủ cột. Vui lòng chạy script SUPABASE_ADD_USER_COLUMNS.sql trong Supabase SQL Editor'
+    }
+    
+    throw new Error(errorMessage)
   }
 
+  console.log('Submission saved successfully:', data)
   return data
 }
 

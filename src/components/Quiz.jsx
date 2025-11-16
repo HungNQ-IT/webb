@@ -99,11 +99,22 @@ function Quiz({ quizzes }) {
         }))
       }
 
+      console.log('Saving submission:', { quizId: quiz.id, score, total: autoGradedCount })
+      
       saveSubmission(quiz.id, score, autoGradedCount, details)
+        .then((data) => {
+          console.log('Submission saved successfully:', data)
+        })
         .catch(err => {
           console.error('Failed to save submission to Supabase:', err)
-          setSubmissionError('Không thể lưu kết quả lên máy chủ. Vui lòng thử lại sau.')
+          console.error('Error details:', {
+            message: err.message,
+            error: err
+          })
+          setSubmissionError(`Không thể lưu kết quả: ${err.message || 'Lỗi không xác định'}. Vui lòng mở Console (F12) để xem chi tiết.`)
         })
+    } else {
+      console.log('User not authenticated, skipping submission save')
     }
 
     // Navigate to result page
