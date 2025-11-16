@@ -586,6 +586,36 @@
       "choices": ["study", "studied", "would study", "would have studied"],
       "answer": 3,
       "explain": "Câu điều kiện loại 3 đảo ngữ: Had + S + past participle, S + would have + past participle."
+    },
+    {
+      "id": 14,
+      "subject": "Toán",
+      "grade": 12,
+      "title": "Chủ đề 8 - Bài 22: Phân loại thế giới sống",
+      "type": "tracnghiem",
+      "description": "Khoa Học Tự Nhiên 6",
+      "timeLimit": 30,
+      "questions": [
+        {
+          "q": "Trong hệ thống phân loại 5 giới sinh vật, vi khuẩn thuộc giới nào?",
+          "choices": ["Giới Khởi Sinh", "Giới Nguyên Sinh", "Giới Nấm", "Giới Động Vật"],
+          "answer": 1,
+          "explain": ""
+        }
+      ]
+    },
+    
+    {
+          "q": "Cho các đại diện: (1) Nấm sò; (2) Tảo lục đơn bào; (3) Vi khuẩn; (4) Rong. Trong các đại diện trên, có bao nhiêu đại diện thuộc giới Nguyên sinh?",
+          "choices": ["1", "2", "3", "4"],
+          "answer": 1,
+          "explain": ""
+    },
+    {
+      "q": "Trong các loài dưới đây, loài nào thuộc giới Khởi sinh?",
+          "choices": ["Trùng giày", "Trùng sốt rét", "Trùng kiết lị", "VI khuẩn lao"],
+          "answer": 1,
+          "explain": ""
     }
   ]
 }
