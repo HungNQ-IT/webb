@@ -20,6 +20,11 @@ CREATE INDEX IF NOT EXISTS idx_submissions_created_at ON submissions(created_at 
 -- Tạo RLS (Row Level Security) policies
 ALTER TABLE submissions ENABLE ROW LEVEL SECURITY;
 
+-- Xóa các policies cũ nếu đã tồn tại (để có thể chạy lại script)
+DROP POLICY IF EXISTS "Users can view own submissions" ON submissions;
+DROP POLICY IF EXISTS "Users can insert own submissions" ON submissions;
+DROP POLICY IF EXISTS "Admins can view all submissions" ON submissions;
+
 -- Policy: Users có thể xem submissions của chính họ
 CREATE POLICY "Users can view own submissions"
   ON submissions
@@ -49,6 +54,9 @@ CREATE POLICY "Admins can view all submissions"
       )
     )
   );
+
+-- Xóa function cũ nếu đã tồn tại (để có thể chạy lại script)
+DROP FUNCTION IF EXISTS get_submissions_with_users();
 
 -- Tạo function để lấy submissions với thông tin user (cho admin)
 CREATE OR REPLACE FUNCTION get_submissions_with_users()
