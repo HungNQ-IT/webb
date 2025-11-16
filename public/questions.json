@@ -615,6 +615,108 @@
       "choices": ["Trùng giày", "Trùng sốt rét", "Trùng kiết lị", "VI khuẩn lao"],
       "answer": 1,
       "explain": ""
+    },
+    {
+      "q": "Trong các loài dưới đây, loài nào không thuộc giới Thực vật?",
+      "choices": ["Tảo đa bào", "Dương xỉ", "Rêu", "Thông"],
+      "answer": 1,
+      "explain": ""
+    },
+    {
+      "q": "Loại rừng nào dưới đây có hệ thực vật phong phú nhất?",
+      "choices": ["Rừng lá kim phương Bắc", "Rừng mưa nhiệt đới", "Rừng lá rộng ôn đới", "Rừng ngập mặn ven biển"],
+      "answer": 1,
+      "explain": ""
+    },
+    {
+      "q": "Thế giới sống được phân thành các nhóm theo trình tự nào?",
+      "choices": ["Loài -> chi -> họ -> bộ -> lớp -> ngành -> giới", "Chi -> họ -> bộ -> lớp -> ngành -> giới -> loài", "TLoài -> chi -> bộ -> họ -> lớp -> ngành -> giới", "Loài -> chi -> lớp -> họ -> bộ -> ngành -> giới"],
+      "answer": 1,
+      "explain": ""
+    },
+    {
+      "q": "Đặc điểm nào dưới đây không phải của giới động vật?",
+      "choices": ["Đa bào", "Dị dưỡng", "Nhân sơ", "Có khả năng di chuyển"],
+      "answer": 1,
+      "explain": ""
+    },
+    {
+      "q": "Việc phân loại thế giới sống có ý nghĩa gì đối với chúng ta?\n(1) Gọi đúng tên sinh vật.\n(2) Đưa sinh vật vào đúng nhóm phân loại.\n(3) Thấy được vai trò của sinh vật trong tự nhiên và thực tiễn.\n(4) Nhận ra sự đa dạng của sinh giới.",
+      "choices": ["(1), (3), (2)", "(2), (3), (4)", "(1), (2), (4)", "(1), (3), (4)"],
+      "answer": 1,
+      "explain": ""
+    },
+    {
+      "q": "Cấu tạo tế bào nhân thực, cơ thể đa bào, có khả năng quang hợp là đặc điểm của sinh vật thuộc giơi nào sau đây?",
+      "choices": ["Khởi sinh", "Nguyên sinh", "Nấm", "Thực vật"],
+      "answer": 1,
+      "explain": ""
+    },
+    {
+      "q": "Sinh vật nào dưới đây có kiểu dinh dưỡng là tự dưỡng?",
+      "choices": ["Trùng giày", "Con cò", "Chuột bạch", "Cây đào"],
+      "answer": 1,
+      "explain": ""
+    },
+    {
+      "q": "Bậc phân loại cao nhất trong thế giới sống là?",
+      "choices": ["Bộ", "Giới", "Chi", "Loài"],
+      "answer": 1,
+      "explain": ""
+    },
+    {
+      "q": "Trong nguyên tắc phân loại sinh vật không bao gồm bậc phân loại nào dưới đây?",
+      "choices": ["Ngành", "Loài", "Bộ", "Vực"],
+      "answer": 1,
+      "explain": ""
+    },
+    {
+      "q": "Nấm hương có tên khoa học là Lentinula edodes. Hãy chỉ ra tên loài và tên chi của nấm hương?",
+      "choices": ["Tên loài: Lentinula - Tên chi: edodes.", "Tên loài: edodes - Tên chi: Lentinula", "Cả 3 đáp án đều sai", "Tên loài: Lentinula edodes - Tên chi: không có."],
+      "answer": 1,
+      "explain": ""
+    },
+    {
+      "q": "Bậc phân loại thấp nhất trong thế giới sống là?",
+      "choices": ["Chi", "Giới", "Bộ", "Loài"],
+      "answer": 1,
+      "explain": ""
+    },
+    {
+      "q": "Thế giới sống được chia làm bao nhiêu giới?",
+      "choices": ["4", "3", "1", "5"],
+      "answer": 1,
+      "explain": ""
+    },
+    {
+      "q": "Ai là người đã phân loại thế giới sống thành 5 giới?",
+      "choices": ["Carl Linnaeus", "Robert Hooke", " Fahrenheit", "Whittaker"],
+      "answer": 1,
+      "explain": ""
+    },
+    {
+      "q": "Phân biệt 5 giới sinh vật dựa vào những tiêu chí nào:",
+      "choices": ["Đặc điểm tế bào ( tế bào nhân sơ hay nhân thực).", "Mức độ tổ chức cơ thể (cơ thể đơn bào hay đa bào)", "Môi trường sống (dưới nước hay trên cạn,...).", "Tất cả các đáp án trên đều đúng."],
+      "answer": 1,
+      "explain": ""
+    },
+    {
+      "q": "Đặc điểm giới Thực vật là:",
+      "choices": ["Gồm những sinh vật có tế bào nhân thực, cơ thể đa bào, có khả năng quang hợp, môi trường sống đa dạng, không thể di chuyển được.", "Gồm những sinh vật có tế bào nhân sơ, cơ thể đa bào, có khả năng quang hợp, môi trường sống đa dạng, không thể di chuyển được", "Gồm những sinh vật có tế bào nhân thực, cơ thể đơn bào, có khả năng quang hợp, môi trường sống đa dạng, không thể di chuyển được.", "Gồm những sinh vật có tế bào nhân thực, cơ thể đa bào, không có khả năng quang hợp, môi trường sống đa dạng, không thể di chuyển được."],
+      "answer": 1,
+      "explain": ""
+    },
+    {
+      "q": "Đặc điểm của giới Nguyên sinh là:",
+      "choices": ["Gồm những sinh vật có tế bào nhân thực, cơ thể đa bào, có khẳ năng quang hợp, môi trường sống đa dạng, không thể di chuyển được", "Gồm những sinh vật có tế bào nhân thực, cơ thể đơn bào hoặc đa bào, sống dị dưỡng", "Gồm những sinh vật có tế bào nhân thực, cơ thể đa bào, có khẳ năng quang hợp, môi trường sống đa dạng, không thể di chuyển được.", "Gồm những sinh vật có cấu tạo tế bào nhân sơ, sống tự dưỡng hoặc dị dưỡng, môi trường sống đa dạng."],
+      "answer": 1,
+      "explain": ""
+    },
+    {
+      "q": "Đặc điểm của giới Động vật là:",
+      "choices": ["Gồm những sinh vật có tế bào nhân thực, cơ thể đa bào, có khẳ năng quang hợp, môi trường sống đa dạng, không thể di chuyển được.", "Gồm những sinh vật có tế bào nhân thực, cơ thể đơn bào hoặc đa bào, sống dị dưỡng", "Gồm những sinh vật có cấu tạo tế bào  nhân thực, cơ thể đa bào, dị dưỡng, có khả năng di chuyển, môi trường sống rất đa dạng.", "Gồm những sinh vật có cấu tạo tế bào nhân sơ, sống tự dưỡng hoặc dị dưỡng, môi rường sống đa dạng."],
+      "answer": 1,
+      "explain": ""
     }
   ]
 }
