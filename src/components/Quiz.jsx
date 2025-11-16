@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { saveQuizResult } from '../utils/storage'
 import RichContent from './RichContent'
 import { useAuth } from '../context/AuthContext'
-import { apiRequest } from '../utils/api/client'
+import { saveSubmission } from '../utils/supabaseSubmissions'
 
 function Quiz({ quizzes }) {
   const { id } = useParams()
@@ -86,23 +86,24 @@ function Quiz({ quizzes }) {
 
     setSubmissionError('')
 
+    // Lưu vào Supabase nếu user đã đăng nhập
     if (isAuthenticated) {
-      apiRequest('/submissions', {
-        method: 'POST',
-        token,
-        body: {
-          quizId: quiz.id,
-          score,
-          total: autoGradedCount,
-          details: {
-            questionCount: quiz.questions.length,
-            answers: [...answers]
-          }
-        }
-      }).catch(err => {
-        console.error('Failed to sync submission:', err)
-        setSubmissionError('Không thể đồng bộ kết quả lên máy chủ. Vui lòng thử lại sau.')
-      })
+      const details = {
+        questionCount: quiz.questions.length,
+        answers: [...answers],
+        questions: quiz.questions.map((q, idx) => ({
+          question: q.q,
+          userAnswer: answers[idx],
+          correctAnswer: q.answer,
+          isCorrect: answers[idx] === q.answer
+        }))
+      }
+
+      saveSubmission(quiz.id, score, autoGradedCount, details)
+        .catch(err => {
+          console.error('Failed to save submission to Supabase:', err)
+          setSubmissionError('Không thể lưu kết quả lên máy chủ. Vui lòng thử lại sau.')
+        })
     }
 
     // Navigate to result page
