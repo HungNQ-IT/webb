@@ -9,56 +9,129 @@ function AdminDashboard({ quizzes = [] }) {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [selectedSubmission, setSelectedSubmission] = useState(null)
+  const [newSubmissionNotification, setNewSubmissionNotification] = useState(null)
 
   useEffect(() => {
     let isMounted = true
     setLoading(true)
     
-    // Lấy tất cả submissions từ Supabase
+    // Hàm format submissions
+    const formatSubmissions = (data) => {
+      return data.map((sub) => {
+        const userInfo = sub.details?.userInfo || {}
+        return {
+          id: sub.id,
+          quizId: sub.quiz_id,
+          score: sub.score,
+          total: sub.total,
+          details: sub.details,
+          createdAt: sub.created_at,
+          user: {
+            id: sub.user_id,
+            email: userInfo.email || 'N/A',
+            name: userInfo.name || '—',
+            grade: userInfo.grade || '—'
+          }
+        }
+      })
+    }
+    
+    // Lấy tất cả submissions từ Supabase lần đầu
     supabase
       .from('submissions')
       .select('*')
       .order('created_at', { ascending: false })
-      .then(async ({ data, error: fetchError }) => {
+      .then(({ data, error: fetchError }) => {
         if (!isMounted) return
         
         if (fetchError) {
           console.error('Error fetching submissions:', fetchError)
           setError(fetchError.message || 'Không thể tải dữ liệu')
+          setLoading(false)
           return
         }
 
-        // Lấy thông tin user từ details (đã lưu khi submit)
-        const formattedSubmissions = data.map((sub) => {
-          const userInfo = sub.details?.userInfo || {}
-          return {
-            id: sub.id,
-            quizId: sub.quiz_id,
-            score: sub.score,
-            total: sub.total,
-            details: sub.details,
-            createdAt: sub.created_at,
-            user: {
-              id: sub.user_id,
-              email: userInfo.email || 'N/A',
-              name: userInfo.name || '—',
-              grade: userInfo.grade || '—'
-            }
-          }
-        })
-        
+        const formattedSubmissions = formatSubmissions(data || [])
         setSubmissions(formattedSubmissions)
+        setLoading(false)
       })
       .catch((err) => {
         if (!isMounted) return
         console.error('Error:', err)
         setError(err.message || 'Không thể tải dữ liệu')
-      })
-      .finally(() => {
-        if (isMounted) setLoading(false)
+        setLoading(false)
       })
     
-    return () => { isMounted = false }
+    // Subscribe để nhận updates real-time
+    const channel = supabase
+      .channel('submissions-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: '*', // INSERT, UPDATE, DELETE
+          schema: 'public',
+          table: 'submissions'
+        },
+        (payload) => {
+          console.log('Real-time update:', payload)
+          
+          if (!isMounted) return
+          
+          // Nếu là INSERT, thêm submission mới vào đầu danh sách
+          if (payload.eventType === 'INSERT') {
+            const newSub = payload.new
+            const userInfo = newSub.details?.userInfo || {}
+            const formattedSub = {
+              id: newSub.id,
+              quizId: newSub.quiz_id,
+              score: newSub.score,
+              total: newSub.total,
+              details: newSub.details,
+              createdAt: newSub.created_at,
+              user: {
+                id: newSub.user_id,
+                email: userInfo.email || 'N/A',
+                name: userInfo.name || '—',
+                grade: userInfo.grade || '—'
+              }
+            }
+            setSubmissions(prev => [formattedSub, ...prev])
+            
+            // Hiển thị thông báo
+            setNewSubmissionNotification({
+              name: userInfo.name || userInfo.email || 'Học sinh',
+              quizId: newSub.quiz_id
+            })
+            
+            // Tự động ẩn thông báo sau 5 giây
+            setTimeout(() => {
+              setNewSubmissionNotification(null)
+            }, 5000)
+          } 
+          // Nếu là UPDATE hoặc DELETE, reload toàn bộ
+          else {
+            supabase
+              .from('submissions')
+              .select('*')
+              .order('created_at', { ascending: false })
+              .then(({ data, error }) => {
+                if (!isMounted) return
+                if (error) {
+                  console.error('Error reloading submissions:', error)
+                  return
+                }
+                const formattedSubmissions = formatSubmissions(data || [])
+                setSubmissions(formattedSubmissions)
+              })
+          }
+        }
+      )
+      .subscribe()
+    
+    return () => {
+      isMounted = false
+      supabase.removeChannel(channel)
+    }
   }, [])
 
   return (
@@ -66,10 +139,31 @@ function AdminDashboard({ quizzes = [] }) {
       <div className="container mx-auto px-4">
         <div className="bg-white rounded-2xl shadow-lg p-6">
           <h1 className="text-3xl font-bold text-gray-800 mb-6">Kết quả làm bài của học sinh</h1>
+          
+          {/* Thông báo submission mới */}
+          {newSubmissionNotification && (
+            <div className="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg flex items-center justify-between animate-pulse">
+              <span>
+                ✨ <strong>{newSubmissionNotification.name}</strong> vừa nộp bài #{newSubmissionNotification.quizId}
+              </span>
+              <button
+                onClick={() => setNewSubmissionNotification(null)}
+                className="text-green-700 hover:text-green-900"
+              >
+                ×
+              </button>
+            </div>
+          )}
+          
           {loading && <p className="text-gray-600">Đang tải dữ liệu...</p>}
           {error && (
             <div className="mb-4 bg-red-100 text-red-700 px-4 py-2 rounded-lg">
               {error}
+              {error.includes('relation "submissions" does not exist') && (
+                <div className="mt-2 text-sm">
+                  ⚠️ Bảng submissions chưa được tạo. Vui lòng chạy SQL script trong file <code className="bg-red-200 px-1 rounded">supabase_setup.sql</code>
+                </div>
+              )}
             </div>
           )}
           {!loading && !error && submissions.length === 0 && (
