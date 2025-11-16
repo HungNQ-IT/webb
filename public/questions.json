@@ -590,7 +590,7 @@
     {
       "id": 14,
       "subject": "Toán",
-      "grade": 12,
+      "grade": 6,
       "title": "Chủ đề 8 - Bài 22: Phân loại thế giới sống",
       "type": "tracnghiem",
       "description": "Khoa Học Tự Nhiên 6",
@@ -604,7 +604,6 @@
         }
       ]
     },
-    
     {
           "q": "Cho các đại diện: (1) Nấm sò; (2) Tảo lục đơn bào; (3) Vi khuẩn; (4) Rong. Trong các đại diện trên, có bao nhiêu đại diện thuộc giới Nguyên sinh?",
           "choices": ["1", "2", "3", "4"],
