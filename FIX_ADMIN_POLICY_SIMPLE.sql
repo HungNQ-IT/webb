@@ -6,7 +6,7 @@ DROP POLICY IF EXISTS "Admins can view all submissions" ON submissions;
 DROP POLICY IF EXISTS "Users can view own submissions" ON submissions;
 DROP POLICY IF EXISTS "All authenticated users can view submissions" ON submissions;
 
--- Policy: Chỉ cho phép email admin cụ thể xem tất cả submissions
+-- Policy: Chỉ cho phép email admin hoặc role = 'admin' xem tất cả submissions
 CREATE POLICY "Admin can view all submissions"
   ON submissions
   FOR SELECT
@@ -15,7 +15,12 @@ CREATE POLICY "Admin can view all submissions"
     EXISTS (
       SELECT 1 FROM auth.users
       WHERE auth.users.id = auth.uid()
-      AND LOWER(auth.users.email) = LOWER('hungquocnguyen252@gmail.com')
+      AND (
+        -- Kiểm tra email admin
+        LOWER(auth.users.email) = LOWER('hungquocnguyen252@gmail.com')
+        -- Hoặc kiểm tra role = 'admin' trong metadata
+        OR (auth.users.raw_user_meta_data->>'role')::TEXT = 'admin'
+      )
     )
   );
 
