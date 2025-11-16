@@ -3,13 +3,43 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { saveQuizResult } from '../utils/storage'
 import RichContent from './RichContent'
 import { useAuth } from '../context/AuthContext'
-import { saveSubmission } from '../utils/supabaseSubmissions'
+import { supabase } from '../utils/supabase'
+
+// Hàm lưu submission vào Supabase
+async function saveSubmissionToSupabase(quizId, score, total, answers, questionCount) {
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error('User not authenticated')
+
+  // Lưu thông tin user vào details để admin có thể xem
+  const { data, error } = await supabase
+    .from('submissions')
+    .insert({
+      user_id: user.id,
+      quiz_id: quizId,
+      score: score,
+      total: total,
+      details: {
+        questionCount: questionCount,
+        answers: answers,
+        userInfo: {
+          email: user.email,
+          name: user.user_metadata?.name || null,
+          grade: user.user_metadata?.grade || null
+        }
+      }
+    })
+    .select()
+    .single()
+
+  if (error) throw error
+  return data
+}
 
 function Quiz({ quizzes }) {
   const { id } = useParams()
   const navigate = useNavigate()
   const quiz = quizzes.find(q => q.id === parseInt(id))
-  const { isAuthenticated, token } = useAuth()
+  const { isAuthenticated } = useAuth()
   
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [answers, setAnswers] = useState([])
@@ -86,35 +116,13 @@ function Quiz({ quizzes }) {
 
     setSubmissionError('')
 
-    // Lưu vào Supabase nếu user đã đăng nhập
     if (isAuthenticated) {
-      const details = {
-        questionCount: quiz.questions.length,
-        answers: [...answers],
-        questions: quiz.questions.map((q, idx) => ({
-          question: q.q,
-          userAnswer: answers[idx],
-          correctAnswer: q.answer,
-          isCorrect: answers[idx] === q.answer
-        }))
-      }
-
-      console.log('Saving submission:', { quizId: quiz.id, score, total: autoGradedCount })
-      
-      saveSubmission(quiz.id, score, autoGradedCount, details)
-        .then((data) => {
-          console.log('Submission saved successfully:', data)
-        })
+      // Lưu vào Supabase
+      saveSubmissionToSupabase(quiz.id, score, autoGradedCount, answers, quiz.questions.length)
         .catch(err => {
-          console.error('Failed to save submission to Supabase:', err)
-          console.error('Error details:', {
-            message: err.message,
-            error: err
-          })
-          setSubmissionError(`Không thể lưu kết quả: ${err.message || 'Lỗi không xác định'}. Vui lòng mở Console (F12) để xem chi tiết.`)
+          console.error('Failed to sync submission:', err)
+          setSubmissionError('Không thể đồng bộ kết quả lên máy chủ. Vui lòng thử lại sau.')
         })
-    } else {
-      console.log('User not authenticated, skipping submission save')
     }
 
     // Navigate to result page

@@ -1,41 +1,65 @@
 import { useEffect, useState } from 'react'
-import React from 'react'
+import { supabase } from '../utils/supabase'
 import { useAuth } from '../context/AuthContext'
-import { getAllSubmissions } from '../utils/supabaseSubmissions'
+import RichContent from './RichContent'
 
-function AdminDashboard() {
-  const { user, isAuthenticated } = useAuth()
+function AdminDashboard({ quizzes = [] }) {
+  const { user } = useAuth()
   const [submissions, setSubmissions] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [selectedSubmission, setSelectedSubmission] = useState(null)
 
   useEffect(() => {
-    if (!isAuthenticated || user?.role !== 'admin') {
-      setLoading(false)
-      return
-    }
-
     let isMounted = true
     setLoading(true)
-    setError('')
-
-    getAllSubmissions()
-      .then((data) => {
+    
+    // Lấy tất cả submissions từ Supabase
+    supabase
+      .from('submissions')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .then(async ({ data, error: fetchError }) => {
         if (!isMounted) return
-        setSubmissions(data)
+        
+        if (fetchError) {
+          console.error('Error fetching submissions:', fetchError)
+          setError(fetchError.message || 'Không thể tải dữ liệu')
+          return
+        }
+
+        // Lấy thông tin user từ details (đã lưu khi submit)
+        const formattedSubmissions = data.map((sub) => {
+          const userInfo = sub.details?.userInfo || {}
+          return {
+            id: sub.id,
+            quizId: sub.quiz_id,
+            score: sub.score,
+            total: sub.total,
+            details: sub.details,
+            createdAt: sub.created_at,
+            user: {
+              id: sub.user_id,
+              email: userInfo.email || 'N/A',
+              name: userInfo.name || '—',
+              grade: userInfo.grade || '—'
+            }
+          }
+        })
+        
+        setSubmissions(formattedSubmissions)
       })
       .catch((err) => {
         if (!isMounted) return
-        console.error('Error loading submissions:', err)
+        console.error('Error:', err)
         setError(err.message || 'Không thể tải dữ liệu')
       })
       .finally(() => {
         if (isMounted) setLoading(false)
       })
-
+    
     return () => { isMounted = false }
-  }, [isAuthenticated, user])
+  }, [])
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-indigo-100 py-12">
@@ -67,67 +91,34 @@ function AdminDashboard() {
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   {submissions.map((submission) => (
-                    <React.Fragment key={submission.id}>
-                      <tr className="hover:bg-indigo-50 cursor-pointer" onClick={() => setSelectedSubmission(selectedSubmission?.id === submission.id ? null : submission)}>
-                        <td className="px-4 py-3 text-sm text-gray-800">
-                          {submission.user?.name || '—'}
-                        </td>
-                        <td className="px-4 py-3 text-sm text-gray-600">
-                          {submission.user?.email}
-                        </td>
-                        <td className="px-4 py-3 text-sm text-gray-600">
-                          {submission.user?.grade || '—'}
-                        </td>
-                        <td className="px-4 py-3 text-sm text-gray-600">
-                          #{submission.quizId}
-                        </td>
-                        <td className="px-4 py-3 text-sm font-semibold text-gray-800">
-                          {submission.score}/{submission.total}
-                        </td>
-                        <td className="px-4 py-3 text-sm text-gray-500">
-                          {new Date(submission.createdAt).toLocaleString()}
-                        </td>
-                        <td className="px-4 py-3 text-sm">
-                          <button className="text-indigo-600 hover:text-indigo-800 font-medium">
-                            {selectedSubmission?.id === submission.id ? 'Ẩn' : 'Xem'}
-                          </button>
-                        </td>
-                      </tr>
-                      {selectedSubmission?.id === submission.id && submission.details && (
-                        <tr>
-                          <td colSpan="7" className="px-4 py-6 bg-gray-50">
-                            <div className="space-y-4">
-                              <h3 className="font-semibold text-gray-800 mb-4">Chi tiết câu trả lời:</h3>
-                              {submission.details.questions && submission.details.questions.map((q, idx) => (
-                                <div key={idx} className={`p-4 rounded-lg border-2 ${q.isCorrect ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'}`}>
-                                  <div className="flex items-start justify-between mb-2">
-                                    <span className="font-semibold text-gray-800">Câu {idx + 1}:</span>
-                                    <span className={`px-2 py-1 rounded text-xs font-semibold ${q.isCorrect ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800'}`}>
-                                      {q.isCorrect ? '✓ Đúng' : '✗ Sai'}
-                                    </span>
-                                  </div>
-                                  <div className="text-sm text-gray-700 mb-2" dangerouslySetInnerHTML={{ __html: q.question }} />
-                                  <div className="space-y-1 text-sm">
-                                    <div>
-                                      <span className="font-medium">Câu trả lời của học sinh: </span>
-                                      <span className={q.isCorrect ? 'text-green-700' : 'text-red-700'}>
-                                        {q.userAnswer !== null && q.userAnswer !== undefined ? String.fromCharCode(65 + q.userAnswer) : 'Chưa trả lời'}
-                                      </span>
-                                    </div>
-                                    <div>
-                                      <span className="font-medium">Đáp án đúng: </span>
-                                      <span className="text-green-700">
-                                        {q.correctAnswer !== null && q.correctAnswer !== undefined ? String.fromCharCode(65 + q.correctAnswer) : 'N/A'}
-                                      </span>
-                                    </div>
-                                  </div>
-                                </div>
-                              ))}
-                            </div>
-                          </td>
-                        </tr>
-                      )}
-                    </React.Fragment>
+                    <tr key={submission.id} className="hover:bg-indigo-50">
+                      <td className="px-4 py-3 text-sm text-gray-800">
+                        {submission.user?.name || '—'}
+                      </td>
+                      <td className="px-4 py-3 text-sm text-gray-600">
+                        {submission.user?.email}
+                      </td>
+                      <td className="px-4 py-3 text-sm text-gray-600">
+                        {submission.user?.grade || '—'}
+                      </td>
+                      <td className="px-4 py-3 text-sm text-gray-600">
+                        #{submission.quizId}
+                      </td>
+                      <td className="px-4 py-3 text-sm font-semibold text-gray-800">
+                        {submission.score}/{submission.total}
+                      </td>
+                      <td className="px-4 py-3 text-sm text-gray-500">
+                        {new Date(submission.createdAt).toLocaleString()}
+                      </td>
+                      <td className="px-4 py-3 text-sm">
+                        <button
+                          onClick={() => setSelectedSubmission(submission)}
+                          className="text-indigo-600 hover:text-indigo-800 font-medium"
+                        >
+                          Xem chi tiết
+                        </button>
+                      </td>
+                    </tr>
                   ))}
                 </tbody>
               </table>
@@ -135,6 +126,148 @@ function AdminDashboard() {
           )}
         </div>
       </div>
+
+      {/* Modal hiển thị chi tiết */}
+      {selectedSubmission && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="sticky top-0 bg-white border-b px-6 py-4 flex justify-between items-center">
+              <h2 className="text-2xl font-bold text-gray-800">
+                Chi tiết bài làm - {selectedSubmission.user?.name || selectedSubmission.user?.email}
+              </h2>
+              <button
+                onClick={() => setSelectedSubmission(null)}
+                className="text-gray-500 hover:text-gray-700 text-2xl"
+              >
+                ×
+              </button>
+            </div>
+            <div className="p-6">
+              <div className="mb-6 grid grid-cols-2 gap-4">
+                <div>
+                  <p className="text-sm text-gray-500">Email</p>
+                  <p className="font-semibold">{selectedSubmission.user?.email}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Lớp</p>
+                  <p className="font-semibold">{selectedSubmission.user?.grade || '—'}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Bài tập</p>
+                  <p className="font-semibold">#{selectedSubmission.quizId}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Điểm số</p>
+                  <p className="font-semibold text-indigo-600">
+                    {selectedSubmission.score}/{selectedSubmission.total}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Thời gian nộp</p>
+                  <p className="font-semibold">
+                    {new Date(selectedSubmission.createdAt).toLocaleString()}
+                  </p>
+                </div>
+              </div>
+
+              {/* Hiển thị câu hỏi và câu trả lời */}
+              {(() => {
+                const quiz = quizzes.find(q => q.id === selectedSubmission.quizId)
+                const details = selectedSubmission.details || {}
+                const answers = details.answers || []
+                
+                if (!quiz) {
+                  return <p className="text-gray-500">Không tìm thấy thông tin bài tập.</p>
+                }
+
+                return (
+                  <div className="space-y-4">
+                    <h3 className="text-xl font-bold text-gray-800 mb-4">Câu trả lời chi tiết</h3>
+                    {quiz.questions.map((question, index) => {
+                      const userAnswer = answers[index]
+                      const hasChoices = Array.isArray(question.choices) && question.choices.length > 0
+                      const isCorrect = hasChoices && userAnswer === question.answer
+                      
+                      return (
+                        <div key={index} className="border rounded-lg p-4">
+                          <div className="flex items-start justify-between mb-2">
+                            <span className="font-semibold text-gray-700">Câu {index + 1}</span>
+                            {hasChoices && (
+                              <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+                                isCorrect 
+                                  ? 'bg-green-100 text-green-800' 
+                                  : 'bg-red-100 text-red-800'
+                              }`}>
+                                {isCorrect ? '✓ Đúng' : '✗ Sai'}
+                              </span>
+                            )}
+                          </div>
+                          <div className="mb-3">
+                            <RichContent 
+                              text={question.q} 
+                              eq={question.eq} 
+                              image={question.image} 
+                            />
+                          </div>
+                          {hasChoices ? (
+                            <div className="space-y-2">
+                              <p className="text-sm font-medium text-gray-600">Các lựa chọn:</p>
+                              {question.choices.map((choice, choiceIndex) => {
+                                const choiceObj = typeof choice === 'string' ? { text: choice } : choice
+                                const isUserAnswer = userAnswer === choiceIndex
+                                const isCorrectAnswer = choiceIndex === question.answer
+                                
+                                return (
+                                  <div
+                                    key={choiceIndex}
+                                    className={`p-2 rounded border-2 ${
+                                      isCorrectAnswer
+                                        ? 'border-green-500 bg-green-50'
+                                        : isUserAnswer
+                                        ? 'border-red-500 bg-red-50'
+                                        : 'border-gray-200'
+                                    }`}
+                                  >
+                                    <span className="font-medium mr-2">
+                                      {String.fromCharCode(65 + choiceIndex)}.
+                                    </span>
+                                    <RichContent 
+                                      text={choiceObj.text} 
+                                      eq={choiceObj.eq} 
+                                      image={choiceObj.image} 
+                                    />
+                                    {isCorrectAnswer && (
+                                      <span className="ml-2 text-green-600 font-semibold">(Đáp án đúng)</span>
+                                    )}
+                                    {isUserAnswer && !isCorrectAnswer && (
+                                      <span className="ml-2 text-red-600 font-semibold">(Bạn chọn)</span>
+                                    )}
+                                  </div>
+                                )
+                              })}
+                            </div>
+                          ) : (
+                            <div className="bg-amber-50 border border-amber-200 rounded p-3">
+                              <p className="text-sm text-amber-800">
+                                Đây là câu hỏi tự luận. Học sinh cần làm bài và nộp theo hướng dẫn của giáo viên.
+                              </p>
+                              {userAnswer !== null && userAnswer !== undefined && (
+                                <p className="mt-2 text-sm font-medium">
+                                  Học sinh đã chọn: {String.fromCharCode(65 + userAnswer)}
+                                </p>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      )
+                    })}
+                  </div>
+                )
+              })()}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

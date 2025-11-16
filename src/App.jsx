@@ -113,7 +113,7 @@ function App() {
                 path="/admin"
                 element={
                   <RequireAuth roles={['admin']}>
-                    <AdminDashboard />
+                    <AdminDashboard quizzes={quizzes} />
                   </RequireAuth>
                 }
               />
