@@ -9,6 +9,10 @@ CREATE TABLE IF NOT EXISTS submissions (
   score INTEGER NOT NULL,
   total INTEGER NOT NULL,
   details JSONB, -- Lưu câu trả lời và thông tin chi tiết
+  -- Lưu thêm thông tin user để dễ query (không cần join với auth.users)
+  user_email TEXT,
+  user_name TEXT,
+  user_grade TEXT,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 

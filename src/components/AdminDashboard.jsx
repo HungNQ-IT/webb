@@ -26,9 +26,9 @@ function AdminDashboard() {
         setSubmissions(data)
       })
       .catch((err) => {
-        if (!isMounted) {
-          setError(err.message || 'Không thể tải dữ liệu')
-        }
+        if (!isMounted) return
+        console.error('Error loading submissions:', err)
+        setError(err.message || 'Không thể tải dữ liệu')
       })
       .finally(() => {
         if (isMounted) setLoading(false)

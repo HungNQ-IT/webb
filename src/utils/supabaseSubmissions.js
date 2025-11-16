@@ -10,6 +10,9 @@ export async function saveSubmission(quizId, score, total, details) {
     throw new Error('User chưa đăng nhập')
   }
 
+  // Lấy thông tin user từ metadata
+  const userMeta = user.user_metadata || {}
+  
   const { data, error } = await supabase
     .from('submissions')
     .insert({
@@ -17,7 +20,11 @@ export async function saveSubmission(quizId, score, total, details) {
       quiz_id: quizId,
       score,
       total,
-      details: details || null
+      details: details || null,
+      // Lưu thêm thông tin user để dễ query sau này
+      user_email: user.email,
+      user_name: userMeta.name || null,
+      user_grade: userMeta.grade || null
     })
     .select()
     .single()
@@ -58,12 +65,17 @@ export async function getMySubmissions() {
  * Lấy tất cả submissions (chỉ dành cho admin)
  */
 export async function getAllSubmissions() {
-  // Gọi function trong Supabase để lấy submissions với thông tin user
+  // Query trực tiếp từ bảng submissions (đã có thông tin user trong bảng)
   const { data, error } = await supabase
-    .rpc('get_submissions_with_users')
+    .from('submissions')
+    .select('*')
+    .order('created_at', { ascending: false })
 
   if (error) {
     console.error('Error fetching all submissions:', error)
+    if (error.message.includes('permission') || error.message.includes('policy')) {
+      throw new Error('Bạn không có quyền xem submissions. Vui lòng kiểm tra quyền admin.')
+    }
     throw new Error(error.message || 'Không thể tải dữ liệu')
   }
 
@@ -77,9 +89,9 @@ export async function getAllSubmissions() {
     createdAt: item.created_at,
     user: {
       id: item.user_id,
-      email: item.user_email,
-      name: item.user_name,
-      grade: item.user_grade
+      email: item.user_email || '',
+      name: item.user_name || null,
+      grade: item.user_grade || null
     }
   }))
 }
