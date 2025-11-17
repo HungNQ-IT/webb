@@ -14,6 +14,7 @@ const Result = lazy(() => import('./components/Result'))
 const Login = lazy(() => import('./components/Login'))
 const Register = lazy(() => import('./components/Register'))
 const AdminDashboard = lazy(() => import('./components/AdminDashboard'))
+const Profile = lazy(() => import('./components/Profile'))
 
 function App() {
   const [quizzes, setQuizzes] = useState([])
@@ -109,6 +110,14 @@ function App() {
               <Route path="/subject/:subject" element={<QuizList quizzes={quizzes} />} />
               <Route path="/quiz/:id" element={<Quiz quizzes={quizzes} />} />
               <Route path="/result/:id" element={<Result quizzes={quizzes} />} />
+              <Route
+                path="/profile"
+                element={
+                  <RequireAuth>
+                    <Profile />
+                  </RequireAuth>
+                }
+              />
               <Route
                 path="/admin"
                 element={
