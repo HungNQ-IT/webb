@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Home from './components/Home'
 import RequireAuth from './components/RequireAuth'
 import Layout from './components/Layout'
+import Loading from './components/Loading'
 import { AuthProvider } from './context/AuthContext'
 
 // Lazy load các components để tải nhanh hơn
@@ -73,34 +74,17 @@ function App() {
   }, [])
 
   if (loading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Đang tải dữ liệu...</p>
-        </div>
-      </div>
-    )
+    return <Loading message="Đang tải dữ liệu..." />
   }
 
   // Get base path from Vite config (for GitHub Pages)
   const basePath = import.meta.env.BASE_URL || '/'
   const basename = basePath.endsWith('/') ? basePath.slice(0, -1) : basePath || '/'
 
-  // Loading component cho lazy routes
-  const LoadingSpinner = () => (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
-      <div className="text-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto"></div>
-        <p className="mt-4 text-gray-600">Đang tải...</p>
-      </div>
-    </div>
-  )
-
   return (
     <BrowserRouter basename={basename}>
       <AuthProvider>
-        <Suspense fallback={<LoadingSpinner />}>
+        <Suspense fallback={<Loading />}>
           <Routes>
             <Route element={<Layout />}>
               <Route index element={<Home />} />
