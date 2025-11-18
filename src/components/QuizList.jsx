@@ -124,8 +124,8 @@ function QuizList({ quizzes, ieltsTests = [] }) {
             // Layout cũ cho các môn học thông thường
             <div className="grid md:grid-cols-2 gap-6">
               {subjectQuizzes.map((quiz, index) => {
-              // Màu và badge dựa theo difficulty trong JSON
-              const difficultyConfig = {
+                // Màu và badge dựa theo difficulty trong JSON
+                const difficultyConfig = {
                 easy: {
                   color: 'from-green-500 to-green-600',
                   badge: { text: 'Dễ', color: 'bg-green-500' }
@@ -137,28 +137,28 @@ function QuizList({ quizzes, ieltsTests = [] }) {
                 hard: {
                   color: 'from-red-500 to-red-600',
                   badge: { text: 'Khó', color: 'bg-red-500' }
+                  }
                 }
-              }
-              
-              // Nếu không có difficulty, dùng màu mặc định theo thứ tự
-              const defaultColors = [
+                
+                // Nếu không có difficulty, dùng màu mặc định theo thứ tự
+                const defaultColors = [
                 'from-orange-500 to-orange-600',
                 'from-green-500 to-green-600',
                 'from-blue-500 to-blue-600',
-                'from-purple-500 to-purple-600'
-              ]
-              
-              const config = quiz.difficulty 
-                ? difficultyConfig[quiz.difficulty] 
-                : { 
-                    color: defaultColors[index % defaultColors.length],
-                    badge: null
-                  }
-              
-              const colorClass = config.color
-              const badge = config.badge
-              
-              return (
+                  'from-purple-500 to-purple-600'
+                ]
+                
+                const config = quiz.difficulty 
+                  ? difficultyConfig[quiz.difficulty] 
+                  : { 
+                      color: defaultColors[index % defaultColors.length],
+                      badge: null
+                    }
+                
+                const colorClass = config.color
+                const badge = config.badge
+                
+                return (
                 <div
                   key={quiz.id}
                   className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-all"
@@ -206,7 +206,7 @@ function QuizList({ quizzes, ieltsTests = [] }) {
                     </Link>
                   </div>
                 </div>
-              )
+                )
               })}
             </div>
           )}
