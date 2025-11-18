@@ -87,9 +87,11 @@ function QuizList({ quizzes }) {
                       <h2 className="text-xl font-bold flex-1">
                         {quiz.title}
                       </h2>
-                      <span className={`${badge.color} text-white text-xs font-semibold px-3 py-1 rounded-full`}>
-                        {badge.text}
-                      </span>
+                      {badge && (
+                        <span className={`${badge.color} text-white text-xs font-semibold px-3 py-1 rounded-full`}>
+                          {badge.text}
+                        </span>
+                      )}
                     </div>
                     <p className="text-white/90 text-sm">
                       {quiz.description || 'Kiểm tra kiến thức về phương trình bậc hai và công thức nghiệm'}
