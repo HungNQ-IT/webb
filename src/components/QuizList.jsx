@@ -50,8 +50,59 @@ function QuizList({ quizzes }) {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
-            {subjectQuizzes.map((quiz, index) => {
+          {/* Layout khác nhau cho IELTS/Ngoại ngữ vs các môn khác */}
+          {decodedCategory ? (
+            // Layout mới cho IELTS và Ngoại ngữ (có category)
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {subjectQuizzes.map((quiz) => {
+                const sections = quiz.sections || 3
+                
+                return (
+                  <div
+                    key={quiz.id}
+                    className="bg-white rounded-xl shadow-sm border border-gray-200 p-5 hover:shadow-md transition-all"
+                  >
+                    <div className="mb-4">
+                      <div className="flex items-start gap-2 mb-3">
+                        <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                          <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/>
+                          </svg>
+                        </div>
+                        <h3 className="font-bold text-gray-900 text-base leading-tight">
+                          {quiz.title}
+                        </h3>
+                      </div>
+                      
+                      <div className="space-y-2 text-sm text-gray-600 mb-3">
+                        {quiz.timeLimit && (
+                          <div className="flex items-center gap-1.5">
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <span>{quiz.timeLimit} phút</span>
+                          </div>
+                        )}
+                        <div className="text-gray-700">
+                          {sections} phần thi | {quiz.questions.length} câu hỏi
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <Link
+                      to={`/quiz/${quiz.id}`}
+                      className="block w-full text-center bg-white border-2 border-blue-600 text-blue-600 px-4 py-2.5 rounded-lg font-medium hover:bg-blue-50 transition-all"
+                    >
+                      Làm bài
+                    </Link>
+                  </div>
+                )
+              })}
+            </div>
+          ) : (
+            // Layout cũ cho các môn học thông thường
+            <div className="grid md:grid-cols-2 gap-6">
+              {subjectQuizzes.map((quiz, index) => {
               // Màu và badge dựa theo difficulty trong JSON
               const difficultyConfig = {
                 easy: {
@@ -135,8 +186,9 @@ function QuizList({ quizzes }) {
                   </div>
                 </div>
               )
-            })}
-          </div>
+              })}
+            </div>
+          )}
 
           {subjectQuizzes.length === 0 && (
             <div className="bg-white rounded-2xl p-12 text-center border border-gray-200">
