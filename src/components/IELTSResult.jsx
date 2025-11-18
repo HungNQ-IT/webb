@@ -80,8 +80,8 @@ function IELTSResult() {
                       Question {qIndex + 1}: {question.type}
                     </div>
 
-                    {/* Table Completion Results */}
-                    {question.type === 'table-completion' && (
+                    {/* Table Completion & Note Completion Results */}
+                    {(question.type === 'table-completion' || question.type === 'note-completion') && (
                       <div className="space-y-2">
                         {question.answers.map((correctAnswer, aIndex) => {
                           const key = `${passage.id}-${qIndex}-${aIndex}`

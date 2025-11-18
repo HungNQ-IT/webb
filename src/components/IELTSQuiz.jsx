@@ -49,8 +49,8 @@ function IELTSQuiz({ ieltsTests }) {
 
     test.passages.forEach((passage) => {
       passage.questions.forEach((question, qIndex) => {
-        if (question.type === 'table-completion') {
-          // Đếm số ô trống trong bảng
+        if (question.type === 'table-completion' || question.type === 'note-completion') {
+          // Đếm số ô trống trong bảng hoặc notes
           question.answers.forEach((answer, aIndex) => {
             totalQuestions++
             const key = `${passage.id}-${qIndex}-${aIndex}`
@@ -222,6 +222,53 @@ function IELTSQuiz({ ieltsTests }) {
                           ))}
                         </tbody>
                       </table>
+                    </div>
+                  </div>
+                )}
+
+                {/* Note Completion */}
+                {question.type === 'note-completion' && (
+                  <div>
+                    <div className="mb-4 text-sm text-gray-700">
+                      {question.instruction}
+                    </div>
+                    <div className="border border-gray-300 rounded-lg p-6 bg-gray-50">
+                      <h3 className="text-lg font-bold text-center mb-4">{question.notes.title}</h3>
+                      {question.notes.sections.map((section, sIndex) => (
+                        <div key={sIndex} className="mb-6 last:mb-0">
+                          <h4 className="font-semibold text-sm mb-3">{section.heading}</h4>
+                          <ul className="space-y-2 ml-4">
+                            {section.items.map((item, iIndex) => {
+                              // Tìm vị trí số trong item (ví dụ: "1______")
+                              const match = item.match(/(\d+)______/)
+                              if (match) {
+                                const questionNum = parseInt(match[1])
+                                const parts = item.split(/\d+______/)
+                                return (
+                                  <li key={iIndex} className="text-sm flex items-center gap-2">
+                                    <span>•</span>
+                                    <span>{parts[0]}</span>
+                                    <input
+                                      type="text"
+                                      value={answers[`${passage.id}-${qIndex}-${questionNum - 1}`] || ''}
+                                      onChange={(e) => handleAnswerChange(passage.id, qIndex, questionNum - 1, e.target.value)}
+                                      disabled={isSubmitted}
+                                      className="px-2 py-1 border border-gray-300 rounded focus:border-blue-500 focus:outline-none disabled:bg-gray-100 w-32"
+                                      placeholder={`Answer ${questionNum}`}
+                                    />
+                                    <span>{parts[1]}</span>
+                                  </li>
+                                )
+                              }
+                              return (
+                                <li key={iIndex} className="text-sm">
+                                  <span>• {item}</span>
+                                </li>
+                              )
+                            })}
+                          </ul>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 )}
