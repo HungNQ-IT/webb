@@ -10,11 +10,11 @@ function Home() {
             <p className="text-blue-100 mb-4">Hãy chọn môn học và bắt đầu hành trình chinh phục tri thức của bạn!</p>
             <div className="flex items-center justify-center gap-8 mt-6">
               <div className="text-center">
-                <div className="text-3xl font-bold">5</div>
+                <div className="text-3xl font-bold">20</div>
                 <div className="text-sm text-blue-100">Bài tập</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold">4</div>
+                <div className="text-3xl font-bold">6</div>
                 <div className="text-sm text-blue-100">Môn học</div>
               </div>
               <div className="text-center">
@@ -94,6 +94,37 @@ function Home() {
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-2">Tiếng Anh</h3>
               <p className="text-gray-600 text-sm">Nâng cao kỹ năng tiếng Anh</p>
+            </Link>
+
+            <Link
+              to="/subject/IELTS"
+              className="group bg-white rounded-2xl p-6 shadow-sm border border-gray-200 hover:shadow-lg transition-all"
+            >
+              <div className="bg-gradient-to-br from-red-500 to-red-600 rounded-2xl p-6 mb-4">
+                <div className="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mx-auto transition-transform group-hover:scale-110">
+                  <svg className="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                  </svg>
+                </div>
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">IELTS</h3>
+              <p className="text-gray-600 text-sm">Luyện thi IELTS 4 kỹ năng</p>
+            </Link>
+
+            <Link
+              to="/subject/Ngoại ngữ"
+              className="group bg-white rounded-2xl p-6 shadow-sm border border-gray-200 hover:shadow-lg transition-all"
+            >
+              <div className="bg-gradient-to-br from-pink-500 to-pink-600 rounded-2xl p-6 mb-4">
+                <div className="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mx-auto transition-transform group-hover:scale-110">
+                  <svg className="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/>
+                  </svg>
+                </div>
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Ngoại ngữ</h3>
+              <p className="text-gray-600 text-sm">Học tiếng Nhật và các ngôn ngữ khác</p>
             </Link>
           </div>
         </div>

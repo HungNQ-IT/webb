@@ -722,6 +722,206 @@
       "explain": ""
     }
   ]
+},
+{
+  "id": 15,
+  "subject": "IELTS",
+  "category": "Reading",
+  "title": "IELTS Reading Practice Test 1",
+  "difficulty": "medium",
+  "type": "tracnghiem",
+  "description": "Practice test for IELTS Reading section",
+  "timeLimit": 60,
+  "questions": [
+    {
+      "q": "According to the passage, what is the main cause of climate change?",
+      "choices": ["Natural disasters", "Human activities", "Solar radiation", "Ocean currents"],
+      "answer": 1,
+      "explain": "The passage clearly states that human activities, particularly the burning of fossil fuels, are the primary cause of climate change."
+    },
+    {
+      "q": "The word 'mitigate' in paragraph 3 is closest in meaning to:",
+      "choices": ["Worsen", "Reduce", "Ignore", "Accelerate"],
+      "answer": 1,
+      "explain": "In this context, 'mitigate' means to reduce or lessen the severity of something."
+    },
+    {
+      "q": "Which of the following is NOT mentioned as a renewable energy source?",
+      "choices": ["Solar power", "Wind energy", "Nuclear power", "Hydroelectric power"],
+      "answer": 2,
+      "explain": "Nuclear power is not considered a renewable energy source in the passage."
+    }
+  ]
+},
+{
+  "id": 16,
+  "subject": "IELTS",
+  "category": "Listening",
+  "title": "IELTS Listening Practice Test 1",
+  "difficulty": "medium",
+  "type": "tracnghiem",
+  "description": "Practice test for IELTS Listening section",
+  "timeLimit": 30,
+  "questions": [
+    {
+      "q": "What time does the library close on weekdays?",
+      "choices": ["5:00 PM", "6:00 PM", "7:00 PM", "8:00 PM"],
+      "answer": 2,
+      "explain": "The speaker mentions that the library closes at 7:00 PM on weekdays."
+    },
+    {
+      "q": "How much does a student membership cost per year?",
+      "choices": ["$20", "$30", "$40", "$50"],
+      "answer": 1,
+      "explain": "Student membership is $30 per year as stated in the conversation."
+    }
+  ]
+},
+{
+  "id": 17,
+  "subject": "IELTS",
+  "category": "Writing",
+  "title": "IELTS Writing Task 2 Practice",
+  "difficulty": "hard",
+  "type": "tracnghiem",
+  "description": "Practice for IELTS Writing Task 2",
+  "timeLimit": 40,
+  "questions": [
+    {
+      "q": "Which of the following is the best thesis statement for an essay about online education?",
+      "choices": [
+        "Online education is popular.",
+        "Online education offers flexibility and accessibility, making it an effective alternative to traditional classroom learning.",
+        "Many people study online.",
+        "Online education uses the internet."
+      ],
+      "answer": 1,
+      "explain": "A good thesis statement should be clear, specific, and present a main argument."
+    },
+    {
+      "q": "What is the recommended structure for IELTS Writing Task 2?",
+      "choices": [
+        "Introduction only",
+        "Introduction - Body - Conclusion",
+        "Body paragraphs only",
+        "Conclusion only"
+      ],
+      "answer": 1,
+      "explain": "The standard essay structure includes an introduction, body paragraphs, and a conclusion."
+    }
+  ]
+},
+{
+  "id": 18,
+  "subject": "IELTS",
+  "category": "Speaking",
+  "title": "IELTS Speaking Part 1 Practice",
+  "difficulty": "easy",
+  "type": "tracnghiem",
+  "description": "Practice for IELTS Speaking Part 1",
+  "timeLimit": 15,
+  "questions": [
+    {
+      "q": "Which response is most appropriate for 'Do you like reading books?'",
+      "choices": [
+        "Yes.",
+        "Yes, I do. I enjoy reading novels in my free time, especially mystery and science fiction.",
+        "Books are good.",
+        "Sometimes."
+      ],
+      "answer": 1,
+      "explain": "A good IELTS Speaking response should be extended and provide specific details."
+    },
+    {
+      "q": "What should you do if you don't understand a question in IELTS Speaking?",
+      "choices": [
+        "Stay silent",
+        "Guess the answer",
+        "Politely ask the examiner to repeat or clarify",
+        "Change the topic"
+      ],
+      "answer": 2,
+      "explain": "It's perfectly acceptable to ask for clarification in IELTS Speaking."
+    }
+  ]
+},
+{
+  "id": 19,
+  "subject": "Ngoại ngữ",
+  "category": "Tiếng Nhật",
+  "title": "Hiragana và Katakana cơ bản",
+  "difficulty": "easy",
+  "type": "tracnghiem",
+  "description": "Bài tập về bảng chữ cái Hiragana và Katakana",
+  "timeLimit": 20,
+  "questions": [
+    {
+      "q": "Chữ 'あ' trong Hiragana đọc là gì?",
+      "choices": ["a", "i", "u", "e"],
+      "answer": 0,
+      "explain": "'あ' đọc là 'a', là chữ cái đầu tiên trong bảng Hiragana."
+    },
+    {
+      "q": "Katakana được sử dụng chủ yếu để viết:",
+      "choices": ["Từ Hán Việt", "Từ ngoại lai", "Động từ", "Tính từ"],
+      "answer": 1,
+      "explain": "Katakana chủ yếu được dùng để viết các từ ngoại lai và tên riêng nước ngoài."
+    },
+    {
+      "q": "Chữ 'か' trong Hiragana đọc là gì?",
+      "choices": ["ka", "sa", "ta", "na"],
+      "answer": 0,
+      "explain": "'か' đọc là 'ka' trong bảng Hiragana."
+    },
+    {
+      "q": "'こんにちは' có nghĩa là gì?",
+      "choices": ["Xin chào", "Tạm biệt", "Cảm ơn", "Xin lỗi"],
+      "answer": 0,
+      "explain": "'こんにちは' (konnichiwa) có nghĩa là 'Xin chào' trong tiếng Nhật."
+    },
+    {
+      "q": "Chữ 'ありがとう' có nghĩa là gì?",
+      "choices": ["Xin lỗi", "Tạm biệt", "Cảm ơn", "Xin chào"],
+      "answer": 2,
+      "explain": "'ありがとう' (arigatou) có nghĩa là 'Cảm ơn' trong tiếng Nhật."
+    }
+  ]
+},
+{
+  "id": 20,
+  "subject": "Ngoại ngữ",
+  "category": "Tiếng Nhật",
+  "title": "Ngữ pháp tiếng Nhật N5",
+  "difficulty": "medium",
+  "type": "tracnghiem",
+  "description": "Bài tập ngữ pháp cơ bản trình độ N5",
+  "timeLimit": 25,
+  "questions": [
+    {
+      "q": "Điền trợ từ thích hợp: 私___学生です。(Tôi là học sinh)",
+      "choices": ["は", "が", "を", "に"],
+      "answer": 0,
+      "explain": "Trợ từ 'は' (wa) được dùng để chỉ chủ đề của câu."
+    },
+    {
+      "q": "Cách nói 'Tôi đi đến trường' trong tiếng Nhật là:",
+      "choices": ["学校に行きます", "学校を行きます", "学校が行きます", "学校で行きます"],
+      "answer": 0,
+      "explain": "Trợ từ 'に' được dùng để chỉ hướng đi, và '行きます' (ikimasu) có nghĩa là 'đi'."
+    },
+    {
+      "q": "Động từ 'たべます' (tabemasu) có nghĩa là gì?",
+      "choices": ["Uống", "Ăn", "Ngủ", "Đi"],
+      "answer": 1,
+      "explain": "'たべます' có nghĩa là 'ăn' trong tiếng Nhật."
+    },
+    {
+      "q": "Thì quá khứ của 'です' (desu) là gì?",
+      "choices": ["でした", "ですた", "だった", "でる"],
+      "answer": 0,
+      "explain": "'でした' (deshita) là dạng quá khứ lịch sự của 'です'."
+    }
+  ]
 }
 ]
 

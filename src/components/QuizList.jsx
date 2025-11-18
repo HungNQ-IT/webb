@@ -2,8 +2,9 @@ import { Link, useParams } from 'react-router-dom'
 import { useMemo } from 'react'
 
 function QuizList({ quizzes }) {
-  const { subject, grade } = useParams()
+  const { subject, grade, category } = useParams()
   const decodedSubject = decodeURIComponent(subject)
+  const decodedCategory = category ? decodeURIComponent(category) : null
 
   const subjectQuizzes = useMemo(() => {
     let filtered = quizzes.filter(q => q.subject === decodedSubject)
@@ -13,8 +14,13 @@ function QuizList({ quizzes }) {
       filtered = filtered.filter(q => q.grade === parseInt(grade))
     }
     
+    // Nếu có category, lọc theo category
+    if (decodedCategory) {
+      filtered = filtered.filter(q => q.category === decodedCategory)
+    }
+    
     return filtered
-  }, [quizzes, decodedSubject, grade])
+  }, [quizzes, decodedSubject, grade, decodedCategory])
 
   return (
     <div className="min-h-screen bg-gray-50 py-12">
@@ -34,10 +40,13 @@ function QuizList({ quizzes }) {
 
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-gray-900 mb-2">
-              {decodedSubject} {grade && `- Lớp ${grade}`}
+              {decodedSubject} {grade && `- Lớp ${grade}`} {decodedCategory && `- ${decodedCategory}`}
             </h1>
             <p className="text-gray-600">
-              Kiểm tra kiến thức về {decodedSubject.toLowerCase()} và công thức nghiệm
+              {decodedCategory 
+                ? `Luyện tập ${decodedCategory} - ${decodedSubject}`
+                : `Kiểm tra kiến thức về ${decodedSubject.toLowerCase()}`
+              }
             </p>
           </div>
 

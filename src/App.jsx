@@ -9,6 +9,7 @@ import { AuthProvider } from './context/AuthContext'
 // Lazy load các components để tải nhanh hơn
 const SubjectList = lazy(() => import('./components/SubjectList'))
 const GradeList = lazy(() => import('./components/GradeList'))
+const CategoryList = lazy(() => import('./components/CategoryList'))
 const QuizList = lazy(() => import('./components/QuizList'))
 const Quiz = lazy(() => import('./components/Quiz'))
 const Result = lazy(() => import('./components/Result'))
@@ -91,7 +92,8 @@ function App() {
               <Route path="/subjects" element={<SubjectList quizzes={quizzes} />} />
               <Route path="/subject/:subject/grades" element={<GradeList />} />
               <Route path="/subject/:subject/grade/:grade" element={<QuizList quizzes={quizzes} />} />
-              <Route path="/subject/:subject" element={<QuizList quizzes={quizzes} />} />
+              <Route path="/subject/:subject/category/:category" element={<QuizList quizzes={quizzes} />} />
+              <Route path="/subject/:subject" element={<CategoryList quizzes={quizzes} />} />
               <Route path="/quiz/:id" element={<Quiz quizzes={quizzes} />} />
               <Route path="/result/:id" element={<Result quizzes={quizzes} />} />
               <Route
