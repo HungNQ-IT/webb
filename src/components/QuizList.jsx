@@ -1,7 +1,7 @@
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import { useMemo, useState } from 'react'
 
-function QuizList({ quizzes }) {
+function QuizList({ quizzes, ieltsTests = [] }) {
   const { subject, grade, category } = useParams()
   const navigate = useNavigate()
   const decodedSubject = decodeURIComponent(subject)
@@ -10,20 +10,28 @@ function QuizList({ quizzes }) {
   const [showModal, setShowModal] = useState(false)
 
   const subjectQuizzes = useMemo(() => {
+    // Nếu là IELTS hoặc Ngoại ngữ, lấy từ ieltsTests
+    if (decodedSubject === 'IELTS' || decodedSubject === 'Ngoại ngữ') {
+      let filtered = ieltsTests.filter(q => q.subject === decodedSubject)
+      if (decodedCategory) {
+        filtered = filtered.filter(q => q.category === decodedCategory)
+      }
+      return filtered
+    }
+    
+    // Các môn khác lấy từ quizzes
     let filtered = quizzes.filter(q => q.subject === decodedSubject)
     
-    // Nếu có grade (lớp), lọc theo grade
     if (grade) {
       filtered = filtered.filter(q => q.grade === parseInt(grade))
     }
     
-    // Nếu có category, lọc theo category
     if (decodedCategory) {
       filtered = filtered.filter(q => q.category === decodedCategory)
     }
     
     return filtered
-  }, [quizzes, decodedSubject, grade, decodedCategory])
+  }, [quizzes, ieltsTests, decodedSubject, grade, decodedCategory])
 
   return (
     <div className="min-h-screen bg-gray-50 py-12">
@@ -302,7 +310,11 @@ function QuizList({ quizzes }) {
                   <button
                     onClick={() => {
                       setShowModal(false)
-                      navigate(`/quiz/${selectedQuiz.id}`)
+                      // Nếu là IELTS, dùng route /ielts/:id
+                      const route = selectedQuiz.type === 'ielts-reading' 
+                        ? `/ielts/${selectedQuiz.id}`
+                        : `/quiz/${selectedQuiz.id}`
+                      navigate(route)
                     }}
                     className="w-full bg-blue-600 text-white py-4 rounded-xl font-semibold text-lg hover:bg-blue-700 transition-all"
                   >

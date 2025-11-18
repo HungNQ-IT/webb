@@ -1,0 +1,104 @@
+[
+  {
+    "id": 101,
+    "subject": "IELTS",
+    "category": "Reading",
+    "title": "IELTS Practice Set 3 Reading test 1",
+    "difficulty": "medium",
+    "type": "ielts-reading",
+    "description": "Practice test for IELTS Reading section",
+    "timeLimit": 60,
+    "sections": 3,
+    "passages": [
+      {
+        "id": 1,
+        "title": "Passage 1",
+        "text": "A disaster of Titanic proportions\n\nAt 11:39 p.m. on the evening of Sunday 14 April 1912, lookouts Frederick Fleet and Reginald Lee on the forward mast of the Titanic sighted an eerie, black mass coming into view directly in front of the ship. Fleet picked up the phone to the helm, waited for Sixth Officer Moody to answer, and yelled 'Iceberg, right ahead!' The greatest disaster in maritime history was about to be set in motion.\n\nThirty-seven seconds later, despite the efforts of officers in the bridge and engine room to steer around the iceberg, the Titanic struck a piece of submerged ice, bursting rivets in the ship's hull and flooding the first five watertight compartments. The ship's designer, Thomas Andrews, carried out a visual inspection of the ship's damage and informed Captain Smith at midnight that the ship would sink in less than two hours. By 12:30 a.m., the lifeboats were being filled with women and children, after Smith had given the command for them to be uncovered and swung out 15 minutes earlier. The first lifeboat was successfully lowered 15 minutes later, with only 28 of its 65 seats occupied. By 1:15 a.m., the waterline was beginning to reach the Titanic's name on the ship's bow, and over the next hour every lifeboat would be released as officers struggled to maintain order amongst the growing panic on board.",
+        "questions": [
+          {
+            "type": "table-completion",
+            "instruction": "Complete the table below. Choose NO MORE THAN TWO WORDS from the text for each answer. Write your answers in boxes 1-6 on your answer sheet.",
+            "table": {
+              "headers": ["Time", "Person/s", "Position", "Action"],
+              "rows": [
+                ["11:39 p.m.", "1______", "2______", "Reported sighting of iceberg"],
+                ["3______", "Andrews", "Ship's designer", "Reported how long the Titanic could stay afloat"],
+                ["12:15 a.m.", "Smith", "Captain", "Ordered 4______ to be released"],
+                ["2:17 a.m.", "Bride & Philips", "5______", "Relayed final 6______"]
+              ]
+            },
+            "answers": [
+              "Fleet and Lee",
+              "Lookouts",
+              "Midnight",
+              "lifeboats",
+              "Radio operators",
+              "distress call"
+            ]
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Passage 2",
+        "text": "The Impact of Climate Change on Marine Ecosystems\n\nClimate change is having profound effects on marine ecosystems worldwide. Rising ocean temperatures, ocean acidification, and changing ocean currents are disrupting marine food webs and threatening the survival of many species. Coral reefs, often called the 'rainforests of the sea,' are particularly vulnerable to these changes.\n\nScientists have observed that coral bleaching events, caused by elevated water temperatures, have become more frequent and severe in recent decades. When corals are stressed by warm water, they expel the symbiotic algae living in their tissues, causing them to turn white. Without these algae, corals lose their primary food source and are more susceptible to disease.\n\nThe consequences extend beyond coral reefs. Many fish species depend on coral reefs for food and shelter, and their decline affects fishing communities and coastal economies. Additionally, ocean acidification, caused by the absorption of excess carbon dioxide from the atmosphere, makes it difficult for shellfish and other marine organisms to build their shells and skeletons.",
+        "questions": [
+          {
+            "type": "true-false-not-given",
+            "instruction": "Do the following statements agree with the information in the passage? Write TRUE if the statement agrees with the information, FALSE if the statement contradicts the information, or NOT GIVEN if there is no information on this.",
+            "items": [
+              {
+                "question": "Coral reefs are more resistant to climate change than other marine ecosystems.",
+                "answer": "FALSE"
+              },
+              {
+                "question": "Coral bleaching occurs when water temperatures drop significantly.",
+                "answer": "FALSE"
+              },
+              {
+                "question": "The decline of coral reefs affects local fishing industries.",
+                "answer": "TRUE"
+              },
+              {
+                "question": "Scientists have developed a cure for coral bleaching.",
+                "answer": "NOT GIVEN"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Passage 3",
+        "text": "The Evolution of Urban Planning\n\nUrban planning has evolved significantly over the past century, reflecting changing priorities and understanding of how cities function. In the early 20th century, urban planning focused primarily on infrastructure development and zoning regulations. Planners sought to separate residential, commercial, and industrial areas to reduce conflicts and improve living conditions.\n\nHowever, this approach led to urban sprawl and increased dependence on automobiles. By the 1960s, urban planners began to recognize the importance of creating walkable, mixed-use neighborhoods that promote social interaction and reduce environmental impact. The concept of 'smart growth' emerged, emphasizing compact development, public transportation, and the preservation of open spaces.\n\nToday, sustainable urban planning incorporates principles of environmental stewardship, social equity, and economic vitality. Planners use advanced technologies and data analytics to design cities that are resilient to climate change and provide high quality of life for all residents. Green infrastructure, such as parks and green roofs, is integrated into urban design to manage stormwater, reduce heat island effects, and improve air quality.",
+        "questions": [
+          {
+            "type": "matching-headings",
+            "instruction": "Choose the correct heading for each paragraph from the list of headings below.",
+            "headings": [
+              "The limitations of early urban planning",
+              "Modern approaches to sustainable cities",
+              "The origins of urban planning",
+              "Transportation challenges in cities",
+              "The role of technology in urban design"
+            ],
+            "paragraphs": [
+              {
+                "paragraph": "A",
+                "correctHeading": 2
+              },
+              {
+                "paragraph": "B",
+                "correctHeading": 0
+              },
+              {
+                "paragraph": "C",
+                "correctHeading": 1
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -12,6 +12,7 @@ const GradeList = lazy(() => import('./components/GradeList'))
 const CategoryList = lazy(() => import('./components/CategoryList'))
 const QuizList = lazy(() => import('./components/QuizList'))
 const Quiz = lazy(() => import('./components/Quiz'))
+const IELTSQuiz = lazy(() => import('./components/IELTSQuiz'))
 const Result = lazy(() => import('./components/Result'))
 const Login = lazy(() => import('./components/Login'))
 const Register = lazy(() => import('./components/Register'))
@@ -20,58 +21,90 @@ const Profile = lazy(() => import('./components/Profile'))
 
 function App() {
   const [quizzes, setQuizzes] = useState([])
+  const [ieltsTests, setIeltsTests] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Load questions from JSON file với cache
     const baseUrl = import.meta.env.BASE_URL || '/'
-    const cacheKey = 'quizzes_cache'
     const cacheTime = 5 * 60 * 1000 // 5 phút
     
-    // Kiểm tra cache trước
-    const cached = localStorage.getItem(cacheKey)
-    if (cached) {
-      try {
-        const { data, timestamp } = JSON.parse(cached)
-        if (Date.now() - timestamp < cacheTime) {
-          setQuizzes(data)
-          setLoading(false)
-          return
+    // Load questions.json
+    const loadQuizzes = () => {
+      const cacheKey = 'quizzes_cache'
+      const cached = localStorage.getItem(cacheKey)
+      
+      if (cached) {
+        try {
+          const { data, timestamp } = JSON.parse(cached)
+          if (Date.now() - timestamp < cacheTime) {
+            setQuizzes(data)
+            return Promise.resolve()
+          }
+        } catch (e) {
+          // Cache lỗi, tiếp tục fetch
         }
-      } catch (e) {
-        // Cache lỗi, tiếp tục fetch
       }
+      
+      return fetch(`${baseUrl}questions.json`, { cache: 'default' })
+        .then(res => {
+          if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
+          return res.json()
+        })
+        .then(data => {
+          if (Array.isArray(data)) {
+            setQuizzes(data)
+            localStorage.setItem(cacheKey, JSON.stringify({ data, timestamp: Date.now() }))
+          } else {
+            console.error('Invalid data format:', data)
+            setQuizzes([])
+          }
+        })
+        .catch(err => {
+          console.error('Error loading questions:', err)
+          setQuizzes([])
+        })
     }
     
-    // Fetch mới
-    fetch(`${baseUrl}questions.json`, {
-      cache: 'default' // Cho phép browser cache
-    })
-      .then(res => {
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`)
+    // Load ielts.json
+    const loadIELTS = () => {
+      const cacheKey = 'ielts_cache'
+      const cached = localStorage.getItem(cacheKey)
+      
+      if (cached) {
+        try {
+          const { data, timestamp } = JSON.parse(cached)
+          if (Date.now() - timestamp < cacheTime) {
+            setIeltsTests(data)
+            return Promise.resolve()
+          }
+        } catch (e) {
+          // Cache lỗi, tiếp tục fetch
         }
-        return res.json()
-      })
-      .then(data => {
-        // Đảm bảo data là một mảng
-        if (Array.isArray(data)) {
-          setQuizzes(data)
-          // Lưu vào cache
-          localStorage.setItem(cacheKey, JSON.stringify({
-            data,
-            timestamp: Date.now()
-          }))
-        } else {
-          console.error('Invalid data format:', data)
-          setQuizzes([])
-        }
-        setLoading(false)
-      })
-      .catch(err => {
-        console.error('Error loading questions:', err)
-        setLoading(false)
-      })
+      }
+      
+      return fetch(`${baseUrl}ielts.json`, { cache: 'default' })
+        .then(res => {
+          if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
+          return res.json()
+        })
+        .then(data => {
+          if (Array.isArray(data)) {
+            setIeltsTests(data)
+            localStorage.setItem(cacheKey, JSON.stringify({ data, timestamp: Date.now() }))
+          } else {
+            console.error('Invalid IELTS data format:', data)
+            setIeltsTests([])
+          }
+        })
+        .catch(err => {
+          console.error('Error loading IELTS tests:', err)
+          setIeltsTests([])
+        })
+    }
+    
+    // Load cả 2 file
+    Promise.all([loadQuizzes(), loadIELTS()])
+      .finally(() => setLoading(false))
   }, [])
 
   if (loading) {
@@ -91,10 +124,11 @@ function App() {
               <Route index element={<Home />} />
               <Route path="/subjects" element={<SubjectList quizzes={quizzes} />} />
               <Route path="/subject/:subject/grades" element={<GradeList />} />
-              <Route path="/subject/:subject/grade/:grade" element={<QuizList quizzes={quizzes} />} />
-              <Route path="/subject/:subject/category/:category" element={<QuizList quizzes={quizzes} />} />
-              <Route path="/subject/:subject" element={<CategoryList quizzes={quizzes} />} />
+              <Route path="/subject/:subject/grade/:grade" element={<QuizList quizzes={quizzes} ieltsTests={ieltsTests} />} />
+              <Route path="/subject/:subject/category/:category" element={<QuizList quizzes={quizzes} ieltsTests={ieltsTests} />} />
+              <Route path="/subject/:subject" element={<CategoryList quizzes={quizzes} ieltsTests={ieltsTests} />} />
               <Route path="/quiz/:id" element={<Quiz quizzes={quizzes} />} />
+              <Route path="/ielts/:id" element={<IELTSQuiz ieltsTests={ieltsTests} />} />
               <Route path="/result/:id" element={<Result quizzes={quizzes} />} />
               <Route
                 path="/profile"

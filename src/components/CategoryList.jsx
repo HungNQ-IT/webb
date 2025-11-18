@@ -1,15 +1,20 @@
 import { Link, useParams } from 'react-router-dom'
 import { useMemo } from 'react'
 
-function CategoryList({ quizzes }) {
+function CategoryList({ quizzes, ieltsTests = [] }) {
   const { subject } = useParams()
   const decodedSubject = decodeURIComponent(subject)
 
   const categories = useMemo(() => {
-    const subjectQuizzes = quizzes.filter(q => q.subject === decodedSubject)
+    // Nếu là IELTS hoặc Ngoại ngữ, lấy từ ieltsTests
+    const allTests = decodedSubject === 'IELTS' || decodedSubject === 'Ngoại ngữ'
+      ? ieltsTests
+      : quizzes
+    
+    const subjectQuizzes = allTests.filter(q => q.subject === decodedSubject)
     const uniqueCategories = [...new Set(subjectQuizzes.map(q => q.category).filter(Boolean))]
     return uniqueCategories
-  }, [quizzes, decodedSubject])
+  }, [quizzes, ieltsTests, decodedSubject])
 
   const getCategoryConfig = (category) => {
     const configs = {
@@ -99,7 +104,10 @@ function CategoryList({ quizzes }) {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {categories.map((category) => {
               const config = getCategoryConfig(category)
-              const categoryQuizzes = quizzes.filter(
+              const allTests = decodedSubject === 'IELTS' || decodedSubject === 'Ngoại ngữ'
+                ? ieltsTests
+                : quizzes
+              const categoryQuizzes = allTests.filter(
                 q => q.subject === decodedSubject && q.category === category
               )
 
