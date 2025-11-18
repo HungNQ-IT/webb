@@ -202,8 +202,35 @@
             "items" : [
               {
                 "question": "One reason for high staff turnover in the hospitality industry is poor morale.",
-                "answer": "True"
+                "answer": "TRUE"
+              },
+              {
+                "question": "Research has shown that staff have a tendency to dislike their workplace,",
+                "answer":"NO"
+              },
+              {
+                "question": "An improvement in working conditions and job security makes staff satisfied with their jobs.",
+                "answer": "NO"
+              },
+              {
+                "question": "Staff should be allowed to choose when they take breaks during the working day.",
+                "answer": "NOT GIVEN"
               }
+            ]
+          },
+          {
+            "type": "summary-completion",
+            "instruction": "Write your answer in boxes 36-40 on your answer sheet.",
+            "summary": {
+              "title": "Fun at work",
+              "text": "Tews, Michel and Stafford carried out research on staff in an American chain of 36______. They discovered that activities designed for staff to have fun improved their 37______, and that management involvement led to lower staff 38______. They also found that the activities needed to fit with both the company's 39______ and the 40______ of the staff. A balance was required between a degree of freedom and maintaining work standards."
+            }, 
+            "answers": [
+              "restaurants",
+              "performance",
+              "turnover",
+              "goals",
+              "characteristics"
             ]
           }
         ]
