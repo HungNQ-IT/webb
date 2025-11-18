@@ -11,6 +11,7 @@ function IELTSQuiz({ ieltsTests }) {
   const [timeRemaining, setTimeRemaining] = useState(null)
   const [highlightedText, setHighlightedText] = useState('')
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [selectedQuestion, setSelectedQuestion] = useState(null)
 
   useEffect(() => {
     if (!test) return
@@ -212,7 +213,7 @@ function IELTSQuiz({ ieltsTests }) {
 
       {/* Main Content */}
       <div className="container mx-auto px-4 py-6">
-        <div className="grid lg:grid-cols-2 gap-6">
+        <div className="grid lg:grid-cols-[2fr,2fr,1.5fr] gap-4">
           {/* Left: Passage */}
           <div className="bg-white rounded-lg border border-gray-200 p-6 h-fit sticky top-24">
             <h2 className="text-xl font-bold text-gray-900 mb-4">{passage.title}</h2>
@@ -221,10 +222,31 @@ function IELTSQuiz({ ieltsTests }) {
             </div>
           </div>
 
-          {/* Right: Questions */}
+          {/* Middle: Questions */}
           <div className="space-y-6">
-            {passage.questions.map((question, qIndex) => (
-              <div key={qIndex} className="bg-white rounded-lg border border-gray-200 p-6">
+            {passage.questions.map((question, qIndex) => {
+              // Calculate question number for ID
+              let questionNum = 1
+              for (let i = 0; i < currentPassage; i++) {
+                test.passages[i].questions.forEach(q => {
+                  if (q.type === 'note-completion' || q.type === 'table-completion' || q.type === 'summary-completion') {
+                    questionNum += q.answers?.length || 0
+                  } else if (q.type === 'true-false-not-given') {
+                    questionNum += q.items?.length || 0
+                  } else if (q.type === 'matching-headings') {
+                    questionNum += q.paragraphs?.length || 0
+                  } else if (q.type === 'matching-information') {
+                    questionNum += q.items?.length || 0
+                  } else if (q.type === 'multiple-choice-two') {
+                    questionNum += 2
+                  } else if (q.type === 'matching-statements') {
+                    questionNum += q.statements?.length || 0
+                  }
+                })
+              }
+              
+              return (
+              <div key={qIndex} id={`question-${questionNum}`} className="bg-white rounded-lg border border-gray-200 p-6 scroll-mt-24">
                 {/* Table Completion */}
                 {question.type === 'table-completion' && (
                   <div>
@@ -504,16 +526,120 @@ function IELTSQuiz({ ieltsTests }) {
                   </div>
                 )}
               </div>
-            ))}
+              )
+            })}
 
             {/* Submit Button */}
             <div className="bg-white rounded-lg border border-gray-200 p-6">
               <button
                 onClick={handleSubmit}
-                className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all"
+                disabled={isSubmitted}
+                className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 NỘP BÀI
               </button>
+            </div>
+          </div>
+
+          {/* Right Sidebar: Question Navigator */}
+          <div className="hidden lg:block">
+            <div className="bg-white rounded-lg border border-gray-200 p-4 sticky top-24">
+
+
+              {test.passages.map((p, pIndex) => {
+                // Đếm số câu hỏi trong passage này
+                let questionCount = 0
+                let startQuestion = 1
+                
+                // Tính số câu bắt đầu của passage này
+                for (let i = 0; i < pIndex; i++) {
+                  test.passages[i].questions.forEach(q => {
+                    if (q.type === 'note-completion' || q.type === 'table-completion' || q.type === 'summary-completion') {
+                      questionCount += q.answers?.length || 0
+                    } else if (q.type === 'true-false-not-given') {
+                      questionCount += q.items?.length || 0
+                    } else if (q.type === 'matching-headings') {
+                      questionCount += q.paragraphs?.length || 0
+                    } else if (q.type === 'matching-information') {
+                      questionCount += q.items?.length || 0
+                    } else if (q.type === 'multiple-choice-two') {
+                      questionCount += 2
+                    } else if (q.type === 'matching-statements') {
+                      questionCount += q.statements?.length || 0
+                    }
+                  })
+                }
+                startQuestion = questionCount + 1
+                
+                // Đếm câu hỏi trong passage hiện tại
+                let currentPassageQuestions = []
+                p.questions.forEach(q => {
+                  if (q.type === 'note-completion' || q.type === 'table-completion' || q.type === 'summary-completion') {
+                    const count = q.answers?.length || 0
+                    for (let i = 0; i < count; i++) {
+                      currentPassageQuestions.push(questionCount + 1)
+                      questionCount++
+                    }
+                  } else if (q.type === 'true-false-not-given') {
+                    const count = q.items?.length || 0
+                    for (let i = 0; i < count; i++) {
+                      currentPassageQuestions.push(questionCount + 1)
+                      questionCount++
+                    }
+                  } else if (q.type === 'matching-headings') {
+                    const count = q.paragraphs?.length || 0
+                    for (let i = 0; i < count; i++) {
+                      currentPassageQuestions.push(questionCount + 1)
+                      questionCount++
+                    }
+                  } else if (q.type === 'matching-information') {
+                    const count = q.items?.length || 0
+                    for (let i = 0; i < count; i++) {
+                      currentPassageQuestions.push(questionCount + 1)
+                      questionCount++
+                    }
+                  } else if (q.type === 'multiple-choice-two') {
+                    currentPassageQuestions.push(questionCount + 1)
+                    currentPassageQuestions.push(questionCount + 2)
+                    questionCount += 2
+                  } else if (q.type === 'matching-statements') {
+                    const count = q.statements?.length || 0
+                    for (let i = 0; i < count; i++) {
+                      currentPassageQuestions.push(questionCount + 1)
+                      questionCount++
+                    }
+                  }
+                })
+
+                return (
+                  <div key={p.id} className="mb-6 last:mb-0">
+                    <h3 className="font-bold text-gray-900 mb-3">{p.title}</h3>
+                    <div className="grid grid-cols-5 gap-2">
+                      {currentPassageQuestions.map((qNum) => (
+                        <button
+                          key={qNum}
+                          onClick={() => {
+                            setCurrentPassage(pIndex)
+                            setSelectedQuestion(qNum)
+                            // Scroll to question
+                            const questionElement = document.getElementById(`question-${qNum}`)
+                            if (questionElement) {
+                              questionElement.scrollIntoView({ behavior: 'smooth', block: 'center' })
+                            }
+                          }}
+                          className={`w-10 h-10 border-2 rounded flex items-center justify-center text-sm font-medium transition-colors ${
+                            selectedQuestion === qNum
+                              ? 'border-blue-500 bg-blue-500 text-white'
+                              : 'border-gray-300 text-gray-700 hover:border-gray-400'
+                          }`}
+                        >
+                          {qNum}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )
+              })}
             </div>
           </div>
         </div>
