@@ -1,10 +1,13 @@
-import { Link, useParams } from 'react-router-dom'
-import { useMemo } from 'react'
+import { Link, useParams, useNavigate } from 'react-router-dom'
+import { useMemo, useState } from 'react'
 
 function QuizList({ quizzes }) {
   const { subject, grade, category } = useParams()
+  const navigate = useNavigate()
   const decodedSubject = decodeURIComponent(subject)
   const decodedCategory = category ? decodeURIComponent(category) : null
+  const [selectedQuiz, setSelectedQuiz] = useState(null)
+  const [showModal, setShowModal] = useState(false)
 
   const subjectQuizzes = useMemo(() => {
     let filtered = quizzes.filter(q => q.subject === decodedSubject)
@@ -89,12 +92,15 @@ function QuizList({ quizzes }) {
                       </div>
                     </div>
                     
-                    <Link
-                      to={`/quiz/${quiz.id}`}
+                    <button
+                      onClick={() => {
+                        setSelectedQuiz(quiz)
+                        setShowModal(true)
+                      }}
                       className="block w-full text-center bg-white border-2 border-blue-600 text-blue-600 px-4 py-2.5 rounded-lg font-medium hover:bg-blue-50 transition-all"
                     >
                       Làm bài
-                    </Link>
+                    </button>
                   </div>
                 )
               })}
@@ -198,6 +204,112 @@ function QuizList({ quizzes }) {
                 </svg>
               </div>
               <p className="text-gray-600">Chưa có bài tập nào cho môn học này.</p>
+            </div>
+          )}
+
+          {/* Modal chọn phần thi */}
+          {showModal && selectedQuiz && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+              <div className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                <div className="p-8">
+                  {/* Header */}
+                  <div className="flex items-start gap-4 mb-6">
+                    <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
+                      <svg className="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/>
+                      </svg>
+                    </div>
+                    <div className="flex-1">
+                      <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                        {selectedQuiz.title}
+                      </h2>
+                      <div className="flex items-center gap-4 text-gray-600">
+                        <div className="flex items-center gap-1.5">
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                          </svg>
+                          <span>{selectedQuiz.timeLimit} phút</span>
+                        </div>
+                        <span>
+                          {selectedQuiz.sections || 3} phần thi | {selectedQuiz.questions.length} câu hỏi
+                        </span>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => setShowModal(false)}
+                      className="text-gray-400 hover:text-gray-600"
+                    >
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12"/>
+                      </svg>
+                    </button>
+                  </div>
+
+                  {/* Chọn phần thi */}
+                  <div className="mb-6">
+                    <h3 className="text-sm font-semibold text-gray-700 mb-3">
+                      Chọn phần thi bạn muốn làm
+                    </h3>
+                    <div className="space-y-2">
+                      <label className="flex items-center gap-3 p-3 border-2 border-gray-200 rounded-lg hover:border-blue-300 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          defaultChecked
+                          className="w-5 h-5 text-blue-600 rounded"
+                        />
+                        <span className="text-gray-900">
+                          Passage 1 ({Math.ceil(selectedQuiz.questions.length / 3)} câu hỏi)
+                        </span>
+                      </label>
+                      <label className="flex items-center gap-3 p-3 border-2 border-gray-200 rounded-lg hover:border-blue-300 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          defaultChecked
+                          className="w-5 h-5 text-blue-600 rounded"
+                        />
+                        <span className="text-gray-900">
+                          Passage 2 ({Math.ceil(selectedQuiz.questions.length / 3)} câu hỏi)
+                        </span>
+                      </label>
+                      <label className="flex items-center gap-3 p-3 border-2 border-gray-200 rounded-lg hover:border-blue-300 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          defaultChecked
+                          className="w-5 h-5 text-blue-600 rounded"
+                        />
+                        <span className="text-gray-900">
+                          Passage 3 ({Math.ceil(selectedQuiz.questions.length / 3)} câu hỏi)
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+
+                  {/* Giới hạn thời gian */}
+                  <div className="mb-8">
+                    <h3 className="text-sm font-semibold text-gray-700 mb-3">
+                      Giới hạn thời gian (Để trống để làm bài không giới hạn)
+                    </h3>
+                    <select className="w-full p-3 border-2 border-gray-200 rounded-lg text-gray-600 focus:border-blue-500 focus:outline-none">
+                      <option value="">-- Chọn thời gian --</option>
+                      <option value="30">30 phút</option>
+                      <option value="45">45 phút</option>
+                      <option value="60">60 phút</option>
+                      <option value="90">90 phút</option>
+                    </select>
+                  </div>
+
+                  {/* Nút hành động */}
+                  <button
+                    onClick={() => {
+                      setShowModal(false)
+                      navigate(`/quiz/${selectedQuiz.id}`)
+                    }}
+                    className="w-full bg-blue-600 text-white py-4 rounded-xl font-semibold text-lg hover:bg-blue-700 transition-all"
+                  >
+                    LUYỆN TẬP
+                  </button>
+                </div>
+              </div>
             </div>
           )}
         </div>
