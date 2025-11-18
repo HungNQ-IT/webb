@@ -102,7 +102,7 @@ function QuizList({ quizzes, ieltsTests = [] }) {
                           </div>
                         )}
                         <div className="text-gray-700">
-                          {sections} phần thi | {quiz.questions.length} câu hỏi
+                          {sections} phần thi | {quiz.questions?.length || quiz.passages?.length || 0} câu hỏi
                         </div>
                       </div>
                     </div>
@@ -246,7 +246,7 @@ function QuizList({ quizzes, ieltsTests = [] }) {
                           <span>{selectedQuiz.timeLimit} phút</span>
                         </div>
                         <span>
-                          {selectedQuiz.sections || 3} phần thi | {selectedQuiz.questions.length} câu hỏi
+                          {selectedQuiz.sections || 3} phần thi | {selectedQuiz.questions?.length || selectedQuiz.passages?.length || 0} câu hỏi
                         </span>
                       </div>
                     </div>
@@ -273,7 +273,7 @@ function QuizList({ quizzes, ieltsTests = [] }) {
                           className="w-5 h-5 text-blue-600 rounded"
                         />
                         <span className="text-gray-900">
-                          Passage 1 ({Math.ceil(selectedQuiz.questions.length / 3)} câu hỏi)
+                          Passage 1 ({selectedQuiz.passages?.[0]?.questions?.length || Math.ceil((selectedQuiz.questions?.length || 0) / 3)} câu hỏi)
                         </span>
                       </label>
                       <label className="flex items-center gap-3 p-3 border-2 border-gray-200 rounded-lg hover:border-blue-300 cursor-pointer">
@@ -283,7 +283,7 @@ function QuizList({ quizzes, ieltsTests = [] }) {
                           className="w-5 h-5 text-blue-600 rounded"
                         />
                         <span className="text-gray-900">
-                          Passage 2 ({Math.ceil(selectedQuiz.questions.length / 3)} câu hỏi)
+                          Passage 2 ({selectedQuiz.passages?.[1]?.questions?.length || Math.ceil((selectedQuiz.questions?.length || 0) / 3)} câu hỏi)
                         </span>
                       </label>
                       <label className="flex items-center gap-3 p-3 border-2 border-gray-200 rounded-lg hover:border-blue-300 cursor-pointer">
@@ -293,7 +293,7 @@ function QuizList({ quizzes, ieltsTests = [] }) {
                           className="w-5 h-5 text-blue-600 rounded"
                         />
                         <span className="text-gray-900">
-                          Passage 3 ({Math.ceil(selectedQuiz.questions.length / 3)} câu hỏi)
+                          Passage 3 ({selectedQuiz.passages?.[2]?.questions?.length || Math.ceil((selectedQuiz.questions?.length || 0) / 3)} câu hỏi)
                         </span>
                       </label>
                     </div>
