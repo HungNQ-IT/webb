@@ -76,6 +76,41 @@ function IELTSQuiz({ ieltsTests }) {
               correctAnswers++
             }
           })
+        } else if (question.type === 'matching-information') {
+          question.items.forEach((item, iIndex) => {
+            totalQuestions++
+            const key = `${passage.id}-${qIndex}-${iIndex}`
+            if (answers[key]?.toUpperCase() === item.answer) {
+              correctAnswers++
+            }
+          })
+        } else if (question.type === 'multiple-choice-two') {
+          // Đếm số đáp án đúng được chọn
+          let correctSelected = 0
+          let incorrectSelected = 0
+          question.options.forEach((option, oIndex) => {
+            const key = `${passage.id}-${qIndex}-${oIndex}`
+            const isSelected = answers[key] === true
+            const isCorrect = question.correctAnswers.includes(oIndex)
+            
+            if (isSelected && isCorrect) {
+              correctSelected++
+            } else if (isSelected && !isCorrect) {
+              incorrectSelected++
+            }
+          })
+          totalQuestions += 2 // Câu hỏi này đáng 2 điểm
+          correctAnswers += correctSelected
+        } else if (question.type === 'summary-completion') {
+          question.answers.forEach((answer, aIndex) => {
+            totalQuestions++
+            const key = `${passage.id}-${qIndex}-${aIndex}`
+            const userAnswer = answers[key]?.trim().toLowerCase()
+            const correctAnswer = answer.toLowerCase()
+            if (userAnswer === correctAnswer) {
+              correctAnswers++
+            }
+          })
         }
       })
     })
@@ -269,6 +304,90 @@ function IELTSQuiz({ ieltsTests }) {
                           </ul>
                         </div>
                       ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Matching Information */}
+                {question.type === 'matching-information' && (
+                  <div>
+                    <div className="mb-4 text-sm text-gray-700">
+                      {question.instruction}
+                    </div>
+                    <div className="space-y-3">
+                      {question.items.map((item, iIndex) => (
+                        <div key={iIndex} className="border border-gray-200 rounded-lg p-4">
+                          <div className="mb-3 text-sm text-gray-900 font-medium">
+                            Question {iIndex + 14}: {item.question}
+                          </div>
+                          <input
+                            type="text"
+                            value={answers[`${passage.id}-${qIndex}-${iIndex}`] || ''}
+                            onChange={(e) => handleAnswerChange(passage.id, qIndex, iIndex, e.target.value.toUpperCase())}
+                            disabled={isSubmitted}
+                            maxLength={1}
+                            className="w-16 px-3 py-2 border border-gray-300 rounded focus:border-blue-500 focus:outline-none text-center uppercase disabled:bg-gray-100"
+                            placeholder="A-G"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Multiple Choice - Choose TWO */}
+                {question.type === 'multiple-choice-two' && (
+                  <div>
+                    <div className="mb-4 text-sm text-gray-700">
+                      {question.instruction}
+                    </div>
+                    <div className="space-y-2">
+                      {question.options.map((option, oIndex) => (
+                        <label key={oIndex} className="flex items-start gap-3 p-3 border-2 border-gray-200 rounded-lg hover:border-blue-300 cursor-pointer">
+                          <input
+                            type="checkbox"
+                            checked={answers[`${passage.id}-${qIndex}-${oIndex}`] === true}
+                            onChange={(e) => handleAnswerChange(passage.id, qIndex, oIndex, e.target.checked)}
+                            disabled={isSubmitted}
+                            className="w-5 h-5 text-blue-600 rounded mt-0.5"
+                          />
+                          <span className="text-sm flex-1">
+                            <span className="font-semibold">{String.fromCharCode(65 + oIndex)}</span> {option}
+                          </span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Summary Completion */}
+                {question.type === 'summary-completion' && (
+                  <div>
+                    <div className="mb-4 text-sm text-gray-700">
+                      {question.instruction}
+                    </div>
+                    <div className="border border-gray-300 rounded-lg p-6 bg-gray-50">
+                      <h3 className="text-lg font-bold text-center mb-4">{question.summary.title}</h3>
+                      <div className="text-sm leading-relaxed">
+                        {question.summary.text.split(/(\d+______)/).map((part, pIndex) => {
+                          const match = part.match(/(\d+)______/)
+                          if (match) {
+                            const questionNum = parseInt(match[1])
+                            return (
+                              <input
+                                key={pIndex}
+                                type="text"
+                                value={answers[`${passage.id}-${qIndex}-${questionNum - 23}`] || ''}
+                                onChange={(e) => handleAnswerChange(passage.id, qIndex, questionNum - 23, e.target.value)}
+                                disabled={isSubmitted}
+                                className="px-2 py-1 border border-gray-300 rounded focus:border-blue-500 focus:outline-none disabled:bg-gray-100 w-32 mx-1"
+                                placeholder={`Q${questionNum}`}
+                              />
+                            )
+                          }
+                          return <span key={pIndex}>{part}</span>
+                        })}
+                      </div>
                     </div>
                   </div>
                 )}
