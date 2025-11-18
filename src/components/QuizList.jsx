@@ -43,20 +43,39 @@ function QuizList({ quizzes }) {
 
           <div className="grid md:grid-cols-2 gap-6">
             {subjectQuizzes.map((quiz, index) => {
-              const colors = [
+              // Màu và badge dựa theo difficulty trong JSON
+              const difficultyConfig = {
+                easy: {
+                  color: 'from-green-500 to-green-600',
+                  badge: { text: 'Dễ', color: 'bg-green-500' }
+                },
+                medium: {
+                  color: 'from-orange-500 to-orange-600',
+                  badge: { text: 'Trung bình', color: 'bg-orange-500' }
+                },
+                hard: {
+                  color: 'from-red-500 to-red-600',
+                  badge: { text: 'Khó', color: 'bg-red-500' }
+                }
+              }
+              
+              // Nếu không có difficulty, dùng màu mặc định theo thứ tự
+              const defaultColors = [
                 'from-orange-500 to-orange-600',
                 'from-green-500 to-green-600',
                 'from-blue-500 to-blue-600',
                 'from-purple-500 to-purple-600'
               ]
-              const badges = [
-                { text: 'Trung bình', color: 'bg-orange-500' },
-                { text: 'Dễ', color: 'bg-green-500' },
-                { text: 'Khó', color: 'bg-red-500' },
-                { text: 'Trung bình', color: 'bg-yellow-500' }
-              ]
-              const colorClass = colors[index % colors.length]
-              const badge = badges[index % badges.length]
+              
+              const config = quiz.difficulty 
+                ? difficultyConfig[quiz.difficulty] 
+                : { 
+                    color: defaultColors[index % defaultColors.length],
+                    badge: null
+                  }
+              
+              const colorClass = config.color
+              const badge = config.badge
               
               return (
                 <div
