@@ -310,18 +310,20 @@ function IELTSQuiz({ ieltsTests }) {
                                 const questionNum = parseInt(match[1])
                                 const parts = item.split(/\d+______/)
                                 return (
-                                  <li key={iIndex} className="text-sm flex items-center gap-2">
-                                    <span>•</span>
-                                    <span>{parts[0]}</span>
-                                    <input
-                                      type="text"
-                                      value={answers[`${passage.id}-${qIndex}-${questionNum - 1}`] || ''}
-                                      onChange={(e) => handleAnswerChange(passage.id, qIndex, questionNum - 1, e.target.value)}
-                                      disabled={isSubmitted}
-                                      className="px-2 py-1 border border-gray-300 rounded focus:border-blue-500 focus:outline-none disabled:bg-gray-100 w-32"
-                                      placeholder={`Answer ${questionNum}`}
-                                    />
-                                    <span>{parts[1]}</span>
+                                  <li key={iIndex} className="text-sm flex items-start gap-1">
+                                    <span className="mt-1">•</span>
+                                    <div className="flex-1 flex flex-wrap items-center gap-1">
+                                      <span>{parts[0]}</span>
+                                      <input
+                                        type="text"
+                                        value={answers[`${passage.id}-${qIndex}-${questionNum - 1}`] || ''}
+                                        onChange={(e) => handleAnswerChange(passage.id, qIndex, questionNum - 1, e.target.value)}
+                                        disabled={isSubmitted}
+                                        className="px-2 py-1 border border-gray-300 rounded focus:border-blue-500 focus:outline-none disabled:bg-gray-100 w-32 inline-block"
+                                        placeholder={`Answer ${questionNum}`}
+                                      />
+                                      <span>{parts[1]}</span>
+                                    </div>
                                   </li>
                                 )
                               }
