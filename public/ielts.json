@@ -13,27 +13,75 @@
       {
         "id": 1,
         "title": "Passage 1",
-        "text": "A disaster of Titanic proportions\n\nAt 11:39 p.m. on the evening of Sunday 14 April 1912, lookouts Frederick Fleet and Reginald Lee on the forward mast of the Titanic sighted an eerie, black mass coming into view directly in front of the ship. Fleet picked up the phone to the helm, waited for Sixth Officer Moody to answer, and yelled 'Iceberg, right ahead!' The greatest disaster in maritime history was about to be set in motion.\n\nThirty-seven seconds later, despite the efforts of officers in the bridge and engine room to steer around the iceberg, the Titanic struck a piece of submerged ice, bursting rivets in the ship's hull and flooding the first five watertight compartments. The ship's designer, Thomas Andrews, carried out a visual inspection of the ship's damage and informed Captain Smith at midnight that the ship would sink in less than two hours. By 12:30 a.m., the lifeboats were being filled with women and children, after Smith had given the command for them to be uncovered and swung out 15 minutes earlier. The first lifeboat was successfully lowered 15 minutes later, with only 28 of its 65 seats occupied. By 1:15 a.m., the waterline was beginning to reach the Titanic's name on the ship's bow, and over the next hour every lifeboat would be released as officers struggled to maintain order amongst the growing panic on board.",
+        "text": "THE IMPORTANCE OF CHILDREN'S PLAY\n\nBrick by brick, six-year-old Alice is building a magical kingdom. Imagining fairy-tale turrets and fire-breathing dragons, wicked witches and gallant heroes, she's creating an enchanting world. Although she isn't aware of it, this fantasy is helping her take her first steps towards her capacity for creativity and so it will have important repercussions in her adult life.\n\nMinutes later, Alice has abandoned the kingdom in favour of playing schools with her younger brother. When she bosses him around as his 'teacher', she's practising how to regulate her emotions through pretence. Later on, when they tire of this and settle down with a board game, she's learning about the need to follow rules and take turns with a partner.\n\n'Play in all its rich variety is one of the highest achievements of the human species,' says Dr David Whitebread from the Faculty of Education at the University of Cambridge, UK. 'It underpins how we develop as intellectual, problem-solving adults and is crucial to our success as a highly adaptable species.'\n\nRecognising the importance of play is not new: over two millennia ago, the Greek philosopher Plato extolled its virtues as a means of developing skills for adult life, and ideas about play-based learning have been developing since the 19th century.\n\nBut we live in changing times, and Whitebread is mindful of a worldwide decline in play, pointing out that over half the people in the world now live in cities. 'The opportunities for free play, which I experienced almost every day of my childhood, are becoming increasingly scarce,' he says. Outdoor play is curtailed by perceptions of risk to do with traffic, as well as parents' increased wish to protect their children from being the victims of crime, and by the emphasis on 'earlier is better' which is leading to greater competition in academic learning and schools.\n\nInternational bodies like the United Nations and the European Union have begun to develop policies concerned with children's right to play, and to consider implications for leisure facilities and educational programmes. But what they often lack is the evidence to base policies on.\n\n'The type of play we are interested in is child-initiated, spontaneous and unpredictable – but, as soon as you ask a five-year-old \"to play\", then you as the researcher have intervened,' explains Dr Sara Baker. 'And we want to know what the long-term impact of play is. It's a real challenge.'\n\nDr Jenny Gibson agrees, pointing out that although some of the steps in the puzzle of how and why play is important have been looked at, there is very little data on the impact it has on the child's later life.\n\nNow, thanks to the university's new Centre for Research on Play in Education, Development and Learning (PEDAL), Whitebread, Baker, Gibson and a team of researchers hope to provide evidence on the role played by play in how a child develops.\n\n'A strong possibility is that play supports the early development of children's self-control,' explains Baker. 'This is our ability to develop awareness of our own thinking processes – it influences how effectively we go about undertaking challenging activities.'\n\nIn a study carried out by Baker with toddlers and young pre-schoolers, she found that children with greater self-control solved problems more quickly when exploring an unfamiliar set-up requiring scientific reasoning. 'This sort of evidence makes us think that giving children the chance to play will make them more successful problem-solvers in the long run.'\n\nIf playful experiences do facilitate this aspect of development, say the researchers, it could be extremely significant for educational practices, because the ability to self-regulate has been shown to be a key predictor of academic performance.\n\nGibson adds: 'Playful behaviour is also an important indicator of healthy social and emotional development. In my previous research, I investigated how observing children at play can give us important clues about their well-being and can even be useful in the diagnosis of neurodevelopmental disorders like autism.'\n\nWhitebread's recent research has involved developing a play-based approach to supporting children's writing. 'Many primary school children find writing difficult, but we showed in a previous study that a playful stimulus was far more effective than an instructional one.' Children wrote longer and better-structured stories when they first played with dolls representing characters in the story. In the latest study, children first created their story with Lego, with similar results. 'Many teachers commented that they had always previously had children saying they didn't know what to write about. With the Lego building, however, not a single child said this through the whole year of the project.'\n\nWhitebread, who directs PEDAL, trained as a primary school teacher in the early 1970s, when, as he describes, 'the teaching of young children was largely a quiet backwater, untroubled by any serious intellectual debate or controversy.' Now, the landscape is very different, with hotly debated topics such as school starting age.\n\n'Somehow the importance of play has been lost in recent decades. It's regarded as something trivial, or even as something negative that contrasts with \"work\". Let's not lose sight of its benefits, and the fundamental contributions it makes to human achievements in the arts, sciences and technology. Let's make sure children have a rich diet of play experiences.'",
         "questions": [
           {
-            "type": "table-completion",
-            "instruction": "Complete the table below. Choose NO MORE THAN TWO WORDS from the text for each answer. Write your answers in boxes 1-6 on your answer sheet.",
-            "table": {
-              "headers": ["Time", "Person/s", "Position", "Action"],
-              "rows": [
-                ["11:39 p.m.", "1______", "2______", "Reported sighting of iceberg"],
-                ["3______", "Andrews", "Ship's designer", "Reported how long the Titanic could stay afloat"],
-                ["12:15 a.m.", "Smith", "Captain", "Ordered 4______ to be released"],
-                ["2:17 a.m.", "Bride & Philips", "5______", "Relayed final 6______"]
+            "type": "note-completion",
+            "instruction": "Complete the notes below. Choose ONE WORD ONLY from the passage for each answer. Write your answers in boxes 1-8 on your answer sheet.",
+            "notes": {
+              "title": "Children's play",
+              "sections": [
+                {
+                  "heading": "Uses of children's play",
+                  "items": [
+                    "building a 'magical kingdom' may help develop 1______",
+                    "board games involve 2______ and turn-taking"
+                  ]
+                },
+                {
+                  "heading": "Recent changes affecting children's play",
+                  "items": [
+                    "populations of 3______ have grown",
+                    "opportunities for free play are limited due to",
+                    "- fear of 4______",
+                    "- fear of 5______",
+                    "- increased 6______ in schools"
+                  ]
+                },
+                {
+                  "heading": "International policies on children's play",
+                  "items": [
+                    "it is difficult to find 7______ to support new policies",
+                    "research needs to study the impact of play on the rest of the child's 8______"
+                  ]
+                }
               ]
             },
             "answers": [
-              "Fleet and Lee",
-              "Lookouts",
-              "Midnight",
-              "lifeboats",
-              "Radio operators",
-              "distress call"
+              "creativity",
+              "rules",
+              "cities",
+              "traffic",
+              "crime",
+              "competition",
+              "evidence",
+              "life"
+            ]
+          },
+          {
+            "type": "true-false-not-given",
+            "instruction": "Do the following statements agree with the information given in Reading Passage 1? In boxes 9-13 on your answer sheet, write TRUE if the statement agrees with the information, FALSE if the statement contradicts the information, or NOT GIVEN if there is no information on this.",
+            "items": [
+              {
+                "question": "Children with good self-control are known to be likely to do well at school later on.",
+                "answer": "TRUE"
+              },
+              {
+                "question": "The way a child plays may provide information about possible medical problems.",
+                "answer": "TRUE"
+              },
+              {
+                "question": "Playing with dolls was found to benefit girls' writing more than boys' writing.",
+                "answer": "NOT GIVEN"
+              },
+              {
+                "question": "Children had problems thinking up ideas when they first created the story with Lego.",
+                "answer": "FALSE"
+              },
+              {
+                "question": "People nowadays regard children's play as less significant than they did in the past.",
+                "answer": "TRUE"
+              }
             ]
           }
         ]
