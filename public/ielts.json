@@ -100,5 +100,78 @@
         ]
       }
     ]
+  },
+  {
+    "id": 102,
+    "subject": "IELTS",
+    "category": "Listening",
+    "title": "IELTS Listening Practice Test 1",
+    "difficulty": "medium",
+    "type": "tracnghiem",
+    "description": "Practice test for IELTS Listening section",
+    "timeLimit": 30,
+    "sections": 3,
+    "questions": [
+      {
+        "q": "What time does the library close on weekdays?",
+        "choices": ["5:00 PM", "6:00 PM", "7:00 PM", "8:00 PM"],
+        "answer": 2,
+        "explain": "The speaker mentions that the library closes at 7:00 PM on weekdays."
+      },
+      {
+        "q": "How much does a student membership cost per year?",
+        "choices": ["$20", "$30", "$40", "$50"],
+        "answer": 1,
+        "explain": "Student membership is $30 per year as stated in the conversation."
+      }
+    ]
+  },
+  {
+    "id": 103,
+    "subject": "IELTS",
+    "category": "Writing",
+    "title": "IELTS Writing Task 2 Practice",
+    "difficulty": "hard",
+    "type": "tracnghiem",
+    "description": "Practice for IELTS Writing Task 2",
+    "timeLimit": 40,
+    "sections": 3,
+    "questions": [
+      {
+        "q": "Which of the following is the best thesis statement for an essay about online education?",
+        "choices": [
+          "Online education is popular.",
+          "Online education offers flexibility and accessibility, making it an effective alternative to traditional classroom learning.",
+          "Many people study online.",
+          "Online education uses the internet."
+        ],
+        "answer": 1,
+        "explain": "A good thesis statement should be clear, specific, and present a main argument."
+      }
+    ]
+  },
+  {
+    "id": 104,
+    "subject": "IELTS",
+    "category": "Speaking",
+    "title": "IELTS Speaking Part 1 Practice",
+    "difficulty": "easy",
+    "type": "tracnghiem",
+    "description": "Practice for IELTS Speaking Part 1",
+    "timeLimit": 15,
+    "sections": 3,
+    "questions": [
+      {
+        "q": "Which response is most appropriate for 'Do you like reading books?'",
+        "choices": [
+          "Yes.",
+          "Yes, I do. I enjoy reading novels in my free time, especially mystery and science fiction.",
+          "Books are good.",
+          "Sometimes."
+        ],
+        "answer": 1,
+        "explain": "A good IELTS Speaking response should be extended and provide specific details."
+      }
+    ]
   }
 ]
