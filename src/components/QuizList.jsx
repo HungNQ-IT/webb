@@ -10,11 +10,18 @@ function QuizList({ quizzes, ieltsTests = [] }) {
   const [showModal, setShowModal] = useState(false)
 
   const subjectQuizzes = useMemo(() => {
+    console.log('DEBUG - decodedSubject:', decodedSubject)
+    console.log('DEBUG - decodedCategory:', decodedCategory)
+    console.log('DEBUG - ieltsTests:', ieltsTests)
+    console.log('DEBUG - quizzes:', quizzes)
+    
     // Nếu là IELTS hoặc Ngoại ngữ, lấy từ ieltsTests
     if (decodedSubject === 'IELTS' || decodedSubject === 'Ngoại ngữ') {
       let filtered = ieltsTests.filter(q => q.subject === decodedSubject)
+      console.log('DEBUG - After subject filter:', filtered)
       if (decodedCategory) {
         filtered = filtered.filter(q => q.category === decodedCategory)
+        console.log('DEBUG - After category filter:', filtered)
       }
       return filtered
     }
