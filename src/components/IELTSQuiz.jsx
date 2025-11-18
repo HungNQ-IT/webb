@@ -10,6 +10,7 @@ function IELTSQuiz({ ieltsTests }) {
   const [answers, setAnswers] = useState({})
   const [timeRemaining, setTimeRemaining] = useState(null)
   const [highlightedText, setHighlightedText] = useState('')
+  const [isSubmitted, setIsSubmitted] = useState(false)
 
   useEffect(() => {
     if (!test) return
@@ -34,10 +35,75 @@ function IELTSQuiz({ ieltsTests }) {
     return () => clearInterval(timer)
   }, [timeRemaining])
 
+  const handleAnswerChange = (passageId, questionIndex, itemIndex, value) => {
+    const key = `${passageId}-${questionIndex}-${itemIndex}`
+    setAnswers(prev => ({
+      ...prev,
+      [key]: value
+    }))
+  }
+
+  const calculateScore = () => {
+    let totalQuestions = 0
+    let correctAnswers = 0
+
+    test.passages.forEach((passage) => {
+      passage.questions.forEach((question, qIndex) => {
+        if (question.type === 'table-completion') {
+          // Đếm số ô trống trong bảng
+          question.answers.forEach((answer, aIndex) => {
+            totalQuestions++
+            const key = `${passage.id}-${qIndex}-${aIndex}`
+            const userAnswer = answers[key]?.trim().toLowerCase()
+            const correctAnswer = answer.toLowerCase()
+            if (userAnswer === correctAnswer) {
+              correctAnswers++
+            }
+          })
+        } else if (question.type === 'true-false-not-given') {
+          question.items.forEach((item, iIndex) => {
+            totalQuestions++
+            const key = `${passage.id}-${qIndex}-${iIndex}`
+            if (answers[key] === item.answer) {
+              correctAnswers++
+            }
+          })
+        } else if (question.type === 'matching-headings') {
+          question.paragraphs.forEach((para, pIndex) => {
+            totalQuestions++
+            const key = `${passage.id}-${qIndex}-${pIndex}`
+            if (parseInt(answers[key]) === para.correctHeading) {
+              correctAnswers++
+            }
+          })
+        }
+      })
+    })
+
+    return { correctAnswers, totalQuestions }
+  }
+
   const handleSubmit = () => {
-    // TODO: Calculate score and navigate to result
-    alert('Nộp bài thành công!')
-    navigate('/')
+    if (isSubmitted) return
+    setIsSubmitted(true)
+    
+    const { correctAnswers, totalQuestions } = calculateScore()
+    
+    // Lưu kết quả vào localStorage
+    const result = {
+      testId: test.id,
+      testTitle: test.title,
+      score: correctAnswers,
+      total: totalQuestions,
+      answers: answers,
+      passages: test.passages,
+      submittedAt: new Date().toISOString()
+    }
+    
+    localStorage.setItem(`ielts_result_${test.id}`, JSON.stringify(result))
+    
+    // Navigate to result page
+    navigate(`/ielts-result/${test.id}`)
   }
 
   const formatTime = (seconds) => {
@@ -141,7 +207,10 @@ function IELTSQuiz({ ieltsTests }) {
                                   {cell.includes('______') ? (
                                     <input
                                       type="text"
-                                      className="w-full px-2 py-1 border border-gray-300 rounded focus:border-blue-500 focus:outline-none"
+                                      value={answers[`${passage.id}-${qIndex}-${rowIndex * question.table.headers.length + cellIndex}`] || ''}
+                                      onChange={(e) => handleAnswerChange(passage.id, qIndex, rowIndex * question.table.headers.length + cellIndex, e.target.value)}
+                                      disabled={isSubmitted}
+                                      className="w-full px-2 py-1 border border-gray-300 rounded focus:border-blue-500 focus:outline-none disabled:bg-gray-100"
                                       placeholder="Your answer"
                                     />
                                   ) : (
@@ -172,8 +241,11 @@ function IELTSQuiz({ ieltsTests }) {
                               <label key={option} className="flex items-center gap-2 cursor-pointer">
                                 <input
                                   type="radio"
-                                  name={`q${qIndex}-${itemIndex}`}
+                                  name={`${passage.id}-q${qIndex}-${itemIndex}`}
                                   value={option}
+                                  checked={answers[`${passage.id}-${qIndex}-${itemIndex}`] === option}
+                                  onChange={(e) => handleAnswerChange(passage.id, qIndex, itemIndex, e.target.value)}
+                                  disabled={isSubmitted}
                                   className="w-4 h-4 text-blue-600"
                                 />
                                 <span className="text-sm">{option}</span>
@@ -204,7 +276,12 @@ function IELTSQuiz({ ieltsTests }) {
                       {question.paragraphs.map((para, paraIndex) => (
                         <div key={paraIndex} className="flex items-center gap-3">
                           <span className="font-semibold text-sm">Paragraph {para.paragraph}:</span>
-                          <select className="flex-1 px-3 py-2 border border-gray-300 rounded focus:border-blue-500 focus:outline-none text-sm">
+                          <select 
+                            value={answers[`${passage.id}-${qIndex}-${paraIndex}`] || ''}
+                            onChange={(e) => handleAnswerChange(passage.id, qIndex, paraIndex, e.target.value)}
+                            disabled={isSubmitted}
+                            className="flex-1 px-3 py-2 border border-gray-300 rounded focus:border-blue-500 focus:outline-none text-sm disabled:bg-gray-100"
+                          >
                             <option value="">-- Select heading --</option>
                             {question.headings.map((heading, i) => (
                               <option key={i} value={i}>{i + 1}. {heading}</option>

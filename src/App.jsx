@@ -13,6 +13,7 @@ const CategoryList = lazy(() => import('./components/CategoryList'))
 const QuizList = lazy(() => import('./components/QuizList'))
 const Quiz = lazy(() => import('./components/Quiz'))
 const IELTSQuiz = lazy(() => import('./components/IELTSQuiz'))
+const IELTSResult = lazy(() => import('./components/IELTSResult'))
 const Result = lazy(() => import('./components/Result'))
 const Login = lazy(() => import('./components/Login'))
 const Register = lazy(() => import('./components/Register'))
@@ -129,6 +130,7 @@ function App() {
               <Route path="/subject/:subject" element={<CategoryList quizzes={quizzes} ieltsTests={ieltsTests} />} />
               <Route path="/quiz/:id" element={<Quiz quizzes={quizzes} />} />
               <Route path="/ielts/:id" element={<IELTSQuiz ieltsTests={ieltsTests} />} />
+              <Route path="/ielts-result/:id" element={<IELTSResult />} />
               <Route path="/result/:id" element={<Result quizzes={quizzes} />} />
               <Route
                 path="/profile"
