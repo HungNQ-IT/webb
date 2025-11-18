@@ -281,6 +281,48 @@ function IELTSResult() {
                       </div>
                     )}
 
+                    {/* Matching Statements Results */}
+                    {question.type === 'matching-statements' && (
+                      <div className="space-y-2">
+                        {question.statements.map((statement, sIndex) => {
+                          const key = `${passage.id}-${qIndex}-${sIndex}`
+                          const userAnswer = result.answers[key]?.toUpperCase()
+                          const isCorrect = userAnswer === statement.answer
+                          
+                          return (
+                            <div key={sIndex} className={`p-3 rounded-lg ${isCorrect ? 'bg-green-50' : 'bg-red-50'}`}>
+                              <div className="flex items-start justify-between gap-3">
+                                <div className="flex-1">
+                                  <div className="text-sm mb-2">
+                                    <span className="font-semibold">Q{sIndex + 27}:</span> {statement.question}
+                                  </div>
+                                  <div className="text-sm">
+                                    <span className="font-medium">Bạn chọn:</span> {userAnswer ? `${userAnswer} (${question.researchers[userAnswer.charCodeAt(0) - 65]})` : '(Không trả lời)'}
+                                  </div>
+                                  {!isCorrect && (
+                                    <div className="text-sm text-green-700 mt-1">
+                                      <span className="font-medium">Đáp án đúng:</span> {statement.answer} ({question.researchers[statement.answer.charCodeAt(0) - 65]})
+                                    </div>
+                                  )}
+                                </div>
+                                <div>
+                                  {isCorrect ? (
+                                    <svg className="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
+                                    </svg>
+                                  ) : (
+                                    <svg className="w-6 h-6 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd"/>
+                                    </svg>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                          )
+                        })}
+                      </div>
+                    )}
+
                     {/* Matching Headings Results */}
                     {question.type === 'matching-headings' && (
                       <div className="space-y-2">

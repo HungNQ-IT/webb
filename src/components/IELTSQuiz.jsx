@@ -111,6 +111,14 @@ function IELTSQuiz({ ieltsTests }) {
               correctAnswers++
             }
           })
+        } else if (question.type === 'matching-statements') {
+          question.statements.forEach((statement, sIndex) => {
+            totalQuestions++
+            const key = `${passage.id}-${qIndex}-${sIndex}`
+            if (answers[key]?.toUpperCase() === statement.answer) {
+              correctAnswers++
+            }
+          })
         }
       })
     })
@@ -418,6 +426,43 @@ function IELTSQuiz({ ieltsTests }) {
                               </label>
                             ))}
                           </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Matching Statements with Researchers */}
+                {question.type === 'matching-statements' && (
+                  <div>
+                    <div className="mb-4 text-sm text-gray-700">
+                      {question.instruction}
+                    </div>
+                    <div className="mb-4 bg-gray-50 rounded-lg p-4">
+                      <div className="font-semibold text-sm mb-2">List of Researchers:</div>
+                      <div className="grid grid-cols-2 gap-2 text-sm">
+                        {question.researchers.map((researcher, i) => (
+                          <div key={i}>
+                            <span className="font-semibold">{String.fromCharCode(65 + i)}</span> {researcher}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="space-y-3">
+                      {question.statements.map((statement, sIndex) => (
+                        <div key={sIndex} className="border border-gray-200 rounded-lg p-4">
+                          <div className="mb-3 text-sm text-gray-900">
+                            <span className="font-semibold">Question {sIndex + 27}:</span> {statement.question}
+                          </div>
+                          <input
+                            type="text"
+                            value={answers[`${passage.id}-${qIndex}-${sIndex}`] || ''}
+                            onChange={(e) => handleAnswerChange(passage.id, qIndex, sIndex, e.target.value.toUpperCase())}
+                            disabled={isSubmitted}
+                            maxLength={1}
+                            className="w-16 px-3 py-2 border border-gray-300 rounded focus:border-blue-500 focus:outline-none text-center uppercase disabled:bg-gray-100"
+                            placeholder="A-F"
+                          />
                         </div>
                       ))}
                     </div>
