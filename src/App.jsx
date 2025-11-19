@@ -1,10 +1,30 @@
 import { useState, useEffect, lazy, Suspense } from 'react'
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom'
 import Home from './components/Home'
 import RequireAuth from './components/RequireAuth'
 import Layout from './components/Layout'
 import Loading from './components/Loading'
 import { AuthProvider } from './context/AuthContext'
+
+// Component để xử lý redirect từ 404.html
+function RedirectHandler() {
+  const navigate = useNavigate()
+  const location = useLocation()
+  
+  useEffect(() => {
+    const redirectPath = sessionStorage.getItem('redirectPath')
+    if (redirectPath) {
+      sessionStorage.removeItem('redirectPath')
+      // Chỉ navigate nếu không phải đang ở path đó rồi
+      const cleanPath = redirectPath.replace(import.meta.env.BASE_URL || '/', '/')
+      if (cleanPath !== location.pathname) {
+        navigate(cleanPath, { replace: true })
+      }
+    }
+  }, [navigate, location])
+  
+  return null
+}
 
 // Lazy load các components để tải nhanh hơn
 const SubjectList = lazy(() => import('./components/SubjectList'))
@@ -119,6 +139,7 @@ function App() {
   return (
     <BrowserRouter basename={basename}>
       <AuthProvider>
+        <RedirectHandler />
         <Suspense fallback={<Loading />}>
           <Routes>
             <Route element={<Layout />}>

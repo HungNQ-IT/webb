@@ -3,53 +3,64 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gia Sư 10 Điểm</title>
+    <title>Đang chuyển hướng... - Gia Sư 10 Điểm</title>
     <script>
-      // GitHub Pages 404.html - Redirect to index.html for React Router
-      // IMPORTANT: Update BASE_PATH to match your repository name
-      var BASE_PATH = '/webb';
-      
-      var path = window.location.pathname;
-      var search = window.location.search || '';
-      var hash = window.location.hash || '';
-      
-      // Remove BASE_PATH prefix if present
-      var cleanPath = path;
-      if (path.indexOf(BASE_PATH) === 0) {
-        cleanPath = path.substring(BASE_PATH.length);
-      }
-      
-      // Build redirect URL
-      var redirectTo = BASE_PATH + '/index.html';
-      
-      // If we have a path beyond the base, add it (React Router will handle it)
-      if (cleanPath && cleanPath !== '/' && cleanPath !== '/index.html') {
-        redirectTo += cleanPath;
-      }
-      
-      // Add query string and hash
-      redirectTo += search + hash;
-      
-      // Perform redirect
-      window.location.replace(redirectTo);
+      // GitHub Pages SPA redirect solution
+      // Lưu path hiện tại vào sessionStorage và redirect về index.html
+      (function() {
+        var BASE_PATH = '/webb';
+        var path = window.location.pathname;
+        
+        // Chỉ redirect nếu không phải index.html
+        if (!path.endsWith('/index.html') && !path.endsWith('/')) {
+          // Lưu path để React Router xử lý
+          sessionStorage.setItem('redirectPath', path + window.location.search + window.location.hash);
+          // Redirect về index.html
+          window.location.replace(BASE_PATH + '/');
+        }
+      })();
     </script>
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+      }
+      .container {
+        text-align: center;
+        padding: 2rem;
+      }
+      .spinner {
+        border: 4px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top: 4px solid white;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 1rem;
+      }
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    </style>
   </head>
   <body>
+    <div class="container">
+      <div class="spinner"></div>
+      <h2>Đang chuyển hướng...</h2>
+      <p>Vui lòng đợi trong giây lát</p>
+    </div>
     <noscript>
-      <p>JavaScript is required. Please enable JavaScript and refresh the page.</p>
-      <p><a href="/webb/">Go to homepage</a></p>
+      <div style="text-align: center; padding: 2rem;">
+        <p>JavaScript is required. Please enable JavaScript and refresh the page.</p>
+        <p><a href="/webb/" style="color: white;">Quay về trang chủ</a></p>
+      </div>
     </noscript>
-    <img src="asset/100-cau-trac-nghiem-dien-tich-dien-truong-co-ban-9.PNG"/>
-    <img src="asset/1.PNG"/>
-    <img src="asset/2.png"/>
-    <img src="asset/3.png"/>
-    <img src="asset/4.png"/>
-    <p>Redirecting...</p>
-    <script>
-      // Fallback after 1 second
-      setTimeout(function() {
-        window.location.replace('/webb/index.html');
-      }, 1000);
-    </script>
   </body>
 </html>
