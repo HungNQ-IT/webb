@@ -33,13 +33,11 @@ const CategoryList = lazy(() => import('./components/CategoryList'))
 const QuizList = lazy(() => import('./components/QuizList'))
 const Quiz = lazy(() => import('./components/Quiz'))
 const IELTSQuiz = lazy(() => import('./components/IELTSQuiz'))
-const IELTSListening = lazy(() => import('./components/IELTSListening'))
 const IELTSResult = lazy(() => import('./components/IELTSResult'))
 const Result = lazy(() => import('./components/Result'))
 const Login = lazy(() => import('./components/Login'))
 const Register = lazy(() => import('./components/Register'))
 const AdminDashboard = lazy(() => import('./components/AdminDashboard'))
-const AdminAudioManager = lazy(() => import('./components/AdminAudioManager'))
 const Profile = lazy(() => import('./components/Profile'))
 
 function App() {
@@ -162,7 +160,6 @@ function App() {
               <Route path="/subject/:subject" element={<CategoryList quizzes={quizzes} ieltsTests={ieltsTests} />} />
               <Route path="/quiz/:id" element={<Quiz quizzes={quizzes} />} />
               <Route path="/ielts/:id" element={<IELTSQuiz ieltsTests={ieltsTests} />} />
-              <Route path="/ielts-listening/:id" element={<IELTSListening ieltsTests={ieltsTests} />} />
               <Route path="/ielts-result/:id" element={<IELTSResult />} />
               <Route path="/result/:id" element={<Result quizzes={quizzes} />} />
               <Route
@@ -178,14 +175,6 @@ function App() {
                 element={
                   <RequireAuth roles={['admin']}>
                     <AdminDashboard quizzes={quizzes} />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="/admin/audio"
-                element={
-                  <RequireAuth roles={['admin']}>
-                    <AdminAudioManager ieltsTests={ieltsTests} />
                   </RequireAuth>
                 }
               />

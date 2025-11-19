@@ -127,7 +127,10 @@
               "It was made possible by a change in people's attitudes.",
               "It attracted interest from a range of bike designers."
             ],
-            "correctAnswers": [1, 3]
+            "correctAnswers": [
+              1,
+              3
+            ]
           },
           {
             "type": "multiple-choice-two",
@@ -139,7 +142,10 @@
               "A bike-sharing scheme would benefit residents who use public transport.",
               "The city has a reputation as a place that welcomes cyclists."
             ],
-            "correctAnswers": [3, 4]
+            "correctAnswers": [
+              3,
+              4
+            ]
           },
           {
             "type": "summary-completion",
@@ -197,16 +203,16 @@
             ]
           },
           {
-            "type" : "true-false-not-given",
+            "type": "true-false-not-given",
             "instruction": "Do the following statements agree with the information given in Reading Passage 1? In boxes 9-13 on your answer sheet, write TRUE if the statement agrees with the information, FALSE if the statement contradicts the information, or NOT GIVEN if there is no information on this.",
-            "items" : [
+            "items": [
               {
                 "question": "One reason for high staff turnover in the hospitality industry is poor morale.",
                 "answer": "TRUE"
               },
               {
                 "question": "Research has shown that staff have a tendency to dislike their workplace,",
-                "answer":"NO"
+                "answer": "NO"
               },
               {
                 "question": "An improvement in working conditions and job security makes staff satisfied with their jobs.",
@@ -224,7 +230,7 @@
             "summary": {
               "title": "Fun at work",
               "text": "Tews, Michel and Stafford carried out research on staff in an American chain of 36______. They discovered that activities designed for staff to have fun improved their 37______, and that management involvement led to lower staff 38______. They also found that the activities needed to fit with both the company's 39______ and the 40______ of the staff. A balance was required between a degree of freedom and maintaining work standards."
-            }, 
+            },
             "answers": [
               "restaurants",
               "performance",
@@ -339,51 +345,51 @@
         "title": "Passage 2",
         "text": "Back to the future of skyscraper design\n\nAnswers to the problem of excessive electricity use by skyscrapers and large public buildings can be found in ingenious but forgotten architectural designs of the 19th and early-20th centuries\n\nA\nThe Recovery of Natural Environments in Architecture by Professor Alan Short is the culmination of 30 years of research and award-winning green building design by Short and colleagues in Architecture, Engineering, Applied Maths and Earth Sciences at the University of Cambridge.\n\n'The crisis in building design is already here,' said Short. 'Policy makers think you can solve energy and building problems with gadgets. You can't. As global temperatures continue to rise, we are going to continue to squander more and more energy on keeping our buildings mechanically cool until we have run out of capacity.'\n\nB\nShort is calling for a sweeping reinvention of how skyscrapers and major public buildings are designed – to end the reliance on sealed buildings which exist solely via the 'life support' system of vast air conditioning units.\n\nInstead, he shows it is entirely possible to accommodate natural ventilation and cooling in large buildings by looking into the past, before the widespread introduction of air conditioning systems, which were 'relentlessly and aggressively marketed' by their inventors.\n\nC\nShort points out that to make most contemporary buildings habitable, they have to be sealed and air conditioned. The energy use and carbon emissions this generates is spectacular and largely unnecessary. Buildings in the West account for 40–50% of electricity usage, generating substantial carbon emissions, and the rest of the world is catching up at a frightening rate. Short regards glass, steel and air-conditioned skyscrapers as symbols of status, rather than practical ways of meeting our requirements.\n\nD\nShort's book highlights a developing and sophisticated art and science of ventilating buildings through the 19th and earlier-20th centuries, including the design of ingeniously ventilated hospitals. Of particular interest were those built to the designs of John Shaw Billings, including the first Johns Hopkins Hospital in the US city of Baltimore (1873–1889).\n\n'We spent three years digitally modelling Billings' final designs,' says Short. 'We put pathogens' in the airstreams, modelled for someone with tuberculosis (TB) coughing in the wards and we found the ventilation systems in the room would have kept other patients safe from harm.\n\nE\n'We discovered that 19th-century hospital wards could generate up to 24 air changes an hour – that's similar to the performance of a modern-day, computer-controlled operating theatre. Single rooms are not appropriate for all patients. Communal wards appropriate for certain patients – older people with dementia, for example – would work just as well in today's hospitals, at a fraction of the energy cost.'\n\nProfessor Short contends the mindset and skill-sets behind these designs have been completely lost, lamenting the disappearance of expertly designed theatres, opera houses, and city buildings where up to half the volume of the building was given over to ensuring everyone got fresh air.\n\nF\nMuch of the ingenuity present in 19th-century hospital and building design was driven by a panicked public clamouring for buildings that could protect against what was thought to be the lethal threat of miasmas – toxic air that spread disease. Miasmas were feared as the principal agents of disease and epidemics for centuries, and were used to explain the spread of infection from the Middle Ages right through to the cholera outbreaks in London and Paris during the 1850s. Foul air, rather than germs, was believed to be the main driver of 'hospital fever', leading to disease and frequent death. The prosperous steered clear of hospitals.\n\nWhile miasma theory has been long since disproved, Short has for the last 30 years advocated a return to some of the building design principles produced in its wake.\n\nG\nToday, huge amounts of a building's space and construction cost are given over to air conditioning. 'But I have designed and built a series of buildings over the past three decades which have tried to reinvent some of these ideas and then measure what happens.\n\n'To go forward into our new low-energy, low-carbon future, we would be well advised to look back at design before our high-energy, high-carbon present appeared. What is surprising is what a rich legacy we have abandoned.'\n\nH\nSuccessful examples of Short's approach include the Queen's Building at De Montfort University in Leicester. Containing as many as 2,000 staff and students, the entire building is naturally ventilated, passively cooled and naturally lit, including the two largest auditoria, each seating more than 150 people. The award-winning building uses a fraction of the electricity of comparable buildings in the UK.\n\nShort contends that glass skyscrapers in London and around the world will become a liability over the next 20 or 30 years if climate modelling predictions and energy price rises come to pass as expected.\n\nI\nHe is convinced that sufficiently cooled skyscrapers using the natural environment can be produced in almost any climate. He and his team have worked on hybrid buildings in the harsh climates of Beijing and Chicago – built with natural ventilation assisted by back-up air conditioning – which, surprisingly perhaps, can be switched off more than half the time on milder days and during the spring and autumn.\n\nShort looks at how we might reimagine the cities, offices and homes of the future. Maybe it's time we changed our outlook.",
         "questions": [
+          {
+            "type": "matching-information",
+            "instruction": "Reading Passage 2 has nine paragraphs, A-I. Which paragraph contains the following information? Write the correct letter, A-I, in boxes 14-18 on your answer sheet.",
+            "items": [
               {
-                "type": "matching-information",
-                "instruction": "Reading Passage 2 has nine paragraphs, A-I. Which paragraph contains the following information? Write the correct letter, A-I, in boxes 14-18 on your answer sheet.",
-                "items": [
-                  {
-                    "question": "why some people avoided hospitals in the 19th century",
-                    "answer": "F"
-                  },
-                  {
-                    "question": "a suggestion that the popularity of tall buildings is linked to prestige",
-                    "answer": "C"
-                  },
-                  {
-                    "question": "a comparison between the circulation of air in a 19th-century building and modern standards",
-                    "answer": "E"
-                  },
-                  {
-                    "question": "how Short tested the circulation of air in a 19th-century building",
-                    "answer": "D"
-                  },
-                  {
-                    "question": "an implication that advertising led to the large-scale introduction of air conditioning",
-                    "answer": "B"
-                  }
-                ]
+                "question": "why some people avoided hospitals in the 19th century",
+                "answer": "F"
               },
               {
-                "type": "summary-completion",
-                "instruction": "Complete the summary below. Choose ONE WORD ONLY from the passage for each answer. Write your answers in boxes 19-26 on your answer sheet.",
-                "summary": {
-                  "title": "Ventilation in 19th-century hospital wards",
-                  "text": "Professor Alan examined the work of John Shaw Billings, who influenced the architectural 19______ of hospitals to ensure they had good ventilation. He calculated that 20______ in the air coming from patients suffering from 21______ would not have harmed other patients. He also found that the air in 22______ in hospitals could change as often as in a modern operating theatre. He suggests that energy use could be reduced by locating more patients in 23______ areas. \n\n A major reason for improving ventilation in 19th-century hospitals was the demand from the 24______ for protection against bad air, known as 25______. These were blamed for the spread of disease for hundreds of years, including epidemics of 26______ in London and Paris in the middle of the 19th century."
-                },
-                "answers": [
-                  "design(s)",
-                  "pathogens",
-                  "tuberculosis",
-                  "wards",
-                  "communal",
-                  "public",
-                  "miasmas",
-                  "cholera"
-                ]
+                "question": "a suggestion that the popularity of tall buildings is linked to prestige",
+                "answer": "C"
+              },
+              {
+                "question": "a comparison between the circulation of air in a 19th-century building and modern standards",
+                "answer": "E"
+              },
+              {
+                "question": "how Short tested the circulation of air in a 19th-century building",
+                "answer": "D"
+              },
+              {
+                "question": "an implication that advertising led to the large-scale introduction of air conditioning",
+                "answer": "B"
               }
             ]
+          },
+          {
+            "type": "summary-completion",
+            "instruction": "Complete the summary below. Choose ONE WORD ONLY from the passage for each answer. Write your answers in boxes 19-26 on your answer sheet.",
+            "summary": {
+              "title": "Ventilation in 19th-century hospital wards",
+              "text": "Professor Alan examined the work of John Shaw Billings, who influenced the architectural 19______ of hospitals to ensure they had good ventilation. He calculated that 20______ in the air coming from patients suffering from 21______ would not have harmed other patients. He also found that the air in 22______ in hospitals could change as often as in a modern operating theatre. He suggests that energy use could be reduced by locating more patients in 23______ areas. \n\n A major reason for improving ventilation in 19th-century hospitals was the demand from the 24______ for protection against bad air, known as 25______. These were blamed for the spread of disease for hundreds of years, including epidemics of 26______ in London and Paris in the middle of the 19th century."
+            },
+            "answers": [
+              "design(s)",
+              "pathogens",
+              "tuberculosis",
+              "wards",
+              "communal",
+              "public",
+              "miasmas",
+              "cholera"
+            ]
+          }
+        ]
       },
       {
         "id": 3,
@@ -444,31 +450,6 @@
     ]
   },
   {
-    "id": 103,
-    "subject": "IELTS",
-    "category": "Listening",
-    "title": "IELTS Listening Practice Test 1",
-    "difficulty": "medium",
-    "type": "tracnghiem",
-    "description": "Practice test for IELTS Listening section",
-    "timeLimit": 30,
-    "sections": 3,
-    "questions": [
-      {
-        "q": "What time does the library close on weekdays?",
-        "choices": ["5:00 PM", "6:00 PM", "7:00 PM", "8:00 PM"],
-        "answer": 2,
-        "explain": "The speaker mentions that the library closes at 7:00 PM on weekdays."
-      },
-      {
-        "q": "How much does a student membership cost per year?",
-        "choices": ["$20", "$30", "$40", "$50"],
-        "answer": 1,
-        "explain": "Student membership is $30 per year as stated in the conversation."
-      }
-    ]
-  },
-  {
     "id": 104,
     "subject": "IELTS",
     "category": "Writing",
@@ -513,280 +494,6 @@
         ],
         "answer": 1,
         "explain": "A good IELTS Speaking response should be extended and provide specific details."
-      }
-    ]
-  },
-  {
-    "id": 106,
-    "subject": "IELTS",
-    "category": "Listening",
-    "title": "IELTS Cambridge 14 Test 1 - Listening",
-    "difficulty": "medium",
-    "type": "ielts-listening",
-    "description": "Full IELTS Listening test with 4 sections",
-    "timeLimit": 30,
-    "sections": [
-      {
-        "id": 1,
-        "title": "Section 1: Library Membership",
-        "instruction": "Listen to the conversation between a student and a librarian. Answer questions 1-10.",
-        "questions": [
-          {
-            "type": "form-completion",
-            "instruction": "Complete the form below. Write NO MORE THAN TWO WORDS AND/OR A NUMBER for each answer.",
-            "form": {
-              "title": "Library Membership Application Form",
-              "fields": [
-                {
-                  "label": "Full name",
-                  "answer": "Sarah Johnson"
-                },
-                {
-                  "label": "Student ID",
-                  "answer": "S12345"
-                },
-                {
-                  "label": "Course",
-                  "answer": "Business Studies"
-                },
-                {
-                  "label": "Email address",
-                  "answer": "sarah.j@email.com"
-                },
-                {
-                  "label": "Phone number",
-                  "answer": "0412 345 678"
-                }
-              ]
-            }
-          },
-          {
-            "type": "multiple-choice",
-            "instruction": "Choose the correct letter, A, B or C.",
-            "items": [
-              {
-                "question": "What time does the library close on weekdays?",
-                "options": ["5:00 PM", "6:00 PM", "7:00 PM"],
-                "answer": 2
-              },
-              {
-                "question": "How many books can students borrow at once?",
-                "options": ["5 books", "10 books", "15 books"],
-                "answer": 1
-              },
-              {
-                "question": "How long can students keep the books?",
-                "options": ["1 week", "2 weeks", "3 weeks"],
-                "answer": 1
-              },
-              {
-                "question": "What is the late fee per day?",
-                "options": ["$0.50", "$1.00", "$1.50"],
-                "answer": 0
-              },
-              {
-                "question": "Where is the study room located?",
-                "options": ["Ground floor", "First floor", "Second floor"],
-                "answer": 2
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "id": 2,
-        "title": "Section 2: Museum Tour",
-        "instruction": "Listen to the tour guide describing the museum. Answer questions 11-20.",
-        "questions": [
-          {
-            "type": "note-completion",
-            "instruction": "Complete the notes below. Write NO MORE THAN TWO WORDS for each answer.",
-            "notes": {
-              "title": "City Museum Tour Information",
-              "items": [
-                "The museum was built in 11______",
-                "The main exhibition is about 12______",
-                "Tours start every 13______ minutes",
-                "The gift shop is located on the 14______ floor",
-                "Photography is allowed in the 15______ area only"
-              ]
-            },
-            "answers": [
-              "1895",
-              "ancient Egypt",
-              "30",
-              "ground",
-              "garden"
-            ]
-          },
-          {
-            "type": "matching",
-            "instruction": "Match each room with its description. Choose the correct letter, A-E.",
-            "items": [
-              {
-                "question": "Room 1",
-                "options": [
-                  "Contains paintings from the 18th century",
-                  "Displays modern sculptures",
-                  "Shows ancient pottery",
-                  "Features historical documents",
-                  "Exhibits natural history specimens"
-                ],
-                "answer": 0
-              },
-              {
-                "question": "Room 2",
-                "options": [
-                  "Contains paintings from the 18th century",
-                  "Displays modern sculptures",
-                  "Shows ancient pottery",
-                  "Features historical documents",
-                  "Exhibits natural history specimens"
-                ],
-                "answer": 2
-              },
-              {
-                "question": "Room 3",
-                "options": [
-                  "Contains paintings from the 18th century",
-                  "Displays modern sculptures",
-                  "Shows ancient pottery",
-                  "Features historical documents",
-                  "Exhibits natural history specimens"
-                ],
-                "answer": 4
-              },
-              {
-                "question": "Room 4",
-                "options": [
-                  "Contains paintings from the 18th century",
-                  "Displays modern sculptures",
-                  "Shows ancient pottery",
-                  "Features historical documents",
-                  "Exhibits natural history specimens"
-                ],
-                "answer": 1
-              },
-              {
-                "question": "Room 5",
-                "options": [
-                  "Contains paintings from the 18th century",
-                  "Displays modern sculptures",
-                  "Shows ancient pottery",
-                  "Features historical documents",
-                  "Exhibits natural history specimens"
-                ],
-                "answer": 3
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "id": 3,
-        "title": "Section 3: University Lecture",
-        "instruction": "Listen to a discussion between two students and their tutor. Answer questions 21-30.",
-        "questions": [
-          {
-            "type": "multiple-choice",
-            "instruction": "Choose the correct letter, A, B or C.",
-            "items": [
-              {
-                "question": "What is the main topic of the lecture?",
-                "options": [
-                  "Climate change",
-                  "Renewable energy",
-                  "Environmental pollution"
-                ],
-                "answer": 1
-              },
-              {
-                "question": "According to the tutor, what is the biggest challenge?",
-                "options": [
-                  "Cost of implementation",
-                  "Public awareness",
-                  "Government policies"
-                ],
-                "answer": 0
-              },
-              {
-                "question": "What does Sarah suggest?",
-                "options": [
-                  "More research is needed",
-                  "Immediate action should be taken",
-                  "Wait for better technology"
-                ],
-                "answer": 1
-              }
-            ]
-          },
-          {
-            "type": "note-completion",
-            "instruction": "Complete the notes below. Write ONE WORD ONLY for each answer.",
-            "notes": {
-              "title": "Renewable Energy Sources",
-              "items": [
-                "Solar power: Uses 24______ to generate electricity",
-                "Wind power: Requires strong and consistent 25______",
-                "Hydroelectric: Depends on water 26______",
-                "Geothermal: Utilizes heat from the 27______",
-                "Biomass: Converts organic 28______ into energy",
-                "Tidal power: Harnesses ocean 29______",
-                "Future outlook: Technology is becoming more 30______"
-              ]
-            },
-            "answers": [
-              "sunlight",
-              "wind",
-              "flow",
-              "earth",
-              "matter",
-              "tides",
-              "affordable"
-            ]
-          }
-        ]
-      },
-      {
-        "id": 4,
-        "title": "Section 4: Academic Lecture",
-        "instruction": "Listen to a lecture about urban planning. Answer questions 31-40.",
-        "questions": [
-          {
-            "type": "note-completion",
-            "instruction": "Complete the notes below. Write NO MORE THAN THREE WORDS for each answer.",
-            "notes": {
-              "title": "Urban Planning in the 21st Century",
-              "items": [
-                "Definition: Urban planning involves designing 31______ for cities",
-                "Key principles:",
-                "- Sustainability: Reducing 32______ and waste",
-                "- Accessibility: Ensuring good 33______ for all residents",
-                "- Green spaces: Creating parks and 34______",
-                "- Mixed-use development: Combining residential and 35______ areas",
-                "Challenges:",
-                "- Population growth: Cities are becoming more 36______",
-                "- Traffic congestion: Need for better 37______",
-                "- Housing affordability: Rising 38______ prices",
-                "Solutions:",
-                "- Smart cities: Using 39______ to improve services",
-                "- Community involvement: Encouraging 40______ participation"
-              ]
-            },
-            "answers": [
-              "living spaces",
-              "carbon emissions",
-              "public transport",
-              "recreational areas",
-              "commercial",
-              "crowded",
-              "infrastructure",
-              "property",
-              "technology",
-              "citizen"
-            ]
-          }
-        ]
       }
     ]
   }
