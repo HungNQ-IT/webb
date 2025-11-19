@@ -317,10 +317,13 @@ function QuizList({ quizzes, ieltsTests = [] }) {
                   <button
                     onClick={() => {
                       setShowModal(false)
-                      // Nếu là IELTS, dùng route /ielts/:id
-                      const route = selectedQuiz.type === 'ielts-reading' 
-                        ? `/ielts/${selectedQuiz.id}`
-                        : `/quiz/${selectedQuiz.id}`
+                      // Phân loại route dựa theo type
+                      let route = `/quiz/${selectedQuiz.id}`
+                      if (selectedQuiz.type === 'ielts-reading') {
+                        route = `/ielts/${selectedQuiz.id}`
+                      } else if (selectedQuiz.type === 'ielts-listening') {
+                        route = `/ielts-listening/${selectedQuiz.id}`
+                      }
                       navigate(route)
                     }}
                     className="w-full bg-blue-600 text-white py-4 rounded-xl font-semibold text-lg hover:bg-blue-700 transition-all"

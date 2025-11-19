@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { supabase } from '../utils/supabase'
 import { useAuth } from '../context/AuthContext'
 import RichContent from './RichContent'
@@ -138,7 +139,15 @@ function AdminDashboard({ quizzes = [] }) {
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-indigo-100 py-12">
       <div className="container mx-auto px-4">
         <div className="bg-white rounded-2xl shadow-lg p-6">
-          <h1 className="text-3xl font-bold text-gray-800 mb-6">Kết quả làm bài của học sinh</h1>
+          <div className="flex items-center justify-between mb-6">
+            <h1 className="text-3xl font-bold text-gray-800">Kết quả làm bài của học sinh</h1>
+            <Link
+              to="/admin/audio"
+              className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors flex items-center gap-2"
+            >
+              🎧 Quản lý Audio
+            </Link>
+          </div>
           
           {/* Thông báo submission mới */}
           {newSubmissionNotification && (

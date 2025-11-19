@@ -40,7 +40,7 @@ function Quiz({ quizzes }) {
   const navigate = useNavigate()
   const quiz = quizzes.find(q => q.id === parseInt(id))
   const { isAuthenticated } = useAuth()
-  
+
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [answers, setAnswers] = useState([])
   const [timeRemaining, setTimeRemaining] = useState(null)
@@ -49,10 +49,10 @@ function Quiz({ quizzes }) {
 
   useEffect(() => {
     if (!quiz) return
-    
+
     // Initialize answers array
     setAnswers(new Array(quiz.questions.length).fill(null))
-    
+
     // Initialize timer if timeLimit exists
     if (quiz.timeLimit) {
       setTimeRemaining(quiz.timeLimit * 60) // Convert minutes to seconds
@@ -87,9 +87,9 @@ function Quiz({ quizzes }) {
 
   const handleSubmit = () => {
     if (isSubmitted) return
-    
+
     setIsSubmitted(true)
-    
+
     // Calculate score for trắc nghiệm questions only
     let score = 0
     let autoGradedCount = 0
@@ -212,19 +212,17 @@ function Quiz({ quizzes }) {
                       key={index}
                       onClick={() => handleAnswerSelect(currentQuestion, index)}
                       disabled={isSubmitted}
-                      className={`w-full text-left p-4 rounded-xl border-2 transition-all ${
-                        isSelected
+                      className={`w-full text-left p-4 rounded-xl border-2 transition-all ${isSelected
                           ? 'border-blue-500 bg-blue-50'
                           : 'border-gray-200 hover:border-blue-300 hover:bg-gray-50'
-                      } ${isSubmitted ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+                        } ${isSubmitted ? 'cursor-not-allowed' : 'cursor-pointer'}`}
                     >
                       <div className="flex items-center gap-3">
-                        <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
-                          isSelected ? 'border-blue-500 bg-blue-500' : 'border-gray-300'
-                        }`}>
+                        <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${isSelected ? 'border-blue-500 bg-blue-500' : 'border-gray-300'
+                          }`}>
                           {isSelected && (
                             <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
+                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                             </svg>
                           )}
                         </div>
@@ -287,13 +285,12 @@ function Quiz({ quizzes }) {
                   key={index}
                   onClick={() => setCurrentQuestion(index)}
                   disabled={isSubmitted}
-                  className={`w-12 h-12 rounded-xl font-semibold transition-all ${
-                    index === currentQuestion
+                  className={`w-12 h-12 rounded-xl font-semibold transition-all ${index === currentQuestion
                       ? 'bg-blue-600 text-white shadow-md'
                       : answers[index] !== null
-                      ? 'bg-blue-100 text-blue-600 border-2 border-blue-200'
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                  } ${isSubmitted ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+                        ? 'bg-blue-100 text-blue-600 border-2 border-blue-200'
+                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    } ${isSubmitted ? 'cursor-not-allowed' : 'cursor-pointer'}`}
                 >
                   {index + 1}
                 </button>

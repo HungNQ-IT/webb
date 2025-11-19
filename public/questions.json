@@ -10,31 +10,56 @@
     "questions": [
       {
         "q": "Công thức tính Δ (delta) trong phương trình bậc hai ax² + bx + c = 0 là gì?",
-        "choices": ["b² - 4ac", "2a + c", "b² + 4ac", "a² - bc"],
+        "choices": [
+          "b² - 4ac",
+          "2a + c",
+          "b² + 4ac",
+          "a² - bc"
+        ],
         "answer": 0,
         "explain": "Công thức Δ = b² - 4ac là công thức cơ bản để tính biệt thức trong phương trình bậc hai."
       },
       {
         "q": "Nếu Δ > 0, phương trình bậc hai có bao nhiêu nghiệm?",
-        "choices": ["0 nghiệm", "1 nghiệm", "2 nghiệm phân biệt", "Vô số nghiệm"],
+        "choices": [
+          "0 nghiệm",
+          "1 nghiệm",
+          "2 nghiệm phân biệt",
+          "Vô số nghiệm"
+        ],
         "answer": 2,
         "explain": "Khi Δ > 0, phương trình có hai nghiệm phân biệt: x₁ = (-b + √Δ)/(2a) và x₂ = (-b - √Δ)/(2a)"
       },
       {
         "q": "Phương trình x² - 5x + 6 = 0 có nghiệm là:",
-        "choices": ["x = 2 và x = 3", "x = 1 và x = 6", "x = -2 và x = -3", "x = 0 và x = 5"],
+        "choices": [
+          "x = 2 và x = 3",
+          "x = 1 và x = 6",
+          "x = -2 và x = -3",
+          "x = 0 và x = 5"
+        ],
         "answer": 0,
         "explain": "Phân tích: x² - 5x + 6 = (x - 2)(x - 3) = 0, nên x = 2 hoặc x = 3"
       },
       {
         "q": "Nếu Δ = 0, phương trình có:",
-        "choices": ["Hai nghiệm phân biệt", "Một nghiệm kép", "Không có nghiệm", "Vô số nghiệm"],
+        "choices": [
+          "Hai nghiệm phân biệt",
+          "Một nghiệm kép",
+          "Không có nghiệm",
+          "Vô số nghiệm"
+        ],
         "answer": 1,
         "explain": "Khi Δ = 0, phương trình có một nghiệm kép: x = -b/(2a)"
       },
       {
         "q": "Công thức nghiệm của phương trình bậc hai khi Δ ≥ 0 là:",
-        "choices": ["x = (-b ± √Δ)/(2a)", "x = b ± √Δ", "x = (-b ± Δ)/(2a)", "x = b/(2a) ± √Δ"],
+        "choices": [
+          "x = (-b ± √Δ)/(2a)",
+          "x = b ± √Δ",
+          "x = (-b ± Δ)/(2a)",
+          "x = b/(2a) ± √Δ"
+        ],
         "answer": 0,
         "explain": "Công thức nghiệm tổng quát: x = (-b ± √Δ)/(2a), áp dụng khi Δ ≥ 0"
       },
@@ -43,10 +68,21 @@
         "eq": "x = \\frac{-b \\pm \\sqrt{b^2-4ac}}{2a}",
         "image": "images/ptb2.png",
         "choices": [
-          { "text": "2", "eq": "x=2" },
-          { "text": "3", "eq": "x=3" },
-          { "text": "2 hoặc 3", "eq": "x=2,3" },
-          { "text": "Không có nghiệm" }
+          {
+            "text": "2",
+            "eq": "x=2"
+          },
+          {
+            "text": "3",
+            "eq": "x=3"
+          },
+          {
+            "text": "2 hoặc 3",
+            "eq": "x=2,3"
+          },
+          {
+            "text": "Không có nghiệm"
+          }
         ],
         "answer": 2,
         "explain": "Áp dụng công thức nghiệm tổng quát",
@@ -66,19 +102,34 @@
     "questions": [
       {
         "q": "Hàm số y = 2x + 3 có hệ số góc là:",
-        "choices": ["2", "3", "5", "1"],
+        "choices": [
+          "2",
+          "3",
+          "5",
+          "1"
+        ],
         "answer": 0,
         "explain": "Trong hàm số y = ax + b, hệ số góc là a. Ở đây a = 2"
       },
       {
         "q": "Đồ thị hàm số y = -x + 2 cắt trục tung tại điểm:",
-        "choices": ["(0, 2)", "(2, 0)", "(0, -2)", "(-2, 0)"],
+        "choices": [
+          "(0, 2)",
+          "(2, 0)",
+          "(0, -2)",
+          "(-2, 0)"
+        ],
         "answer": 0,
         "explain": "Khi x = 0, ta có y = 2. Vậy đồ thị cắt trục tung tại điểm (0, 2)"
       },
       {
         "q": "Hàm số nào sau đây là hàm số nghịch biến?",
-        "choices": ["y = 3x + 1", "y = -2x + 5", "y = x", "y = 5x - 2"],
+        "choices": [
+          "y = 3x + 1",
+          "y = -2x + 5",
+          "y = x",
+          "y = 5x - 2"
+        ],
         "answer": 1,
         "explain": "Hàm số nghịch biến khi hệ số a < 0. Hàm số y = -2x + 5 có a = -2 < 0 nên là hàm số nghịch biến"
       }
@@ -95,19 +146,34 @@
     "questions": [
       {
         "q": "Công thức tính quãng đường trong chuyển động thẳng đều là:",
-        "choices": ["s = vt", "s = v/t", "s = v²t", "s = at²"],
+        "choices": [
+          "s = vt",
+          "s = v/t",
+          "s = v²t",
+          "s = at²"
+        ],
         "answer": 0,
         "explain": "Trong chuyển động thẳng đều, quãng đường được tính bằng công thức s = v.t (vận tốc nhân thời gian)"
       },
       {
         "q": "Một vật chuyển động với vận tốc 5 m/s trong 10 giây. Quãng đường vật đi được là:",
-        "choices": ["50 m", "15 m", "5 m", "10 m"],
+        "choices": [
+          "50 m",
+          "15 m",
+          "5 m",
+          "10 m"
+        ],
         "answer": 0,
         "explain": "s = v.t = 5 m/s × 10 s = 50 m"
       },
       {
         "q": "Trong chuyển động thẳng đều, vận tốc có đặc điểm gì?",
-        "choices": ["Thay đổi theo thời gian", "Không đổi", "Tăng dần", "Giảm dần"],
+        "choices": [
+          "Thay đổi theo thời gian",
+          "Không đổi",
+          "Tăng dần",
+          "Giảm dần"
+        ],
         "answer": 1,
         "explain": "Chuyển động thẳng đều là chuyển động có vận tốc không đổi theo thời gian"
       }
@@ -123,60 +189,95 @@
     "questions": [
       {
         "q": "Nguyên tố nào có ký hiệu hóa học là 'H'?",
-        "choices": ["Heli", "Hydro", "Hafni", "Hafnium"],
+        "choices": [
+          "Heli",
+          "Hydro",
+          "Hafni",
+          "Hafnium"
+        ],
         "answer": 1,
         "explain": "H là ký hiệu của nguyên tố Hydro, nguyên tố đầu tiên trong bảng tuần hoàn"
       },
       {
         "q": "Số nguyên tố trong chu kỳ 1 của bảng tuần hoàn là:",
-        "choices": ["2", "8", "18", "32"],
+        "choices": [
+          "2",
+          "8",
+          "18",
+          "32"
+        ],
         "answer": 0,
         "explain": "Chu kỳ 1 chỉ có 2 nguyên tố: Hydro (H) và Heli (He)"
       },
       {
         "q": "Nhóm nào trong bảng tuần hoàn chứa các nguyên tố khí hiếm?",
-        "choices": ["Nhóm IA", "Nhóm IIA", "Nhóm VIIA", "Nhóm VIIIA"],
+        "choices": [
+          "Nhóm IA",
+          "Nhóm IIA",
+          "Nhóm VIIA",
+          "Nhóm VIIIA"
+        ],
         "answer": 3,
         "explain": "Nhóm VIIIA (hay nhóm 18) chứa các nguyên tố khí hiếm như He, Ne, Ar, Kr, Xe, Rn"
       }
     ]
   },
   {
-  "id": 5,
-  "subject": "Vật Lý",
-  "grade": 11,
-  "title": "Điện trường",
-  "type": "tracnghiem",
-  "description": "Bài tập về điện trường",
-  "timeLimit": 30,
-  "questions": [
-    {
-      "q": "Tìm phát biểu sai về điện trường?",
-      "choices": ["Điện trường tồn tại xung quanh điện tích", "Điện trường tác dụng lực điện lên các điện tích khác đặt trong nó", " Điện trường của điện tích Q ở các điểm càng xa Q càng yếu", " Xung quanh một hệ hai điện tích điểm đặt gần nhau chỉ có điện trường do một điện tích gây ra"],
-      "answer": 3,
-      "explain": "Điện trường là môi trường (dạng vật chất) bao quanh điện tích và gắn liền với Điện tích; Điện trường tác dụng lực điện lên điện tích khác đặt trong nó."
-    },
-    {
-      "q": "Kết luận nào sau đây là sai?",
-      "choices": [" Đường sức điện trường là những đường có hướng", "Đường sức điện đi ra từ điện tích dương và kết thúc là điện tích âm", "Đường sức điện của điện trường tĩnh điện là đường khép kín", "Qua mỗi điểm trong điện trường chỉ có một đường sức điện"],
-      "answer": 2,
-      "explain": ""
-    },
-    {
-      "q": "Một điện tích điểm q = -2,5.10-7C đặt tại điểm M trong điện trường, chịu tác dụng của lực điện trường có độ lớn 6,2.10-2N. Cường độ điện trường tại M là?",
-      "choices": ["2,4.105 V/m", "-2,4.105V/M", "15.10-9V/m", "-15.10-9V/m"],
-      "answer": 0,
-      "explain": "Điện trường là môi trường (dạng vật chất) bao quanh điện tích và gắn liền với Điện tích; Điện trường tác dụng lực điện lên điện tích khác đặt trong nó."
-    },
-    {
-      "q": "Cho quả cầu kim loại A nhiễm điện dương lại gần đầu M của thanh kim loại MN trung hòa về điện. Hiện tượng gì sẽ xảy ra trên thanh MN?",
-      "choices": ["Đầu M nhiễm điện âm, đầu N nhiễm điện dương", "Đầu M nhiễm điện dương, đầu N nhiễm điện âm", "Thanh MN nhiễm điện âm", "Thanh MN nhiễm điện dương"],
-      "image": "asset/100-cau-trac-nghiem-dien-tich-dien-truong-co-ban-9.png",
-      "answer": 0,
-      "explain": "Đậy là hiện tượng nhiễm điện do hưởng ứng: Quả cầu nhiễm điện dương sẽ hút electron về đầu M nên đầu M nhiễm điện âm."
-    }
-  ]
-},
+    "id": 5,
+    "subject": "Vật Lý",
+    "grade": 11,
+    "title": "Điện trường",
+    "type": "tracnghiem",
+    "description": "Bài tập về điện trường",
+    "timeLimit": 30,
+    "questions": [
+      {
+        "q": "Tìm phát biểu sai về điện trường?",
+        "choices": [
+          "Điện trường tồn tại xung quanh điện tích",
+          "Điện trường tác dụng lực điện lên các điện tích khác đặt trong nó",
+          " Điện trường của điện tích Q ở các điểm càng xa Q càng yếu",
+          " Xung quanh một hệ hai điện tích điểm đặt gần nhau chỉ có điện trường do một điện tích gây ra"
+        ],
+        "answer": 3,
+        "explain": "Điện trường là môi trường (dạng vật chất) bao quanh điện tích và gắn liền với Điện tích; Điện trường tác dụng lực điện lên điện tích khác đặt trong nó."
+      },
+      {
+        "q": "Kết luận nào sau đây là sai?",
+        "choices": [
+          " Đường sức điện trường là những đường có hướng",
+          "Đường sức điện đi ra từ điện tích dương và kết thúc là điện tích âm",
+          "Đường sức điện của điện trường tĩnh điện là đường khép kín",
+          "Qua mỗi điểm trong điện trường chỉ có một đường sức điện"
+        ],
+        "answer": 2,
+        "explain": ""
+      },
+      {
+        "q": "Một điện tích điểm q = -2,5.10-7C đặt tại điểm M trong điện trường, chịu tác dụng của lực điện trường có độ lớn 6,2.10-2N. Cường độ điện trường tại M là?",
+        "choices": [
+          "2,4.105 V/m",
+          "-2,4.105V/M",
+          "15.10-9V/m",
+          "-15.10-9V/m"
+        ],
+        "answer": 0,
+        "explain": "Điện trường là môi trường (dạng vật chất) bao quanh điện tích và gắn liền với Điện tích; Điện trường tác dụng lực điện lên điện tích khác đặt trong nó."
+      },
+      {
+        "q": "Cho quả cầu kim loại A nhiễm điện dương lại gần đầu M của thanh kim loại MN trung hòa về điện. Hiện tượng gì sẽ xảy ra trên thanh MN?",
+        "choices": [
+          "Đầu M nhiễm điện âm, đầu N nhiễm điện dương",
+          "Đầu M nhiễm điện dương, đầu N nhiễm điện âm",
+          "Thanh MN nhiễm điện âm",
+          "Thanh MN nhiễm điện dương"
+        ],
+        "image": "asset/100-cau-trac-nghiem-dien-tich-dien-truong-co-ban-9.png",
+        "answer": 0,
+        "explain": "Đậy là hiện tượng nhiễm điện do hưởng ứng: Quả cầu nhiễm điện dương sẽ hút electron về đầu M nên đầu M nhiễm điện âm."
+      }
+    ]
+  },
   {
     "id": 6,
     "subject": "Toán",
@@ -186,621 +287,1002 @@
     "description": "THCS REVICE",
     "timeLimit": 30,
     "questions": [
-    {
+      {
         "q": "Cho tập hợp A = {0}. Hãy chọn khẳng định đúng?",
-        "choices": ["A không phải là tập hợp.", "A là tập hợp có hai phần tử.", "A là tập hợp không có phần tử nào", "A là tập hợp có một phần tử là 0."],
+        "choices": [
+          "A không phải là tập hợp.",
+          "A là tập hợp có hai phần tử.",
+          "A là tập hợp không có phần tử nào",
+          "A là tập hợp có một phần tử là 0."
+        ],
         "answer": 0,
         "explain": ""
-  },
-  {
+      },
+      {
         "q": "Trong các hình sau, hình nào là lục giác đều?",
-        "choices": ["Hình (H2)", " Hình (H1).", "Hình (H4).", "Hình (H3)."],
-        "image" : "asset/1.png",
+        "choices": [
+          "Hình (H2)",
+          " Hình (H1).",
+          "Hình (H4).",
+          "Hình (H3)."
+        ],
+        "image": "asset/1.png",
         "answer": 0,
         "explain": ""
-  },
-  {
-    "q": "Chọn kết quả đúng của phép tính với a ≠ 0?",
-    "eq": "a^m \\cdot a^n",
-    "choices": [
-      { "eq": "a^{m \\cdot n}" },
-      { "eq": "a^{m+n}" },
-      { "eq": "a^{m-n}" },
-      { "eq": "a^{m:n}" }
-    ],
-    "answer": 1,
-    "explain": "Khi nhân hai lũy thừa cùng cơ số, ta giữ nguyên cơ số và cộng các số mũ",
-    "explainEq": "a^m \\cdot a^n = a^{m+n}"
-  },
-  {
-    "q": "Hãy chỉ ra các cặp góc bằng nhau trong hình thoi EFGH sau:",
-        "choices": ["Góc đỉnh E bằng góc đỉnh F.", "Góc đỉnh E bằng góc đỉnh H.", "Góc đỉnh G bằng góc đỉnh H.", "Góc đỉnh E bằng góc đỉnh G."],
-        "image" : "asset/2.png",
+      },
+      {
+        "q": "Chọn kết quả đúng của phép tính với a ≠ 0?",
+        "eq": "a^m \\cdot a^n",
+        "choices": [
+          {
+            "eq": "a^{m \\cdot n}"
+          },
+          {
+            "eq": "a^{m+n}"
+          },
+          {
+            "eq": "a^{m-n}"
+          },
+          {
+            "eq": "a^{m:n}"
+          }
+        ],
+        "answer": 1,
+        "explain": "Khi nhân hai lũy thừa cùng cơ số, ta giữ nguyên cơ số và cộng các số mũ",
+        "explainEq": "a^m \\cdot a^n = a^{m+n}"
+      },
+      {
+        "q": "Hãy chỉ ra các cặp góc bằng nhau trong hình thoi EFGH sau:",
+        "choices": [
+          "Góc đỉnh E bằng góc đỉnh F.",
+          "Góc đỉnh E bằng góc đỉnh H.",
+          "Góc đỉnh G bằng góc đỉnh H.",
+          "Góc đỉnh E bằng góc đỉnh G."
+        ],
+        "image": "asset/2.png",
         "answer": 0,
         "explain": ""
-  },
-  {
-    "q": "Hình thoi có tính chất nào dưới đây?",
-        "choices": ["Bốn góc bằng nhau.", "Hai đường chéo bằng nhau.", "Bốn cạnh không bằng nhau.", "Hai đường chéo vuông góc với nhau"],
+      },
+      {
+        "q": "Hình thoi có tính chất nào dưới đây?",
+        "choices": [
+          "Bốn góc bằng nhau.",
+          "Hai đường chéo bằng nhau.",
+          "Bốn cạnh không bằng nhau.",
+          "Hai đường chéo vuông góc với nhau"
+        ],
         "answer": 0,
         "explain": ""
-  },
-  {
-    "q": "Cho tam giác đều ABC. Kết luận nào sau đây là đúng nhất?",
-        "choices": ["AB < AC < BC", "AB < AC.", "AB = BC.", "AB = BC = AC."],
+      },
+      {
+        "q": "Cho tam giác đều ABC. Kết luận nào sau đây là đúng nhất?",
+        "choices": [
+          "AB < AC < BC",
+          "AB < AC.",
+          "AB = BC.",
+          "AB = BC = AC."
+        ],
         "answer": 0,
         "explain": ""
-  },
-  {
-    "q": "Cho lục giác đều ABCDEF. Kết luận nào sau đây là sai?",
-        "choices": ["AB = BC = CD = EF = DE = FA", " AD = BE = CF.", "AD = BE = CF = AE = BD.", "Góc đỉnh A bằng góc đỉnh E"],
-        "image" : "asset/3.png",
+      },
+      {
+        "q": "Cho lục giác đều ABCDEF. Kết luận nào sau đây là sai?",
+        "choices": [
+          "AB = BC = CD = EF = DE = FA",
+          " AD = BE = CF.",
+          "AD = BE = CF = AE = BD.",
+          "Góc đỉnh A bằng góc đỉnh E"
+        ],
+        "image": "asset/3.png",
         "answer": 0,
         "explain": ""
-  }, 
-  {
-    "q": "Tính chu vi của hình tam giác đều có độ dài cạnh là 5 m?",
-        "choices": ["6 m", "15 m", "8 m", "10 m"],
+      },
+      {
+        "q": "Tính chu vi của hình tam giác đều có độ dài cạnh là 5 m?",
+        "choices": [
+          "6 m",
+          "15 m",
+          "8 m",
+          "10 m"
+        ],
         "answer": 0,
         "explain": ""
-  },
-  {
-    "q": "Trong các số tự nhiên sau, số nào là số nguyên tố?",
-        "choices": ["16", "17", "1", "33"],
+      },
+      {
+        "q": "Trong các số tự nhiên sau, số nào là số nguyên tố?",
+        "choices": [
+          "16",
+          "17",
+          "1",
+          "33"
+        ],
         "answer": 0,
         "explain": ""
-  },
-  {
-    "q": "Trong các hình sau, hình nào là hình thoi?",
-        "choices": ["Hình B", "Hình C", "Hình A", "Hình D"],
-        "image" : "asset/4.png",
+      },
+      {
+        "q": "Trong các hình sau, hình nào là hình thoi?",
+        "choices": [
+          "Hình B",
+          "Hình C",
+          "Hình A",
+          "Hình D"
+        ],
+        "image": "asset/4.png",
         "answer": 2,
         "explain": ""
-  },
-  {
-    "q": "Phân tích số 20 ra thừa số nguyên tố, ta được kết quả nào sau đây là đúng?",
-        "choices": ["20 = 4.5", "20 = 2.10", "20 = 2.2.5", "20 = 2.5.5"],
-        "image" : "asset/4.png",
+      },
+      {
+        "q": "Phân tích số 20 ra thừa số nguyên tố, ta được kết quả nào sau đây là đúng?",
+        "choices": [
+          "20 = 4.5",
+          "20 = 2.10",
+          "20 = 2.2.5",
+          "20 = 2.5.5"
+        ],
+        "image": "asset/4.png",
         "answer": 2,
         "explain": ""
-  },
-  {
-    "q": "Trong các số sau, số nào là hợp số?",
-        "choices": ["3", "5", "7", "9"],
+      },
+      {
+        "q": "Trong các số sau, số nào là hợp số?",
+        "choices": [
+          "3",
+          "5",
+          "7",
+          "9"
+        ],
         "answer": 3,
         "explain": ""
+      },
+      {
+        "q": "Thực hiện phép tính:\na) 39 * 2023 + 86 * 2023 - 2023 * 25",
+        "eq": "b)\\;5^3 - 8^8 + 9\\cdot 3^2 = ?",
+        "choices": []
+      },
+      {
+        "q": "Câu 2 (1,5 điểm): Tìm x, biết",
+        "eq": "\\begin{aligned} &a)\\;2015 - x = 1000\\\\ &b)\\;320 - 15x = 200\\\\ &c)\\;2^{x+3} - 2^x = 224\\end{aligned}",
+        "choices": []
+      },
+      {
+        "q": "Câu 3 (1 điểm): An được mẹ mua cho 9 quyển vở, 5 cây bút bi và 2 cục tẩy. Mẹ An đã trả tổng cộng hết số tiền là 91.000 đồng. Mẹ An nhớ giá tiền của một quyển vở là 6.500 đồng, của cục tẩy là 5.000 đồng nhưng mẹ An lại không nhớ số tiền của một cây bút bi là bao nhiêu. Em hãy giúp mẹ An tính giá tiền của một cây bút bi là bao nhiêu nhé?",
+        "choices": []
+      },
+      {
+        "q": "Câu 4 (1,25 điểm): Vẽ hình chữ nhật ABCD có chiều dài bằng 8cm, chiều rộng bằng 4cm. Tính:\na) Diện tích của hình chữ nhật ABCD.\nb) Chu vi của hình chữ nhật ABCD.\nc) Giả sử có một hình vuông có chu vi bằng chu vi hình chữ nhật ABCD ở trên. Tính diện tích hình vuông đó.",
+        "choices": []
+      },
+      {
+        "q": "Câu 5 (1,25 điểm): Hãy vẽ hình vuông ABCD có cạnh AB = 7cm.\na) Hãy kể tên các cạnh, các đường chéo của hình vuông ABCD.\nb) Tính chu vi và diện tích của hình vuông ABCD.",
+        "choices": []
+      },
+      {
+        "q": "Câu 6 (0,5 điểm): Vào tết Trung thu, lớp của Bình đã chuẩn bị các phần quà như nhau từ 90 thanh socola nhỏ và 120 chiếc bánh trung thu để tặng các bạn nhỏ trong một trung tâm trại trẻ em khuyết tật. Hỏi các bạn trong lớp của Bình đã chuẩn bị được nhiều nhất bao nhiêu phần quà và khi đó, mỗi phần quà bao gồm mấy thanh socola và mấy chiếc bánh trung thu? Biết mỗi phần quà có số socola và bánh trung thu đều bằng nhau.",
+        "choices": []
+      },
+      {
+        "q": "Câu 7 (0,5 điểm): Cho A = 2 + 2^2 + 2^3 + \\dots + 2^{19} + 2^{20}. Chứng minh A chia hết cho 3.",
+        "choices": []
+      }
+    ]
   },
   {
-    "q": "Thực hiện phép tính:\na) 39 * 2023 + 86 * 2023 - 2023 * 25",
-    "eq": "b)\\;5^3 - 8^8 + 9\\cdot 3^2 = ?",
-    "choices": []
+    "id": 7,
+    "subject": "Tiếng Anh",
+    "grade": 6,
+    "title": "Từ vựng và ngữ pháp cơ bản",
+    "type": "tracnghiem",
+    "description": "Bài tập Tiếng Anh lớp 6 - Từ vựng và thì hiện tại đơn",
+    "timeLimit": 15,
+    "questions": [
+      {
+        "q": "Choose the correct word: I _____ to school every day.",
+        "choices": [
+          "go",
+          "goes",
+          "going",
+          "went"
+        ],
+        "answer": 0,
+        "explain": "Với chủ ngữ 'I', ta dùng động từ nguyên mẫu 'go' trong thì hiện tại đơn."
+      },
+      {
+        "q": "What is the plural form of 'child'?",
+        "choices": [
+          "childs",
+          "children",
+          "childrens",
+          "child"
+        ],
+        "answer": 1,
+        "explain": "'Children' là dạng số nhiều bất quy tắc của 'child'."
+      },
+      {
+        "q": "Choose the correct answer: She _____ her homework in the evening.",
+        "choices": [
+          "do",
+          "does",
+          "did",
+          "doing"
+        ],
+        "answer": 1,
+        "explain": "Với chủ ngữ số ít 'She', ta dùng 'does' trong thì hiện tại đơn."
+      },
+      {
+        "q": "What does 'library' mean in Vietnamese?",
+        "choices": [
+          "Thư viện",
+          "Trường học",
+          "Bệnh viện",
+          "Nhà sách"
+        ],
+        "answer": 0,
+        "explain": "'Library' có nghĩa là 'thư viện' trong tiếng Việt."
+      },
+      {
+        "q": "Choose the correct preposition: I go to school _____ Monday.",
+        "choices": [
+          "in",
+          "on",
+          "at",
+          "for"
+        ],
+        "answer": 1,
+        "explain": "Ta dùng giới từ 'on' với các ngày trong tuần."
+      }
+    ]
   },
   {
-    "q": "Câu 2 (1,5 điểm): Tìm x, biết",
-    "eq": "\\begin{aligned} &a)\\;2015 - x = 1000\\\\ &b)\\;320 - 15x = 200\\\\ &c)\\;2^{x+3} - 2^x = 224\\end{aligned}",
-    "choices": []
+    "id": 8,
+    "subject": "Tiếng Anh",
+    "grade": 7,
+    "title": "Thì hiện tại tiếp diễn và từ vựng",
+    "type": "tracnghiem",
+    "description": "Bài tập Tiếng Anh lớp 7 - Thì hiện tại tiếp diễn",
+    "timeLimit": 15,
+    "questions": [
+      {
+        "q": "Choose the correct form: They _____ football now.",
+        "choices": [
+          "play",
+          "plays",
+          "are playing",
+          "played"
+        ],
+        "answer": 2,
+        "explain": "Với từ 'now', ta dùng thì hiện tại tiếp diễn: 'are playing'."
+      },
+      {
+        "q": "What is the negative form of 'I am studying'?",
+        "choices": [
+          "I am not studying",
+          "I not am studying",
+          "I don't studying",
+          "I isn't studying"
+        ],
+        "answer": 0,
+        "explain": "Dạng phủ định của thì hiện tại tiếp diễn: 'am not + V-ing'."
+      },
+      {
+        "q": "Choose the correct word: My sister is _____ a book.",
+        "choices": [
+          "read",
+          "reads",
+          "reading",
+          "readed"
+        ],
+        "answer": 2,
+        "explain": "Sau 'is', ta dùng động từ dạng V-ing trong thì hiện tại tiếp diễn."
+      },
+      {
+        "q": "What does 'neighborhood' mean?",
+        "choices": [
+          "Hàng xóm",
+          "Khu phố",
+          "Thành phố",
+          "Quốc gia"
+        ],
+        "answer": 1,
+        "explain": "'Neighborhood' có nghĩa là 'khu phố' hoặc 'vùng lân cận'."
+      },
+      {
+        "q": "Choose the correct answer: _____ you watching TV?",
+        "choices": [
+          "Do",
+          "Does",
+          "Are",
+          "Is"
+        ],
+        "answer": 2,
+        "explain": "Câu hỏi thì hiện tại tiếp diễn với 'you' dùng 'Are'."
+      }
+    ]
   },
   {
-    "q": "Câu 3 (1 điểm): An được mẹ mua cho 9 quyển vở, 5 cây bút bi và 2 cục tẩy. Mẹ An đã trả tổng cộng hết số tiền là 91.000 đồng. Mẹ An nhớ giá tiền của một quyển vở là 6.500 đồng, của cục tẩy là 5.000 đồng nhưng mẹ An lại không nhớ số tiền của một cây bút bi là bao nhiêu. Em hãy giúp mẹ An tính giá tiền của một cây bút bi là bao nhiêu nhé?",
-    "choices": []
+    "id": 9,
+    "subject": "Tiếng Anh",
+    "grade": 8,
+    "title": "Thì quá khứ đơn và so sánh",
+    "type": "tracnghiem",
+    "description": "Bài tập Tiếng Anh lớp 8 - Thì quá khứ đơn và cấu trúc so sánh",
+    "timeLimit": 20,
+    "questions": [
+      {
+        "q": "Choose the correct past tense: Yesterday, I _____ to the cinema.",
+        "choices": [
+          "go",
+          "goes",
+          "went",
+          "going"
+        ],
+        "answer": 2,
+        "explain": "'Went' là dạng quá khứ của 'go'. Với 'yesterday', ta dùng thì quá khứ đơn."
+      },
+      {
+        "q": "What is the past participle of 'see'?",
+        "choices": [
+          "saw",
+          "seen",
+          "see",
+          "seeing"
+        ],
+        "answer": 1,
+        "explain": "'Seen' là quá khứ phân từ của 'see' (see - saw - seen)."
+      },
+      {
+        "q": "Choose the correct comparative: This book is _____ than that one.",
+        "choices": [
+          "interesting",
+          "more interesting",
+          "most interesting",
+          "interestinger"
+        ],
+        "answer": 1,
+        "explain": "Tính từ dài (3+ âm tiết) dùng 'more' trong so sánh hơn: 'more interesting'."
+      },
+      {
+        "q": "Choose the correct form: She _____ her keys last night.",
+        "choices": [
+          "lose",
+          "loses",
+          "lost",
+          "losing"
+        ],
+        "answer": 2,
+        "explain": "Với 'last night', ta dùng thì quá khứ đơn: 'lost'."
+      },
+      {
+        "q": "What does 'environment' mean?",
+        "choices": [
+          "Môi trường",
+          "Giáo dục",
+          "Kinh tế",
+          "Văn hóa"
+        ],
+        "answer": 0,
+        "explain": "'Environment' có nghĩa là 'môi trường' trong tiếng Việt."
+      }
+    ]
   },
   {
-    "q": "Câu 4 (1,25 điểm): Vẽ hình chữ nhật ABCD có chiều dài bằng 8cm, chiều rộng bằng 4cm. Tính:\na) Diện tích của hình chữ nhật ABCD.\nb) Chu vi của hình chữ nhật ABCD.\nc) Giả sử có một hình vuông có chu vi bằng chu vi hình chữ nhật ABCD ở trên. Tính diện tích hình vuông đó.",
-    "choices": []
+    "id": 10,
+    "subject": "Tiếng Anh",
+    "grade": 9,
+    "title": "Thì tương lai và câu điều kiện",
+    "type": "tracnghiem",
+    "description": "Bài tập Tiếng Anh lớp 9 - Thì tương lai và câu điều kiện loại 1",
+    "timeLimit": 20,
+    "questions": [
+      {
+        "q": "Choose the correct future form: I _____ visit my grandparents next week.",
+        "choices": [
+          "will",
+          "am",
+          "was",
+          "have"
+        ],
+        "answer": 0,
+        "explain": "Với 'next week', ta dùng 'will' để diễn tả tương lai: 'will visit'."
+      },
+      {
+        "q": "Complete the conditional sentence: If it rains, I _____ stay at home.",
+        "choices": [
+          "will",
+          "would",
+          "am",
+          "was"
+        ],
+        "answer": 0,
+        "explain": "Câu điều kiện loại 1: If + present simple, S + will + V."
+      },
+      {
+        "q": "Choose the correct form: They _____ to the beach tomorrow.",
+        "choices": [
+          "go",
+          "goes",
+          "will go",
+          "went"
+        ],
+        "answer": 2,
+        "explain": "Với 'tomorrow', ta dùng thì tương lai đơn: 'will go'."
+      },
+      {
+        "q": "What is the meaning of 'pollution'?",
+        "choices": [
+          "Ô nhiễm",
+          "Bảo vệ",
+          "Làm sạch",
+          "Tái chế"
+        ],
+        "answer": 0,
+        "explain": "'Pollution' có nghĩa là 'ô nhiễm' trong tiếng Việt."
+      },
+      {
+        "q": "Choose the correct answer: What _____ you do if you win the lottery?",
+        "choices": [
+          "do",
+          "does",
+          "will",
+          "did"
+        ],
+        "answer": 2,
+        "explain": "Câu hỏi về tương lai dùng 'will'."
+      }
+    ]
   },
   {
-    "q": "Câu 5 (1,25 điểm): Hãy vẽ hình vuông ABCD có cạnh AB = 7cm.\na) Hãy kể tên các cạnh, các đường chéo của hình vuông ABCD.\nb) Tính chu vi và diện tích của hình vuông ABCD.",
-    "choices": []
+    "id": 11,
+    "subject": "Tiếng Anh",
+    "grade": 10,
+    "title": "Câu bị động và ngữ pháp nâng cao",
+    "type": "tracnghiem",
+    "description": "Bài tập Tiếng Anh lớp 10 - Câu bị động và các cấu trúc ngữ pháp phức tạp",
+    "timeLimit": 25,
+    "questions": [
+      {
+        "q": "Choose the correct passive form: The book _____ by many people.",
+        "choices": [
+          "read",
+          "reads",
+          "is read",
+          "are read"
+        ],
+        "answer": 2,
+        "explain": "Câu bị động thì hiện tại đơn: 'is/are + past participle'. 'Book' là số ít nên dùng 'is read'."
+      },
+      {
+        "q": "What is the passive form of 'They built this house in 2020'?",
+        "choices": [
+          "This house was built in 2020",
+          "This house is built in 2020",
+          "This house built in 2020",
+          "This house were built in 2020"
+        ],
+        "answer": 0,
+        "explain": "Câu bị động thì quá khứ: 'was/were + past participle'. 'House' là số ít nên dùng 'was built'."
+      },
+      {
+        "q": "Choose the correct modal verb: You _____ study hard to pass the exam.",
+        "choices": [
+          "can",
+          "should",
+          "will",
+          "may"
+        ],
+        "answer": 1,
+        "explain": "'Should' diễn tả lời khuyên: 'Bạn nên học chăm chỉ'."
+      },
+      {
+        "q": "What does 'sustainable' mean?",
+        "choices": [
+          "Bền vững",
+          "Nguy hiểm",
+          "Tạm thời",
+          "Phức tạp"
+        ],
+        "answer": 0,
+        "explain": "'Sustainable' có nghĩa là 'bền vững' trong tiếng Việt."
+      },
+      {
+        "q": "Choose the correct relative pronoun: The man _____ lives next door is a doctor.",
+        "choices": [
+          "which",
+          "who",
+          "where",
+          "when"
+        ],
+        "answer": 1,
+        "explain": "'Who' dùng để thay thế cho danh từ chỉ người làm chủ ngữ."
+      }
+    ]
   },
   {
-    "q": "Câu 6 (0,5 điểm): Vào tết Trung thu, lớp của Bình đã chuẩn bị các phần quà như nhau từ 90 thanh socola nhỏ và 120 chiếc bánh trung thu để tặng các bạn nhỏ trong một trung tâm trại trẻ em khuyết tật. Hỏi các bạn trong lớp của Bình đã chuẩn bị được nhiều nhất bao nhiêu phần quà và khi đó, mỗi phần quà bao gồm mấy thanh socola và mấy chiếc bánh trung thu? Biết mỗi phần quà có số socola và bánh trung thu đều bằng nhau.",
-    "choices": []
+    "id": 12,
+    "subject": "Tiếng Anh",
+    "grade": 11,
+    "title": "Câu tường thuật và ngữ pháp nâng cao",
+    "difficulty": "hard",
+    "type": "tracnghiem",
+    "description": "Bài tập Tiếng Anh lớp 11 - Câu tường thuật và các cấu trúc ngữ pháp phức tạp",
+    "timeLimit": 25,
+    "questions": [
+      {
+        "q": "Choose the correct reported speech: She said, 'I am tired.' → She said that _____ tired.",
+        "choices": [
+          "she is",
+          "she was",
+          "I am",
+          "I was"
+        ],
+        "answer": 1,
+        "explain": "Trong câu tường thuật, thì hiện tại đơn chuyển thành quá khứ đơn: 'am' → 'was', và đổi 'I' → 'she'."
+      },
+      {
+        "q": "What is the reported speech of 'He said, \"I will come tomorrow\"'?",
+        "choices": [
+          "He said that he will come tomorrow",
+          "He said that he would come the next day",
+          "He said that I will come tomorrow",
+          "He said that he comes tomorrow"
+        ],
+        "answer": 1,
+        "explain": "Trong câu tường thuật: 'will' → 'would', 'tomorrow' → 'the next day', 'I' → 'he'."
+      },
+      {
+        "q": "Choose the correct form: I wish I _____ speak English fluently.",
+        "choices": [
+          "can",
+          "could",
+          "will",
+          "am"
+        ],
+        "answer": 1,
+        "explain": "Sau 'wish', ta dùng thì quá khứ để diễn tả điều ước ở hiện tại: 'could'."
+      },
+      {
+        "q": "What does 'phenomenon' mean?",
+        "choices": [
+          "Hiện tượng",
+          "Vấn đề",
+          "Giải pháp",
+          "Nguyên nhân"
+        ],
+        "answer": 0,
+        "explain": "'Phenomenon' có nghĩa là 'hiện tượng' trong tiếng Việt."
+      },
+      {
+        "q": "Choose the correct answer: If I _____ you, I would study harder.",
+        "choices": [
+          "am",
+          "was",
+          "were",
+          "be"
+        ],
+        "answer": 2,
+        "explain": "Câu điều kiện loại 2: If + S + were (cho tất cả các ngôi), S + would + V."
+      }
+    ]
   },
   {
-    "q": "Câu 7 (0,5 điểm): Cho A = 2 + 2^2 + 2^3 + \\dots + 2^{19} + 2^{20}. Chứng minh A chia hết cho 3.",
-    "choices": []
+    "id": 13,
+    "subject": "Tiếng Anh",
+    "grade": 12,
+    "title": "Ôn tập thi tốt nghiệp THPT",
+    "difficulty": "hard",
+    "type": "tracnghiem",
+    "description": "Bài tập Tiếng Anh lớp 12 - Ôn tập cho kỳ thi tốt nghiệp THPT",
+    "timeLimit": 30,
+    "questions": [
+      {
+        "q": "Choose the correct answer: Not only _____ the exam, but he also got the highest score.",
+        "choices": [
+          "he passed",
+          "did he pass",
+          "he did pass",
+          "passed he"
+        ],
+        "answer": 1,
+        "explain": "Với 'Not only' ở đầu câu, ta phải đảo ngữ: 'did he pass'."
+      },
+      {
+        "q": "What is the correct form: I would rather you _____ here on time.",
+        "choices": [
+          "come",
+          "came",
+          "coming",
+          "to come"
+        ],
+        "answer": 1,
+        "explain": "Sau 'would rather', ta dùng thì quá khứ đơn: 'came'."
+      },
+      {
+        "q": "Choose the correct answer: The harder you study, _____ you will get.",
+        "choices": [
+          "the better results",
+          "better results",
+          "the best results",
+          "best results"
+        ],
+        "answer": 0,
+        "explain": "Cấu trúc so sánh kép: 'The + comparative, the + comparative'."
+      },
+      {
+        "q": "What does 'accomplish' mean?",
+        "choices": [
+          "Hoàn thành",
+          "Bắt đầu",
+          "Trì hoãn",
+          "Hủy bỏ"
+        ],
+        "answer": 0,
+        "explain": "'Accomplish' có nghĩa là 'hoàn thành', 'đạt được' trong tiếng Việt."
+      },
+      {
+        "q": "Choose the correct answer: Had I known about the test, I _____ more carefully.",
+        "choices": [
+          "study",
+          "studied",
+          "would study",
+          "would have studied"
+        ],
+        "answer": 3,
+        "explain": "Câu điều kiện loại 3 đảo ngữ: Had + S + past participle, S + would have + past participle."
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "subject": "Toán",
+    "grade": 6,
+    "title": "Chủ đề 8 - Bài 22: Phân loại thế giới sống",
+    "difficulty": "hard",
+    "type": "tracnghiem",
+    "description": "Khoa Học Tự Nhiên 6",
+    "timeLimit": 30,
+    "questions": [
+      {
+        "q": "Trong hệ thống phân loại 5 giới sinh vật, vi khuẩn thuộc giới nào?",
+        "choices": [
+          "Giới Khởi Sinh",
+          "Giới Nguyên Sinh",
+          "Giới Nấm",
+          "Giới Động Vật"
+        ],
+        "answer": 1,
+        "explain": ""
+      },
+      {
+        "q": "Cho các đại diện: (1) Nấm sò; (2) Tảo lục đơn bào; (3) Vi khuẩn; (4) Rong. Trong các đại diện trên, có bao nhiêu đại diện thuộc giới Nguyên sinh?",
+        "choices": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "answer": 1,
+        "explain": ""
+      },
+      {
+        "q": "Trong các loài dưới đây, loài nào thuộc giới Khởi sinh?",
+        "choices": [
+          "Trùng giày",
+          "Trùng sốt rét",
+          "Trùng kiết lị",
+          "VI khuẩn lao"
+        ],
+        "answer": 1,
+        "explain": ""
+      },
+      {
+        "q": "Trong các loài dưới đây, loài nào không thuộc giới Thực vật?",
+        "choices": [
+          "Tảo đa bào",
+          "Dương xỉ",
+          "Rêu",
+          "Thông"
+        ],
+        "answer": 1,
+        "explain": ""
+      },
+      {
+        "q": "Loại rừng nào dưới đây có hệ thực vật phong phú nhất?",
+        "choices": [
+          "Rừng lá kim phương Bắc",
+          "Rừng mưa nhiệt đới",
+          "Rừng lá rộng ôn đới",
+          "Rừng ngập mặn ven biển"
+        ],
+        "answer": 1,
+        "explain": ""
+      },
+      {
+        "q": "Thế giới sống được phân thành các nhóm theo trình tự nào?",
+        "choices": [
+          "Loài -> chi -> họ -> bộ -> lớp -> ngành -> giới",
+          "Chi -> họ -> bộ -> lớp -> ngành -> giới -> loài",
+          "TLoài -> chi -> bộ -> họ -> lớp -> ngành -> giới",
+          "Loài -> chi -> lớp -> họ -> bộ -> ngành -> giới"
+        ],
+        "answer": 1,
+        "explain": ""
+      },
+      {
+        "q": "Đặc điểm nào dưới đây không phải của giới động vật?",
+        "choices": [
+          "Đa bào",
+          "Dị dưỡng",
+          "Nhân sơ",
+          "Có khả năng di chuyển"
+        ],
+        "answer": 1,
+        "explain": ""
+      },
+      {
+        "q": "Việc phân loại thế giới sống có ý nghĩa gì đối với chúng ta?\n(1) Gọi đúng tên sinh vật.\n(2) Đưa sinh vật vào đúng nhóm phân loại.\n(3) Thấy được vai trò của sinh vật trong tự nhiên và thực tiễn.\n(4) Nhận ra sự đa dạng của sinh giới.",
+        "choices": [
+          "(1), (3), (2)",
+          "(2), (3), (4)",
+          "(1), (2), (4)",
+          "(1), (3), (4)"
+        ],
+        "answer": 1,
+        "explain": ""
+      },
+      {
+        "q": "Cấu tạo tế bào nhân thực, cơ thể đa bào, có khả năng quang hợp là đặc điểm của sinh vật thuộc giơi nào sau đây?",
+        "choices": [
+          "Khởi sinh",
+          "Nguyên sinh",
+          "Nấm",
+          "Thực vật"
+        ],
+        "answer": 1,
+        "explain": ""
+      },
+      {
+        "q": "Sinh vật nào dưới đây có kiểu dinh dưỡng là tự dưỡng?",
+        "choices": [
+          "Trùng giày",
+          "Con cò",
+          "Chuột bạch",
+          "Cây đào"
+        ],
+        "answer": 1,
+        "explain": ""
+      },
+      {
+        "q": "Bậc phân loại cao nhất trong thế giới sống là?",
+        "choices": [
+          "Bộ",
+          "Giới",
+          "Chi",
+          "Loài"
+        ],
+        "answer": 1,
+        "explain": ""
+      },
+      {
+        "q": "Trong nguyên tắc phân loại sinh vật không bao gồm bậc phân loại nào dưới đây?",
+        "choices": [
+          "Ngành",
+          "Loài",
+          "Bộ",
+          "Vực"
+        ],
+        "answer": 1,
+        "explain": ""
+      },
+      {
+        "q": "Nấm hương có tên khoa học là Lentinula edodes. Hãy chỉ ra tên loài và tên chi của nấm hương?",
+        "choices": [
+          "Tên loài: Lentinula - Tên chi: edodes.",
+          "Tên loài: edodes - Tên chi: Lentinula",
+          "Cả 3 đáp án đều sai",
+          "Tên loài: Lentinula edodes - Tên chi: không có."
+        ],
+        "answer": 1,
+        "explain": ""
+      },
+      {
+        "q": "Bậc phân loại thấp nhất trong thế giới sống là?",
+        "choices": [
+          "Chi",
+          "Giới",
+          "Bộ",
+          "Loài"
+        ],
+        "answer": 1,
+        "explain": ""
+      },
+      {
+        "q": "Thế giới sống được chia làm bao nhiêu giới?",
+        "choices": [
+          "4",
+          "3",
+          "1",
+          "5"
+        ],
+        "answer": 1,
+        "explain": ""
+      },
+      {
+        "q": "Ai là người đã phân loại thế giới sống thành 5 giới?",
+        "choices": [
+          "Carl Linnaeus",
+          "Robert Hooke",
+          " Fahrenheit",
+          "Whittaker"
+        ],
+        "answer": 1,
+        "explain": ""
+      },
+      {
+        "q": "Phân biệt 5 giới sinh vật dựa vào những tiêu chí nào:",
+        "choices": [
+          "Đặc điểm tế bào ( tế bào nhân sơ hay nhân thực).",
+          "Mức độ tổ chức cơ thể (cơ thể đơn bào hay đa bào)",
+          "Môi trường sống (dưới nước hay trên cạn,...).",
+          "Tất cả các đáp án trên đều đúng."
+        ],
+        "answer": 1,
+        "explain": ""
+      },
+      {
+        "q": "Đặc điểm giới Thực vật là:",
+        "choices": [
+          "Gồm những sinh vật có tế bào nhân thực, cơ thể đa bào, có khả năng quang hợp, môi trường sống đa dạng, không thể di chuyển được.",
+          "Gồm những sinh vật có tế bào nhân sơ, cơ thể đa bào, có khả năng quang hợp, môi trường sống đa dạng, không thể di chuyển được",
+          "Gồm những sinh vật có tế bào nhân thực, cơ thể đơn bào, có khả năng quang hợp, môi trường sống đa dạng, không thể di chuyển được.",
+          "Gồm những sinh vật có tế bào nhân thực, cơ thể đa bào, không có khả năng quang hợp, môi trường sống đa dạng, không thể di chuyển được."
+        ],
+        "answer": 1,
+        "explain": ""
+      },
+      {
+        "q": "Đặc điểm của giới Nguyên sinh là:",
+        "choices": [
+          "Gồm những sinh vật có tế bào nhân thực, cơ thể đa bào, có khẳ năng quang hợp, môi trường sống đa dạng, không thể di chuyển được",
+          "Gồm những sinh vật có tế bào nhân thực, cơ thể đơn bào hoặc đa bào, sống dị dưỡng",
+          "Gồm những sinh vật có tế bào nhân thực, cơ thể đa bào, có khẳ năng quang hợp, môi trường sống đa dạng, không thể di chuyển được.",
+          "Gồm những sinh vật có cấu tạo tế bào nhân sơ, sống tự dưỡng hoặc dị dưỡng, môi trường sống đa dạng."
+        ],
+        "answer": 1,
+        "explain": ""
+      },
+      {
+        "q": "Đặc điểm của giới Động vật là:",
+        "choices": [
+          "Gồm những sinh vật có tế bào nhân thực, cơ thể đa bào, có khẳ năng quang hợp, môi trường sống đa dạng, không thể di chuyển được.",
+          "Gồm những sinh vật có tế bào nhân thực, cơ thể đơn bào hoặc đa bào, sống dị dưỡng",
+          "Gồm những sinh vật có cấu tạo tế bào  nhân thực, cơ thể đa bào, dị dưỡng, có khả năng di chuyển, môi trường sống rất đa dạng.",
+          "Gồm những sinh vật có cấu tạo tế bào nhân sơ, sống tự dưỡng hoặc dị dưỡng, môi rường sống đa dạng."
+        ],
+        "answer": 1,
+        "explain": ""
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "subject": "Ngoại ngữ",
+    "category": "Tiếng Nhật",
+    "title": "Hiragana và Katakana cơ bản",
+    "difficulty": "easy",
+    "type": "tracnghiem",
+    "description": "Bài tập về bảng chữ cái Hiragana và Katakana",
+    "timeLimit": 20,
+    "questions": [
+      {
+        "q": "Chữ 'あ' trong Hiragana đọc là gì?",
+        "choices": [
+          "a",
+          "i",
+          "u",
+          "e"
+        ],
+        "answer": 0,
+        "explain": "'あ' đọc là 'a', là chữ cái đầu tiên trong bảng Hiragana."
+      },
+      {
+        "q": "Katakana được sử dụng chủ yếu để viết:",
+        "choices": [
+          "Từ Hán Việt",
+          "Từ ngoại lai",
+          "Động từ",
+          "Tính từ"
+        ],
+        "answer": 1,
+        "explain": "Katakana chủ yếu được dùng để viết các từ ngoại lai và tên riêng nước ngoài."
+      },
+      {
+        "q": "Chữ 'か' trong Hiragana đọc là gì?",
+        "choices": [
+          "ka",
+          "sa",
+          "ta",
+          "na"
+        ],
+        "answer": 0,
+        "explain": "'か' đọc là 'ka' trong bảng Hiragana."
+      },
+      {
+        "q": "'こんにちは' có nghĩa là gì?",
+        "choices": [
+          "Xin chào",
+          "Tạm biệt",
+          "Cảm ơn",
+          "Xin lỗi"
+        ],
+        "answer": 0,
+        "explain": "'こんにちは' (konnichiwa) có nghĩa là 'Xin chào' trong tiếng Nhật."
+      },
+      {
+        "q": "Chữ 'ありがとう' có nghĩa là gì?",
+        "choices": [
+          "Xin lỗi",
+          "Tạm biệt",
+          "Cảm ơn",
+          "Xin chào"
+        ],
+        "answer": 2,
+        "explain": "'ありがとう' (arigatou) có nghĩa là 'Cảm ơn' trong tiếng Nhật."
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "subject": "Ngoại ngữ",
+    "category": "Tiếng Nhật",
+    "title": "Ngữ pháp tiếng Nhật N5",
+    "difficulty": "medium",
+    "type": "tracnghiem",
+    "description": "Bài tập ngữ pháp cơ bản trình độ N5",
+    "timeLimit": 25,
+    "questions": [
+      {
+        "q": "Điền trợ từ thích hợp: 私___学生です。(Tôi là học sinh)",
+        "choices": [
+          "は",
+          "が",
+          "を",
+          "に"
+        ],
+        "answer": 0,
+        "explain": "Trợ từ 'は' (wa) được dùng để chỉ chủ đề của câu."
+      },
+      {
+        "q": "Cách nói 'Tôi đi đến trường' trong tiếng Nhật là:",
+        "choices": [
+          "学校に行きます",
+          "学校を行きます",
+          "学校が行きます",
+          "学校で行きます"
+        ],
+        "answer": 0,
+        "explain": "Trợ từ 'に' được dùng để chỉ hướng đi, và '行きます' (ikimasu) có nghĩa là 'đi'."
+      },
+      {
+        "q": "Động từ 'たべます' (tabemasu) có nghĩa là gì?",
+        "choices": [
+          "Uống",
+          "Ăn",
+          "Ngủ",
+          "Đi"
+        ],
+        "answer": 1,
+        "explain": "'たべます' có nghĩa là 'ăn' trong tiếng Nhật."
+      },
+      {
+        "q": "Thì quá khứ của 'です' (desu) là gì?",
+        "choices": [
+          "でした",
+          "ですた",
+          "だった",
+          "でる"
+        ],
+        "answer": 0,
+        "explain": "'でした' (deshita) là dạng quá khứ lịch sự của 'です'."
+      }
+    ]
   }
 ]
-},
-{
-  "id": 7,
-  "subject": "Tiếng Anh",
-  "grade": 6,
-  "title": "Từ vựng và ngữ pháp cơ bản",
-  "type": "tracnghiem",
-  "description": "Bài tập Tiếng Anh lớp 6 - Từ vựng và thì hiện tại đơn",
-  "timeLimit": 15,
-  "questions": [
-    {
-      "q": "Choose the correct word: I _____ to school every day.",
-      "choices": ["go", "goes", "going", "went"],
-      "answer": 0,
-      "explain": "Với chủ ngữ 'I', ta dùng động từ nguyên mẫu 'go' trong thì hiện tại đơn."
-    },
-    {
-      "q": "What is the plural form of 'child'?",
-      "choices": ["childs", "children", "childrens", "child"],
-      "answer": 1,
-      "explain": "'Children' là dạng số nhiều bất quy tắc của 'child'."
-    },
-    {
-      "q": "Choose the correct answer: She _____ her homework in the evening.",
-      "choices": ["do", "does", "did", "doing"],
-      "answer": 1,
-      "explain": "Với chủ ngữ số ít 'She', ta dùng 'does' trong thì hiện tại đơn."
-    },
-    {
-      "q": "What does 'library' mean in Vietnamese?",
-      "choices": ["Thư viện", "Trường học", "Bệnh viện", "Nhà sách"],
-      "answer": 0,
-      "explain": "'Library' có nghĩa là 'thư viện' trong tiếng Việt."
-    },
-    {
-      "q": "Choose the correct preposition: I go to school _____ Monday.",
-      "choices": ["in", "on", "at", "for"],
-      "answer": 1,
-      "explain": "Ta dùng giới từ 'on' với các ngày trong tuần."
-    }
-  ]
-},
-{
-  "id": 8,
-  "subject": "Tiếng Anh",
-  "grade": 7,
-  "title": "Thì hiện tại tiếp diễn và từ vựng",
-  "type": "tracnghiem",
-  "description": "Bài tập Tiếng Anh lớp 7 - Thì hiện tại tiếp diễn",
-  "timeLimit": 15,
-  "questions": [
-    {
-      "q": "Choose the correct form: They _____ football now.",
-      "choices": ["play", "plays", "are playing", "played"],
-      "answer": 2,
-      "explain": "Với từ 'now', ta dùng thì hiện tại tiếp diễn: 'are playing'."
-    },
-    {
-      "q": "What is the negative form of 'I am studying'?",
-      "choices": ["I am not studying", "I not am studying", "I don't studying", "I isn't studying"],
-      "answer": 0,
-      "explain": "Dạng phủ định của thì hiện tại tiếp diễn: 'am not + V-ing'."
-    },
-    {
-      "q": "Choose the correct word: My sister is _____ a book.",
-      "choices": ["read", "reads", "reading", "readed"],
-      "answer": 2,
-      "explain": "Sau 'is', ta dùng động từ dạng V-ing trong thì hiện tại tiếp diễn."
-    },
-    {
-      "q": "What does 'neighborhood' mean?",
-      "choices": ["Hàng xóm", "Khu phố", "Thành phố", "Quốc gia"],
-      "answer": 1,
-      "explain": "'Neighborhood' có nghĩa là 'khu phố' hoặc 'vùng lân cận'."
-    },
-    {
-      "q": "Choose the correct answer: _____ you watching TV?",
-      "choices": ["Do", "Does", "Are", "Is"],
-      "answer": 2,
-      "explain": "Câu hỏi thì hiện tại tiếp diễn với 'you' dùng 'Are'."
-    }
-  ]
-},
-{
-  "id": 9,
-  "subject": "Tiếng Anh",
-  "grade": 8,
-  "title": "Thì quá khứ đơn và so sánh",
-  "type": "tracnghiem",
-  "description": "Bài tập Tiếng Anh lớp 8 - Thì quá khứ đơn và cấu trúc so sánh",
-  "timeLimit": 20,
-  "questions": [
-    {
-      "q": "Choose the correct past tense: Yesterday, I _____ to the cinema.",
-      "choices": ["go", "goes", "went", "going"],
-      "answer": 2,
-      "explain": "'Went' là dạng quá khứ của 'go'. Với 'yesterday', ta dùng thì quá khứ đơn."
-    },
-    {
-      "q": "What is the past participle of 'see'?",
-      "choices": ["saw", "seen", "see", "seeing"],
-      "answer": 1,
-      "explain": "'Seen' là quá khứ phân từ của 'see' (see - saw - seen)."
-    },
-    {
-      "q": "Choose the correct comparative: This book is _____ than that one.",
-      "choices": ["interesting", "more interesting", "most interesting", "interestinger"],
-      "answer": 1,
-      "explain": "Tính từ dài (3+ âm tiết) dùng 'more' trong so sánh hơn: 'more interesting'."
-    },
-    {
-      "q": "Choose the correct form: She _____ her keys last night.",
-      "choices": ["lose", "loses", "lost", "losing"],
-      "answer": 2,
-      "explain": "Với 'last night', ta dùng thì quá khứ đơn: 'lost'."
-    },
-    {
-      "q": "What does 'environment' mean?",
-      "choices": ["Môi trường", "Giáo dục", "Kinh tế", "Văn hóa"],
-      "answer": 0,
-      "explain": "'Environment' có nghĩa là 'môi trường' trong tiếng Việt."
-    }
-  ]
-},
-{
-  "id": 10,
-  "subject": "Tiếng Anh",
-  "grade": 9,
-  "title": "Thì tương lai và câu điều kiện",
-  "type": "tracnghiem",
-  "description": "Bài tập Tiếng Anh lớp 9 - Thì tương lai và câu điều kiện loại 1",
-  "timeLimit": 20,
-  "questions": [
-    {
-      "q": "Choose the correct future form: I _____ visit my grandparents next week.",
-      "choices": ["will", "am", "was", "have"],
-      "answer": 0,
-      "explain": "Với 'next week', ta dùng 'will' để diễn tả tương lai: 'will visit'."
-    },
-    {
-      "q": "Complete the conditional sentence: If it rains, I _____ stay at home.",
-      "choices": ["will", "would", "am", "was"],
-      "answer": 0,
-      "explain": "Câu điều kiện loại 1: If + present simple, S + will + V."
-    },
-    {
-      "q": "Choose the correct form: They _____ to the beach tomorrow.",
-      "choices": ["go", "goes", "will go", "went"],
-      "answer": 2,
-      "explain": "Với 'tomorrow', ta dùng thì tương lai đơn: 'will go'."
-    },
-    {
-      "q": "What is the meaning of 'pollution'?",
-      "choices": ["Ô nhiễm", "Bảo vệ", "Làm sạch", "Tái chế"],
-      "answer": 0,
-      "explain": "'Pollution' có nghĩa là 'ô nhiễm' trong tiếng Việt."
-    },
-    {
-      "q": "Choose the correct answer: What _____ you do if you win the lottery?",
-      "choices": ["do", "does", "will", "did"],
-      "answer": 2,
-      "explain": "Câu hỏi về tương lai dùng 'will'."
-    }
-  ]
-},
-{
-  "id": 11,
-  "subject": "Tiếng Anh",
-  "grade": 10,
-  "title": "Câu bị động và ngữ pháp nâng cao",
-  "type": "tracnghiem",
-  "description": "Bài tập Tiếng Anh lớp 10 - Câu bị động và các cấu trúc ngữ pháp phức tạp",
-  "timeLimit": 25,
-  "questions": [
-    {
-      "q": "Choose the correct passive form: The book _____ by many people.",
-      "choices": ["read", "reads", "is read", "are read"],
-      "answer": 2,
-      "explain": "Câu bị động thì hiện tại đơn: 'is/are + past participle'. 'Book' là số ít nên dùng 'is read'."
-    },
-    {
-      "q": "What is the passive form of 'They built this house in 2020'?",
-      "choices": ["This house was built in 2020", "This house is built in 2020", "This house built in 2020", "This house were built in 2020"],
-      "answer": 0,
-      "explain": "Câu bị động thì quá khứ: 'was/were + past participle'. 'House' là số ít nên dùng 'was built'."
-    },
-    {
-      "q": "Choose the correct modal verb: You _____ study hard to pass the exam.",
-      "choices": ["can", "should", "will", "may"],
-      "answer": 1,
-      "explain": "'Should' diễn tả lời khuyên: 'Bạn nên học chăm chỉ'."
-    },
-    {
-      "q": "What does 'sustainable' mean?",
-      "choices": ["Bền vững", "Nguy hiểm", "Tạm thời", "Phức tạp"],
-      "answer": 0,
-      "explain": "'Sustainable' có nghĩa là 'bền vững' trong tiếng Việt."
-    },
-    {
-      "q": "Choose the correct relative pronoun: The man _____ lives next door is a doctor.",
-      "choices": ["which", "who", "where", "when"],
-      "answer": 1,
-      "explain": "'Who' dùng để thay thế cho danh từ chỉ người làm chủ ngữ."
-    }
-  ]
-},
-{
-  "id": 12,
-  "subject": "Tiếng Anh",
-  "grade": 11,
-  "title": "Câu tường thuật và ngữ pháp nâng cao",
-  "difficulty": "hard",
-  "type": "tracnghiem",
-  "description": "Bài tập Tiếng Anh lớp 11 - Câu tường thuật và các cấu trúc ngữ pháp phức tạp",
-  "timeLimit": 25,
-  "questions": [
-    {
-      "q": "Choose the correct reported speech: She said, 'I am tired.' → She said that _____ tired.",
-      "choices": ["she is", "she was", "I am", "I was"],
-      "answer": 1,
-      "explain": "Trong câu tường thuật, thì hiện tại đơn chuyển thành quá khứ đơn: 'am' → 'was', và đổi 'I' → 'she'."
-    },
-    {
-      "q": "What is the reported speech of 'He said, \"I will come tomorrow\"'?",
-      "choices": ["He said that he will come tomorrow", "He said that he would come the next day", "He said that I will come tomorrow", "He said that he comes tomorrow"],
-      "answer": 1,
-      "explain": "Trong câu tường thuật: 'will' → 'would', 'tomorrow' → 'the next day', 'I' → 'he'."
-    },
-    {
-      "q": "Choose the correct form: I wish I _____ speak English fluently.",
-      "choices": ["can", "could", "will", "am"],
-      "answer": 1,
-      "explain": "Sau 'wish', ta dùng thì quá khứ để diễn tả điều ước ở hiện tại: 'could'."
-    },
-    {
-      "q": "What does 'phenomenon' mean?",
-      "choices": ["Hiện tượng", "Vấn đề", "Giải pháp", "Nguyên nhân"],
-      "answer": 0,
-      "explain": "'Phenomenon' có nghĩa là 'hiện tượng' trong tiếng Việt."
-    },
-    {
-      "q": "Choose the correct answer: If I _____ you, I would study harder.",
-      "choices": ["am", "was", "were", "be"],
-      "answer": 2,
-      "explain": "Câu điều kiện loại 2: If + S + were (cho tất cả các ngôi), S + would + V."
-    }
-  ]
-},
-{
-  "id": 13,
-  "subject": "Tiếng Anh",
-  "grade": 12,
-  "title": "Ôn tập thi tốt nghiệp THPT",
-  "difficulty": "hard",
-  "type": "tracnghiem",
-  "description": "Bài tập Tiếng Anh lớp 12 - Ôn tập cho kỳ thi tốt nghiệp THPT",
-  "timeLimit": 30,
-  "questions": [
-    {
-      "q": "Choose the correct answer: Not only _____ the exam, but he also got the highest score.",
-      "choices": ["he passed", "did he pass", "he did pass", "passed he"],
-      "answer": 1,
-      "explain": "Với 'Not only' ở đầu câu, ta phải đảo ngữ: 'did he pass'."
-    },
-    {
-      "q": "What is the correct form: I would rather you _____ here on time.",
-      "choices": ["come", "came", "coming", "to come"],
-      "answer": 1,
-      "explain": "Sau 'would rather', ta dùng thì quá khứ đơn: 'came'."
-    },
-    {
-      "q": "Choose the correct answer: The harder you study, _____ you will get.",
-      "choices": ["the better results", "better results", "the best results", "best results"],
-      "answer": 0,
-      "explain": "Cấu trúc so sánh kép: 'The + comparative, the + comparative'."
-    },
-    {
-      "q": "What does 'accomplish' mean?",
-      "choices": ["Hoàn thành", "Bắt đầu", "Trì hoãn", "Hủy bỏ"],
-      "answer": 0,
-      "explain": "'Accomplish' có nghĩa là 'hoàn thành', 'đạt được' trong tiếng Việt."
-    },
-    {
-      "q": "Choose the correct answer: Had I known about the test, I _____ more carefully.",
-      "choices": ["study", "studied", "would study", "would have studied"],
-      "answer": 3,
-      "explain": "Câu điều kiện loại 3 đảo ngữ: Had + S + past participle, S + would have + past participle."
-    }
-  ]
-},
-{
-  "id": 14,
-  "subject": "Toán",
-  "grade": 6,
-  "title": "Chủ đề 8 - Bài 22: Phân loại thế giới sống",
-  "difficulty": "hard",
-  "type": "tracnghiem",
-  "description": "Khoa Học Tự Nhiên 6",
-  "timeLimit": 30,
-  "questions": [
-    {
-      "q": "Trong hệ thống phân loại 5 giới sinh vật, vi khuẩn thuộc giới nào?",
-      "choices": ["Giới Khởi Sinh", "Giới Nguyên Sinh", "Giới Nấm", "Giới Động Vật"],
-      "answer": 1,
-      "explain": ""
-    },
-    {
-      "q": "Cho các đại diện: (1) Nấm sò; (2) Tảo lục đơn bào; (3) Vi khuẩn; (4) Rong. Trong các đại diện trên, có bao nhiêu đại diện thuộc giới Nguyên sinh?",
-      "choices": ["1", "2", "3", "4"],
-      "answer": 1,
-      "explain": ""
-    },
-    {
-      "q": "Trong các loài dưới đây, loài nào thuộc giới Khởi sinh?",
-      "choices": ["Trùng giày", "Trùng sốt rét", "Trùng kiết lị", "VI khuẩn lao"],
-      "answer": 1,
-      "explain": ""
-    },
-    {
-      "q": "Trong các loài dưới đây, loài nào không thuộc giới Thực vật?",
-      "choices": ["Tảo đa bào", "Dương xỉ", "Rêu", "Thông"],
-      "answer": 1,
-      "explain": ""
-    },
-    {
-      "q": "Loại rừng nào dưới đây có hệ thực vật phong phú nhất?",
-      "choices": ["Rừng lá kim phương Bắc", "Rừng mưa nhiệt đới", "Rừng lá rộng ôn đới", "Rừng ngập mặn ven biển"],
-      "answer": 1,
-      "explain": ""
-    },
-    {
-      "q": "Thế giới sống được phân thành các nhóm theo trình tự nào?",
-      "choices": ["Loài -> chi -> họ -> bộ -> lớp -> ngành -> giới", "Chi -> họ -> bộ -> lớp -> ngành -> giới -> loài", "TLoài -> chi -> bộ -> họ -> lớp -> ngành -> giới", "Loài -> chi -> lớp -> họ -> bộ -> ngành -> giới"],
-      "answer": 1,
-      "explain": ""
-    },
-    {
-      "q": "Đặc điểm nào dưới đây không phải của giới động vật?",
-      "choices": ["Đa bào", "Dị dưỡng", "Nhân sơ", "Có khả năng di chuyển"],
-      "answer": 1,
-      "explain": ""
-    },
-    {
-      "q": "Việc phân loại thế giới sống có ý nghĩa gì đối với chúng ta?\n(1) Gọi đúng tên sinh vật.\n(2) Đưa sinh vật vào đúng nhóm phân loại.\n(3) Thấy được vai trò của sinh vật trong tự nhiên và thực tiễn.\n(4) Nhận ra sự đa dạng của sinh giới.",
-      "choices": ["(1), (3), (2)", "(2), (3), (4)", "(1), (2), (4)", "(1), (3), (4)"],
-      "answer": 1,
-      "explain": ""
-    },
-    {
-      "q": "Cấu tạo tế bào nhân thực, cơ thể đa bào, có khả năng quang hợp là đặc điểm của sinh vật thuộc giơi nào sau đây?",
-      "choices": ["Khởi sinh", "Nguyên sinh", "Nấm", "Thực vật"],
-      "answer": 1,
-      "explain": ""
-    },
-    {
-      "q": "Sinh vật nào dưới đây có kiểu dinh dưỡng là tự dưỡng?",
-      "choices": ["Trùng giày", "Con cò", "Chuột bạch", "Cây đào"],
-      "answer": 1,
-      "explain": ""
-    },
-    {
-      "q": "Bậc phân loại cao nhất trong thế giới sống là?",
-      "choices": ["Bộ", "Giới", "Chi", "Loài"],
-      "answer": 1,
-      "explain": ""
-    },
-    {
-      "q": "Trong nguyên tắc phân loại sinh vật không bao gồm bậc phân loại nào dưới đây?",
-      "choices": ["Ngành", "Loài", "Bộ", "Vực"],
-      "answer": 1,
-      "explain": ""
-    },
-    {
-      "q": "Nấm hương có tên khoa học là Lentinula edodes. Hãy chỉ ra tên loài và tên chi của nấm hương?",
-      "choices": ["Tên loài: Lentinula - Tên chi: edodes.", "Tên loài: edodes - Tên chi: Lentinula", "Cả 3 đáp án đều sai", "Tên loài: Lentinula edodes - Tên chi: không có."],
-      "answer": 1,
-      "explain": ""
-    },
-    {
-      "q": "Bậc phân loại thấp nhất trong thế giới sống là?",
-      "choices": ["Chi", "Giới", "Bộ", "Loài"],
-      "answer": 1,
-      "explain": ""
-    },
-    {
-      "q": "Thế giới sống được chia làm bao nhiêu giới?",
-      "choices": ["4", "3", "1", "5"],
-      "answer": 1,
-      "explain": ""
-    },
-    {
-      "q": "Ai là người đã phân loại thế giới sống thành 5 giới?",
-      "choices": ["Carl Linnaeus", "Robert Hooke", " Fahrenheit", "Whittaker"],
-      "answer": 1,
-      "explain": ""
-    },
-    {
-      "q": "Phân biệt 5 giới sinh vật dựa vào những tiêu chí nào:",
-      "choices": ["Đặc điểm tế bào ( tế bào nhân sơ hay nhân thực).", "Mức độ tổ chức cơ thể (cơ thể đơn bào hay đa bào)", "Môi trường sống (dưới nước hay trên cạn,...).", "Tất cả các đáp án trên đều đúng."],
-      "answer": 1,
-      "explain": ""
-    },
-    {
-      "q": "Đặc điểm giới Thực vật là:",
-      "choices": ["Gồm những sinh vật có tế bào nhân thực, cơ thể đa bào, có khả năng quang hợp, môi trường sống đa dạng, không thể di chuyển được.", "Gồm những sinh vật có tế bào nhân sơ, cơ thể đa bào, có khả năng quang hợp, môi trường sống đa dạng, không thể di chuyển được", "Gồm những sinh vật có tế bào nhân thực, cơ thể đơn bào, có khả năng quang hợp, môi trường sống đa dạng, không thể di chuyển được.", "Gồm những sinh vật có tế bào nhân thực, cơ thể đa bào, không có khả năng quang hợp, môi trường sống đa dạng, không thể di chuyển được."],
-      "answer": 1,
-      "explain": ""
-    },
-    {
-      "q": "Đặc điểm của giới Nguyên sinh là:",
-      "choices": ["Gồm những sinh vật có tế bào nhân thực, cơ thể đa bào, có khẳ năng quang hợp, môi trường sống đa dạng, không thể di chuyển được", "Gồm những sinh vật có tế bào nhân thực, cơ thể đơn bào hoặc đa bào, sống dị dưỡng", "Gồm những sinh vật có tế bào nhân thực, cơ thể đa bào, có khẳ năng quang hợp, môi trường sống đa dạng, không thể di chuyển được.", "Gồm những sinh vật có cấu tạo tế bào nhân sơ, sống tự dưỡng hoặc dị dưỡng, môi trường sống đa dạng."],
-      "answer": 1,
-      "explain": ""
-    },
-    {
-      "q": "Đặc điểm của giới Động vật là:",
-      "choices": ["Gồm những sinh vật có tế bào nhân thực, cơ thể đa bào, có khẳ năng quang hợp, môi trường sống đa dạng, không thể di chuyển được.", "Gồm những sinh vật có tế bào nhân thực, cơ thể đơn bào hoặc đa bào, sống dị dưỡng", "Gồm những sinh vật có cấu tạo tế bào  nhân thực, cơ thể đa bào, dị dưỡng, có khả năng di chuyển, môi trường sống rất đa dạng.", "Gồm những sinh vật có cấu tạo tế bào nhân sơ, sống tự dưỡng hoặc dị dưỡng, môi rường sống đa dạng."],
-      "answer": 1,
-      "explain": ""
-    }
-  ]
-},
-{
-  "id": 19,
-  "subject": "Ngoại ngữ",
-  "category": "Tiếng Nhật",
-  "title": "Hiragana và Katakana cơ bản",
-  "difficulty": "easy",
-  "type": "tracnghiem",
-  "description": "Bài tập về bảng chữ cái Hiragana và Katakana",
-  "timeLimit": 20,
-  "questions": [
-    {
-      "q": "Chữ 'あ' trong Hiragana đọc là gì?",
-      "choices": ["a", "i", "u", "e"],
-      "answer": 0,
-      "explain": "'あ' đọc là 'a', là chữ cái đầu tiên trong bảng Hiragana."
-    },
-    {
-      "q": "Katakana được sử dụng chủ yếu để viết:",
-      "choices": ["Từ Hán Việt", "Từ ngoại lai", "Động từ", "Tính từ"],
-      "answer": 1,
-      "explain": "Katakana chủ yếu được dùng để viết các từ ngoại lai và tên riêng nước ngoài."
-    },
-    {
-      "q": "Chữ 'か' trong Hiragana đọc là gì?",
-      "choices": ["ka", "sa", "ta", "na"],
-      "answer": 0,
-      "explain": "'か' đọc là 'ka' trong bảng Hiragana."
-    },
-    {
-      "q": "'こんにちは' có nghĩa là gì?",
-      "choices": ["Xin chào", "Tạm biệt", "Cảm ơn", "Xin lỗi"],
-      "answer": 0,
-      "explain": "'こんにちは' (konnichiwa) có nghĩa là 'Xin chào' trong tiếng Nhật."
-    },
-    {
-      "q": "Chữ 'ありがとう' có nghĩa là gì?",
-      "choices": ["Xin lỗi", "Tạm biệt", "Cảm ơn", "Xin chào"],
-      "answer": 2,
-      "explain": "'ありがとう' (arigatou) có nghĩa là 'Cảm ơn' trong tiếng Nhật."
-    }
-  ]
-},
-{
-  "id": 20,
-  "subject": "Ngoại ngữ",
-  "category": "Tiếng Nhật",
-  "title": "Ngữ pháp tiếng Nhật N5",
-  "difficulty": "medium",
-  "type": "tracnghiem",
-  "description": "Bài tập ngữ pháp cơ bản trình độ N5",
-  "timeLimit": 25,
-  "questions": [
-    {
-      "q": "Điền trợ từ thích hợp: 私___学生です。(Tôi là học sinh)",
-      "choices": ["は", "が", "を", "に"],
-      "answer": 0,
-      "explain": "Trợ từ 'は' (wa) được dùng để chỉ chủ đề của câu."
-    },
-    {
-      "q": "Cách nói 'Tôi đi đến trường' trong tiếng Nhật là:",
-      "choices": ["学校に行きます", "学校を行きます", "学校が行きます", "学校で行きます"],
-      "answer": 0,
-      "explain": "Trợ từ 'に' được dùng để chỉ hướng đi, và '行きます' (ikimasu) có nghĩa là 'đi'."
-    },
-    {
-      "q": "Động từ 'たべます' (tabemasu) có nghĩa là gì?",
-      "choices": ["Uống", "Ăn", "Ngủ", "Đi"],
-      "answer": 1,
-      "explain": "'たべます' có nghĩa là 'ăn' trong tiếng Nhật."
-    },
-    {
-      "q": "Thì quá khứ của 'です' (desu) là gì?",
-      "choices": ["でした", "ですた", "だった", "でる"],
-      "answer": 0,
-      "explain": "'でした' (deshita) là dạng quá khứ lịch sự của 'です'."
-    }
-  ]
-}
-]
-
-
