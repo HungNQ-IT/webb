@@ -474,7 +474,7 @@ function IELTSQuiz({ ieltsTests }) {
                     </div>
                     <div className="border border-gray-300 rounded-lg p-6 bg-gray-50">
                       <h3 className="text-lg font-bold text-center mb-4">{question.summary.title}</h3>
-                      <div className="text-sm leading-relaxed">
+                      <div className="text-base leading-loose">
                         {question.summary.text.split(/(\d+______)/).map((part, pIndex) => {
                           const match = part.match(/(\d+)______/)
                           if (match) {
@@ -483,15 +483,15 @@ function IELTSQuiz({ ieltsTests }) {
                               <input
                                 key={pIndex}
                                 type="text"
-                                value={answers[`${passage.id}-${qIndex}-${questionNum - 23}`] || ''}
-                                onChange={(e) => handleAnswerChange(passage.id, qIndex, questionNum - 23, e.target.value)}
+                                value={answers[`${passage.id}-${qIndex}-${questionNum - 19}`] || ''}
+                                onChange={(e) => handleAnswerChange(passage.id, qIndex, questionNum - 19, e.target.value)}
                                 disabled={isSubmitted}
-                                className="px-2 py-1 border border-gray-300 rounded focus:border-blue-500 focus:outline-none disabled:bg-gray-100 w-32 mx-1"
+                                className="inline-block align-middle px-3 py-1.5 border border-gray-400 rounded focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none disabled:bg-gray-100 w-36 mx-1 text-center"
                                 placeholder={`Q${questionNum}`}
                               />
                             )
                           }
-                          return <span key={pIndex}>{part}</span>
+                          return <span key={pIndex} className="inline">{part}</span>
                         })}
                       </div>
                     </div>
