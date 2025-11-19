@@ -389,7 +389,57 @@
         "id": 3,
         "title": "Passage 3",
         "text": "Passage 3 content here - to be added",
-        "questions": []
+        "questions": [
+          {
+            "type": "matching-headings",
+            "instruction": "Write the correct number, i-ix, in boxes 27-34 on your answer sheet.",
+            "headings": [
+              "Complaints about the impact of a ceertain approach",
+              "Fundamental beliefs that are in fact incorrect",
+              "Early recommendations concerning business activities",
+              "Organisations that put a new approach into practice",
+              "Companies that have suffered from changing their approach",
+              "What people are increasingly expected to do",
+              "How to achieve outcomes that are currently impossible",
+              "Neither approach guarantees continuous improvement",
+              "Evidence that a certain approach can have more disadvantages than advantages"
+            ],
+            "paragraphs": [
+              {
+                "paragraph": "A",
+                "correctHeading": 5
+              },
+              {
+                "paragraph": "B",
+                "correctHeading": 0
+              },
+              {
+                "paragraph": "C",
+                "correctHeading": 2
+              },
+              {
+                "paragraph": "D",
+                "correctHeading": 1
+              },
+              {
+                "paragraph": "E",
+                "correctHeading": 8
+              },
+              {
+                "paragraph": "F",
+                "correctHeading": 6
+              },
+              {
+                "paragraph": "G",
+                "correctHeading": 3
+              },
+              {
+                "paragraph": "H",
+                "correctHeading": 7
+              }
+            ]
+          }
+        ]
       }
     ]
   },
