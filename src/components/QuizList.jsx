@@ -174,7 +174,7 @@ function QuizList({ quizzes, ieltsTests = [] }) {
             // Layout mới cho IELTS và Ngoại ngữ (có category)
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
               {subjectQuizzes.map((quiz) => {
-                const sections = quiz.sections || 3
+                const sections = Array.isArray(quiz.sections) ? quiz.sections.length : (quiz.sections || 3)
                 
                 return (
                   <div
@@ -474,7 +474,7 @@ function QuizList({ quizzes, ieltsTests = [] }) {
                           <span>{selectedQuiz.timeLimit} phút</span>
                         </div>
                         <span>
-                          {selectedQuiz.sections || 3} phần thi | {selectedQuiz.questions?.length || selectedQuiz.passages?.length || 0} câu hỏi
+                          {Array.isArray(selectedQuiz.sections) ? selectedQuiz.sections.length : (selectedQuiz.sections || 3)} phần thi | {selectedQuiz.questions?.length || selectedQuiz.passages?.length || 0} câu hỏi
                         </span>
                       </div>
                     </div>

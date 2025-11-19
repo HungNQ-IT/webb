@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clear All Cache</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    .container {
+      background: white;
+      padding: 3rem;
+      border-radius: 1rem;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      text-align: center;
+      max-width: 500px;
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 1rem;
+      font-size: 2rem;
+    }
+    .warning {
+      background: #fff3cd;
+      border: 2px solid #ffc107;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin: 1.5rem 0;
+      color: #856404;
+    }
+    button {
+      background: #dc3545;
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      margin: 0.5rem;
+      transition: all 0.3s;
+      font-weight: bold;
+    }
+    button:hover {
+      background: #c82333;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(220, 53, 69, 0.4);
+    }
+    .success {
+      color: #28a745;
+      margin-top: 1rem;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+    .steps {
+      text-align: left;
+      background: #f8f9fa;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin: 1rem 0;
+    }
+    .steps li {
+      margin: 0.5rem 0;
+    }
+    code {
+      background: #e9ecef;
+      padding: 0.2rem 0.5rem;
+      border-radius: 0.25rem;
+      font-family: monospace;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🧹 Clear All Cache</h1>
+    
+    <div class="warning">
+      <strong>⚠️ Cảnh báo:</strong> Thao tác này sẽ xóa toàn bộ cache và reload trang.
+    </div>
+
+    <button onclick="clearEverything()">
+      🗑️ XÓA TẤT CẢ & RELOAD
+    </button>
+
+    <div id="message"></div>
+
+    <div class="steps">
+      <h3>📋 Các bước thực hiện:</h3>
+      <ol>
+        <li>Click nút "XÓA TẤT CẢ & RELOAD"</li>
+        <li>Chờ trang reload tự động</li>
+        <li>Vào lại trang Listening</li>
+        <li>Lỗi sẽ biến mất ✅</li>
+      </ol>
+    </div>
+
+    <div class="steps">
+      <h3>🔧 Hoặc làm thủ công:</h3>
+      <ol>
+        <li>Mở DevTools (F12)</li>
+        <li>Vào tab <code>Application</code></li>
+        <li>Click <code>Clear storage</code></li>
+        <li>Click <code>Clear site data</code></li>
+        <li>Hard reload: <code>Cmd+Shift+R</code> (Mac) hoặc <code>Ctrl+Shift+R</code> (Windows)</li>
+      </ol>
+    </div>
+  </div>
+
+  <script>
+    function clearEverything() {
+      // Clear localStorage
+      localStorage.clear()
+      
+      // Clear sessionStorage
+      sessionStorage.clear()
+      
+      // Show message
+      const messageDiv = document.getElementById('message')
+      messageDiv.className = 'success'
+      messageDiv.textContent = '✅ Đã xóa cache! Đang reload...'
+      
+      // Reload after 1 second
+      setTimeout(() => {
+        window.location.href = window.location.origin
+      }, 1000)
+    }
+  </script>
+</body>
+</html>

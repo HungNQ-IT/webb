@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clear Cache</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    .container {
+      background: white;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      text-align: center;
+      max-width: 400px;
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 1rem;
+    }
+    button {
+      background: #667eea;
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      margin: 0.5rem;
+      transition: all 0.3s;
+    }
+    button:hover {
+      background: #5568d3;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+    .success {
+      color: #10b981;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+    .info {
+      color: #666;
+      font-size: 0.9rem;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🧹 Xóa Cache</h1>
+    <p>Xóa cache để tải dữ liệu mới nhất</p>
+    
+    <button onclick="clearAllCache()">Xóa Tất Cả Cache</button>
+    <button onclick="clearIELTSCache()">Chỉ Xóa IELTS Cache</button>
+    
+    <div id="message"></div>
+    
+    <div class="info">
+      <p>Sau khi xóa cache, hãy reload trang chính để tải dữ liệu mới.</p>
+    </div>
+  </div>
+
+  <script>
+    function clearAllCache() {
+      localStorage.clear()
+      showMessage('✅ Đã xóa toàn bộ cache!')
+    }
+
+    function clearIELTSCache() {
+      localStorage.removeItem('ielts_cache')
+      localStorage.removeItem('quizzes_cache')
+      showMessage('✅ Đã xóa IELTS cache!')
+    }
+
+    function showMessage(msg) {
+      const messageDiv = document.getElementById('message')
+      messageDiv.className = 'success'
+      messageDiv.textContent = msg
+      
+      setTimeout(() => {
+        messageDiv.textContent = ''
+      }, 3000)
+    }
+  </script>
+</body>
+</html>

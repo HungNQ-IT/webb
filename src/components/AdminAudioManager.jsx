@@ -1,11 +1,15 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
+import { supabase } from '../utils/supabase'
 
 function AdminAudioManager({ ieltsTests }) {
   const { user } = useAuth()
   const [selectedTest, setSelectedTest] = useState(null)
   const [audioUrl, setAudioUrl] = useState('')
   const [showInstructions, setShowInstructions] = useState(false)
+  const [audioUrls, setAudioUrls] = useState({})
+  const [loading, setLoading] = useState(false)
+  const [message, setMessage] = useState(null)
 
   // Chỉ admin mới có quyền truy cập
   if (!user || user.role !== 'admin') {
@@ -26,12 +30,32 @@ function AdminAudioManager({ ieltsTests }) {
     )
   }
 
+  // Load audio URLs từ Supabase
+  useEffect(() => {
+    const loadAudioUrls = async () => {
+      const { data, error } = await supabase
+        .from('ielts_audio')
+        .select('test_id, audio_url')
+      
+      if (!error && data) {
+        const urlMap = {}
+        data.forEach(item => {
+          urlMap[item.test_id] = item.audio_url
+        })
+        setAudioUrls(urlMap)
+      }
+    }
+    
+    loadAudioUrls()
+  }, [])
+
   // Lọc chỉ các bài Listening
   const listeningTests = ieltsTests.filter(test => test.category === 'Listening')
 
   const handleTestSelect = (test) => {
     setSelectedTest(test)
-    setAudioUrl(test.audioUrl || '')
+    setAudioUrl(audioUrls[test.id] || '')
+    setMessage(null)
   }
 
   const convertGoogleDriveLink = (link) => {
@@ -43,10 +67,111 @@ function AdminAudioManager({ ieltsTests }) {
     return link
   }
 
-  const handleSave = () => {
-    // Trong thực tế, bạn sẽ cần API để lưu vào database
-    // Hiện tại chỉ hiển thị thông báo
-    alert(`Audio URL đã được cập nhật cho bài test #${selectedTest.id}\n\nLưu ý: Để thay đổi có hiệu lực, bạn cần cập nhật file ielts.json thủ công với URL:\n${audioUrl}`)
+  const handleSave = async () => {
+    if (!audioUrl.trim()) {
+      setMessage({ type: 'error', text: 'Vui lòng nhập link audio' })
+      return
+    }
+
+    setLoading(true)
+    setMessage(null)
+    const directUrl = convertGoogleDriveLink(audioUrl)
+
+    try {
+      // Kiểm tra xem đã có audio chưa
+      const { data: existing } = await supabase
+        .from('ielts_audio')
+        .select('id')
+        .eq('test_id', selectedTest.id)
+        .single()
+
+      if (existing) {
+        // Update
+        const { error } = await supabase
+          .from('ielts_audio')
+          .update({ 
+            audio_url: directUrl,
+            updated_at: new Date().toISOString()
+          })
+          .eq('test_id', selectedTest.id)
+
+        if (error) throw error
+      } else {
+        // Insert
+        const { error } = await supabase
+          .from('ielts_audio')
+          .insert({
+            test_id: selectedTest.id,
+            audio_url: directUrl,
+            uploaded_by: user.id
+          })
+
+        if (error) throw error
+      }
+
+      // Cập nhật state local
+      setAudioUrls(prev => ({
+        ...prev,
+        [selectedTest.id]: directUrl
+      }))
+
+      setMessage({ 
+        type: 'success', 
+        text: `✅ Đã lưu audio cho bài test #${selectedTest.id}` 
+      })
+      
+      // Clear cache để reload data
+      localStorage.removeItem('ielts_cache')
+      
+    } catch (error) {
+      console.error('Error saving audio:', error)
+      setMessage({ 
+        type: 'error', 
+        text: `❌ Lỗi: ${error.message}` 
+      })
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleDelete = async () => {
+    if (!confirm('Bạn có chắc muốn xóa audio này?')) return
+
+    setLoading(true)
+    setMessage(null)
+
+    try {
+      const { error } = await supabase
+        .from('ielts_audio')
+        .delete()
+        .eq('test_id', selectedTest.id)
+
+      if (error) throw error
+
+      // Cập nhật state local
+      setAudioUrls(prev => {
+        const newUrls = { ...prev }
+        delete newUrls[selectedTest.id]
+        return newUrls
+      })
+
+      setAudioUrl('')
+      setMessage({ 
+        type: 'success', 
+        text: `✅ Đã xóa audio cho bài test #${selectedTest.id}` 
+      })
+      
+      localStorage.removeItem('ielts_cache')
+      
+    } catch (error) {
+      console.error('Error deleting audio:', error)
+      setMessage({ 
+        type: 'error', 
+        text: `❌ Lỗi: ${error.message}` 
+      })
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -136,7 +261,7 @@ function AdminAudioManager({ ieltsTests }) {
                           </p>
                         </div>
                         <div className="ml-2">
-                          {test.audioUrl ? (
+                          {audioUrls[test.id] ? (
                             <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
                               ✓ Có audio
                             </span>
@@ -226,18 +351,53 @@ function AdminAudioManager({ ieltsTests }) {
                     </div>
                   )}
 
+                  {/* Message */}
+                  {message && (
+                    <div className={`mb-4 p-4 rounded-lg ${
+                      message.type === 'success' 
+                        ? 'bg-green-50 border border-green-200 text-green-800' 
+                        : 'bg-red-50 border border-red-200 text-red-800'
+                    }`}>
+                      {message.text}
+                    </div>
+                  )}
+
                   <div className="space-y-3">
                     <button
                       onClick={handleSave}
-                      disabled={!audioUrl}
-                      className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                      disabled={!audioUrl || loading}
+                      className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                     >
-                      💾 Lưu Audio URL
+                      {loading ? (
+                        <>
+                          <svg className="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                          <span>Đang lưu...</span>
+                        </>
+                      ) : (
+                        <>
+                          <span>💾</span>
+                          <span>Lưu Audio</span>
+                        </>
+                      )}
                     </button>
+
+                    {audioUrls[selectedTest.id] && (
+                      <button
+                        onClick={handleDelete}
+                        disabled={loading}
+                        className="w-full bg-red-600 text-white py-3 rounded-lg font-semibold hover:bg-red-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                      >
+                        <span>🗑️</span>
+                        <span>Xóa Audio</span>
+                      </button>
+                    )}
                     
-                    <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-                      <p className="text-sm text-yellow-800">
-                        <strong>⚠️ Lưu ý:</strong> Sau khi lưu, bạn cần cập nhật file <code className="bg-yellow-100 px-1 rounded">public/ielts.json</code> thủ công với URL mới.
+                    <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                      <p className="text-sm text-blue-800">
+                        <strong>💡 Lưu ý:</strong> Audio được lưu vào database Supabase. Không cần cập nhật file JSON thủ công.
                       </p>
                     </div>
                   </div>
