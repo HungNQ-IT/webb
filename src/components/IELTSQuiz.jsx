@@ -168,6 +168,14 @@ function IELTSQuiz({ ieltsTests }) {
 
   const passage = test.passages[currentPassage]
 
+  if (!passage) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <p className="text-gray-600">Passage không tồn tại.</p>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -290,7 +298,7 @@ function IELTSQuiz({ ieltsTests }) {
 
           {/* Middle: Questions */}
           <div className="space-y-6">
-            {passage.questions.map((question, qIndex) => {
+            {passage.questions && passage.questions.length > 0 ? passage.questions.map((question, qIndex) => {
               // Calculate question number for ID
               let questionNum = 1
               for (let i = 0; i < currentPassage; i++) {
@@ -595,7 +603,11 @@ function IELTSQuiz({ ieltsTests }) {
                 )}
               </div>
               )
-            })}
+            }) : (
+              <div className="bg-white rounded-lg border border-gray-200 p-6 text-center text-gray-600">
+                Passage này chưa có câu hỏi.
+              </div>
+            )}
 
             {/* Submit Button */}
             <div className="bg-white rounded-lg border border-gray-200 p-6">
