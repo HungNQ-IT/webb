@@ -4,7 +4,6 @@ import Home from './components/Home'
 import RequireAuth from './components/RequireAuth'
 import Layout from './components/Layout'
 import Loading from './components/Loading'
-import ErrorBoundary from './components/ErrorBoundary'
 import { AuthProvider } from './context/AuthContext'
 
 // Component để xử lý redirect từ 404.html
@@ -152,52 +151,50 @@ function App() {
     <BrowserRouter basename={basename}>
       <AuthProvider>
         <RedirectHandler />
-        <ErrorBoundary>
-          <Suspense fallback={<Loading />}>
-            <Routes>
-              <Route element={<Layout />}>
-                <Route index element={<Home />} />
-                <Route path="/subjects" element={<SubjectList quizzes={quizzes} />} />
-                <Route path="/subject/:subject/grades" element={<GradeList />} />
-                <Route path="/subject/:subject/grade/:grade" element={<QuizList quizzes={quizzes} ieltsTests={ieltsTests} />} />
-                <Route path="/subject/:subject/category/:category" element={<QuizList quizzes={quizzes} ieltsTests={ieltsTests} />} />
-                <Route path="/subject/:subject" element={<CategoryList quizzes={quizzes} ieltsTests={ieltsTests} />} />
-                <Route path="/quiz/:id" element={<Quiz quizzes={quizzes} />} />
-                <Route path="/ielts/:id" element={<IELTSQuiz ieltsTests={ieltsTests} />} />
-                <Route path="/ielts-listening/:id" element={<IELTSListening ieltsTests={ieltsTests} />} />
-                <Route path="/ielts-result/:id" element={<IELTSResult />} />
-                <Route path="/result/:id" element={<Result quizzes={quizzes} />} />
-                <Route
-                  path="/profile"
-                  element={
-                    <RequireAuth>
-                      <Profile />
-                    </RequireAuth>
-                  }
-                />
-                <Route
-                  path="/admin"
-                  element={
-                    <RequireAuth roles={['admin']}>
-                      <AdminDashboard quizzes={quizzes} />
-                    </RequireAuth>
-                  }
-                />
-                <Route
-                  path="/admin/audio"
-                  element={
-                    <RequireAuth roles={['admin']}>
-                      <AdminAudioManager ieltsTests={ieltsTests} />
-                    </RequireAuth>
-                  }
-                />
-              </Route>
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-          </Suspense>
-        </ErrorBoundary>
+        <Suspense fallback={<Loading />}>
+          <Routes>
+            <Route element={<Layout />}>
+              <Route index element={<Home />} />
+              <Route path="/subjects" element={<SubjectList quizzes={quizzes} />} />
+              <Route path="/subject/:subject/grades" element={<GradeList />} />
+              <Route path="/subject/:subject/grade/:grade" element={<QuizList quizzes={quizzes} ieltsTests={ieltsTests} />} />
+              <Route path="/subject/:subject/category/:category" element={<QuizList quizzes={quizzes} ieltsTests={ieltsTests} />} />
+              <Route path="/subject/:subject" element={<CategoryList quizzes={quizzes} ieltsTests={ieltsTests} />} />
+              <Route path="/quiz/:id" element={<Quiz quizzes={quizzes} />} />
+              <Route path="/ielts/:id" element={<IELTSQuiz ieltsTests={ieltsTests} />} />
+              <Route path="/ielts-listening/:id" element={<IELTSListening ieltsTests={ieltsTests} />} />
+              <Route path="/ielts-result/:id" element={<IELTSResult />} />
+              <Route path="/result/:id" element={<Result quizzes={quizzes} />} />
+              <Route
+                path="/profile"
+                element={
+                  <RequireAuth>
+                    <Profile />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/admin"
+                element={
+                  <RequireAuth roles={['admin']}>
+                    <AdminDashboard quizzes={quizzes} />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/admin/audio"
+                element={
+                  <RequireAuth roles={['admin']}>
+                    <AdminAudioManager ieltsTests={ieltsTests} />
+                  </RequireAuth>
+                }
+              />
+            </Route>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Suspense>
       </AuthProvider>
     </BrowserRouter>
   )
