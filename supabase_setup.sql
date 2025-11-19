@@ -60,3 +60,75 @@ BEGIN
   END IF;
 END $$;
 
+
+
+-- ============================================
+-- Bảng lưu audio URLs cho IELTS Listening
+-- ============================================
+
+-- Bước 6: Tạo bảng ielts_audio
+CREATE TABLE IF NOT EXISTS ielts_audio (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  test_id BIGINT NOT NULL UNIQUE,
+  audio_url TEXT NOT NULL,
+  uploaded_by UUID REFERENCES auth.users(id),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+-- Bước 7: Tạo index cho ielts_audio
+CREATE INDEX IF NOT EXISTS idx_ielts_audio_test_id ON ielts_audio(test_id);
+
+-- Bước 8: Bật Row Level Security cho ielts_audio
+ALTER TABLE ielts_audio ENABLE ROW LEVEL SECURITY;
+
+-- Bước 9: Tạo policies cho ielts_audio
+
+-- Policy 1: Mọi người có thể đọc audio URLs (để phát audio)
+CREATE POLICY "Anyone can read audio URLs"
+ON ielts_audio
+FOR SELECT
+TO authenticated, anon
+USING (true);
+
+-- Policy 2: Chỉ admin mới có thể thêm audio URLs
+CREATE POLICY "Only admins can insert audio URLs"
+ON ielts_audio
+FOR INSERT
+TO authenticated
+WITH CHECK (
+  (auth.jwt() ->> 'email')::text = 'hungquocnguyen252@gmail.com'
+  OR (auth.jwt() -> 'user_metadata' ->> 'role')::text = 'admin'
+);
+
+-- Policy 3: Chỉ admin mới có thể cập nhật audio URLs
+CREATE POLICY "Only admins can update audio URLs"
+ON ielts_audio
+FOR UPDATE
+TO authenticated
+USING (
+  (auth.jwt() ->> 'email')::text = 'hungquocnguyen252@gmail.com'
+  OR (auth.jwt() -> 'user_metadata' ->> 'role')::text = 'admin'
+);
+
+-- Policy 4: Chỉ admin mới có thể xóa audio URLs
+CREATE POLICY "Only admins can delete audio URLs"
+ON ielts_audio
+FOR DELETE
+TO authenticated
+USING (
+  (auth.jwt() ->> 'email')::text = 'hungquocnguyen252@gmail.com'
+  OR (auth.jwt() -> 'user_metadata' ->> 'role')::text = 'admin'
+);
+
+-- Bước 10: Bật realtime cho bảng ielts_audio
+DO $
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_publication_tables 
+    WHERE pubname = 'supabase_realtime' 
+    AND tablename = 'ielts_audio'
+  ) THEN
+    ALTER PUBLICATION supabase_realtime ADD TABLE ielts_audio;
+  END IF;
+END $;

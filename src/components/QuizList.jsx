@@ -1,13 +1,114 @@
 import { Link, useParams, useNavigate } from 'react-router-dom'
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useEffect } from 'react'
+import { useAuth } from '../context/AuthContext'
+import { supabase } from '../utils/supabase'
 
 function QuizList({ quizzes, ieltsTests = [] }) {
   const { subject, grade, category } = useParams()
   const navigate = useNavigate()
+  const { user } = useAuth()
   const decodedSubject = decodeURIComponent(subject)
   const decodedCategory = category ? decodeURIComponent(category) : null
   const [selectedQuiz, setSelectedQuiz] = useState(null)
   const [showModal, setShowModal] = useState(false)
+  const [showAudioModal, setShowAudioModal] = useState(false)
+  const [audioUrls, setAudioUrls] = useState({})
+  const [editingAudio, setEditingAudio] = useState({ testId: null, url: '' })
+  const [loading, setLoading] = useState(false)
+
+  const isAdmin = user?.role === 'admin'
+
+  // Load audio URLs từ Supabase
+  useEffect(() => {
+    const loadAudioUrls = async () => {
+      const { data, error } = await supabase
+        .from('ielts_audio')
+        .select('test_id, audio_url')
+      
+      if (!error && data) {
+        const urlMap = {}
+        data.forEach(item => {
+          urlMap[item.test_id] = item.audio_url
+        })
+        setAudioUrls(urlMap)
+      }
+    }
+    
+    if (decodedCategory === 'Listening') {
+      loadAudioUrls()
+    }
+  }, [decodedCategory])
+
+  const handleAddAudio = (testId) => {
+    setEditingAudio({ testId, url: audioUrls[testId] || '' })
+    setShowAudioModal(true)
+  }
+
+  const convertGoogleDriveLink = (link) => {
+    const match = link.match(/\/d\/([a-zA-Z0-9_-]+)/)
+    if (match) {
+      return `https://drive.google.com/uc?export=download&id=${match[1]}`
+    }
+    return link
+  }
+
+  const handleSaveAudio = async () => {
+    if (!editingAudio.url.trim()) {
+      alert('Vui lòng nhập link audio')
+      return
+    }
+
+    setLoading(true)
+    const directUrl = convertGoogleDriveLink(editingAudio.url)
+
+    try {
+      // Kiểm tra xem đã có audio chưa
+      const { data: existing } = await supabase
+        .from('ielts_audio')
+        .select('id')
+        .eq('test_id', editingAudio.testId)
+        .single()
+
+      if (existing) {
+        // Update
+        const { error } = await supabase
+          .from('ielts_audio')
+          .update({ 
+            audio_url: directUrl,
+            updated_at: new Date().toISOString()
+          })
+          .eq('test_id', editingAudio.testId)
+
+        if (error) throw error
+      } else {
+        // Insert
+        const { error } = await supabase
+          .from('ielts_audio')
+          .insert({
+            test_id: editingAudio.testId,
+            audio_url: directUrl,
+            uploaded_by: user.id
+          })
+
+        if (error) throw error
+      }
+
+      // Cập nhật state local
+      setAudioUrls(prev => ({
+        ...prev,
+        [editingAudio.testId]: directUrl
+      }))
+
+      alert('✅ Đã lưu audio thành công!')
+      setShowAudioModal(false)
+      setEditingAudio({ testId: null, url: '' })
+    } catch (error) {
+      console.error('Error saving audio:', error)
+      alert('❌ Lỗi khi lưu audio: ' + error.message)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   const subjectQuizzes = useMemo(() => {
     console.log('DEBUG - decodedSubject:', decodedSubject)
@@ -78,8 +179,19 @@ function QuizList({ quizzes, ieltsTests = [] }) {
                 return (
                   <div
                     key={quiz.id}
-                    className="bg-white rounded-xl shadow-sm border border-gray-200 p-5 hover:shadow-md transition-all"
+                    className="bg-white rounded-xl shadow-sm border border-gray-200 p-5 hover:shadow-md transition-all relative"
                   >
+                    {/* Admin: Nút thêm audio */}
+                    {isAdmin && decodedCategory === 'Listening' && (
+                      <button
+                        onClick={() => handleAddAudio(quiz.id)}
+                        className="absolute top-3 right-3 w-8 h-8 bg-purple-600 hover:bg-purple-700 text-white rounded-full flex items-center justify-center transition-colors shadow-md"
+                        title="Thêm/Sửa audio"
+                      >
+                        {audioUrls[quiz.id] ? '✏️' : '+'}
+                      </button>
+                    )}
+
                     <div className="mb-4">
                       <div className="flex items-start gap-2 mb-3">
                         <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
@@ -87,12 +199,28 @@ function QuizList({ quizzes, ieltsTests = [] }) {
                             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/>
                           </svg>
                         </div>
-                        <h3 className="font-bold text-gray-900 text-base leading-tight">
+                        <h3 className="font-bold text-gray-900 text-base leading-tight pr-8">
                           {quiz.title}
                         </h3>
                       </div>
                       
                       <div className="space-y-2 text-sm text-gray-600 mb-3">
+                        {/* Hiển thị trạng thái audio cho Listening */}
+                        {decodedCategory === 'Listening' && (
+                          <div className="flex items-center gap-1.5">
+                            {audioUrls[quiz.id] ? (
+                              <>
+                                <span className="text-green-600">🎧</span>
+                                <span className="text-green-600 font-medium">Có audio</span>
+                              </>
+                            ) : (
+                              <>
+                                <span className="text-red-600">🔇</span>
+                                <span className="text-red-600">Chưa có audio</span>
+                              </>
+                            )}
+                          </div>
+                        )}
                         {quiz.timeLimit && (
                           <div className="flex items-center gap-1.5">
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -219,6 +347,106 @@ function QuizList({ quizzes, ieltsTests = [] }) {
                 </svg>
               </div>
               <p className="text-gray-600">Chưa có bài tập nào cho môn học này.</p>
+            </div>
+          )}
+
+          {/* Modal thêm/sửa audio (Admin only) */}
+          {showAudioModal && editingAudio.testId && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+              <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full">
+                <div className="p-6">
+                  <div className="flex items-center justify-between mb-6">
+                    <h2 className="text-2xl font-bold text-gray-900">
+                      🎧 Thêm Audio cho bài #{editingAudio.testId}
+                    </h2>
+                    <button
+                      onClick={() => {
+                        setShowAudioModal(false)
+                        setEditingAudio({ testId: null, url: '' })
+                      }}
+                      className="text-gray-400 hover:text-gray-600"
+                    >
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12"/>
+                      </svg>
+                    </button>
+                  </div>
+
+                  <div className="mb-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                    <p className="text-sm text-blue-800">
+                      <strong>📖 Hướng dẫn:</strong>
+                    </p>
+                    <ol className="text-sm text-blue-700 mt-2 space-y-1 ml-4 list-decimal">
+                      <li>Upload file audio lên Google Drive</li>
+                      <li>Click chuột phải → Chia sẻ → "Bất kỳ ai có link đều có thể xem"</li>
+                      <li>Copy link và paste vào ô bên dưới</li>
+                    </ol>
+                  </div>
+
+                  <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Google Drive Link
+                    </label>
+                    <input
+                      type="text"
+                      value={editingAudio.url}
+                      onChange={(e) => setEditingAudio(prev => ({ ...prev, url: e.target.value }))}
+                      placeholder="https://drive.google.com/file/d/FILE_ID/view"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none"
+                    />
+                  </div>
+
+                  {editingAudio.url && (
+                    <div className="mb-4">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Direct Link (Tự động chuyển đổi)
+                      </label>
+                      <div className="p-3 bg-green-50 border border-green-200 rounded-lg">
+                        <code className="text-xs text-green-800 break-all">
+                          {convertGoogleDriveLink(editingAudio.url)}
+                        </code>
+                      </div>
+                    </div>
+                  )}
+
+                  {editingAudio.url && (
+                    <div className="mb-4">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Test Audio
+                      </label>
+                      <audio
+                        controls
+                        src={convertGoogleDriveLink(editingAudio.url)}
+                        className="w-full"
+                        onError={() => {
+                          alert('Không thể tải audio. Kiểm tra:\n1. Link có đúng?\n2. File có quyền "Anyone with the link can view"?')
+                        }}
+                      >
+                        Trình duyệt không hỗ trợ audio player.
+                      </audio>
+                    </div>
+                  )}
+
+                  <div className="flex gap-3">
+                    <button
+                      onClick={() => {
+                        setShowAudioModal(false)
+                        setEditingAudio({ testId: null, url: '' })
+                      }}
+                      className="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                    >
+                      Hủy
+                    </button>
+                    <button
+                      onClick={handleSaveAudio}
+                      disabled={loading || !editingAudio.url.trim()}
+                      className="flex-1 px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {loading ? 'Đang lưu...' : '💾 Lưu Audio'}
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           )}
 

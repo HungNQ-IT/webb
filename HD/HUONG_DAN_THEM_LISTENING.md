@@ -2,12 +2,12 @@
 
 ## Tổng quan
 Bài tập IELTS Listening có 2 phần chính:
-1. **Audio**: Upload lên Google Drive và thêm link (chỉ admin)
+1. **Audio**: Upload lên Google Drive và thêm link **TRỰC TIẾP TRÊN TRANG WEB** (chỉ admin)
 2. **Đề bài và câu hỏi**: Thêm thủ công vào file JSON
 
 ---
 
-## Phần 1: Thêm Audio (Chỉ Admin)
+## Phần 1: Thêm Audio (Chỉ Admin) - TRÊN TRANG WEB
 
 ### Bước 1: Upload audio lên Google Drive
 
@@ -33,9 +33,18 @@ https://drive.google.com/uc?export=download&id=FILE_ID
 - Link gốc: `https://drive.google.com/file/d/1ABC123xyz/view?usp=sharing`
 - Direct link: `https://drive.google.com/uc?export=download&id=1ABC123xyz`
 
-### Bước 3: Thêm link vào JSON
+### Bước 3: Thêm link trên trang web
 
-Mở file `public/ielts.json` và thêm trường `audioUrl` vào bài tập Listening.
+1. **Đăng nhập** bằng tài khoản admin
+2. Vào trang **IELTS → Listening**
+3. Tìm bài test cần thêm audio
+4. Click nút **"+"** ở góc trên bên phải của card bài test
+5. Paste link Google Drive vào ô
+6. Hệ thống sẽ tự động chuyển đổi sang direct link
+7. Click **"Test Audio"** để kiểm tra
+8. Click **"💾 Lưu Audio"**
+
+✅ **Xong!** Audio đã được lưu vào database và sẵn sàng sử dụng.
 
 ---
 
@@ -293,7 +302,8 @@ Mở file `public/ielts.json` và thêm trường `audioUrl` vào bài tập Lis
 ### 1. Audio từ Google Drive
 - ✅ Chỉ admin mới có quyền thêm/sửa link audio
 - ✅ Phải đặt quyền "Anyone with the link can view"
-- ✅ Sử dụng direct link để audio có thể phát trực tiếp
+- ✅ Hệ thống tự động chuyển đổi sang direct link
+- ✅ Audio được lưu trong database Supabase, không cần chỉnh sửa file JSON
 - ⚠️ Không upload file audio quá lớn (khuyến nghị < 50MB)
 
 ### 2. Đề bài và câu hỏi
@@ -301,10 +311,11 @@ Mở file `public/ielts.json` và thêm trường `audioUrl` vào bài tập Lis
 - ✅ Tuân thủ đúng cấu trúc JSON
 - ✅ Kiểm tra syntax JSON trước khi lưu (dùng JSONLint.com)
 - ✅ Đánh số câu hỏi liên tục (1, 2, 3...)
+- ⚠️ **KHÔNG CẦN** thêm trường `audioUrl` vào JSON nữa
 
 ### 3. Kiểm tra sau khi thêm
-1. Mở file JSON bằng editor và kiểm tra syntax
-2. Refresh trang web và kiểm tra audio có phát được không
+1. Vào trang Listening, kiểm tra icon 🎧 "Có audio" hiển thị
+2. Click "Làm bài" và kiểm tra audio có phát được không
 3. Làm thử bài tập để đảm bảo câu hỏi hiển thị đúng
 4. Kiểm tra đáp án có chính xác không
 
@@ -314,8 +325,19 @@ Mở file `public/ielts.json` và thêm trường `audioUrl` vào bài tập Lis
 
 ### Audio không phát được
 - Kiểm tra link Google Drive có đúng format không
-- Kiểm tra quyền chia sẻ file trên Drive
+- Kiểm tra quyền chia sẻ file trên Drive: "Anyone with the link can view"
 - Thử mở link trực tiếp trên trình duyệt
+- Kiểm tra trong modal "Test Audio" trước khi lưu
+
+### Không thấy nút "+" để thêm audio
+- Đảm bảo bạn đã đăng nhập bằng tài khoản admin
+- Kiểm tra email admin trong file `.env` (VITE_ADMIN_EMAILS)
+- Refresh trang và đăng nhập lại
+
+### Lỗi khi lưu audio
+- Kiểm tra bảng `ielts_audio` đã được tạo trong Supabase chưa
+- Chạy script `supabase_setup.sql` trong SQL Editor của Supabase
+- Kiểm tra policies có đúng không (admin có quyền INSERT/UPDATE)
 
 ### JSON bị lỗi
 - Sử dụng JSONLint.com để kiểm tra syntax

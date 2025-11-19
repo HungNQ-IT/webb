@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
+import { supabase } from '../utils/supabase'
 import AudioPlayer from './AudioPlayer'
 
 function IELTSListening({ ieltsTests }) {
@@ -11,6 +12,32 @@ function IELTSListening({ ieltsTests }) {
   const [answers, setAnswers] = useState({})
   const [timeRemaining, setTimeRemaining] = useState(null)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [audioUrl, setAudioUrl] = useState(null)
+  const [loadingAudio, setLoadingAudio] = useState(true)
+
+  // Load audio URL từ Supabase
+  useEffect(() => {
+    const loadAudio = async () => {
+      if (!test) return
+      
+      setLoadingAudio(true)
+      const { data, error } = await supabase
+        .from('ielts_audio')
+        .select('audio_url')
+        .eq('test_id', test.id)
+        .single()
+      
+      if (!error && data) {
+        setAudioUrl(data.audio_url)
+      } else {
+        // Fallback to audioUrl from JSON if exists
+        setAudioUrl(test.audioUrl || null)
+      }
+      setLoadingAudio(false)
+    }
+    
+    loadAudio()
+  }, [test])
 
   useEffect(() => {
     if (!test) return
@@ -184,8 +211,18 @@ function IELTSListening({ ieltsTests }) {
       <div className="container mx-auto px-4 py-6">
         <div className="max-w-4xl mx-auto space-y-6">
           {/* Audio Player */}
-          {test.audioUrl && (
-            <AudioPlayer audioUrl={test.audioUrl} title={test.title} />
+          {loadingAudio ? (
+            <div className="bg-gray-100 rounded-xl p-6 text-center">
+              <p className="text-gray-600">Đang tải audio...</p>
+            </div>
+          ) : audioUrl ? (
+            <AudioPlayer audioUrl={audioUrl} title={test.title} />
+          ) : (
+            <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-6">
+              <p className="text-yellow-800">
+                ⚠️ Bài này chưa có audio. Vui lòng liên hệ admin để thêm audio.
+              </p>
+            </div>
           )}
 
           {/* Section Instruction */}

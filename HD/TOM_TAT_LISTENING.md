@@ -5,24 +5,32 @@
 ### 1. Components mới
 - **AudioPlayer.jsx**: Player audio với đầy đủ tính năng (play/pause, tua, tốc độ, âm lượng)
 - **IELTSListening.jsx**: Component hiển thị bài tập Listening với audio
-- **AdminAudioManager.jsx**: Trang quản lý audio cho admin
+- **QuizList.jsx**: Đã cập nhật để admin có thể thêm audio trực tiếp
 
-### 2. Routing
+### 2. Database
+- **Bảng ielts_audio**: Lưu audio URLs trong Supabase
+- **Policies**: Chỉ admin mới có quyền thêm/sửa/xóa audio
+- **Real-time**: Tự động cập nhật khi có thay đổi
+
+### 3. Routing
 - `/ielts-listening/:id` - Làm bài Listening
-- `/admin/audio` - Quản lý audio (chỉ admin)
+- Audio được load tự động từ database
 
-### 3. Tài liệu
+### 4. Tài liệu
 - **HUONG_DAN_THEM_LISTENING.md**: Hướng dẫn chi tiết cách thêm bài Listening
 - **MAU_LISTENING.json**: File mẫu JSON cho bài Listening
+- **supabase_setup.sql**: Script tạo bảng ielts_audio
 
 ## 🎯 Cách sử dụng
 
-### Cho Admin:
+### Cho Admin - Thêm Audio:
 1. Đăng nhập bằng email admin
-2. Vào `/admin/audio` để quản lý audio
-3. Upload audio lên Google Drive
-4. Copy link và paste vào trang quản lý
-5. Cập nhật file `public/ielts.json` với URL mới
+2. Vào trang **IELTS → Listening**
+3. Click nút **"+"** trên card bài test
+4. Upload audio lên Google Drive và copy link
+5. Paste link vào modal
+6. Click **"💾 Lưu Audio"**
+7. ✅ Xong! Audio được lưu vào database
 
 ### Thêm bài Listening mới:
 1. Mở file `public/ielts.json`
@@ -30,9 +38,12 @@
 3. Thay đổi:
    - `id`: ID duy nhất
    - `title`: Tên bài test
-   - `audioUrl`: Link Google Drive (direct link)
+   - `type`: "ielts-listening"
+   - `category`: "Listening"
    - `sections`: Các phần thi và câu hỏi
-4. Lưu file và refresh trang
+4. **KHÔNG CẦN** thêm `audioUrl` vào JSON
+5. Lưu file và refresh trang
+6. Admin thêm audio trực tiếp trên web
 
 ## 📝 Cấu trúc JSON
 
@@ -42,10 +53,11 @@
   "subject": "IELTS",
   "category": "Listening",
   "type": "ielts-listening",
-  "audioUrl": "https://drive.google.com/uc?export=download&id=FILE_ID",
   "sections": [...]
 }
 ```
+
+**Lưu ý:** KHÔNG cần thêm `audioUrl` vào JSON. Audio được quản lý qua database.
 
 ## 🎧 Các loại câu hỏi hỗ trợ
 
@@ -58,7 +70,18 @@
 
 - Hướng dẫn chi tiết: `HD/HUONG_DAN_THEM_LISTENING.md`
 - File mẫu: `MAU_LISTENING.json`
-- Quản lý audio: `/admin/audio` (chỉ admin)
+- Thêm audio: Vào trang IELTS → Listening → Click nút "+" (chỉ admin)
+- Database setup: `supabase_setup.sql`
+
+---
+
+## 🎉 Ưu điểm của hệ thống mới
+
+✅ **Đơn giản**: Admin thêm audio trực tiếp trên web, không cần chỉnh sửa file JSON  
+✅ **An toàn**: Audio URLs được lưu trong database, có backup tự động  
+✅ **Linh hoạt**: Có thể sửa/xóa audio bất cứ lúc nào  
+✅ **Real-time**: Thay đổi có hiệu lực ngay lập tức  
+✅ **Phân quyền**: Chỉ admin mới có quyền quản lý audio
 
 ---
 
