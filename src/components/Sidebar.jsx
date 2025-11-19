@@ -21,6 +21,62 @@ function Sidebar() {
         onMouseEnter={() => setIsOpen(true)}
       />
 
+      {/* Tab hint - chỉ hiện khi sidebar đóng */}
+      {!isOpen && (
+        <div
+          className="fixed left-0 top-1/2 -translate-y-1/2 z-40 cursor-pointer group"
+          onMouseEnter={() => setIsOpen(true)}
+        >
+          <div className="bg-gradient-to-r from-blue-600 to-blue-500 text-white px-2 py-6 rounded-r-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:px-3">
+            <div className="flex flex-col items-center gap-2">
+              {/* Icon menu */}
+              <svg 
+                className="w-5 h-5 animate-pulse" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={2.5} 
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+              
+              {/* Text dọc */}
+              <div className="flex flex-col items-center text-xs font-semibold tracking-wider">
+                <span>M</span>
+                <span>E</span>
+                <span>N</span>
+                <span>U</span>
+              </div>
+              
+              {/* Icon mũi tên */}
+              <svg 
+                className="w-4 h-4 group-hover:translate-x-1 transition-transform" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  strokeWidth={2.5} 
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </div>
+          </div>
+          
+          {/* Tooltip */}
+          <div className="absolute left-full top-1/2 -translate-y-1/2 ml-2 px-3 py-2 bg-gray-900 text-white text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none">
+            Kéo chuột vào đây để mở menu
+            <div className="absolute right-full top-1/2 -translate-y-1/2 border-8 border-transparent border-r-gray-900"></div>
+          </div>
+        </div>
+      )}
+
       {/* Overlay */}
       {isOpen && (
         <div
