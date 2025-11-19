@@ -290,6 +290,47 @@
                 "answer": "TRUE"
               }
             ]
+          },
+          {
+            "type": "note-completion",
+            "instruction": "Complete the notes below. Choose NO MORE THAN TWO WORDS from the passage for each answer.",
+            "notes": {
+              "title": "Alexander Henderson",
+              "sections": [
+                {
+                  "heading": "Early life",
+                  "items": [
+                    "was born in Scotland in 1831 – father was a 9______",
+                    "trained as an accountant, emigrated to Canada in 1855"
+                  ]
+                },
+                {
+                  "heading": "Start of a photographic career",
+                  "items": [
+                    "opened up a photographic studio in 1866",
+                    "took photos of city life, but preferred landscape photography",
+                    "people bought Henderson's photos because photography took up considerable time and the 10______ was heavy",
+                    "the photographs Henderson sold were 11______ or souvenirs"
+                  ]
+                },
+                {
+                  "heading": "Travelling as a professional photographer",
+                  "items": [
+                    "travelled widely in Quebec and Ontario in 1870s and 1880s",
+                    "took many trips along eastern rivers in a 12______",
+                    "worked for Canadian railways between 1875 and 1897",
+                    "worked for CPR in 1885 and photographed the 13______ and the railway at Rogers Pass"
+                  ]
+                }
+              ]
+            },
+            "answers": [
+              "merchant",
+              "equipment",
+              "gifts",
+              "canoe",
+              "mountains"
+            ]
           }
         ]
       }
