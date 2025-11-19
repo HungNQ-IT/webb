@@ -9,6 +9,17 @@ function IELTSListening({ ieltsTests = [] }) {
   
   const test = ieltsTests.find(t => t.id === parseInt(id))
   
+  // Debug logging
+  useEffect(() => {
+    console.log('IELTSListening - ID:', id)
+    console.log('IELTSListening - ieltsTests:', ieltsTests)
+    console.log('IELTSListening - test:', test)
+    if (test) {
+      console.log('IELTSListening - test.sections:', test.sections)
+      console.log('IELTSListening - test.type:', test.type)
+    }
+  }, [id, ieltsTests, test])
+  
   const [currentSection, setCurrentSection] = useState(0)
   const [answers, setAnswers] = useState({})
   const [timeRemaining, setTimeRemaining] = useState(null)
@@ -74,7 +85,7 @@ function IELTSListening({ ieltsTests = [] }) {
     if (timeRemaining === 0 && !isSubmitted) {
       handleSubmit()
     }
-  }, [timeRemaining, isSubmitted])
+  }, [timeRemaining, isSubmitted, handleSubmit])
 
   const handleAnswerChange = (sectionId, questionIndex, itemIndex, value) => {
     const key = `${sectionId}-${questionIndex}-${itemIndex}`
@@ -160,7 +171,7 @@ function IELTSListening({ ieltsTests = [] }) {
     
     // Navigate to result page
     navigate(`/ielts-result/${test.id}`)
-  }, [isSubmitted, test, answers, navigate])
+  }, [isSubmitted, test, answers, navigate, calculateScore])
 
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60)

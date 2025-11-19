@@ -4,6 +4,7 @@ import Home from './components/Home'
 import RequireAuth from './components/RequireAuth'
 import Layout from './components/Layout'
 import Loading from './components/Loading'
+import ErrorBoundary from './components/ErrorBoundary'
 import { AuthProvider } from './context/AuthContext'
 
 // Component để xử lý redirect từ 404.html
@@ -60,14 +61,16 @@ function App() {
         try {
           const { data, timestamp } = JSON.parse(cached)
           if (Date.now() - timestamp < cacheTime) {
+            console.log('App - Loaded quizzes from cache:', data.length)
             setQuizzes(data)
             return Promise.resolve()
           }
         } catch (e) {
-          // Cache lỗi, tiếp tục fetch
+          console.error('Cache error for quizzes:', e)
         }
       }
       
+      console.log('App - Fetching questions.json from:', `${baseUrl}questions.json`)
       return fetch(`${baseUrl}questions.json`, { cache: 'default' })
         .then(res => {
           if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
@@ -75,6 +78,7 @@ function App() {
         })
         .then(data => {
           if (Array.isArray(data)) {
+            console.log('App - Loaded quizzes:', data.length)
             setQuizzes(data)
             localStorage.setItem(cacheKey, JSON.stringify({ data, timestamp: Date.now() }))
           } else {
@@ -97,14 +101,16 @@ function App() {
         try {
           const { data, timestamp } = JSON.parse(cached)
           if (Date.now() - timestamp < cacheTime) {
+            console.log('App - Loaded IELTS from cache:', data.length)
             setIeltsTests(data)
             return Promise.resolve()
           }
         } catch (e) {
-          // Cache lỗi, tiếp tục fetch
+          console.error('Cache error for IELTS:', e)
         }
       }
       
+      console.log('App - Fetching ielts.json from:', `${baseUrl}ielts.json`)
       return fetch(`${baseUrl}ielts.json`, { cache: 'default' })
         .then(res => {
           if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
@@ -112,6 +118,7 @@ function App() {
         })
         .then(data => {
           if (Array.isArray(data)) {
+            console.log('App - Loaded IELTS tests:', data.length, data)
             setIeltsTests(data)
             localStorage.setItem(cacheKey, JSON.stringify({ data, timestamp: Date.now() }))
           } else {
@@ -127,7 +134,10 @@ function App() {
     
     // Load cả 2 file
     Promise.all([loadQuizzes(), loadIELTS()])
-      .finally(() => setLoading(false))
+      .finally(() => {
+        console.log('App - Loading complete')
+        setLoading(false)
+      })
   }, [])
 
   if (loading) {
@@ -142,50 +152,52 @@ function App() {
     <BrowserRouter basename={basename}>
       <AuthProvider>
         <RedirectHandler />
-        <Suspense fallback={<Loading />}>
-          <Routes>
-            <Route element={<Layout />}>
-              <Route index element={<Home />} />
-              <Route path="/subjects" element={<SubjectList quizzes={quizzes} />} />
-              <Route path="/subject/:subject/grades" element={<GradeList />} />
-              <Route path="/subject/:subject/grade/:grade" element={<QuizList quizzes={quizzes} ieltsTests={ieltsTests} />} />
-              <Route path="/subject/:subject/category/:category" element={<QuizList quizzes={quizzes} ieltsTests={ieltsTests} />} />
-              <Route path="/subject/:subject" element={<CategoryList quizzes={quizzes} ieltsTests={ieltsTests} />} />
-              <Route path="/quiz/:id" element={<Quiz quizzes={quizzes} />} />
-              <Route path="/ielts/:id" element={<IELTSQuiz ieltsTests={ieltsTests} />} />
-              <Route path="/ielts-listening/:id" element={<IELTSListening ieltsTests={ieltsTests} />} />
-              <Route path="/ielts-result/:id" element={<IELTSResult />} />
-              <Route path="/result/:id" element={<Result quizzes={quizzes} />} />
-              <Route
-                path="/profile"
-                element={
-                  <RequireAuth>
-                    <Profile />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="/admin"
-                element={
-                  <RequireAuth roles={['admin']}>
-                    <AdminDashboard quizzes={quizzes} />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="/admin/audio"
-                element={
-                  <RequireAuth roles={['admin']}>
-                    <AdminAudioManager ieltsTests={ieltsTests} />
-                  </RequireAuth>
-                }
-              />
-            </Route>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </Suspense>
+        <ErrorBoundary>
+          <Suspense fallback={<Loading />}>
+            <Routes>
+              <Route element={<Layout />}>
+                <Route index element={<Home />} />
+                <Route path="/subjects" element={<SubjectList quizzes={quizzes} />} />
+                <Route path="/subject/:subject/grades" element={<GradeList />} />
+                <Route path="/subject/:subject/grade/:grade" element={<QuizList quizzes={quizzes} ieltsTests={ieltsTests} />} />
+                <Route path="/subject/:subject/category/:category" element={<QuizList quizzes={quizzes} ieltsTests={ieltsTests} />} />
+                <Route path="/subject/:subject" element={<CategoryList quizzes={quizzes} ieltsTests={ieltsTests} />} />
+                <Route path="/quiz/:id" element={<Quiz quizzes={quizzes} />} />
+                <Route path="/ielts/:id" element={<IELTSQuiz ieltsTests={ieltsTests} />} />
+                <Route path="/ielts-listening/:id" element={<IELTSListening ieltsTests={ieltsTests} />} />
+                <Route path="/ielts-result/:id" element={<IELTSResult />} />
+                <Route path="/result/:id" element={<Result quizzes={quizzes} />} />
+                <Route
+                  path="/profile"
+                  element={
+                    <RequireAuth>
+                      <Profile />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/admin"
+                  element={
+                    <RequireAuth roles={['admin']}>
+                      <AdminDashboard quizzes={quizzes} />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/admin/audio"
+                  element={
+                    <RequireAuth roles={['admin']}>
+                      <AdminAudioManager ieltsTests={ieltsTests} />
+                    </RequireAuth>
+                  }
+                />
+              </Route>
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </Suspense>
+        </ErrorBoundary>
       </AuthProvider>
     </BrowserRouter>
   )
