@@ -35,7 +35,6 @@ const Quiz = lazy(() => import('./components/Quiz'))
 const IELTSQuiz = lazy(() => import('./components/IELTSQuiz'))
 const IELTSListening = lazy(() => import('./components/IELTSListening'))
 const IELTSResult = lazy(() => import('./components/IELTSResult'))
-const TestListening = lazy(() => import('./components/TestListening'))
 const Result = lazy(() => import('./components/Result'))
 const Login = lazy(() => import('./components/Login'))
 const Register = lazy(() => import('./components/Register'))
@@ -156,7 +155,6 @@ function App() {
               <Route path="/ielts/:id" element={<IELTSQuiz ieltsTests={ieltsTests} />} />
               <Route path="/ielts-listening/:id" element={<IELTSListening ieltsTests={ieltsTests} />} />
               <Route path="/ielts-result/:id" element={<IELTSResult />} />
-              <Route path="/test-listening" element={<TestListening />} />
               <Route path="/result/:id" element={<Result quizzes={quizzes} />} />
               <Route
                 path="/profile"

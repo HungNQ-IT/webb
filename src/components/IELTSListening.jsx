@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { supabase } from '../utils/supabase'
 import AudioPlayer from './AudioPlayer'
@@ -7,18 +7,7 @@ function IELTSListening({ ieltsTests = [] }) {
   const { id } = useParams()
   const navigate = useNavigate()
   
-  // Debug logging
-  console.log('IELTSListening - ID from params:', id)
-  console.log('IELTSListening - ieltsTests:', ieltsTests)
-  console.log('IELTSListening - ieltsTests length:', ieltsTests?.length)
-  
-  // Kiểm tra ieltsTests có tồn tại không
-  if (!Array.isArray(ieltsTests)) {
-    console.error('ieltsTests is not an array:', ieltsTests)
-  }
-  
   const test = ieltsTests.find(t => t.id === parseInt(id))
-  console.log('IELTSListening - Found test:', test)
   
   const [currentSection, setCurrentSection] = useState(0)
   const [answers, setAnswers] = useState({})
@@ -66,12 +55,11 @@ function IELTSListening({ ieltsTests = [] }) {
   }, [test])
 
   useEffect(() => {
-    if (timeRemaining === null || timeRemaining <= 0) return
+    if (timeRemaining === null || timeRemaining <= 0 || isSubmitted) return
 
     const timer = setInterval(() => {
       setTimeRemaining(prev => {
         if (prev <= 1) {
-          handleSubmit()
           return 0
         }
         return prev - 1
@@ -79,7 +67,14 @@ function IELTSListening({ ieltsTests = [] }) {
     }, 1000)
 
     return () => clearInterval(timer)
-  }, [timeRemaining])
+  }, [timeRemaining, isSubmitted])
+
+  // Auto submit when time runs out
+  useEffect(() => {
+    if (timeRemaining === 0 && !isSubmitted) {
+      handleSubmit()
+    }
+  }, [timeRemaining, isSubmitted])
 
   const handleAnswerChange = (sectionId, questionIndex, itemIndex, value) => {
     const key = `${sectionId}-${questionIndex}-${itemIndex}`
@@ -89,23 +84,29 @@ function IELTSListening({ ieltsTests = [] }) {
     }))
   }
 
-  const calculateScore = () => {
+  const calculateScore = useCallback(() => {
+    if (!test || !test.sections) {
+      return { correctAnswers: 0, totalQuestions: 0 }
+    }
+
     let totalQuestions = 0
     let correctAnswers = 0
 
     test.sections.forEach((section) => {
+      if (!section.questions) return
+      
       section.questions.forEach((question, qIndex) => {
-        if (question.type === 'form-completion') {
+        if (question.type === 'form-completion' && question.form?.fields) {
           question.form.fields.forEach((field, fIndex) => {
             totalQuestions++
             const key = `${section.id}-${qIndex}-${fIndex}`
             const userAnswer = answers[key]?.trim().toLowerCase()
-            const correctAnswer = field.answer.toLowerCase()
-            if (userAnswer === correctAnswer) {
+            const correctAnswer = field.answer?.toLowerCase()
+            if (userAnswer && correctAnswer && userAnswer === correctAnswer) {
               correctAnswers++
             }
           })
-        } else if (question.type === 'multiple-choice') {
+        } else if (question.type === 'multiple-choice' && question.items) {
           question.items.forEach((item, iIndex) => {
             totalQuestions++
             const key = `${section.id}-${qIndex}-${iIndex}`
@@ -113,17 +114,17 @@ function IELTSListening({ ieltsTests = [] }) {
               correctAnswers++
             }
           })
-        } else if (question.type === 'note-completion') {
+        } else if (question.type === 'note-completion' && question.answers) {
           question.answers.forEach((answer, aIndex) => {
             totalQuestions++
             const key = `${section.id}-${qIndex}-${aIndex}`
             const userAnswer = answers[key]?.trim().toLowerCase()
-            const correctAnswer = answer.toLowerCase()
-            if (userAnswer === correctAnswer) {
+            const correctAnswer = answer?.toLowerCase()
+            if (userAnswer && correctAnswer && userAnswer === correctAnswer) {
               correctAnswers++
             }
           })
-        } else if (question.type === 'matching') {
+        } else if (question.type === 'matching' && question.items) {
           question.items.forEach((item, iIndex) => {
             totalQuestions++
             const key = `${section.id}-${qIndex}-${iIndex}`
@@ -136,10 +137,10 @@ function IELTSListening({ ieltsTests = [] }) {
     })
 
     return { correctAnswers, totalQuestions }
-  }
+  }, [test, answers])
 
-  const handleSubmit = () => {
-    if (isSubmitted) return
+  const handleSubmit = useCallback(() => {
+    if (isSubmitted || !test) return
     setIsSubmitted(true)
     
     const { correctAnswers, totalQuestions } = calculateScore()
@@ -159,7 +160,7 @@ function IELTSListening({ ieltsTests = [] }) {
     
     // Navigate to result page
     navigate(`/ielts-result/${test.id}`)
-  }
+  }, [isSubmitted, test, answers, navigate])
 
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60)
