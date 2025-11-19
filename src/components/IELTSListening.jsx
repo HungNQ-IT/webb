@@ -3,10 +3,22 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { supabase } from '../utils/supabase'
 import AudioPlayer from './AudioPlayer'
 
-function IELTSListening({ ieltsTests }) {
+function IELTSListening({ ieltsTests = [] }) {
   const { id } = useParams()
   const navigate = useNavigate()
+  
+  // Debug logging
+  console.log('IELTSListening - ID from params:', id)
+  console.log('IELTSListening - ieltsTests:', ieltsTests)
+  console.log('IELTSListening - ieltsTests length:', ieltsTests?.length)
+  
+  // Kiểm tra ieltsTests có tồn tại không
+  if (!Array.isArray(ieltsTests)) {
+    console.error('ieltsTests is not an array:', ieltsTests)
+  }
+  
   const test = ieltsTests.find(t => t.id === parseInt(id))
+  console.log('IELTSListening - Found test:', test)
   
   const [currentSection, setCurrentSection] = useState(0)
   const [answers, setAnswers] = useState({})
@@ -14,26 +26,33 @@ function IELTSListening({ ieltsTests }) {
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [audioUrl, setAudioUrl] = useState(null)
   const [loadingAudio, setLoadingAudio] = useState(true)
+  const [error, setError] = useState(null)
 
   // Load audio URL từ Supabase
   useEffect(() => {
     const loadAudio = async () => {
       if (!test) return
       
-      setLoadingAudio(true)
-      const { data, error } = await supabase
-        .from('ielts_audio')
-        .select('audio_url')
-        .eq('test_id', test.id)
-        .single()
-      
-      if (!error && data) {
-        setAudioUrl(data.audio_url)
-      } else {
-        // Fallback to audioUrl from JSON if exists
+      try {
+        setLoadingAudio(true)
+        const { data, error } = await supabase
+          .from('ielts_audio')
+          .select('audio_url')
+          .eq('test_id', test.id)
+          .single()
+        
+        if (!error && data) {
+          setAudioUrl(data.audio_url)
+        } else {
+          // Fallback to audioUrl from JSON if exists
+          setAudioUrl(test.audioUrl || null)
+        }
+      } catch (err) {
+        console.error('Error loading audio:', err)
         setAudioUrl(test.audioUrl || null)
+      } finally {
+        setLoadingAudio(false)
       }
-      setLoadingAudio(false)
     }
     
     loadAudio()
@@ -148,10 +167,52 @@ function IELTSListening({ ieltsTests }) {
     return `${mins}:${secs.toString().padStart(2, '0')}`
   }
 
+  // Hiển thị lỗi nếu có
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-red-600 mb-4">Đã xảy ra lỗi: {error}</p>
+          <button
+            onClick={() => navigate(-1)}
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          >
+            Quay lại
+          </button>
+        </div>
+      </div>
+    )
+  }
+
   if (!test) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <p className="text-gray-600">Không tìm thấy bài tập.</p>
+        <div className="text-center">
+          <p className="text-gray-600 mb-4">Không tìm thấy bài tập với ID: {id}</p>
+          <button
+            onClick={() => navigate(-1)}
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          >
+            Quay lại
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  // Kiểm tra test có sections không
+  if (!test.sections || !Array.isArray(test.sections) || test.sections.length === 0) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-gray-600 mb-4">Bài tập này chưa có sections.</p>
+          <button
+            onClick={() => navigate(-1)}
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          >
+            Quay lại
+          </button>
+        </div>
       </div>
     )
   }
@@ -161,7 +222,15 @@ function IELTSListening({ ieltsTests }) {
   if (!section) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <p className="text-gray-600">Section không tồn tại.</p>
+        <div className="text-center">
+          <p className="text-gray-600 mb-4">Section không tồn tại.</p>
+          <button
+            onClick={() => setCurrentSection(0)}
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          >
+            Về Section đầu tiên
+          </button>
+        </div>
       </div>
     )
   }
