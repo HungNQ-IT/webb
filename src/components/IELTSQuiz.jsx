@@ -349,8 +349,8 @@ function IELTSQuiz({ ieltsTests }) {
                                       value={answers[`${passage.id}-${qIndex}-${rowIndex * question.table.headers.length + cellIndex}`] || ''}
                                       onChange={(e) => handleAnswerChange(passage.id, qIndex, rowIndex * question.table.headers.length + cellIndex, e.target.value)}
                                       disabled={isSubmitted}
-                                      className="w-full px-2 py-1 border border-gray-300 rounded focus:border-blue-500 focus:outline-none disabled:bg-gray-100"
-                                      placeholder="Your answer"
+                                      className="w-28 px-3 py-1.5 border border-gray-300 rounded focus:border-blue-500 focus:outline-none disabled:bg-gray-100 text-center text-sm"
+                                      placeholder="Answer"
                                     />
                                   ) : (
                                     cell
@@ -486,7 +486,7 @@ function IELTSQuiz({ ieltsTests }) {
                                 value={answers[`${passage.id}-${qIndex}-${questionNum - 19}`] || ''}
                                 onChange={(e) => handleAnswerChange(passage.id, qIndex, questionNum - 19, e.target.value)}
                                 disabled={isSubmitted}
-                                className="inline-block align-middle px-3 py-1.5 border border-gray-400 rounded focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none disabled:bg-gray-100 w-36 mx-1 text-center"
+                                className="inline-block align-middle px-3 py-1.5 border border-gray-300 rounded focus:border-blue-500 focus:outline-none disabled:bg-gray-100 w-28 mx-1 text-center text-sm"
                                 placeholder={`Q${questionNum}`}
                               />
                             )
