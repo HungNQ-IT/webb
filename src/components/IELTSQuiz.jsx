@@ -9,9 +9,11 @@ function IELTSQuiz({ ieltsTests }) {
   const [currentPassage, setCurrentPassage] = useState(0)
   const [answers, setAnswers] = useState({})
   const [timeRemaining, setTimeRemaining] = useState(null)
-  const [highlightedText, setHighlightedText] = useState('')
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [selectedQuestion, setSelectedQuestion] = useState(null)
+  const [highlights, setHighlights] = useState({})
+  const [selectedColor, setSelectedColor] = useState('yellow')
+  const [showColorPicker, setShowColorPicker] = useState(false)
 
   useEffect(() => {
     if (!test) return
@@ -175,9 +177,46 @@ function IELTSQuiz({ ieltsTests }) {
             <div>
               <h1 className="text-xl font-bold text-gray-900">{test.title}</h1>
               <div className="flex items-center gap-4 mt-1">
-                <button className="text-sm text-blue-600 hover:underline">
-                  Highlight nội dung ⓘ
-                </button>
+                <div className="relative">
+                  <button 
+                    onClick={() => setShowColorPicker(!showColorPicker)}
+                    className="text-sm text-blue-600 hover:underline flex items-center gap-1"
+                  >
+                    Highlight nội dung ⓘ
+                  </button>
+                  {showColorPicker && (
+                    <div className="absolute top-full left-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg p-3 z-20">
+                      <div className="text-xs text-gray-600 mb-2">Chọn màu highlight:</div>
+                      <div className="flex gap-2">
+                        {[
+                          { color: 'yellow', label: 'Vàng', bg: 'bg-yellow-200' },
+                          { color: 'green', label: 'Xanh lá', bg: 'bg-green-200' },
+                          { color: 'blue', label: 'Xanh dương', bg: 'bg-blue-200' },
+                          { color: 'pink', label: 'Hồng', bg: 'bg-pink-200' }
+                        ].map(({ color, label, bg }) => (
+                          <button
+                            key={color}
+                            onClick={() => {
+                              setSelectedColor(color)
+                              setShowColorPicker(false)
+                            }}
+                            className={`w-8 h-8 rounded ${bg} border-2 ${selectedColor === color ? 'border-gray-800' : 'border-gray-300'} hover:border-gray-500`}
+                            title={label}
+                          />
+                        ))}
+                      </div>
+                      <button
+                        onClick={() => {
+                          setHighlights({})
+                          setShowColorPicker(false)
+                        }}
+                        className="mt-2 w-full text-xs text-red-600 hover:underline"
+                      >
+                        Xóa tất cả highlight
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
             {timeRemaining !== null && (
@@ -217,7 +256,34 @@ function IELTSQuiz({ ieltsTests }) {
           {/* Left: Passage */}
           <div className="bg-white rounded-lg border border-gray-200 p-6 h-fit sticky top-24">
             <h2 className="text-xl font-bold text-gray-900 mb-4">{passage.title}</h2>
-            <div className="prose prose-sm max-w-none text-gray-700 whitespace-pre-line leading-relaxed">
+            <div 
+              className="prose prose-sm max-w-none text-gray-700 whitespace-pre-line leading-relaxed select-text"
+              onMouseUp={() => {
+                const selection = window.getSelection()
+                const selectedText = selection.toString().trim()
+                if (selectedText.length > 0) {
+                  const range = selection.getRangeAt(0)
+                  const span = document.createElement('span')
+                  const colorClass = {
+                    yellow: 'bg-yellow-200',
+                    green: 'bg-green-200',
+                    blue: 'bg-blue-200',
+                    pink: 'bg-pink-200'
+                  }[selectedColor]
+                  span.className = `${colorClass} cursor-pointer`
+                  span.title = 'Click to remove highlight'
+                  span.onclick = (e) => {
+                    e.target.outerHTML = e.target.innerHTML
+                  }
+                  try {
+                    range.surroundContents(span)
+                    selection.removeAllRanges()
+                  } catch (e) {
+                    // Ignore errors when selection spans multiple elements
+                  }
+                }
+              }}
+            >
               {passage.text}
             </div>
           </div>
