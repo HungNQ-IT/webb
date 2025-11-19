@@ -10,6 +10,7 @@ function AdminAudioManager({ ieltsTests }) {
   const [audioUrls, setAudioUrls] = useState({})
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState(null)
+  const [uploadingFile, setUploadingFile] = useState(false)
 
   // Chỉ admin mới có quyền truy cập
   if (!user || user.role !== 'admin') {
@@ -58,12 +59,78 @@ function AdminAudioManager({ ieltsTests }) {
     setMessage(null)
   }
 
+  const handleFileUpload = async (event) => {
+    const file = event.target.files[0]
+    if (!file) return
+
+    // Validate file type
+    const validTypes = ['audio/mpeg', 'audio/mp3', 'audio/wav', 'audio/ogg', 'audio/m4a']
+    if (!validTypes.includes(file.type) && !file.name.match(/\.(mp3|wav|ogg|m4a)$/i)) {
+      setMessage({ 
+        type: 'error', 
+        text: '❌ File phải là MP3, WAV, OGG hoặc M4A' 
+      })
+      return
+    }
+
+    // Max 50MB
+    if (file.size > 50 * 1024 * 1024) {
+      setMessage({ 
+        type: 'error', 
+        text: '❌ File không được vượt quá 50MB' 
+      })
+      return
+    }
+
+    setUploadingFile(true)
+    setMessage({ type: 'info', text: '⏳ Đang upload file...' })
+
+    try {
+      // Upload to Supabase Storage
+      const fileName = `test-${selectedTest.id}-${Date.now()}.${file.name.split('.').pop()}`
+      const { data, error } = await supabase.storage
+        .from('ielts-audio')
+        .upload(fileName, file, {
+          cacheControl: '3600',
+          upsert: false
+        })
+
+      if (error) throw error
+
+      // Get public URL
+      const { data: { publicUrl } } = supabase.storage
+        .from('ielts-audio')
+        .getPublicUrl(fileName)
+
+      // Set URL
+      setAudioUrl(publicUrl)
+      setMessage({ 
+        type: 'success', 
+        text: '✅ Upload thành công! Click "Lưu Audio" để hoàn tất.' 
+      })
+
+    } catch (error) {
+      console.error('Upload error:', error)
+      setMessage({ 
+        type: 'error', 
+        text: `❌ Lỗi upload: ${error.message}` 
+      })
+    } finally {
+      setUploadingFile(false)
+    }
+  }
+
   const convertGoogleDriveLink = (link) => {
-    // Chuyển đổi link Google Drive thành direct link
+    // Chuyển đổi link Google Drive thành streaming link
+    
+    // Pattern: /file/d/FILE_ID/view hoặc /d/FILE_ID
     const match = link.match(/\/d\/([a-zA-Z0-9_-]+)/)
     if (match) {
-      return `https://drive.google.com/uc?export=download&id=${match[1]}`
+      const fileId = match[1]
+      // Dùng export=open để stream audio (tốt hơn export=download)
+      return `https://drive.google.com/uc?export=open&id=${fileId}`
     }
+    
     return link
   }
 
@@ -297,19 +364,71 @@ function AdminAudioManager({ ieltsTests }) {
                     </div>
                   </div>
 
+                  {/* Upload File */}
                   <div className="mb-4">
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Google Drive Link
+                      📤 Upload File Audio (Khuyên dùng)
+                    </label>
+                    <div className="flex items-center gap-3">
+                      <label className="flex-1 cursor-pointer">
+                        <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 hover:border-blue-500 transition-colors text-center">
+                          {uploadingFile ? (
+                            <div className="flex items-center justify-center gap-2 text-blue-600">
+                              <svg className="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">
+                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                              </svg>
+                              <span>Đang upload...</span>
+                            </div>
+                          ) : (
+                            <>
+                              <div className="text-3xl mb-2">🎵</div>
+                              <div className="text-sm text-gray-600">
+                                Click để chọn file audio
+                              </div>
+                              <div className="text-xs text-gray-500 mt-1">
+                                MP3, WAV, OGG, M4A (Max 50MB)
+                              </div>
+                            </>
+                          )}
+                        </div>
+                        <input
+                          type="file"
+                          accept="audio/*,.mp3,.wav,.ogg,.m4a"
+                          onChange={handleFileUpload}
+                          disabled={uploadingFile}
+                          className="hidden"
+                        />
+                      </label>
+                    </div>
+                  </div>
+
+                  {/* Hoặc dùng link */}
+                  <div className="mb-4">
+                    <div className="relative">
+                      <div className="absolute inset-0 flex items-center">
+                        <div className="w-full border-t border-gray-300"></div>
+                      </div>
+                      <div className="relative flex justify-center text-sm">
+                        <span className="px-2 bg-white text-gray-500">Hoặc dùng link</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      🔗 Link Audio (Google Drive, Supabase, v.v.)
                     </label>
                     <input
                       type="text"
                       value={audioUrl}
                       onChange={(e) => setAudioUrl(e.target.value)}
-                      placeholder="https://drive.google.com/file/d/FILE_ID/view"
+                      placeholder="https://your-audio-url.mp3"
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none"
+                      disabled={uploadingFile}
                     />
                     <p className="text-xs text-gray-500 mt-1">
-                      Paste link chia sẻ từ Google Drive
+                      Paste link audio từ bất kỳ nguồn nào
                     </p>
                   </div>
 
@@ -356,6 +475,8 @@ function AdminAudioManager({ ieltsTests }) {
                     <div className={`mb-4 p-4 rounded-lg ${
                       message.type === 'success' 
                         ? 'bg-green-50 border border-green-200 text-green-800' 
+                        : message.type === 'info'
+                        ? 'bg-blue-50 border border-blue-200 text-blue-800'
                         : 'bg-red-50 border border-red-200 text-red-800'
                     }`}>
                       {message.text}
