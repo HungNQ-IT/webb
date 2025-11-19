@@ -56,8 +56,21 @@ function IELTSListening({ ieltsTests = [] }) {
 
   // Set timer
   useEffect(() => {
-    if (!test || !test.timeLimit) return
-    setTimeRemaining(test.timeLimit * 60)
+    if (!test) return
+    
+    // Check custom time từ localStorage
+    const customTime = localStorage.getItem(`custom_time_${test.id}`)
+    const timeLimit = customTime ? parseInt(customTime) : test.timeLimit
+    
+    if (timeLimit) {
+      setTimeRemaining(timeLimit * 60)
+      console.log(`⏱️ Time limit set: ${timeLimit} minutes`)
+    }
+    
+    // Clear custom time sau khi đã dùng
+    return () => {
+      localStorage.removeItem(`custom_time_${test.id}`)
+    }
   }, [test])
 
   // Countdown

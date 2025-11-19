@@ -15,6 +15,7 @@ function QuizList({ quizzes, ieltsTests = [] }) {
   const [audioUrls, setAudioUrls] = useState({})
   const [editingAudio, setEditingAudio] = useState({ testId: null, url: '' })
   const [loading, setLoading] = useState(false)
+  const [customTimeLimit, setCustomTimeLimit] = useState('')
 
   const isAdmin = user?.role === 'admin'
 
@@ -238,6 +239,7 @@ function QuizList({ quizzes, ieltsTests = [] }) {
                     <button
                       onClick={() => {
                         setSelectedQuiz(quiz)
+                        setCustomTimeLimit('') // Reset thời gian khi mở modal
                         setShowModal(true)
                       }}
                       className="block w-full text-center bg-white border-2 border-blue-600 text-blue-600 px-4 py-2.5 rounded-lg font-medium hover:bg-blue-50 transition-all"
@@ -530,21 +532,40 @@ function QuizList({ quizzes, ieltsTests = [] }) {
                   {/* Giới hạn thời gian */}
                   <div className="mb-8">
                     <h3 className="text-sm font-semibold text-gray-700 mb-3">
-                      Giới hạn thời gian (Để trống để làm bài không giới hạn)
+                      Giới hạn thời gian
                     </h3>
-                    <select className="w-full p-3 border-2 border-gray-200 rounded-lg text-gray-600 focus:border-blue-500 focus:outline-none">
-                      <option value="">-- Chọn thời gian --</option>
+                    <select 
+                      value={customTimeLimit}
+                      onChange={(e) => setCustomTimeLimit(e.target.value)}
+                      className="w-full p-3 border-2 border-gray-200 rounded-lg text-gray-600 focus:border-blue-500 focus:outline-none"
+                    >
+                      <option value="">Dùng thời gian mặc định ({selectedQuiz?.timeLimit || 30} phút)</option>
                       <option value="30">30 phút</option>
                       <option value="45">45 phút</option>
                       <option value="60">60 phút</option>
                       <option value="90">90 phút</option>
+                      <option value="120">120 phút</option>
                     </select>
+                    <p className="text-xs text-gray-500 mt-2">
+                      {customTimeLimit 
+                        ? `Bạn đã chọn: ${customTimeLimit} phút` 
+                        : `Thời gian mặc định: ${selectedQuiz?.timeLimit || 30} phút`
+                      }
+                    </p>
                   </div>
 
                   {/* Nút hành động */}
                   <button
                     onClick={() => {
+                      // Lưu thời gian custom vào localStorage nếu có
+                      if (customTimeLimit) {
+                        localStorage.setItem(`custom_time_${selectedQuiz.id}`, customTimeLimit)
+                      } else {
+                        localStorage.removeItem(`custom_time_${selectedQuiz.id}`)
+                      }
+                      
                       setShowModal(false)
+                      
                       // Phân loại route dựa theo type
                       let route = `/quiz/${selectedQuiz.id}`
                       if (selectedQuiz.type === 'ielts-reading') {
