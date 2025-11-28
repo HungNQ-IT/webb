@@ -5,10 +5,12 @@ import react from '@vitejs/plugin-react'
 export default defineConfig(({ command, mode }) => {
   // For GitHub Pages production build
   const isProd = mode === 'production' && command === 'build'
+  // For Surge deployment
+  const isSurge = mode === 'surge' && command === 'build'
   
   return {
     plugins: [react()],
-    // Use '/webb/' for GitHub Pages, '/' for local dev and preview
+    // Use '/webb/' for GitHub Pages, '/' for Surge and local dev
     base: isProd ? '/webb/' : '/',
     // Server config for preview
     server: {

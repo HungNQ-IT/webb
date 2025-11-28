@@ -1,0 +1,16 @@
+# Surge ignore file
+node_modules
+src
+.git
+.github
+HD
+server
+*.md
+.env
+.env.example
+.gitignore
+package.json
+package-lock.json
+vite.config.js
+tailwind.config.js
+postcss.config.js

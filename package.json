@@ -7,8 +7,10 @@
     "dev": "vite",
     "build": "vite build",
     "build:local": "vite build --mode development",
+    "build:surge": "vite build --mode surge",
     "preview": "vite preview --port 4173",
     "preview:prod": "vite preview --port 4173 --host",
+    "deploy:surge": "npm run build:surge && surge dist",
     "server": "npm run dev --prefix server",
     "server:start": "npm run start --prefix server"
   },
