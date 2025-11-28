@@ -1,0 +1,48 @@
+{
+  "id": 999,
+  "subject": "Toán",
+  "grade": 10,
+  "category": "Đại số",
+  "title": "Bài tập tự luận - Linh hoạt",
+  "difficulty": "medium",
+  "type": "tracnghiem",
+  "description": "Bài tập tự luận có AI chấm điểm linh hoạt",
+  "timeLimit": 30,
+  "questions": [
+    {
+      "q": "Tìm x biết: 2x + 5 = 13",
+      "type": "essay",
+      "points": 10,
+      "answer": "x = 4",
+      "explain": "Câu này chỉ cần kết quả ngắn gọn: 2x = 8, suy ra x = 4"
+    },
+    {
+      "q": "Giải phương trình: x² - 5x + 6 = 0 và giải thích các bước giải.",
+      "type": "essay",
+      "points": 10,
+      "answer": "Bước 1: Tính delta: Δ = b² - 4ac = 25 - 24 = 1\nBước 2: Vì Δ > 0 nên phương trình có 2 nghiệm phân biệt\nBước 3: x₁ = (5 + 1)/2 = 3, x₂ = (5 - 1)/2 = 2\nVậy phương trình có 2 nghiệm: x = 2 và x = 3",
+      "explain": "Câu này yêu cầu giải thích các bước nên cần trình bày chi tiết."
+    },
+    {
+      "q": "Tính diện tích hình chữ nhật có chiều dài 5cm, chiều rộng 3cm.",
+      "type": "essay",
+      "points": 10,
+      "answer": "S = 15 cm²",
+      "explain": "Câu tính toán đơn giản, chỉ cần kết quả: S = 5 × 3 = 15 cm²"
+    },
+    {
+      "q": "Giải thích định lý Pythagore và cho ví dụ minh họa.",
+      "type": "essay",
+      "points": 10,
+      "answer": "Định lý Pythagore: Trong tam giác vuông, bình phương cạnh huyền bằng tổng bình phương hai cạnh góc vuông. Công thức: c² = a² + b². Ví dụ: Tam giác vuông có 2 cạnh góc vuông là 3cm và 4cm, thì cạnh huyền c = √(9 + 16) = 5cm.",
+      "explain": "Câu này yêu cầu giải thích và ví dụ nên cần trả lời dài."
+    },
+    {
+      "q": "Tìm nghiệm của phương trình: x + 7 = 10",
+      "type": "essay",
+      "points": 10,
+      "answer": "x = 3",
+      "explain": "Câu đơn giản, chỉ cần ghi kết quả."
+    }
+  ]
+}

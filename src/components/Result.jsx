@@ -2,6 +2,7 @@ import { useParams, Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { getQuizResult } from '../utils/storage'
 import RichContent from './RichContent'
+import AIGradingResult from './AIGradingResult'
 
 function Result({ quizzes }) {
   const { id } = useParams()
@@ -181,9 +182,29 @@ function Result({ quizzes }) {
                         })}
                       </div>
                     ) : (
-                      <p className="mb-4 text-sm text-blue-700 bg-blue-100 p-3 rounded-xl">
-                        Câu hỏi này không được chấm tự động. Hãy đối chiếu với lời giải hoặc nhờ giáo viên chấm.
-                      </p>
+                      <div className="mb-4">
+                        {/* Hiển thị câu trả lời của học sinh */}
+                        <div className="bg-white border-2 border-gray-200 rounded-lg p-4 mb-4">
+                          <h4 className="font-semibold text-gray-900 mb-2">📝 Câu trả lời của bạn:</h4>
+                          <p className="text-gray-700 whitespace-pre-wrap">{userAnswer || '(Chưa trả lời)'}</p>
+                        </div>
+                        
+                        {/* AI Grading */}
+                        {userAnswer && userAnswer.length >= 10 && (
+                          <AIGradingResult
+                            question={question.q}
+                            studentAnswer={userAnswer}
+                            correctAnswer={question.answer}
+                            maxScore={question.points || 10}
+                          />
+                        )}
+                        
+                        {(!userAnswer || userAnswer.length < 10) && (
+                          <p className="text-sm text-gray-600 bg-gray-100 p-3 rounded-xl">
+                            ⚠️ Câu trả lời quá ngắn để chấm điểm tự động.
+                          </p>
+                        )}
+                      </div>
                     )}
                     {(question.explain || question.explainEq || question.explainImage) && (
                       <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-xl">

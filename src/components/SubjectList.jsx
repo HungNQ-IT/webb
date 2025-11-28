@@ -95,13 +95,13 @@ function SubjectList({ quizzes }) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-900 py-12">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           <div className="mb-8">
             <button
               onClick={() => window.history.back()}
-              className="text-gray-600 hover:text-gray-800 font-medium flex items-center gap-1"
+              className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 font-medium flex items-center gap-1"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -110,10 +110,10 @@ function SubjectList({ quizzes }) {
             </button>
           </div>
 
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
             Chọn môn học
           </h1>
-          <p className="text-gray-600 mb-8">
+          <p className="text-gray-600 dark:text-gray-400 mb-8">
             Chọn môn học bạn muốn luyện tập
           </p>
 
@@ -131,17 +131,17 @@ function SubjectList({ quizzes }) {
                 <Link
                   key={subject}
                   to={linkTo}
-                  className="group bg-white rounded-2xl p-6 shadow-sm border border-gray-200 hover:shadow-lg transition-all"
+                  className="group bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-gray-200 dark:border-slate-700 hover:shadow-lg transition-all hover:scale-105"
                 >
                   <div className={`bg-gradient-to-br ${config.color} rounded-2xl p-6 mb-4`}>
                     <div className="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mx-auto transition-transform group-hover:scale-110">
                       {config.icon}
                     </div>
                   </div>
-                  <h2 className="text-xl font-bold text-gray-900 mb-2">
+                  <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">
                     {subject}
                   </h2>
-                  <p className="text-gray-600 text-sm">
+                  <p className="text-gray-600 dark:text-gray-400 text-sm">
                     {config.description}
                   </p>
                 </Link>

@@ -143,13 +143,13 @@ function QuizList({ quizzes, ieltsTests = [] }) {
   }, [quizzes, ieltsTests, decodedSubject, grade, decodedCategory])
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-900 py-12">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           <div className="mb-8">
             <button
               onClick={() => window.history.back()}
-              className="text-gray-600 hover:text-gray-800 font-medium flex items-center gap-1"
+              className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 font-medium flex items-center gap-1"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -159,10 +159,10 @@ function QuizList({ quizzes, ieltsTests = [] }) {
           </div>
 
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
               {decodedSubject} {grade && `- Lớp ${grade}`} {decodedCategory && `- ${decodedCategory}`}
             </h1>
-            <p className="text-gray-600">
+            <p className="text-gray-600 dark:text-gray-400">
               {decodedCategory 
                 ? `Luyện tập ${decodedCategory} - ${decodedSubject}`
                 : `Kiểm tra kiến thức về ${decodedSubject.toLowerCase()}`
@@ -180,7 +180,7 @@ function QuizList({ quizzes, ieltsTests = [] }) {
                 return (
                   <div
                     key={quiz.id}
-                    className="bg-white rounded-xl shadow-sm border border-gray-200 p-5 hover:shadow-md transition-all relative"
+                    className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-200 dark:border-slate-700 p-5 hover:shadow-md transition-all relative"
                   >
                     {/* Admin: Nút thêm audio */}
                     {isAdmin && decodedCategory === 'Listening' && (
@@ -200,12 +200,12 @@ function QuizList({ quizzes, ieltsTests = [] }) {
                             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/>
                           </svg>
                         </div>
-                        <h3 className="font-bold text-gray-900 text-base leading-tight pr-8">
+                        <h3 className="font-bold text-gray-900 dark:text-gray-100 text-base leading-tight pr-8">
                           {quiz.title}
                         </h3>
                       </div>
                       
-                      <div className="space-y-2 text-sm text-gray-600 mb-3">
+                      <div className="space-y-2 text-sm text-gray-600 dark:text-gray-400 mb-3">
                         {/* Hiển thị trạng thái audio cho Listening */}
                         {decodedCategory === 'Listening' && (
                           <div className="flex items-center gap-1.5">
@@ -230,7 +230,7 @@ function QuizList({ quizzes, ieltsTests = [] }) {
                             <span>{quiz.timeLimit} phút</span>
                           </div>
                         )}
-                        <div className="text-gray-700">
+                        <div className="text-gray-700 dark:text-gray-300">
                           {sections} phần thi | {quiz.questions?.length || quiz.passages?.length || 0} câu hỏi
                         </div>
                       </div>
@@ -242,7 +242,7 @@ function QuizList({ quizzes, ieltsTests = [] }) {
                         setCustomTimeLimit('') // Reset thời gian khi mở modal
                         setShowModal(true)
                       }}
-                      className="block w-full text-center bg-white border-2 border-blue-600 text-blue-600 px-4 py-2.5 rounded-lg font-medium hover:bg-blue-50 transition-all"
+                      className="block w-full text-center bg-white dark:bg-slate-700 border-2 border-blue-600 dark:border-blue-500 text-blue-600 dark:text-blue-400 px-4 py-2.5 rounded-lg font-medium hover:bg-blue-50 dark:hover:bg-slate-600 transition-all"
                     >
                       Làm bài
                     </button>

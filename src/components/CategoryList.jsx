@@ -77,13 +77,13 @@ function CategoryList({ quizzes, ieltsTests = [] }) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-900 py-12">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           <div className="mb-8">
             <button
               onClick={() => window.history.back()}
-              className="text-gray-600 hover:text-gray-800 font-medium flex items-center gap-1"
+              className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 font-medium flex items-center gap-1"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -93,10 +93,10 @@ function CategoryList({ quizzes, ieltsTests = [] }) {
           </div>
 
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
               {decodedSubject}
             </h1>
-            <p className="text-gray-600">
+            <p className="text-gray-600 dark:text-gray-400">
               Chọn kỹ năng bạn muốn luyện tập
             </p>
           </div>
@@ -115,20 +115,20 @@ function CategoryList({ quizzes, ieltsTests = [] }) {
                 <Link
                   key={category}
                   to={`/subject/${encodeURIComponent(decodedSubject)}/category/${encodeURIComponent(category)}`}
-                  className="group bg-white rounded-2xl p-6 shadow-sm border border-gray-200 hover:shadow-lg transition-all"
+                  className="group bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-gray-200 dark:border-slate-700 hover:shadow-lg transition-all hover:scale-105"
                 >
                   <div className={`bg-gradient-to-br ${config.color} rounded-2xl p-6 mb-4`}>
                     <div className="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mx-auto transition-transform group-hover:scale-110">
                       {config.icon}
                     </div>
                   </div>
-                  <h2 className="text-xl font-bold text-gray-900 mb-2">
+                  <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">
                     {category}
                   </h2>
-                  <p className="text-gray-600 text-sm mb-3">
+                  <p className="text-gray-600 dark:text-gray-400 text-sm mb-3">
                     {config.description}
                   </p>
-                  <div className="text-sm text-gray-500">
+                  <div className="text-sm text-gray-500 dark:text-gray-400">
                     {categoryQuizzes.length} bài tập
                   </div>
                 </Link>
@@ -137,13 +137,13 @@ function CategoryList({ quizzes, ieltsTests = [] }) {
           </div>
 
           {categories.length === 0 && (
-            <div className="bg-white rounded-2xl p-12 text-center border border-gray-200">
-              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="bg-white dark:bg-slate-800 rounded-2xl p-12 text-center border border-gray-200 dark:border-slate-700">
+              <div className="w-16 h-16 bg-gray-100 dark:bg-slate-700 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-8 h-8 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                 </svg>
               </div>
-              <p className="text-gray-600">Chưa có danh mục nào.</p>
+              <p className="text-gray-600 dark:text-gray-400">Chưa có danh mục nào.</p>
             </div>
           )}
         </div>

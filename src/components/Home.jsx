@@ -2,12 +2,12 @@ import { Link } from 'react-router-dom'
 
 function Home() {
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-900 py-12">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
-          <div className="bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl p-8 mb-8 text-white text-center">
+          <div className="bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-500 dark:to-purple-500 rounded-2xl p-8 mb-8 text-white text-center shadow-xl">
             <h2 className="text-3xl font-bold mb-3">Chào mừng đến với nền tảng học tập</h2>
-            <p className="text-blue-100 mb-4">Hãy chọn môn học và bắt đầu hành trình chinh phục tri thức của bạn!</p>
+            <p className="text-blue-50 mb-4">Hãy chọn môn học và bắt đầu hành trình chinh phục tri thức của bạn!</p>
             <div className="flex items-center justify-center gap-8 mt-6">
               <div className="text-center">
                 <div className="text-3xl font-bold">20</div>
@@ -25,11 +25,11 @@ function Home() {
           </div>
 
           {/* Subjects Section */}
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Chọn môn học</h2>
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">Chọn môn học</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             <Link
               to="/subject/Toán/grades"
-              className="group bg-white rounded-2xl p-6 shadow-sm border border-gray-200 hover:shadow-lg transition-all"
+              className="group bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-gray-200 dark:border-slate-700 hover:shadow-xl dark:hover:shadow-blue-500/20 transition-all hover:scale-105"
             >
               <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl p-6 mb-4">
                 <div className="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mx-auto transition-transform group-hover:scale-110">
@@ -42,13 +42,13 @@ function Home() {
                   </svg>
                 </div>
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Toán</h3>
-              <p className="text-gray-600 text-sm">Luyện tập Toán học từ cơ bản đến nâng cao</p>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">Toán</h3>
+              <p className="text-gray-600 dark:text-gray-400 text-sm">Luyện tập Toán học từ cơ bản đến nâng cao</p>
             </Link>
 
             <Link
               to="/subject/Vật Lý/grades"
-              className="group bg-white rounded-2xl p-6 shadow-sm border border-gray-200 hover:shadow-lg transition-all"
+              className="group bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-gray-200 dark:border-slate-700 hover:shadow-xl dark:hover:shadow-purple-500/20 transition-all hover:scale-105"
             >
               <div className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl p-6 mb-4">
                 <div className="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mx-auto transition-transform group-hover:scale-110">
@@ -60,13 +60,13 @@ function Home() {
                   </svg>
                 </div>
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Vật Lý</h3>
-              <p className="text-gray-600 text-sm">Khám phá thế giới vật lý</p>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">Vật Lý</h3>
+              <p className="text-gray-600 dark:text-gray-400 text-sm">Khám phá thế giới vật lý</p>
             </Link>
 
             <Link
               to="/subject/Hóa Học/grades"
-              className="group bg-white rounded-2xl p-6 shadow-sm border border-gray-200 hover:shadow-lg transition-all"
+              className="group bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-gray-200 dark:border-slate-700 hover:shadow-xl dark:hover:shadow-green-500/20 transition-all hover:scale-105"
             >
               <div className="bg-gradient-to-br from-green-500 to-green-600 rounded-2xl p-6 mb-4">
                 <div className="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mx-auto transition-transform group-hover:scale-110">
@@ -75,13 +75,13 @@ function Home() {
                   </svg>
                 </div>
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Hóa Học</h3>
-              <p className="text-gray-600 text-sm">Thí nghiệm và phản ứng hóa học</p>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">Hóa Học</h3>
+              <p className="text-gray-600 dark:text-gray-400 text-sm">Thí nghiệm và phản ứng hóa học</p>
             </Link>
 
             <Link
               to="/subject/Tiếng Anh/grades"
-              className="group bg-white rounded-2xl p-6 shadow-sm border border-gray-200 hover:shadow-lg transition-all"
+              className="group bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-gray-200 dark:border-slate-700 hover:shadow-xl dark:hover:shadow-orange-500/20 transition-all hover:scale-105"
             >
               <div className="bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl p-6 mb-4">
                 <div className="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mx-auto transition-transform group-hover:scale-110">
@@ -92,13 +92,13 @@ function Home() {
                   </svg>
                 </div>
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Tiếng Anh</h3>
-              <p className="text-gray-600 text-sm">Nâng cao kỹ năng tiếng Anh</p>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">Tiếng Anh</h3>
+              <p className="text-gray-600 dark:text-gray-400 text-sm">Nâng cao kỹ năng tiếng Anh</p>
             </Link>
 
             <Link
               to="/subject/IELTS"
-              className="group bg-white rounded-2xl p-6 shadow-sm border border-gray-200 hover:shadow-lg transition-all"
+              className="group bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-gray-200 dark:border-slate-700 hover:shadow-xl dark:hover:shadow-red-500/20 transition-all hover:scale-105"
             >
               <div className="bg-gradient-to-br from-red-500 to-red-600 rounded-2xl p-6 mb-4">
                 <div className="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mx-auto transition-transform group-hover:scale-110">
@@ -108,13 +108,13 @@ function Home() {
                   </svg>
                 </div>
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">IELTS</h3>
-              <p className="text-gray-600 text-sm">Luyện thi IELTS 4 kỹ năng</p>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">IELTS</h3>
+              <p className="text-gray-600 dark:text-gray-400 text-sm">Luyện thi IELTS 4 kỹ năng</p>
             </Link>
 
             <Link
               to="/subject/Ngoại ngữ"
-              className="group bg-white rounded-2xl p-6 shadow-sm border border-gray-200 hover:shadow-lg transition-all"
+              className="group bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-gray-200 dark:border-slate-700 hover:shadow-xl dark:hover:shadow-pink-500/20 transition-all hover:scale-105"
             >
               <div className="bg-gradient-to-br from-pink-500 to-pink-600 rounded-2xl p-6 mb-4">
                 <div className="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mx-auto transition-transform group-hover:scale-110">
@@ -123,8 +123,8 @@ function Home() {
                   </svg>
                 </div>
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">Ngoại ngữ</h3>
-              <p className="text-gray-600 text-sm">Học tiếng Nhật và các ngôn ngữ khác</p>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">Ngoại ngữ</h3>
+              <p className="text-gray-600 dark:text-gray-400 text-sm">Học tiếng Nhật và các ngôn ngữ khác</p>
             </Link>
           </div>
         </div>

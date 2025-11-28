@@ -4,6 +4,7 @@ import { saveQuizResult } from '../utils/storage'
 import RichContent from './RichContent'
 import { useAuth } from '../context/AuthContext'
 import { supabase } from '../utils/supabase'
+import EssayQuestion from './EssayQuestion'
 
 // Hàm lưu submission vào Supabase
 async function saveSubmissionToSupabase(quizId, score, total, answers, questionCount) {
@@ -85,8 +86,25 @@ function Quiz({ quizzes }) {
     setAnswers(newAnswers)
   }
 
+  const handleEssayAnswer = (questionIndex, text) => {
+    if (isSubmitted) return
+    const newAnswers = [...answers]
+    newAnswers[questionIndex] = text
+    setAnswers(newAnswers)
+  }
+
   const handleSubmit = () => {
     if (isSubmitted) return
+
+    // Kiểm tra số câu chưa làm
+    const unansweredCount = answers.filter(a => a === null || a === undefined || a === '').length
+    
+    if (unansweredCount > 0) {
+      const confirmSubmit = window.confirm(
+        `Bạn còn ${unansweredCount} câu chưa làm.\n\nBạn có chắc muốn nộp bài không?`
+      )
+      if (!confirmSubmit) return
+    }
 
     setIsSubmitted(true)
 
@@ -148,13 +166,9 @@ function Quiz({ quizzes }) {
   const question = quiz.questions[currentQuestion]
   const progress = ((currentQuestion + 1) / quiz.questions.length) * 100
   const hasChoices = Array.isArray(question.choices) && question.choices.length > 0
-  const canSubmit = quiz.questions.every((q, index) => {
-    const hasChoice = Array.isArray(q.choices) && q.choices.length > 0
-    if (hasChoice) {
-      return answers[index] !== null
-    }
-    return true
-  })
+  
+  // Cho phép nộp bài bất cứ lúc nào (không cần làm hết)
+  const canSubmit = true
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
@@ -163,7 +177,7 @@ function Quiz({ quizzes }) {
           {/* Header */}
           <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 mb-6">
             <div className="flex items-center justify-between mb-4">
-              <div>
+              <div className="flex-1">
                 <button
                   onClick={() => window.history.back()}
                   className="text-gray-600 hover:text-gray-800 mb-2 flex items-center gap-1"
@@ -175,14 +189,30 @@ function Quiz({ quizzes }) {
                 <h1 className="text-xl font-bold text-gray-900">{quiz.title}</h1>
                 <p className="text-sm text-gray-600 mt-1">Câu {currentQuestion + 1} / {quiz.questions.length}</p>
               </div>
-              {timeRemaining !== null && (
-                <div className="flex items-center gap-2 text-blue-600">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <span className="text-lg font-semibold">{formatTime(timeRemaining)}</span>
-                </div>
-              )}
+              
+              <div className="flex items-center gap-4">
+                {timeRemaining !== null && (
+                  <div className="flex items-center gap-2 text-blue-600">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span className="text-lg font-semibold">{formatTime(timeRemaining)}</span>
+                  </div>
+                )}
+                
+                {/* Nút nộp bài luôn hiển thị */}
+                {!isSubmitted && (
+                  <button
+                    onClick={handleSubmit}
+                    className="px-6 py-3 bg-green-600 text-white rounded-xl font-semibold hover:bg-green-700 transition-all shadow-lg hover:shadow-xl flex items-center gap-2"
+                  >
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd"/>
+                    </svg>
+                    Nộp bài
+                  </button>
+                )}
+              </div>
             </div>
             <div className="w-full bg-gray-200 rounded-full h-2">
               <div
@@ -235,9 +265,13 @@ function Quiz({ quizzes }) {
                 })}
               </div>
             ) : (
-              <div className="bg-blue-50 border border-blue-200 text-blue-900 rounded-xl p-4">
-                <p>Đây là câu hỏi tự luận. Hãy làm bài và nộp theo hướng dẫn của giáo viên.</p>
-              </div>
+              <EssayQuestion
+                question={question}
+                questionIndex={currentQuestion}
+                answer={answers[currentQuestion]}
+                onAnswerChange={handleEssayAnswer}
+                isSubmitted={isSubmitted}
+              />
             )}
           </div>
 
@@ -262,8 +296,8 @@ function Quiz({ quizzes }) {
               ) : (
                 <button
                   onClick={handleSubmit}
-                  disabled={isSubmitted || !canSubmit}
-                  className="px-6 py-3 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+                  disabled={isSubmitted}
+                  className="px-6 py-3 bg-green-600 text-white rounded-xl font-semibold hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg"
                 >
                   Nộp bài
                 </button>

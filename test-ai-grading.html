@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test AI Chấm Điểm</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 900px;
+      margin: 50px auto;
+      padding: 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 10px;
+    }
+    .subtitle {
+      color: #666;
+      margin-bottom: 30px;
+    }
+    label {
+      display: block;
+      font-weight: bold;
+      margin-top: 15px;
+      margin-bottom: 5px;
+      color: #333;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+    }
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+    button {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      margin-top: 20px;
+      width: 100%;
+      transition: transform 0.2s;
+    }
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    .result {
+      margin-top: 30px;
+      padding: 20px;
+      border-radius: 10px;
+      background: #f8f9fa;
+      border: 2px solid #e9ecef;
+    }
+    .score {
+      font-size: 48px;
+      font-weight: bold;
+      text-align: center;
+      margin: 20px 0;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .feedback {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 15px 0;
+      border-left: 4px solid #667eea;
+    }
+    .strengths {
+      background: #d4edda;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 15px 0;
+      border-left: 4px solid #28a745;
+    }
+    .improvements {
+      background: #fff3cd;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 15px 0;
+      border-left: 4px solid #ffc107;
+    }
+    .error {
+      background: #f8d7da;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 15px 0;
+      border-left: 4px solid #dc3545;
+      color: #721c24;
+    }
+    ul {
+      margin: 10px 0;
+      padding-left: 20px;
+    }
+    li {
+      margin: 5px 0;
+    }
+    .info {
+      background: #e7f3ff;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      border-left: 4px solid #2196F3;
+    }
+    code {
+      background: #f4f4f4;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: monospace;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🤖 Test AI Chấm Điểm</h1>
+    <p class="subtitle">Kiểm tra AI chấm điểm tự luận</p>
+
+    <div class="info">
+      <strong>📝 Lưu ý:</strong> Cần có <code>VITE_GEMINI_API_KEY</code> trong file <code>.env</code>
+      <br>
+      Lấy API key miễn phí tại: <a href="https://makersuite.google.com/app/apikey" target="_blank">Google AI Studio</a>
+    </div>
+
+    <label>API Key (Google Gemini):</label>
+    <input type="text" id="apiKey" placeholder="AIzaSy...">
+
+    <label>Câu hỏi:</label>
+    <textarea id="question" placeholder="Ví dụ: Giải thích định luật Newton thứ 2">Giải thích định luật Newton thứ 2 và cho ví dụ minh họa.</textarea>
+
+    <label>Câu trả lời của học sinh:</label>
+    <textarea id="studentAnswer" placeholder="Nhập câu trả lời...">Định luật Newton thứ 2 phát biểu rằng lực tác dụng lên một vật bằng khối lượng của vật nhân với gia tốc của nó. Công thức: F = m × a. Ví dụ: Khi đẩy một chiếc xe, nếu xe nặng hơn thì cần lực lớn hơn để tạo ra cùng một gia tốc.</textarea>
+
+    <label>Đáp án mẫu (tùy chọn):</label>
+    <textarea id="correctAnswer" placeholder="Đáp án mẫu để AI so sánh...">Định luật Newton thứ 2 phát biểu: Gia tốc của một vật tỉ lệ thuận với lực tác dụng lên vật và tỉ lệ nghịch với khối lượng của vật. Công thức: F = ma, trong đó F là lực (N), m là khối lượng (kg), a là gia tốc (m/s²).</textarea>
+
+    <label>Điểm tối đa:</label>
+    <input type="number" id="maxScore" value="10" min="1" max="100">
+
+    <button onclick="gradeEssay()" id="gradeBtn">🚀 Chấm điểm ngay</button>
+
+    <div id="result"></div>
+  </div>
+
+  <script>
+    async function gradeEssay() {
+      const apiKey = document.getElementById('apiKey').value.trim()
+      const question = document.getElementById('question').value.trim()
+      const studentAnswer = document.getElementById('studentAnswer').value.trim()
+      const correctAnswer = document.getElementById('correctAnswer').value.trim()
+      const maxScore = parseInt(document.getElementById('maxScore').value)
+      const resultDiv = document.getElementById('result')
+      const gradeBtn = document.getElementById('gradeBtn')
+
+      if (!apiKey) {
+        resultDiv.innerHTML = '<div class="error">❌ Vui lòng nhập API key!</div>'
+        return
+      }
+
+      if (!question || !studentAnswer) {
+        resultDiv.innerHTML = '<div class="error">❌ Vui lòng nhập câu hỏi và câu trả lời!</div>'
+        return
+      }
+
+      gradeBtn.disabled = true
+      gradeBtn.textContent = '⏳ Đang chấm điểm...'
+      resultDiv.innerHTML = '<div class="feedback">⏳ AI đang phân tích câu trả lời...</div>'
+
+      try {
+        const prompt = `Bạn là giáo viên chấm bài. Hãy chấm điểm câu trả lời tự luận sau:
+
+**Câu hỏi:**
+${question}
+
+${correctAnswer ? `**Đáp án mẫu:**
+${correctAnswer}
+` : ''}
+
+**Câu trả lời của học sinh:**
+${studentAnswer}
+
+**Yêu cầu chấm điểm:**
+- Điểm tối đa: ${maxScore}
+- Đánh giá về: nội dung, logic, ngữ pháp, từ vựng
+- Cho điểm công bằng, khách quan
+
+**Trả lời theo format JSON:**
+{
+  "score": <số điểm từ 0 đến ${maxScore}>,
+  "feedback": "<nhận xét tổng quan 2-3 câu>",
+  "strengths": ["<điểm mạnh 1>", "<điểm mạnh 2>"],
+  "improvements": ["<cần cải thiện 1>", "<cần cải thiện 2>"]
+}
+
+Chỉ trả về JSON, không thêm text khác.`
+
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            contents: [{
+              parts: [{
+                text: prompt
+              }]
+            }],
+            generationConfig: {
+              temperature: 0.4,
+              topK: 32,
+              topP: 1,
+              maxOutputTokens: 1024,
+            }
+          })
+        })
+
+        if (!response.ok) {
+          throw new Error(`API error: ${response.status}`)
+        }
+
+        const data = await response.json()
+        const aiResponse = data.candidates[0].content.parts[0].text
+        
+        // Parse JSON
+        let jsonStr = aiResponse.trim()
+        if (jsonStr.startsWith('```json')) {
+          jsonStr = jsonStr.replace(/```json\n?/g, '').replace(/```\n?/g, '')
+        } else if (jsonStr.startsWith('```')) {
+          jsonStr = jsonStr.replace(/```\n?/g, '')
+        }
+        
+        const result = JSON.parse(jsonStr)
+        
+        // Display result
+        resultDiv.innerHTML = `
+          <div class="result">
+            <h2 style="text-align: center; color: #333;">📊 Kết quả chấm điểm</h2>
+            <div class="score">${result.score} / ${maxScore}</div>
+            
+            <div class="feedback">
+              <strong>💬 Nhận xét chung:</strong>
+              <p>${result.feedback}</p>
+            </div>
+            
+            ${result.strengths && result.strengths.length > 0 ? `
+              <div class="strengths">
+                <strong>✅ Điểm mạnh:</strong>
+                <ul>
+                  ${result.strengths.map(s => `<li>${s}</li>`).join('')}
+                </ul>
+              </div>
+            ` : ''}
+            
+            ${result.improvements && result.improvements.length > 0 ? `
+              <div class="improvements">
+                <strong>💡 Cần cải thiện:</strong>
+                <ul>
+                  ${result.improvements.map(i => `<li>${i}</li>`).join('')}
+                </ul>
+              </div>
+            ` : ''}
+          </div>
+        `
+        
+      } catch (error) {
+        console.error('Error:', error)
+        resultDiv.innerHTML = `
+          <div class="error">
+            <strong>❌ Lỗi:</strong> ${error.message}
+            <br><br>
+            <strong>Nguyên nhân có thể:</strong>
+            <ul>
+              <li>API key không đúng</li>
+              <li>Hết quota (60 requests/phút)</li>
+              <li>Lỗi network</li>
+            </ul>
+          </div>
+        `
+      } finally {
+        gradeBtn.disabled = false
+        gradeBtn.textContent = '🚀 Chấm điểm ngay'
+      }
+    }
+  </script>
+</body>
+</html>
