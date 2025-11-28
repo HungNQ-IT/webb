@@ -18,8 +18,8 @@ function IELTSResult() {
 
   if (!result) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <p className="text-gray-600">Đang tải kết quả...</p>
+      <div className="min-h-screen bg-gray-50 dark:bg-slate-900 flex items-center justify-center">
+        <p className="text-gray-600 dark:text-gray-400">Đang tải kết quả...</p>
       </div>
     )
   }
@@ -28,55 +28,55 @@ function IELTSResult() {
   const band = calculateBand(percentage)
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-900 py-12">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 mb-6 text-center">
-            <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg className="w-10 h-10 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+          <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 p-8 mb-6 text-center">
+            <div className="w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg className="w-10 h-10 text-green-600 dark:text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
               </svg>
             </div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Hoàn thành!</h1>
-            <p className="text-gray-600">{result.testTitle}</p>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">Hoàn thành!</h1>
+            <p className="text-gray-600 dark:text-gray-400">{result.testTitle}</p>
           </div>
 
           {/* Score */}
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 mb-6">
+          <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 p-8 mb-6">
             <div className="grid md:grid-cols-3 gap-6 text-center">
               <div>
-                <div className="text-4xl font-bold text-blue-600 mb-2">
+                <div className="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">
                   {result.score}/{result.total}
                 </div>
-                <div className="text-sm text-gray-600">Câu đúng</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">Câu đúng</div>
               </div>
               <div>
-                <div className="text-4xl font-bold text-green-600 mb-2">
+                <div className="text-4xl font-bold text-green-600 dark:text-green-400 mb-2">
                   {percentage}%
                 </div>
-                <div className="text-sm text-gray-600">Tỷ lệ chính xác</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">Tỷ lệ chính xác</div>
               </div>
               <div>
-                <div className="text-4xl font-bold text-purple-600 mb-2">
+                <div className="text-4xl font-bold text-purple-600 dark:text-purple-400 mb-2">
                   {band}
                 </div>
-                <div className="text-sm text-gray-600">IELTS Band (ước tính)</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">IELTS Band (ước tính)</div>
               </div>
             </div>
           </div>
 
           {/* Detailed Results */}
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 mb-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-6">Chi tiết kết quả</h2>
+          <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 p-8 mb-6">
+            <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-6">Chi tiết kết quả</h2>
             
             {result.passages.map((passage, pIndex) => (
               <div key={passage.id} className="mb-8 last:mb-0">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">{passage.title}</h3>
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">{passage.title}</h3>
                 
                 {passage.questions.map((question, qIndex) => (
-                  <div key={qIndex} className="mb-6 pb-6 border-b border-gray-200 last:border-0">
-                    <div className="text-sm font-medium text-gray-700 mb-3">
+                  <div key={qIndex} className="mb-6 pb-6 border-b border-gray-200 dark:border-slate-700 last:border-0">
+                    <div className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
                       Question {qIndex + 1}: {question.type}
                     </div>
 
@@ -89,25 +89,25 @@ function IELTSResult() {
                           const isCorrect = userAnswer.toLowerCase() === correctAnswer.toLowerCase()
                           
                           return (
-                            <div key={aIndex} className={`p-3 rounded-lg ${isCorrect ? 'bg-green-50' : 'bg-red-50'}`}>
+                            <div key={aIndex} className={`p-3 rounded-lg ${isCorrect ? 'bg-green-50 dark:bg-green-900/20' : 'bg-red-50 dark:bg-red-900/20'}`}>
                               <div className="flex items-center justify-between">
                                 <div className="flex-1">
-                                  <div className="text-sm">
+                                  <div className="text-sm text-gray-900 dark:text-gray-100">
                                     <span className="font-medium">Câu trả lời của bạn:</span> {userAnswer || '(Không trả lời)'}
                                   </div>
                                   {!isCorrect && (
-                                    <div className="text-sm text-green-700 mt-1">
+                                    <div className="text-sm text-green-700 dark:text-green-400 mt-1">
                                       <span className="font-medium">Đáp án đúng:</span> {correctAnswer}
                                     </div>
                                   )}
                                 </div>
                                 <div>
                                   {isCorrect ? (
-                                    <svg className="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <svg className="w-6 h-6 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20">
                                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
                                     </svg>
                                   ) : (
-                                    <svg className="w-6 h-6 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <svg className="w-6 h-6 text-red-600 dark:text-red-400" fill="currentColor" viewBox="0 0 20 20">
                                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd"/>
                                     </svg>
                                   )}
@@ -136,18 +136,18 @@ function IELTSResult() {
                                     <span className="font-medium">Bạn chọn:</span> {userAnswer || '(Không trả lời)'}
                                   </div>
                                   {!isCorrect && (
-                                    <div className="text-sm text-green-700 mt-1">
+                                    <div className="text-sm text-green-700 dark:text-green-400 mt-1">
                                       <span className="font-medium">Đáp án đúng:</span> {item.answer}
                                     </div>
                                   )}
                                 </div>
                                 <div>
                                   {isCorrect ? (
-                                    <svg className="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <svg className="w-6 h-6 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20">
                                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
                                     </svg>
                                   ) : (
-                                    <svg className="w-6 h-6 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <svg className="w-6 h-6 text-red-600 dark:text-red-400" fill="currentColor" viewBox="0 0 20 20">
                                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd"/>
                                     </svg>
                                   )}
@@ -176,18 +176,18 @@ function IELTSResult() {
                                     <span className="font-medium">Bạn chọn:</span> {userAnswer || '(Không trả lời)'}
                                   </div>
                                   {!isCorrect && (
-                                    <div className="text-sm text-green-700 mt-1">
+                                    <div className="text-sm text-green-700 dark:text-green-400 mt-1">
                                       <span className="font-medium">Đáp án đúng:</span> {item.answer}
                                     </div>
                                   )}
                                 </div>
                                 <div>
                                   {isCorrect ? (
-                                    <svg className="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <svg className="w-6 h-6 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20">
                                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
                                     </svg>
                                   ) : (
-                                    <svg className="w-6 h-6 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <svg className="w-6 h-6 text-red-600 dark:text-red-400" fill="currentColor" viewBox="0 0 20 20">
                                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd"/>
                                     </svg>
                                   )}
@@ -218,19 +218,19 @@ function IELTSResult() {
                                     <span className="font-semibold">{String.fromCharCode(65 + oIndex)}</span> {option}
                                   </div>
                                   {isSelected && !isCorrect && (
-                                    <div className="text-sm text-red-700 mt-1">Bạn chọn sai</div>
+                                    <div className="text-sm text-red-700 dark:text-red-400 mt-1">Bạn chọn sai</div>
                                   )}
                                   {!isSelected && isCorrect && (
-                                    <div className="text-sm text-green-700 mt-1">Đáp án đúng (bạn không chọn)</div>
+                                    <div className="text-sm text-green-700 dark:text-green-400 mt-1">Đáp án đúng (bạn không chọn)</div>
                                   )}
                                 </div>
                                 <div>
                                   {isSelected && isCorrect ? (
-                                    <svg className="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <svg className="w-6 h-6 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20">
                                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
                                     </svg>
                                   ) : isSelected ? (
-                                    <svg className="w-6 h-6 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <svg className="w-6 h-6 text-red-600 dark:text-red-400" fill="currentColor" viewBox="0 0 20 20">
                                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd"/>
                                     </svg>
                                   ) : null}
@@ -258,18 +258,18 @@ function IELTSResult() {
                                     <span className="font-medium">Question {aIndex + 23}:</span> {userAnswer || '(Không trả lời)'}
                                   </div>
                                   {!isCorrect && (
-                                    <div className="text-sm text-green-700 mt-1">
+                                    <div className="text-sm text-green-700 dark:text-green-400 mt-1">
                                       <span className="font-medium">Đáp án đúng:</span> {correctAnswer}
                                     </div>
                                   )}
                                 </div>
                                 <div>
                                   {isCorrect ? (
-                                    <svg className="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <svg className="w-6 h-6 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20">
                                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
                                     </svg>
                                   ) : (
-                                    <svg className="w-6 h-6 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <svg className="w-6 h-6 text-red-600 dark:text-red-400" fill="currentColor" viewBox="0 0 20 20">
                                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd"/>
                                     </svg>
                                   )}
@@ -300,18 +300,18 @@ function IELTSResult() {
                                     <span className="font-medium">Bạn chọn:</span> {userAnswer ? `${userAnswer} (${question.researchers[userAnswer.charCodeAt(0) - 65]})` : '(Không trả lời)'}
                                   </div>
                                   {!isCorrect && (
-                                    <div className="text-sm text-green-700 mt-1">
+                                    <div className="text-sm text-green-700 dark:text-green-400 mt-1">
                                       <span className="font-medium">Đáp án đúng:</span> {statement.answer} ({question.researchers[statement.answer.charCodeAt(0) - 65]})
                                     </div>
                                   )}
                                 </div>
                                 <div>
                                   {isCorrect ? (
-                                    <svg className="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <svg className="w-6 h-6 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20">
                                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
                                     </svg>
                                   ) : (
-                                    <svg className="w-6 h-6 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <svg className="w-6 h-6 text-red-600 dark:text-red-400" fill="currentColor" viewBox="0 0 20 20">
                                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd"/>
                                     </svg>
                                   )}
@@ -342,18 +342,18 @@ function IELTSResult() {
                                     <span className="font-medium">Bạn chọn:</span> {!isNaN(userAnswer) ? question.headings[userAnswer] : '(Không trả lời)'}
                                   </div>
                                   {!isCorrect && (
-                                    <div className="text-sm text-green-700 mt-1">
+                                    <div className="text-sm text-green-700 dark:text-green-400 mt-1">
                                       <span className="font-medium">Đáp án đúng:</span> {question.headings[para.correctHeading]}
                                     </div>
                                   )}
                                 </div>
                                 <div>
                                   {isCorrect ? (
-                                    <svg className="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <svg className="w-6 h-6 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20">
                                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
                                     </svg>
                                   ) : (
-                                    <svg className="w-6 h-6 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                                    <svg className="w-6 h-6 text-red-600 dark:text-red-400" fill="currentColor" viewBox="0 0 20 20">
                                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd"/>
                                     </svg>
                                   )}
@@ -374,13 +374,13 @@ function IELTSResult() {
           <div className="flex gap-4">
             <Link
               to="/"
-              className="flex-1 bg-gray-600 text-white py-3 rounded-xl font-medium text-center hover:bg-gray-700 transition-all"
+              className="flex-1 bg-gray-600 dark:bg-slate-700 text-white py-3 rounded-xl font-medium text-center hover:bg-gray-700 dark:hover:bg-slate-600 transition-all"
             >
               Về trang chủ
             </Link>
             <Link
               to={`/ielts/${id}`}
-              className="flex-1 bg-blue-600 text-white py-3 rounded-xl font-medium text-center hover:bg-blue-700 transition-all"
+              className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-500 dark:to-purple-500 text-white py-3 rounded-xl font-medium text-center hover:from-blue-700 hover:to-purple-700 dark:hover:from-blue-600 dark:hover:to-purple-600 transition-all"
             >
               Làm lại
             </Link>

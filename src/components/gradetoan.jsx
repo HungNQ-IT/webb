@@ -8,7 +8,7 @@ function SubjectList({ quizzes }) {
   }, [quizzes])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12">
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-900 py-12">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <div className="mb-8">

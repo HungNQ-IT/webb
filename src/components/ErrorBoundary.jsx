@@ -58,7 +58,7 @@ class ErrorBoundary extends Component {
             <div className="flex gap-3">
               <button
                 onClick={() => window.location.reload()}
-                className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-colors"
               >
                 Tải lại trang
               </button>

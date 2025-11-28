@@ -200,7 +200,7 @@ function QuizList({ quizzes, ieltsTests = [] }) {
                             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/>
                           </svg>
                         </div>
-                        <h3 className="font-bold text-gray-900 dark:text-gray-100 text-base leading-tight pr-8">
+                        <h3 className="font-bold text-gray-900 dark:text-gray-100 dark:text-gray-100 text-base leading-tight pr-8">
                           {quiz.title}
                         </h3>
                       </div>
@@ -327,7 +327,7 @@ function QuizList({ quizzes, ieltsTests = [] }) {
                     </div>
                     <Link
                       to={`/quiz/${quiz.id}`}
-                      className="w-full flex items-center justify-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-xl font-medium hover:bg-blue-700 transition-all"
+                      className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-xl font-medium hover:from-blue-700 hover:to-purple-700 transition-all"
                     >
                       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
@@ -442,7 +442,7 @@ function QuizList({ quizzes, ieltsTests = [] }) {
                     <button
                       onClick={handleSaveAudio}
                       disabled={loading || !editingAudio.url.trim()}
-                      className="flex-1 px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="flex-1 px-4 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {loading ? 'Đang lưu...' : '💾 Lưu Audio'}
                     </button>
@@ -496,7 +496,7 @@ function QuizList({ quizzes, ieltsTests = [] }) {
                       Chọn phần thi bạn muốn làm
                     </h3>
                     <div className="space-y-2">
-                      <label className="flex items-center gap-3 p-3 border-2 border-gray-200 rounded-lg hover:border-blue-300 cursor-pointer">
+                      <label className="flex items-center gap-3 p-3 border-2 border-gray-200 dark:border-slate-700 rounded-lg hover:border-blue-300 dark:hover:border-blue-500 cursor-pointer">
                         <input
                           type="checkbox"
                           defaultChecked
@@ -506,7 +506,7 @@ function QuizList({ quizzes, ieltsTests = [] }) {
                           Passage 1 ({selectedQuiz.passages?.[0]?.questions?.length || Math.ceil((selectedQuiz.questions?.length || 0) / 3)} câu hỏi)
                         </span>
                       </label>
-                      <label className="flex items-center gap-3 p-3 border-2 border-gray-200 rounded-lg hover:border-blue-300 cursor-pointer">
+                      <label className="flex items-center gap-3 p-3 border-2 border-gray-200 dark:border-slate-700 rounded-lg hover:border-blue-300 dark:hover:border-blue-500 cursor-pointer">
                         <input
                           type="checkbox"
                           defaultChecked
@@ -516,7 +516,7 @@ function QuizList({ quizzes, ieltsTests = [] }) {
                           Passage 2 ({selectedQuiz.passages?.[1]?.questions?.length || Math.ceil((selectedQuiz.questions?.length || 0) / 3)} câu hỏi)
                         </span>
                       </label>
-                      <label className="flex items-center gap-3 p-3 border-2 border-gray-200 rounded-lg hover:border-blue-300 cursor-pointer">
+                      <label className="flex items-center gap-3 p-3 border-2 border-gray-200 dark:border-slate-700 rounded-lg hover:border-blue-300 dark:hover:border-blue-500 cursor-pointer">
                         <input
                           type="checkbox"
                           defaultChecked
@@ -537,7 +537,7 @@ function QuizList({ quizzes, ieltsTests = [] }) {
                     <select 
                       value={customTimeLimit}
                       onChange={(e) => setCustomTimeLimit(e.target.value)}
-                      className="w-full p-3 border-2 border-gray-200 rounded-lg text-gray-600 focus:border-blue-500 focus:outline-none"
+                      className="w-full p-3 border-2 border-gray-200 dark:border-slate-700 rounded-lg text-gray-600 focus:border-blue-500 focus:outline-none"
                     >
                       <option value="">Dùng thời gian mặc định ({selectedQuiz?.timeLimit || 30} phút)</option>
                       <option value="30">30 phút</option>
@@ -575,7 +575,7 @@ function QuizList({ quizzes, ieltsTests = [] }) {
                       }
                       navigate(route)
                     }}
-                    className="w-full bg-blue-600 text-white py-4 rounded-xl font-semibold text-lg hover:bg-blue-700 transition-all"
+                    className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 rounded-xl font-semibold text-lg hover:from-blue-700 hover:to-purple-700 transition-all"
                   >
                     LUYỆN TẬP
                   </button>

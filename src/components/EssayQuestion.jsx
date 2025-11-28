@@ -22,7 +22,7 @@ function EssayQuestion({ question, questionIndex, answer, onAnswerChange, isSubm
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+    <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-gray-200 dark:border-slate-700 p-6">
       {/* Question */}
       <div className="mb-4">
         <div className="flex items-start gap-3 mb-3">
@@ -49,7 +49,7 @@ function EssayQuestion({ question, questionIndex, answer, onAnswerChange, isSubm
           onChange={handleChange}
           disabled={isSubmitted}
           placeholder="Nhập câu trả lời của bạn... (Trả lời ngắn gọn, đúng trọng tâm)"
-          className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-purple-500 focus:outline-none disabled:bg-gray-100 disabled:cursor-not-allowed resize-none"
+          className="w-full px-4 py-3 border-2 border-gray-300 dark:border-slate-600 dark:border-slate-600 rounded-lg focus:border-purple-500 focus:outline-none disabled:bg-gray-100 dark:disabled:bg-slate-600 disabled:cursor-not-allowed resize-none"
           rows="8"
         />
         
@@ -59,7 +59,7 @@ function EssayQuestion({ question, questionIndex, answer, onAnswerChange, isSubm
             <span className={`font-medium ${getCharCountColor()}`}>
               {charCount} / {recommendedChars} ký tự
             </span>
-            <span className="text-gray-500">
+            <span className="text-gray-500 dark:text-gray-400">
               {charCount < minChars && `Cần thêm ${minChars - charCount} ký tự`}
               {charCount >= minChars && charCount < recommendedChars && '✓ Đủ tối thiểu'}
               {charCount >= recommendedChars && '✓ Tốt'}

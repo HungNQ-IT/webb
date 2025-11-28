@@ -138,9 +138,9 @@ function AdminDashboard({ quizzes = [] }) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-indigo-100 py-12">
       <div className="container mx-auto px-4">
-        <div className="bg-white rounded-2xl shadow-lg p-6">
+        <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-6">
           <div className="flex items-center justify-between mb-6">
-            <h1 className="text-3xl font-bold text-gray-800">Kết quả làm bài của học sinh</h1>
+            <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100">Kết quả làm bài của học sinh</h1>
             <Link
               to="/admin/audio"
               className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors flex items-center gap-2"
@@ -164,7 +164,7 @@ function AdminDashboard({ quizzes = [] }) {
             </div>
           )}
           
-          {loading && <p className="text-gray-600">Đang tải dữ liệu...</p>}
+          {loading && <p className="text-gray-600 dark:text-gray-400">Đang tải dữ liệu...</p>}
           {error && (
             <div className="mb-4 bg-red-100 text-red-700 px-4 py-2 rounded-lg">
               {error}
@@ -176,12 +176,12 @@ function AdminDashboard({ quizzes = [] }) {
             </div>
           )}
           {!loading && !error && submissions.length === 0 && (
-            <p className="text-gray-600">Chưa có bài nộp nào.</p>
+            <p className="text-gray-600 dark:text-gray-400">Chưa có bài nộp nào.</p>
           )}
           {!loading && !error && submissions.length > 0 && (
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
+                <thead className="bg-gray-50 dark:bg-slate-700">
                   <tr>
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Học sinh</th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
@@ -195,22 +195,22 @@ function AdminDashboard({ quizzes = [] }) {
                 <tbody className="bg-white divide-y divide-gray-200">
                   {submissions.map((submission) => (
                     <tr key={submission.id} className="hover:bg-indigo-50">
-                      <td className="px-4 py-3 text-sm text-gray-800">
+                      <td className="px-4 py-3 text-sm text-gray-800 dark:text-gray-100">
                         {submission.user?.name || '—'}
                       </td>
-                      <td className="px-4 py-3 text-sm text-gray-600">
+                      <td className="px-4 py-3 text-sm text-gray-600 dark:text-gray-400">
                         {submission.user?.email}
                       </td>
-                      <td className="px-4 py-3 text-sm text-gray-600">
+                      <td className="px-4 py-3 text-sm text-gray-600 dark:text-gray-400">
                         {submission.user?.grade || '—'}
                       </td>
-                      <td className="px-4 py-3 text-sm text-gray-600">
+                      <td className="px-4 py-3 text-sm text-gray-600 dark:text-gray-400">
                         #{submission.quizId}
                       </td>
-                      <td className="px-4 py-3 text-sm font-semibold text-gray-800">
+                      <td className="px-4 py-3 text-sm font-semibold text-gray-800 dark:text-gray-100">
                         {submission.score}/{submission.total}
                       </td>
-                      <td className="px-4 py-3 text-sm text-gray-500">
+                      <td className="px-4 py-3 text-sm text-gray-500 dark:text-gray-400">
                         {new Date(submission.createdAt).toLocaleString()}
                       </td>
                       <td className="px-4 py-3 text-sm">
@@ -233,9 +233,9 @@ function AdminDashboard({ quizzes = [] }) {
       {/* Modal hiển thị chi tiết */}
       {selectedSubmission && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+          <div className="bg-white dark:bg-slate-800 rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
             <div className="sticky top-0 bg-white border-b px-6 py-4 flex justify-between items-center">
-              <h2 className="text-2xl font-bold text-gray-800">
+              <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
                 Chi tiết bài làm - {selectedSubmission.user?.name || selectedSubmission.user?.email}
               </h2>
               <button
@@ -248,25 +248,25 @@ function AdminDashboard({ quizzes = [] }) {
             <div className="p-6">
               <div className="mb-6 grid grid-cols-2 gap-4">
                 <div>
-                  <p className="text-sm text-gray-500">Email</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">Email</p>
                   <p className="font-semibold">{selectedSubmission.user?.email}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-500">Lớp</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">Lớp</p>
                   <p className="font-semibold">{selectedSubmission.user?.grade || '—'}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-500">Bài tập</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">Bài tập</p>
                   <p className="font-semibold">#{selectedSubmission.quizId}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-500">Điểm số</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">Điểm số</p>
                   <p className="font-semibold text-indigo-600">
                     {selectedSubmission.score}/{selectedSubmission.total}
                   </p>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-500">Thời gian nộp</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">Thời gian nộp</p>
                   <p className="font-semibold">
                     {new Date(selectedSubmission.createdAt).toLocaleString()}
                   </p>
@@ -280,7 +280,7 @@ function AdminDashboard({ quizzes = [] }) {
                 const answers = details.answers || []
                 
                 if (!quiz) {
-                  return <p className="text-gray-500">Không tìm thấy thông tin bài tập.</p>
+                  return <p className="text-gray-500 dark:text-gray-400">Không tìm thấy thông tin bài tập.</p>
                 }
 
                 return (
@@ -294,7 +294,7 @@ function AdminDashboard({ quizzes = [] }) {
                       return (
                         <div key={index} className="border rounded-lg p-4">
                           <div className="flex items-start justify-between mb-2">
-                            <span className="font-semibold text-gray-700">Câu {index + 1}</span>
+                            <span className="font-semibold text-gray-700 dark:text-gray-300">Câu {index + 1}</span>
                             {hasChoices && (
                               <span className={`px-3 py-1 rounded-full text-sm font-medium ${
                                 isCorrect 
@@ -314,7 +314,7 @@ function AdminDashboard({ quizzes = [] }) {
                           </div>
                           {hasChoices ? (
                             <div className="space-y-2">
-                              <p className="text-sm font-medium text-gray-600">Các lựa chọn:</p>
+                              <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Các lựa chọn:</p>
                               {question.choices.map((choice, choiceIndex) => {
                                 const choiceObj = typeof choice === 'string' ? { text: choice } : choice
                                 const isUserAnswer = userAnswer === choiceIndex
@@ -328,7 +328,7 @@ function AdminDashboard({ quizzes = [] }) {
                                         ? 'border-green-500 bg-green-50'
                                         : isUserAnswer
                                         ? 'border-red-500 bg-red-50'
-                                        : 'border-gray-200'
+                                        : 'border-gray-200 dark:border-slate-700'
                                     }`}
                                   >
                                     <span className="font-medium mr-2">

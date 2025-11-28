@@ -22,10 +22,10 @@ export default function RichContent({ text, eq, image, className }) {
   return (
     <div className={className || ''}>
       {text && (
-        <p className="whitespace-pre-line text-gray-800">{text}</p>
+        <p className="whitespace-pre-line text-gray-800 dark:text-gray-100">{text}</p>
       )}
       {eq && (
-        <div className="mt-2 text-gray-900" dangerouslySetInnerHTML={renderLatex(eq)} />
+        <div className="mt-2 text-gray-900 dark:text-gray-100" dangerouslySetInnerHTML={renderLatex(eq)} />
       )}
       {imgSrc && (
         <div className="mt-3">

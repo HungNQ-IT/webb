@@ -140,7 +140,7 @@ function AudioPlayer({ audioUrl, title }) {
     const embedUrl = getEmbedUrl(audioUrl)
     
     return (
-      <div className="bg-white rounded-xl shadow-lg border-2 border-blue-100 overflow-hidden">
+      <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg border-2 border-blue-100 overflow-hidden">
         {/* Header */}
         <div className="bg-gradient-to-r from-blue-500 to-indigo-600 px-6 py-4">
           <div className="flex items-center gap-3">
@@ -162,7 +162,7 @@ function AudioPlayer({ audioUrl, title }) {
 
         {/* Audio Player */}
         <div className="bg-gray-50 p-4">
-          <div className="bg-white rounded-lg shadow-inner overflow-hidden border border-gray-200">
+          <div className="bg-white dark:bg-slate-800 rounded-lg shadow-inner overflow-hidden border border-gray-200 dark:border-slate-700">
             <iframe
               src={embedUrl}
               width="100%"
@@ -196,7 +196,7 @@ function AudioPlayer({ audioUrl, title }) {
 
   // Nếu không phải Google Drive, dùng audio tag thông thường
   return (
-    <div className="bg-white rounded-xl shadow-lg border-2 border-blue-100 overflow-hidden">
+    <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg border-2 border-blue-100 overflow-hidden">
       <audio ref={audioRef} src={audioUrl} preload="metadata" />
       
       {/* Header */}
@@ -295,7 +295,7 @@ function AudioPlayer({ audioUrl, title }) {
         <div className="flex items-center justify-between gap-4 bg-white rounded-lg p-4 shadow-sm">
           {/* Playback Speed */}
           <div className="flex items-center gap-2">
-            <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z"/>
             </svg>
             <div className="flex gap-1">

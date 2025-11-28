@@ -191,7 +191,7 @@ function Profile() {
                   return (
                     <div
                       key={index}
-                      className="flex items-center justify-between p-4 rounded-xl border border-gray-200 dark:border-slate-700 hover:border-blue-300 dark:hover:border-blue-600 transition-colors"
+                      className="flex items-center justify-between p-4 rounded-xl border border-gray-200 dark:border-slate-700 hover:border-blue-300 dark:hover:border-blue-500 dark:hover:border-blue-600 transition-colors"
                     >
                       <div className="flex items-center gap-4 flex-1">
                         <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
@@ -204,7 +204,7 @@ function Profile() {
                           </svg>
                         </div>
                         <div className="flex-1">
-                          <p className="font-semibold text-gray-900 dark:text-gray-100">Bài tập #{submission.quiz_id}</p>
+                          <p className="font-semibold text-gray-900 dark:text-gray-100 dark:text-gray-100">Bài tập #{submission.quiz_id}</p>
                           <p className="text-sm text-gray-600 dark:text-gray-400">{formatDate(submission.created_at)}</p>
                         </div>
                       </div>

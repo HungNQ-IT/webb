@@ -160,8 +160,8 @@ function IELTSQuiz({ ieltsTests }) {
 
   if (!test) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <p className="text-gray-600">Không tìm thấy bài tập.</p>
+      <div className="min-h-screen bg-gray-50 dark:bg-slate-900 flex items-center justify-center">
+        <p className="text-gray-600 dark:text-gray-400">Không tìm thấy bài tập.</p>
       </div>
     )
   }
@@ -170,31 +170,31 @@ function IELTSQuiz({ ieltsTests }) {
 
   if (!passage) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <p className="text-gray-600">Passage không tồn tại.</p>
+      <div className="min-h-screen bg-gray-50 dark:bg-slate-900 flex items-center justify-center">
+        <p className="text-gray-600 dark:text-gray-400">Passage không tồn tại.</p>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-900">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 sticky top-0 z-10">
+      <div className="bg-white dark:bg-slate-800 border-b border-gray-200 dark:border-slate-700 sticky top-0 z-10 shadow-sm">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-xl font-bold text-gray-900">{test.title}</h1>
+              <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100">{test.title}</h1>
               <div className="flex items-center gap-4 mt-1">
                 <div className="relative">
                   <button 
                     onClick={() => setShowColorPicker(!showColorPicker)}
-                    className="text-sm text-blue-600 hover:underline flex items-center gap-1"
+                    className="text-sm text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1"
                   >
                     Highlight nội dung ⓘ
                   </button>
                   {showColorPicker && (
-                    <div className="absolute top-full left-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg p-3 z-20">
-                      <div className="text-xs text-gray-600 mb-2">Chọn màu highlight:</div>
+                    <div className="absolute top-full left-0 mt-2 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-600 rounded-lg shadow-lg p-3 z-20">
+                      <div className="text-xs text-gray-600 dark:text-gray-400 mb-2">Chọn màu highlight:</div>
                       <div className="flex gap-2">
                         {[
                           { color: 'yellow', label: 'Vàng', bg: 'bg-yellow-200' },
@@ -229,8 +229,8 @@ function IELTSQuiz({ ieltsTests }) {
             </div>
             {timeRemaining !== null && (
               <div className="text-right">
-                <div className="text-sm text-gray-600">Thời gian còn lại:</div>
-                <div className="text-2xl font-bold text-gray-900">{formatTime(timeRemaining)}</div>
+                <div className="text-sm text-gray-600 dark:text-gray-400">Thời gian còn lại:</div>
+                <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">{formatTime(timeRemaining)}</div>
               </div>
             )}
           </div>
@@ -238,7 +238,7 @@ function IELTSQuiz({ ieltsTests }) {
       </div>
 
       {/* Tabs */}
-      <div className="bg-white border-b border-gray-200">
+      <div className="bg-white dark:bg-slate-800 border-b border-gray-200 dark:border-slate-700">
         <div className="container mx-auto px-4">
           <div className="flex gap-2">
             {test.passages.map((p, index) => (
@@ -247,8 +247,8 @@ function IELTSQuiz({ ieltsTests }) {
                 onClick={() => setCurrentPassage(index)}
                 className={`px-6 py-3 font-medium border-b-2 transition-colors ${
                   currentPassage === index
-                    ? 'border-blue-600 text-blue-600'
-                    : 'border-transparent text-gray-600 hover:text-gray-900'
+                    ? 'border-blue-600 dark:border-blue-400 text-blue-600 dark:text-blue-400'
+                    : 'border-transparent text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
                 }`}
               >
                 {p.title}
@@ -262,10 +262,10 @@ function IELTSQuiz({ ieltsTests }) {
       <div className="container mx-auto px-4 py-6">
         <div className="grid lg:grid-cols-[2fr,2fr,1.5fr] gap-4">
           {/* Left: Passage */}
-          <div className="bg-white rounded-lg border border-gray-200 p-6 h-fit sticky top-24">
-            <h2 className="text-xl font-bold text-gray-900 mb-4">{passage.title}</h2>
+          <div className="bg-white dark:bg-slate-800 rounded-lg border border-gray-200 dark:border-slate-700 p-6 h-fit sticky top-24">
+            <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-4">{passage.title}</h2>
             <div 
-              className="prose prose-sm max-w-none text-gray-700 whitespace-pre-line leading-relaxed select-text"
+              className="prose prose-sm max-w-none text-gray-700 dark:text-gray-300 whitespace-pre-line leading-relaxed select-text"
               onMouseUp={() => {
                 const selection = window.getSelection()
                 const selectedText = selection.toString().trim()
@@ -320,19 +320,19 @@ function IELTSQuiz({ ieltsTests }) {
               }
               
               return (
-              <div key={qIndex} id={`question-${questionNum}`} className="bg-white rounded-lg border border-gray-200 p-6 scroll-mt-24">
+              <div key={qIndex} id={`question-${questionNum}`} className="bg-white dark:bg-slate-800 rounded-lg border border-gray-200 dark:border-slate-700 p-6 scroll-mt-24">
                 {/* Table Completion */}
                 {question.type === 'table-completion' && (
                   <div>
-                    <div className="mb-4 text-sm text-gray-700">
+                    <div className="mb-4 text-sm text-gray-700 dark:text-gray-300">
                       {question.instruction}
                     </div>
                     <div className="overflow-x-auto">
                       <table className="w-full border-collapse border border-gray-300">
                         <thead>
-                          <tr className="bg-gray-50">
+                          <tr className="bg-gray-50 dark:bg-slate-700">
                             {question.table.headers.map((header, i) => (
-                              <th key={i} className="border border-gray-300 px-3 py-2 text-left text-sm font-semibold">
+                              <th key={i} className="border border-gray-300 dark:border-slate-600 px-3 py-2 text-left text-sm font-semibold">
                                 {header}
                               </th>
                             ))}
@@ -342,14 +342,14 @@ function IELTSQuiz({ ieltsTests }) {
                           {question.table.rows.map((row, rowIndex) => (
                             <tr key={rowIndex}>
                               {row.map((cell, cellIndex) => (
-                                <td key={cellIndex} className="border border-gray-300 px-3 py-2 text-sm">
+                                <td key={cellIndex} className="border border-gray-300 dark:border-slate-600 px-3 py-2 text-sm">
                                   {cell.includes('______') ? (
                                     <input
                                       type="text"
                                       value={answers[`${passage.id}-${qIndex}-${rowIndex * question.table.headers.length + cellIndex}`] || ''}
                                       onChange={(e) => handleAnswerChange(passage.id, qIndex, rowIndex * question.table.headers.length + cellIndex, e.target.value)}
                                       disabled={isSubmitted}
-                                      className="w-28 px-3 py-1.5 border border-gray-300 rounded focus:border-blue-500 focus:outline-none disabled:bg-gray-100 text-center text-sm"
+                                      className="w-28 px-3 py-1.5 border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-gray-900 dark:text-gray-100 rounded focus:border-blue-500 dark:focus:border-blue-400 focus:outline-none disabled:bg-gray-100 dark:disabled:bg-slate-600 text-center text-sm"
                                       placeholder="Answer"
                                     />
                                   ) : (
@@ -368,10 +368,10 @@ function IELTSQuiz({ ieltsTests }) {
                 {/* Note Completion */}
                 {question.type === 'note-completion' && (
                   <div>
-                    <div className="mb-4 text-sm text-gray-700">
+                    <div className="mb-4 text-sm text-gray-700 dark:text-gray-300">
                       {question.instruction}
                     </div>
-                    <div className="border border-gray-300 rounded-lg p-6 bg-gray-50">
+                    <div className="border border-gray-300 dark:border-slate-600 rounded-lg p-6 bg-gray-50 dark:bg-slate-700">
                       <h3 className="text-lg font-bold text-center mb-4">{question.notes.title}</h3>
                       {question.notes.sections.map((section, sIndex) => (
                         <div key={sIndex} className="mb-6 last:mb-0">
@@ -393,7 +393,7 @@ function IELTSQuiz({ ieltsTests }) {
                                         value={answers[`${passage.id}-${qIndex}-${questionNum - 1}`] || ''}
                                         onChange={(e) => handleAnswerChange(passage.id, qIndex, questionNum - 1, e.target.value)}
                                         disabled={isSubmitted}
-                                        className="px-2 py-1 border border-gray-300 rounded focus:border-blue-500 focus:outline-none disabled:bg-gray-100 w-32 inline-block"
+                                        className="px-2 py-1 border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-gray-900 dark:text-gray-100 rounded focus:border-blue-500 dark:focus:border-blue-400 focus:outline-none disabled:bg-gray-100 dark:disabled:bg-slate-600 w-32 inline-block"
                                         placeholder={`Answer ${questionNum}`}
                                       />
                                       <span>{parts[1]}</span>
@@ -417,13 +417,13 @@ function IELTSQuiz({ ieltsTests }) {
                 {/* Matching Information */}
                 {question.type === 'matching-information' && (
                   <div>
-                    <div className="mb-4 text-sm text-gray-700">
+                    <div className="mb-4 text-sm text-gray-700 dark:text-gray-300">
                       {question.instruction}
                     </div>
                     <div className="space-y-3">
                       {question.items.map((item, iIndex) => (
-                        <div key={iIndex} className="border border-gray-200 rounded-lg p-4">
-                          <div className="mb-3 text-sm text-gray-900 font-medium">
+                        <div key={iIndex} className="border border-gray-200 dark:border-slate-700 rounded-lg p-4">
+                          <div className="mb-3 text-sm text-gray-900 dark:text-gray-100 font-medium">
                             Question {iIndex + 14}: {item.question}
                           </div>
                           <input
@@ -432,7 +432,7 @@ function IELTSQuiz({ ieltsTests }) {
                             onChange={(e) => handleAnswerChange(passage.id, qIndex, iIndex, e.target.value.toUpperCase())}
                             disabled={isSubmitted}
                             maxLength={1}
-                            className="w-16 px-3 py-2 border border-gray-300 rounded focus:border-blue-500 focus:outline-none text-center uppercase disabled:bg-gray-100"
+                            className="w-16 px-3 py-2 border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-gray-900 dark:text-gray-100 rounded focus:border-blue-500 dark:focus:border-blue-400 focus:outline-none text-center uppercase disabled:bg-gray-100 dark:disabled:bg-slate-600"
                             placeholder="A-G"
                           />
                         </div>
@@ -444,12 +444,12 @@ function IELTSQuiz({ ieltsTests }) {
                 {/* Multiple Choice - Choose TWO */}
                 {question.type === 'multiple-choice-two' && (
                   <div>
-                    <div className="mb-4 text-sm text-gray-700">
+                    <div className="mb-4 text-sm text-gray-700 dark:text-gray-300">
                       {question.instruction}
                     </div>
                     <div className="space-y-2">
                       {question.options.map((option, oIndex) => (
-                        <label key={oIndex} className="flex items-start gap-3 p-3 border-2 border-gray-200 rounded-lg hover:border-blue-300 cursor-pointer">
+                        <label key={oIndex} className="flex items-start gap-3 p-3 border-2 border-gray-200 dark:border-slate-700 rounded-lg hover:border-blue-300 dark:hover:border-blue-500 cursor-pointer">
                           <input
                             type="checkbox"
                             checked={answers[`${passage.id}-${qIndex}-${oIndex}`] === true}
@@ -469,10 +469,10 @@ function IELTSQuiz({ ieltsTests }) {
                 {/* Summary Completion */}
                 {question.type === 'summary-completion' && (
                   <div>
-                    <div className="mb-4 text-sm text-gray-700">
+                    <div className="mb-4 text-sm text-gray-700 dark:text-gray-300">
                       {question.instruction}
                     </div>
-                    <div className="border border-gray-300 rounded-lg p-6 bg-gray-50">
+                    <div className="border border-gray-300 dark:border-slate-600 rounded-lg p-6 bg-gray-50 dark:bg-slate-700">
                       <h3 className="text-lg font-bold text-center mb-4">{question.summary.title}</h3>
                       <div className="text-base leading-loose">
                         {question.summary.text.split(/(\d+______)/).map((part, pIndex) => {
@@ -486,7 +486,7 @@ function IELTSQuiz({ ieltsTests }) {
                                 value={answers[`${passage.id}-${qIndex}-${questionNum - 19}`] || ''}
                                 onChange={(e) => handleAnswerChange(passage.id, qIndex, questionNum - 19, e.target.value)}
                                 disabled={isSubmitted}
-                                className="inline-block align-middle px-3 py-1.5 border border-gray-300 rounded focus:border-blue-500 focus:outline-none disabled:bg-gray-100 w-28 mx-1 text-center text-sm"
+                                className="inline-block align-middle px-3 py-1.5 border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-gray-900 dark:text-gray-100 rounded focus:border-blue-500 dark:focus:border-blue-400 focus:outline-none disabled:bg-gray-100 dark:disabled:bg-slate-600 w-28 mx-1 text-center text-sm"
                                 placeholder={`Q${questionNum}`}
                               />
                             )
@@ -501,12 +501,12 @@ function IELTSQuiz({ ieltsTests }) {
                 {/* True/False/Not Given */}
                 {question.type === 'true-false-not-given' && (
                   <div>
-                    <div className="mb-4 text-sm text-gray-700">
+                    <div className="mb-4 text-sm text-gray-700 dark:text-gray-300">
                       {question.instruction}
                     </div>
                     <div className="space-y-4">
                       {question.items.map((item, itemIndex) => (
-                        <div key={itemIndex} className="border border-gray-200 rounded-lg p-4">
+                        <div key={itemIndex} className="border border-gray-200 dark:border-slate-700 rounded-lg p-4">
                           <div className="mb-3 text-sm text-gray-900">{item.question}</div>
                           <div className="flex gap-3">
                             {['TRUE', 'FALSE', 'NOT GIVEN'].map((option) => (
@@ -533,7 +533,7 @@ function IELTSQuiz({ ieltsTests }) {
                 {/* Matching Statements with Researchers */}
                 {question.type === 'matching-statements' && (
                   <div>
-                    <div className="mb-4 text-sm text-gray-700">
+                    <div className="mb-4 text-sm text-gray-700 dark:text-gray-300">
                       {question.instruction}
                     </div>
                     <div className="mb-4 bg-gray-50 rounded-lg p-4">
@@ -548,7 +548,7 @@ function IELTSQuiz({ ieltsTests }) {
                     </div>
                     <div className="space-y-3">
                       {question.statements.map((statement, sIndex) => (
-                        <div key={sIndex} className="border border-gray-200 rounded-lg p-4">
+                        <div key={sIndex} className="border border-gray-200 dark:border-slate-700 rounded-lg p-4">
                           <div className="mb-3 text-sm text-gray-900">
                             <span className="font-semibold">Question {sIndex + 27}:</span> {statement.question}
                           </div>
@@ -558,7 +558,7 @@ function IELTSQuiz({ ieltsTests }) {
                             onChange={(e) => handleAnswerChange(passage.id, qIndex, sIndex, e.target.value.toUpperCase())}
                             disabled={isSubmitted}
                             maxLength={1}
-                            className="w-16 px-3 py-2 border border-gray-300 rounded focus:border-blue-500 focus:outline-none text-center uppercase disabled:bg-gray-100"
+                            className="w-16 px-3 py-2 border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-gray-900 dark:text-gray-100 rounded focus:border-blue-500 dark:focus:border-blue-400 focus:outline-none text-center uppercase disabled:bg-gray-100 dark:disabled:bg-slate-600"
                             placeholder="A-F"
                           />
                         </div>
@@ -570,7 +570,7 @@ function IELTSQuiz({ ieltsTests }) {
                 {/* Matching Headings */}
                 {question.type === 'matching-headings' && (
                   <div>
-                    <div className="mb-4 text-sm text-gray-700">
+                    <div className="mb-4 text-sm text-gray-700 dark:text-gray-300">
                       {question.instruction}
                     </div>
                     <div className="mb-4 bg-gray-50 rounded-lg p-4">
@@ -589,7 +589,7 @@ function IELTSQuiz({ ieltsTests }) {
                             value={answers[`${passage.id}-${qIndex}-${paraIndex}`] || ''}
                             onChange={(e) => handleAnswerChange(passage.id, qIndex, paraIndex, e.target.value)}
                             disabled={isSubmitted}
-                            className="flex-1 px-3 py-2 border border-gray-300 rounded focus:border-blue-500 focus:outline-none text-sm disabled:bg-gray-100"
+                            className="flex-1 px-3 py-2 border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-gray-900 dark:text-gray-100 rounded focus:border-blue-500 dark:focus:border-blue-400 focus:outline-none text-sm disabled:bg-gray-100 dark:disabled:bg-slate-600"
                           >
                             <option value="">-- Select heading --</option>
                             {question.headings.map((heading, i) => (
@@ -604,17 +604,17 @@ function IELTSQuiz({ ieltsTests }) {
               </div>
               )
             }) : (
-              <div className="bg-white rounded-lg border border-gray-200 p-6 text-center text-gray-600">
+              <div className="bg-white dark:bg-slate-800 rounded-lg border border-gray-200 dark:border-slate-700 p-6 text-center text-gray-600 dark:text-gray-400">
                 Passage này chưa có câu hỏi.
               </div>
             )}
 
             {/* Submit Button */}
-            <div className="bg-white rounded-lg border border-gray-200 p-6">
+            <div className="bg-white dark:bg-slate-800 rounded-lg border border-gray-200 dark:border-slate-700 p-6">
               <button
                 onClick={handleSubmit}
                 disabled={isSubmitted}
-                className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
               >
                 NỘP BÀI
               </button>
@@ -693,7 +693,7 @@ function IELTSQuiz({ ieltsTests }) {
 
                 return (
                   <div key={p.id} className="mb-6 last:mb-0">
-                    <h3 className="font-bold text-gray-900 mb-3">{p.title}</h3>
+                    <h3 className="font-bold text-gray-900 dark:text-gray-100 mb-3">{p.title}</h3>
                     <div className="grid grid-cols-5 gap-2">
                       {currentPassageQuestions.map((qNum) => (
                         <button

@@ -1,6 +1,6 @@
 function Loading({ message = 'Đang tải...' }) {
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-900 flex items-center justify-center">
       <div className="text-center">
         <div className="inline-block animate-bounce">
           <div className="w-20 h-20 bg-blue-600 rounded-2xl flex items-center justify-center shadow-lg">

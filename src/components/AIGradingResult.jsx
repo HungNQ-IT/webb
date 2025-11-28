@@ -30,18 +30,18 @@ function AIGradingResult({ question, studentAnswer, correctAnswer, maxScore = 10
 
   if (!result) {
     return (
-      <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg p-6 border-2 border-purple-200">
+      <div className="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-lg p-6 border-2 border-purple-200 dark:border-purple-700">
         <div className="text-center">
-          <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg className="w-8 h-8 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+          <div className="w-16 h-16 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg className="w-8 h-8 text-purple-600 dark:text-purple-400" fill="currentColor" viewBox="0 0 20 20">
               <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
               <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm9.707 5.707a1 1 0 00-1.414-1.414L9 12.586l-1.293-1.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
             </svg>
           </div>
-          <h3 className="text-lg font-bold text-gray-900 mb-2">
+          <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-2">
             🤖 Chấm điểm bằng AI
           </h3>
-          <p className="text-gray-600 mb-4">
+          <p className="text-gray-600 dark:text-gray-400 mb-4">
             AI sẽ đánh giá câu trả lời của bạn và đưa ra nhận xét chi tiết
           </p>
           <button
@@ -70,9 +70,9 @@ function AIGradingResult({ question, studentAnswer, correctAnswer, maxScore = 10
   const scoreColor = scorePercentage >= 80 ? 'green' : scorePercentage >= 60 ? 'yellow' : scorePercentage >= 40 ? 'orange' : 'red'
 
   return (
-    <div className="bg-white rounded-xl shadow-lg border-2 border-purple-100 overflow-hidden">
+    <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg border-2 border-purple-100 dark:border-purple-700 overflow-hidden">
       {/* Header */}
-      <div className="bg-gradient-to-r from-purple-600 to-pink-600 px-6 py-4">
+      <div className="bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-700 dark:to-pink-700 px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
@@ -97,13 +97,13 @@ function AIGradingResult({ question, studentAnswer, correctAnswer, maxScore = 10
       </div>
 
       {/* Score */}
-      <div className="bg-gradient-to-br from-gray-50 to-purple-50 p-6">
+      <div className="bg-gradient-to-br from-gray-50 to-purple-50 dark:from-slate-900 dark:to-purple-900/20 p-6">
         <div className="flex items-center justify-center gap-8 mb-6">
           <div className="text-center">
-            <div className={`text-6xl font-bold bg-gradient-to-r from-${scoreColor}-500 to-${scoreColor}-600 bg-clip-text text-transparent`}>
+            <div className={`text-6xl font-bold bg-gradient-to-r from-${scoreColor}-500 to-${scoreColor}-600 dark:from-${scoreColor}-400 dark:to-${scoreColor}-500 bg-clip-text text-transparent`}>
               {result.score}
             </div>
-            <div className="text-gray-600 text-sm mt-1">/ {maxScore} điểm</div>
+            <div className="text-gray-600 dark:text-gray-400 text-sm mt-1">/ {maxScore} điểm</div>
           </div>
           <div className="w-32 h-32">
             <svg className="transform -rotate-90" viewBox="0 0 120 120">
@@ -131,25 +131,25 @@ function AIGradingResult({ question, studentAnswer, correctAnswer, maxScore = 10
         </div>
 
         {/* Feedback */}
-        <div className="bg-white rounded-lg p-4 mb-4 shadow-sm">
-          <h4 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
+        <div className="bg-white dark:bg-slate-800 rounded-lg p-4 mb-4 shadow-sm border border-gray-100 dark:border-slate-700">
+          <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-2 flex items-center gap-2">
             <span>💬</span>
             Nhận xét chung
           </h4>
-          <p className="text-gray-700 leading-relaxed">{result.feedback}</p>
+          <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{result.feedback}</p>
         </div>
 
         {/* Strengths */}
         {result.strengths && result.strengths.length > 0 && (
-          <div className="bg-green-50 rounded-lg p-4 mb-4 border border-green-200">
-            <h4 className="font-semibold text-green-900 mb-2 flex items-center gap-2">
+          <div className="bg-green-50 dark:bg-green-900/20 rounded-lg p-4 mb-4 border border-green-200 dark:border-green-700">
+            <h4 className="font-semibold text-green-900 dark:text-green-400 mb-2 flex items-center gap-2">
               <span>✅</span>
               Điểm mạnh
             </h4>
             <ul className="space-y-1">
               {result.strengths.map((strength, index) => (
-                <li key={index} className="text-green-800 text-sm flex items-start gap-2">
-                  <span className="text-green-600 mt-0.5">•</span>
+                <li key={index} className="text-green-800 dark:text-green-300 text-sm flex items-start gap-2">
+                  <span className="text-green-600 dark:text-green-400 mt-0.5">•</span>
                   <span>{strength}</span>
                 </li>
               ))}
@@ -159,15 +159,15 @@ function AIGradingResult({ question, studentAnswer, correctAnswer, maxScore = 10
 
         {/* Improvements */}
         {result.improvements && result.improvements.length > 0 && (
-          <div className="bg-orange-50 rounded-lg p-4 border border-orange-200">
-            <h4 className="font-semibold text-orange-900 mb-2 flex items-center gap-2">
+          <div className="bg-orange-50 dark:bg-orange-900/20 rounded-lg p-4 border border-orange-200 dark:border-orange-700">
+            <h4 className="font-semibold text-orange-900 dark:text-orange-400 mb-2 flex items-center gap-2">
               <span>💡</span>
               Cần cải thiện
             </h4>
             <ul className="space-y-1">
               {result.improvements.map((improvement, index) => (
-                <li key={index} className="text-orange-800 text-sm flex items-start gap-2">
-                  <span className="text-orange-600 mt-0.5">•</span>
+                <li key={index} className="text-orange-800 dark:text-orange-300 text-sm flex items-start gap-2">
+                  <span className="text-orange-600 dark:text-orange-400 mt-0.5">•</span>
                   <span>{improvement}</span>
                 </li>
               ))}
