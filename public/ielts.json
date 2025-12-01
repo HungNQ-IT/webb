@@ -450,6 +450,121 @@
     ]
   },
   {
+    "id": 103,
+    "subject": "IELTS",
+    "category": "Reading",
+    "title": "IELTS Reading Test 2 - Make That Wine!",
+    "difficulty": "medium",
+    "type": "ielts-reading",
+    "description": "Practice test for IELTS Reading section",
+    "timeLimit": 60,
+    "sections": 1,
+    "passages": [
+      {
+        "id": 1,
+        "title": "Passage 1: Make That Wine!",
+        "text": "Make That Wine!\n\nAustralia is a nation of beer drinkers. Actually, make that wine. Yes, wine has now just about supplanted beer as the alcoholic drink of choice, probably because of the extensive range of choices available and the rich culture behind them. This all adds a certain depth and intimacy to the drinking process which beer just cannot match. In addition, although wine drinkers seldom think about it, moderate consumption seems to be beneficial for the health, lowering the incidence of heart disease and various other ailments.\n\nWine is the product of the fermentation of grape juice, in which yeast (a fungus) consumes the natural sugars within, producing alcohol and carbon dioxide as waste. Yeast grows naturally on many varieties of grapes, often visible as a white powder, and causing fermentation directly on the plant. Thus, the discovery of wine-making is inevitable in human history. The evidence shows that this was at least 8,000 years ago in the Near East. From there, wine-making spread around the ancient Mediterranean civilisations, where the liquid was considered a staple, not a luxury, as it is produced. To this day, the biggest drinkers of wine remain the Mediterranean countries, with France leading the way.\n\nThis leads to the classification of wines, which is quite complex. It often begins with the colour: red or white. Most people do not know that the colour of wine is not due to the grapes used (whose skins are either green or purple), but to the wine-making process itself. All grape juice is clear. Red wines are produced by leaving the grape skin in contact with the juice during fermentation; white wines by not doing so. Thus, white wine can be made from dark-coloured grapes, provided that the skin is separated early, although the resultant wine may have a pinkish tinge.\n\nA similar wine classification is based more specifically on the grape species used, giving such well-known names as Pinot Noir and Merlot. Chardonnay grapes remain one of the most widely planted, producing an array of white wines. Trailing the cabernet sauvignon grape, a key ingredient in the world's most widely recognised, and similarly named, red wines. When one grape species is used, or is predominant, the wine produced is called varietal, as opposed to mixing the juices of various identified grapes, which results in blended. The latter is often done when wine-makers, and the people who drink their product, want a consistent taste, year after year. Far from being looked down upon, it often results in some of the world's most expensive bottles, such as the Cote Rotie wines in France.\n\nIncreasingly, however, market recognition is based on the location of the wine production, resulting in labels such as Bordeaux in France, Napa Valley in California, and the Barossa Valley in Australia. Traditional wines made in these places carry trademarks, respected by serious wine drinkers. However, an example of the blurred lines is the term 'champagne'. This was expected to be made from grapes grown in the Champagne region of France, with all the expertise and traditions of that area, but, despite legal attempts to trademark the term, it has become 'semi-generic', allowing it to be used for any wine of this type made anywhere in the world.\n\nFinally, we come to the vinification method as a means of classification. One example is, in fact, champagne, known as a 'sparkling' wine. Allowing a secondary fermentation in a sealed container, it retains some of the waste carbon dioxide. Another variation is to stop the fermentation before all the natural sugars are consumed, creating dessert wines, ranging from slight to extreme sweetness. Yet again, grapes may be left on their ripened, creating 'late harvest wines', or allowed to become partially dried (or 'raisoned'), creating 'dried grape wines'. Clearly, there are many possibilities, all producing uniquely flavoured products.\n\nOne of the best-known terms relating to wine is 'vintage'. This signifies that the product was made from grapes that were grown in a single labeled year. If that year is eventually acknowledged to have produced exceptionally fine grapes and resultant wines ('a good vintage'), bottles from that period are often saved for future consumption. Of course, the appreciation and assessment of wine is an inexact science, meaning that the significance of a particular vintage often promotes much speculation and disagreement. A non-vintage wine is usually a blend from the produce of two or more years, which is done, as mentioned before, for consistency and quality control.\n\nThis leads to the rich and varied world of wine assessment, and its descriptive terminology. Wine has such a variety of aromas, flavours, textures, and aftertastes that serious wine drinkers demand an agreed vocabulary so that the drinking sensations can be reliably described in writing. From bouquet to biscuity, mellow to musky, vivid to vegetal, the conceited connoisseur can perplex the listener with some really purple prose. Perhaps the opportunity to posture pretentiously with all this jargon is the main reason why wine enthusiasts are so taken with this product. Cheers!",
+        "questions": [
+          {
+            "type": "true-false-not-given",
+            "instruction": "Do the following statements agree with the information given in Reading Passage One? Write TRUE if the statement agrees with the information, FALSE if the statement contradicts the information, NOT GIVEN if there is no information on this",
+            "items": [
+              {
+                "question": "Wine is popular in Australia because it is healthy.",
+                "answer": "FALSE"
+              },
+              {
+                "question": "Yeast is white-coloured.",
+                "answer": "TRUE"
+              },
+              {
+                "question": "Wine is popular in the Near East.",
+                "answer": "NOT GIVEN"
+              },
+              {
+                "question": "Blended wines are usually cheaper.",
+                "answer": "FALSE"
+              }
+            ]
+          },
+          {
+            "type": "table-completion",
+            "instruction": "Complete the table. Choose NO MORE THAN TWO WORDS from the passage for each answer.",
+            "table": {
+              "headers": ["Classification based on", "Associated fact", "Related example"],
+              "rows": [
+                {
+                  "col1": "Colour",
+                  "col2": "Red wines use (5)______ in fermentation.",
+                  "col3": "(6)______"
+                },
+                {
+                  "col1": "grape species",
+                  "col2": "can be (7)______ or blended",
+                  "col3": "Cote Rotie wines"
+                },
+                {
+                  "col1": "Location",
+                  "col2": "Drinkers of wine (8)______ this.",
+                  "col3": "Barossa Valley"
+                },
+                {
+                  "col1": "(9)______",
+                  "col2": "can allow (10)______ to remain",
+                  "col3": "dessert wine"
+                }
+              ]
+            },
+            "answers": [
+              "grape skin",
+              "white wines",
+              "varietal",
+              "respect",
+              "vinification method",
+              "carbon dioxide"
+            ]
+          },
+          {
+            "type": "multiple-choice",
+            "instruction": "Choose the correct letter, A, B, C, or D.",
+            "items": [
+              {
+                "question": "11. Vintage wines are",
+                "options": [
+                  "mostly better.",
+                  "often preferred.",
+                  "often discussed.",
+                  "more costly."
+                ],
+                "answer": 2
+              },
+              {
+                "question": "12. The author thinks that wine terminology is",
+                "options": [
+                  "unnecessary.",
+                  "serious.",
+                  "good.",
+                  "bad."
+                ],
+                "answer": 0
+              },
+              {
+                "question": "13. Wine",
+                "options": [
+                  "is more popular than beer, in Australia.",
+                  "is most popular in France.",
+                  "can be simply classified.",
+                  "is often 'raisoned'."
+                ],
+                "answer": 0
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": 104,
     "subject": "IELTS",
     "category": "Writing",
