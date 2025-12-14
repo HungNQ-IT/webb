@@ -18,141 +18,151 @@ function SubjectList({ quizzes }) {
   const getSubjectConfig = (subject) => {
     const configs = {
       'Toán': {
-        color: 'from-blue-500 to-blue-600',
+        color: 'from-blue-500 to-cyan-500',
+        bg: 'bg-blue-100 dark:bg-blue-900/50',
+        text: 'text-blue-600 dark:text-blue-400',
         icon: (
-          <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="0.5">
-            <rect x="4" y="4" width="16" height="16" rx="2" fill="none" stroke="currentColor" strokeWidth="2"/>
-            <line x1="9" y1="9" x2="9" y2="15" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-            <line x1="15" y1="9" x2="15" y2="15" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-            <line x1="9" y1="12" x2="15" y2="12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-            <line x1="12" y1="9" x2="12" y2="15" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+          <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
           </svg>
         ),
-        description: 'Luyện tập Toán học từ cơ bản đến nâng cao'
+        description: 'Đại số, Hình học và các bài toán tư duy logic.'
       },
       'Vật Lý': {
-        color: 'from-purple-500 to-purple-600',
+        color: 'from-purple-500 to-pink-500',
+        bg: 'bg-purple-100 dark:bg-purple-900/50',
+        text: 'text-purple-600 dark:text-purple-400',
         icon: (
-          <svg className="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-            <circle cx="12" cy="12" r="3"/>
-            <path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41m11.32-11.32l1.41-1.41"/>
-            <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(45 12 12)"/>
-            <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(-45 12 12)"/>
+          <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
           </svg>
         ),
-        description: 'Khám phá thế giới vật lý'
+        description: 'Cơ học, Điện học và các hiện tượng tự nhiên.'
       },
       'Hóa Học': {
-        color: 'from-green-500 to-green-600',
+        color: 'from-green-500 to-emerald-500',
+        bg: 'bg-green-100 dark:bg-green-900/50',
+        text: 'text-green-600 dark:text-green-400',
         icon: (
-          <svg className="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+          <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
           </svg>
         ),
-        description: 'Thí nghiệm và phản ứng hóa học'
+        description: 'Phản ứng hóa học và bảng tuần hoàn nguyên tố.'
       },
       'Khoa Học Tự Nhiên': {
         color: 'from-teal-500 to-cyan-600',
+        bg: 'bg-teal-100 dark:bg-teal-900/50',
+        text: 'text-teal-600 dark:text-teal-400',
         icon: (
-          <svg className="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
         ),
-        description: 'Khám phá thế giới tự nhiên xung quanh'
+        description: 'Khám phá thế giới tự nhiên xung quanh.'
       },
       'Tiếng Anh': {
-        color: 'from-orange-500 to-orange-600',
+        color: 'from-orange-500 to-amber-500',
+        bg: 'bg-orange-100 dark:bg-orange-900/50',
+        text: 'text-orange-600 dark:text-orange-400',
         icon: (
-          <svg className="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-            <circle cx="12" cy="12" r="10"/>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
-            <path d="M2 12h20"/>
+          <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
           </svg>
         ),
-        description: 'Nâng cao kỹ năng tiếng Anh'
+        description: 'Ngữ pháp, từ vựng và kỹ năng giao tiếp.'
       },
       'IELTS': {
-        color: 'from-red-500 to-red-600',
+        color: 'from-red-500 to-rose-500',
+        bg: 'bg-red-100 dark:bg-red-900/50',
+        text: 'text-red-600 dark:text-red-400',
         icon: (
-          <svg className="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+          <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
           </svg>
         ),
-        description: 'Luyện thi IELTS 4 kỹ năng'
+        description: 'Luyện thi chứng chỉ quốc tế 4 kỹ năng.'
       },
       'Ngoại ngữ': {
-        color: 'from-pink-500 to-pink-600',
+        color: 'from-pink-500 to-rose-500',
+        bg: 'bg-pink-100 dark:bg-pink-900/50',
+        text: 'text-pink-600 dark:text-pink-400',
         icon: (
-          <svg className="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/>
+          <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
           </svg>
         ),
-        description: 'Học tiếng Nhật và các ngôn ngữ khác'
+        description: 'Học tiếng Nhật và các ngôn ngữ khác.'
       }
     }
-    
+
     return configs[subject] || {
       color: 'from-gray-500 to-gray-600',
+      bg: 'bg-gray-100 dark:bg-gray-800',
+      text: 'text-gray-600 dark:text-gray-400',
       icon: (
-        <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
-          <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z"/>
+        <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
         </svg>
       ),
-      description: 'Luyện tập và nâng cao kiến thức'
+      description: 'Luyện tập và nâng cao kiến thức.'
     }
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-slate-900 py-12">
+    <div className="min-h-screen py-12">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
-          <div className="mb-8">
+          <div className="mb-12 animate-fade-in-up">
             <button
               onClick={() => window.history.back()}
-              className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 font-medium flex items-center gap-1"
+              className="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 font-medium flex items-center gap-2 mb-6 transition-colors"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
               Quay lại
             </button>
+
+            <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+              Chọn <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400">môn học</span>
+            </h1>
+            <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl">
+              Khám phá kho tàng kiến thức đa dạng. Chọn môn học bạn yêu thích và bắt đầu hành trình chinh phục điểm 10.
+            </p>
           </div>
 
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-            Chọn môn học
-          </h1>
-          <p className="text-gray-600 dark:text-gray-400 mb-8">
-            Chọn môn học bạn muốn luyện tập
-          </p>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {subjects.map((subject) => {
-              const subjectQuizzes = quizzes.filter(q => q.subject === subject)
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {subjects.map((subject, index) => {
               const subjectsWithGrades = ['Toán', 'Vật Lý', 'Hóa Học', 'Khoa Học Tự Nhiên', 'Sinh Học', 'Tiếng Anh']
               const linkTo = subjectsWithGrades.includes(subject)
                 ? `/subject/${encodeURIComponent(subject)}/grades`
                 : `/subject/${encodeURIComponent(subject)}`
-              
+
               const config = getSubjectConfig(subject)
 
               return (
                 <Link
                   key={subject}
                   to={linkTo}
-                  className="group bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-gray-200 dark:border-slate-700 hover:shadow-lg transition-all hover:scale-105"
+                  className="group relative overflow-hidden bg-white dark:bg-slate-800 rounded-3xl p-1 shadow-sm hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 animate-fade-in-up"
+                  style={{ animationDelay: `${index * 100}ms` }}
                 >
-                  <div className={`bg-gradient-to-br ${config.color} rounded-2xl p-6 mb-4`}>
-                    <div className="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mx-auto transition-transform group-hover:scale-110">
+                  <div className={`absolute inset-0 bg-gradient-to-br ${config.color} opacity-0 group-hover:opacity-5 transition-opacity`}></div>
+                  <div className="h-full p-6 flex flex-col relative z-10">
+                    <div className={`w-14 h-14 ${config.bg} rounded-2xl flex items-center justify-center ${config.text} mb-6 group-hover:scale-110 transition-transform`}>
                       {config.icon}
                     </div>
+                    <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+                      {subject}
+                    </h2>
+                    <p className="text-sm text-gray-500 dark:text-gray-400 mb-6 flex-1 leading-relaxed">
+                      {config.description}
+                    </p>
+                    <div className={`flex items-center ${config.text} text-sm font-bold`}>
+                      Bắt đầu học <span className="ml-2 group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
                   </div>
-                  <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-                    {subject}
-                  </h2>
-                  <p className="text-gray-600 dark:text-gray-400 text-sm">
-                    {config.description}
-                  </p>
                 </Link>
               )
             })}
@@ -164,4 +174,3 @@ function SubjectList({ quizzes }) {
 }
 
 export default SubjectList
-
