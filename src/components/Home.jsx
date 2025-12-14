@@ -14,7 +14,7 @@ function Home() {
                 <div className="text-sm text-blue-100">Bài tập</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold">6</div>
+                <div className="text-3xl font-bold">7</div>
                 <div className="text-sm text-blue-100">Môn học</div>
               </div>
               <div className="text-center">
@@ -77,6 +77,21 @@ function Home() {
               </div>
               <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">Hóa Học</h3>
               <p className="text-gray-600 dark:text-gray-400 text-sm">Thí nghiệm và phản ứng hóa học</p>
+            </Link>
+
+            <Link
+              to="/subject/Khoa Học Tự Nhiên/grades"
+              className="group bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-gray-200 dark:border-slate-700 hover:shadow-xl dark:hover:shadow-teal-500/20 transition-all hover:scale-105"
+            >
+              <div className="bg-gradient-to-br from-teal-500 to-cyan-600 rounded-2xl p-6 mb-4">
+                <div className="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mx-auto transition-transform group-hover:scale-110">
+                  <svg className="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  </svg>
+                </div>
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">Khoa Học Tự Nhiên</h3>
+              <p className="text-gray-600 dark:text-gray-400 text-sm">Khám phá thế giới tự nhiên xung quanh</p>
             </Link>
 
             <Link

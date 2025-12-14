@@ -1284,5 +1284,273 @@
         "explain": "'でした' (deshita) là dạng quá khứ lịch sự của 'です'."
       }
     ]
+  },
+  {
+    "id": 201,
+    "subject": "Khoa Học Tự Nhiên",
+    "grade": 6,
+    "title": "Cơ thể sống và môi trường",
+    "type": "tracnghiem",
+    "description": "Kiến thức cơ bản về sinh vật và môi trường sống",
+    "timeLimit": 15,
+    "difficulty": "easy",
+    "questions": [
+      {
+        "q": "Cơ thể sống cần những yếu tố nào để tồn tại?",
+        "choices": [
+          "Không khí, nước, thức ăn",
+          "Chỉ cần nước",
+          "Chỉ cần không khí",
+          "Chỉ cần ánh sáng"
+        ],
+        "answer": 0,
+        "explain": "Cơ thể sống cần không khí để thở, nước để duy trì sự sống, và thức ăn để cung cấp năng lượng."
+      },
+      {
+        "q": "Quá trình cây xanh tạo ra thức ăn từ ánh sáng mặt trời gọi là gì?",
+        "choices": [
+          "Hô hấp",
+          "Quang hợp",
+          "Tiêu hóa",
+          "Tuần hoàn"
+        ],
+        "answer": 1,
+        "explain": "Quang hợp là quá trình cây xanh sử dụng ánh sáng mặt trời, nước và CO2 để tạo ra thức ăn."
+      },
+      {
+        "q": "Động vật nào sau đây là động vật ăn thịt?",
+        "choices": [
+          "Bò",
+          "Dê",
+          "Hổ",
+          "Thỏ"
+        ],
+        "answer": 2,
+        "explain": "Hổ là động vật ăn thịt, còn bò, dê, thỏ là động vật ăn cỏ."
+      },
+      {
+        "q": "Nước chiếm bao nhiêu phần trăm bề mặt Trái Đất?",
+        "choices": [
+          "50%",
+          "60%",
+          "70%",
+          "80%"
+        ],
+        "answer": 2,
+        "explain": "Nước chiếm khoảng 70% bề mặt Trái Đất, phần lớn là nước biển."
+      },
+      {
+        "q": "Khí nào cây xanh hấp thụ trong quá trình quang hợp?",
+        "choices": [
+          "Oxy (O2)",
+          "Nitơ (N2)",
+          "Carbon dioxide (CO2)",
+          "Hydro (H2)"
+        ],
+        "answer": 2,
+        "explain": "Cây xanh hấp thụ CO2 và thải ra O2 trong quá trình quang hợp."
+      }
+    ]
+  },
+  {
+    "id": 202,
+    "subject": "Khoa Học Tự Nhiên",
+    "grade": 7,
+    "title": "Chuyển động và lực",
+    "type": "tracnghiem",
+    "description": "Kiến thức về chuyển động, vận tốc và lực",
+    "timeLimit": 20,
+    "difficulty": "medium",
+    "questions": [
+      {
+        "q": "Công thức tính vận tốc là gì?",
+        "choices": [
+          "v = s × t",
+          "v = s / t",
+          "v = t / s",
+          "v = s + t"
+        ],
+        "answer": 1,
+        "explain": "Vận tốc = Quãng đường / Thời gian (v = s/t)"
+      },
+      {
+        "q": "Đơn vị đo lực trong hệ SI là gì?",
+        "choices": [
+          "Mét (m)",
+          "Kilogram (kg)",
+          "Newton (N)",
+          "Giây (s)"
+        ],
+        "answer": 2,
+        "explain": "Newton (N) là đơn vị đo lực trong hệ đo lường quốc tế SI."
+      },
+      {
+        "q": "Một vật chuyển động đều là vật có:",
+        "choices": [
+          "Vận tốc thay đổi",
+          "Vận tốc không đổi",
+          "Không có vận tốc",
+          "Vận tốc tăng dần"
+        ],
+        "answer": 1,
+        "explain": "Chuyển động đều là chuyển động có vận tốc không đổi theo thời gian."
+      },
+      {
+        "q": "Lực ma sát có tác dụng gì?",
+        "choices": [
+          "Làm vật chuyển động nhanh hơn",
+          "Cản trở chuyển động",
+          "Không ảnh hưởng đến chuyển động",
+          "Làm vật bay lên"
+        ],
+        "answer": 1,
+        "explain": "Lực ma sát luôn cản trở chuyển động của vật."
+      },
+      {
+        "q": "Một xe đi được 60km trong 2 giờ. Vận tốc của xe là bao nhiêu?",
+        "choices": [
+          "20 km/h",
+          "30 km/h",
+          "40 km/h",
+          "60 km/h"
+        ],
+        "answer": 1,
+        "explain": "v = s/t = 60km / 2h = 30 km/h"
+      }
+    ]
+  },
+  {
+    "id": 203,
+    "subject": "Khoa Học Tự Nhiên",
+    "grade": 8,
+    "title": "Hóa học cơ bản",
+    "type": "tracnghiem",
+    "description": "Nguyên tử, phân tử và phản ứng hóa học",
+    "timeLimit": 20,
+    "difficulty": "medium",
+    "questions": [
+      {
+        "q": "Nguyên tử gồm những hạt nào?",
+        "choices": [
+          "Proton, neutron, electron",
+          "Chỉ có proton",
+          "Chỉ có electron",
+          "Proton và neutron"
+        ],
+        "answer": 0,
+        "explain": "Nguyên tử gồm hạt nhân (proton và neutron) và lớp vỏ (electron)."
+      },
+      {
+        "q": "Công thức hóa học của nước là gì?",
+        "choices": [
+          "H2O",
+          "CO2",
+          "O2",
+          "H2"
+        ],
+        "answer": 0,
+        "explain": "Nước có công thức H2O, gồm 2 nguyên tử hydro và 1 nguyên tử oxy."
+      },
+      {
+        "q": "Phản ứng hóa học là gì?",
+        "choices": [
+          "Sự thay đổi trạng thái",
+          "Sự chuyển hóa chất này thành chất khác",
+          "Sự thay đổi nhiệt độ",
+          "Sự thay đổi màu sắc"
+        ],
+        "answer": 1,
+        "explain": "Phản ứng hóa học là quá trình chuyển hóa chất ban đầu thành chất mới."
+      },
+      {
+        "q": "Kim loại nào dẫn điện tốt nhất?",
+        "choices": [
+          "Sắt",
+          "Đồng",
+          "Bạc",
+          "Nhôm"
+        ],
+        "answer": 2,
+        "explain": "Bạc là kim loại dẫn điện tốt nhất, sau đó là đồng và vàng."
+      },
+      {
+        "q": "Khí nào chiếm nhiều nhất trong không khí?",
+        "choices": [
+          "Oxy",
+          "Carbon dioxide",
+          "Nitơ",
+          "Hydro"
+        ],
+        "answer": 2,
+        "explain": "Nitơ chiếm khoảng 78% không khí, oxy chiếm 21%."
+      }
+    ]
+  },
+  {
+    "id": 204,
+    "subject": "Khoa Học Tự Nhiên",
+    "grade": 9,
+    "title": "Điện học cơ bản",
+    "type": "tracnghiem",
+    "description": "Dòng điện, điện áp và mạch điện",
+    "timeLimit": 25,
+    "difficulty": "hard",
+    "questions": [
+      {
+        "q": "Đơn vị đo cường độ dòng điện là gì?",
+        "choices": [
+          "Volt (V)",
+          "Ampe (A)",
+          "Ohm (Ω)",
+          "Watt (W)"
+        ],
+        "answer": 1,
+        "explain": "Ampe (A) là đơn vị đo cường độ dòng điện."
+      },
+      {
+        "q": "Định luật Ohm được biểu diễn bằng công thức nào?",
+        "choices": [
+          "U = I × R",
+          "U = I / R",
+          "U = R / I",
+          "U = I + R"
+        ],
+        "answer": 0,
+        "explain": "Định luật Ohm: Điện áp = Cường độ dòng điện × Điện trở (U = I × R)"
+      },
+      {
+        "q": "Trong mạch nối tiếp, cường độ dòng điện qua các điện trở:",
+        "choices": [
+          "Khác nhau",
+          "Bằng nhau",
+          "Tăng dần",
+          "Giảm dần"
+        ],
+        "answer": 1,
+        "explain": "Trong mạch nối tiếp, cường độ dòng điện qua các điện trở là như nhau."
+      },
+      {
+        "q": "Vật liệu nào sau đây là chất cách điện?",
+        "choices": [
+          "Đồng",
+          "Nhôm",
+          "Cao su",
+          "Bạc"
+        ],
+        "answer": 2,
+        "explain": "Cao su là chất cách điện, không dẫn điện."
+      },
+      {
+        "q": "Một bóng đèn có điện trở 10Ω, hiệu điện thế 12V. Cường độ dòng điện qua đèn là bao nhiêu?",
+        "choices": [
+          "0.8A",
+          "1.2A",
+          "2A",
+          "120A"
+        ],
+        "answer": 1,
+        "explain": "Theo định luật Ohm: I = U/R = 12V / 10Ω = 1.2A"
+      }
+    ]
   }
 ]

@@ -4,8 +4,15 @@ function GradeList() {
   const { subject } = useParams()
   const decodedSubject = decodeURIComponent(subject)
 
-  // Danh sách các lớp (chỉ áp dụng cho Vật Lý)
-  const grades = [6,7,8,9,10, 11, 12]
+  // Danh sách các lớp tùy theo môn học
+  const getGrades = () => {
+    if (decodedSubject === 'Khoa Học Tự Nhiên') {
+      return [6, 7, 8, 9]
+    }
+    return [6, 7, 8, 9, 10, 11, 12]
+  }
+  
+  const grades = getGrades()
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-slate-900 py-12">
