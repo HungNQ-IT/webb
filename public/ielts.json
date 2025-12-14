@@ -493,26 +493,10 @@
             "table": {
               "headers": ["Classification based on", "Associated fact", "Related example"],
               "rows": [
-                {
-                  "col1": "Colour",
-                  "col2": "Red wines use (5)______ in fermentation.",
-                  "col3": "(6)______"
-                },
-                {
-                  "col1": "grape species",
-                  "col2": "can be (7)______ or blended",
-                  "col3": "Cote Rotie wines"
-                },
-                {
-                  "col1": "Location",
-                  "col2": "Drinkers of wine (8)______ this.",
-                  "col3": "Barossa Valley"
-                },
-                {
-                  "col1": "(9)______",
-                  "col2": "can allow (10)______ to remain",
-                  "col3": "dessert wine"
-                }
+                ["Colour", "Red wines use (5)______ in fermentation.", "(6)______"],
+                ["grape species", "can be (7)______ or blended", "Cote Rotie wines"],
+                ["Location", "Drinkers of wine (8)______ this.", "Barossa Valley"],
+                ["(9)______", "can allow (10)______ to remain", "dessert wine"]
               ]
             },
             "answers": [
