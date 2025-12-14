@@ -1,6 +1,37 @@
 import { Link } from 'react-router-dom'
 
 function Home() {
+  const scrollToSubjects = (e) => {
+    e.preventDefault()
+    const element = document.getElementById('subjects')
+    if (element) {
+      // Custom smooth scroll function
+      const targetPosition = element.getBoundingClientRect().top + window.pageYOffset
+      const startPosition = window.pageYOffset
+      const distance = targetPosition - startPosition
+      const duration = 1500 // 1.5 seconds (slower)
+      let start = null
+
+      window.requestAnimationFrame(step)
+
+      function step(timestamp) {
+        if (!start) start = timestamp
+        const progress = timestamp - start
+
+        // Ease-in-out cubic function
+        const ease = progress / duration < 0.5
+          ? 4 * progress * progress * progress / (duration * duration * duration)
+          : 1 - Math.pow(-2 * progress / duration + 2, 3) / 2
+
+        window.scrollTo(0, startPosition + distance * ease)
+
+        if (progress < duration) {
+          window.requestAnimationFrame(step)
+        }
+      }
+    }
+  }
+
   return (
     <div className="min-h-screen pb-20">
       {/* Hero Section */}
@@ -25,7 +56,11 @@ function Home() {
               </p>
 
               <div className="flex flex-wrap justify-center lg:justify-start gap-4 animate-fade-in-up animation-delay-600">
-                <a href="#subjects" className="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl font-bold text-lg transition-all hover:scale-105 shadow-lg shadow-blue-500/30">
+                <a
+                  href="#subjects"
+                  onClick={scrollToSubjects}
+                  className="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl font-bold text-lg transition-all hover:scale-105 shadow-lg shadow-blue-500/30"
+                >
                   Bắt đầu ngay
                 </a>
                 <Link to="/register" className="px-8 py-4 bg-white dark:bg-slate-800 text-gray-900 dark:text-white border border-gray-200 dark:border-slate-700 rounded-2xl font-bold text-lg hover:bg-gray-50 dark:hover:bg-slate-700 transition-all hover:scale-105">
