@@ -134,206 +134,222 @@ function Profile() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-slate-900 flex items-center justify-center">
-        <div className="text-center">
-          <div className="inline-block animate-bounce">
-            <div className="w-20 h-20 bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
-              <svg className="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z" />
-              </svg>
-            </div>
-          </div>
-          <p className="mt-6 text-gray-600 dark:text-gray-400 font-medium">Đang tải...</p>
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center animate-pulse">
+          <div className="w-20 h-20 bg-gray-200 dark:bg-slate-700 rounded-full mx-auto mb-4"></div>
+          <div className="h-4 w-32 bg-gray-200 dark:bg-slate-700 rounded mx-auto"></div>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-slate-900 py-12">
-      <div className="container mx-auto px-4">
+    <div className="min-h-screen py-12 relative overflow-hidden">
+      {/* Decorative Background Elements */}
+      <div className="absolute top-0 left-0 w-full h-96 bg-gradient-to-b from-blue-500/10 to-transparent pointer-events-none"></div>
+      <div className="absolute -top-20 -right-20 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl pointer-events-none"></div>
+      <div className="absolute top-40 -left-20 w-72 h-72 bg-blue-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
-          <div className="mb-8">
+          <div className="mb-8 animate-fade-in-up">
             <button
               onClick={() => window.history.back()}
-              className="text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 font-medium flex items-center gap-1 mb-4"
+              className="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 font-medium flex items-center gap-2 mb-6 transition-colors"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
               Quay lại
             </button>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Hồ sơ cá nhân</h1>
+            <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
+              Hồ sơ <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">cá nhân</span>
+            </h1>
           </div>
 
-          {/* Profile Card */}
-          <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 p-8 mb-6">
-            <div className="flex items-center gap-6">
-              <div className="relative group">
-                <div className="w-24 h-24 rounded-full overflow-hidden shadow-lg border-2 border-white dark:border-slate-600">
-                  {user.avatar_url ? (
-                    <img
-                      src={user.avatar_url}
-                      alt="Avatar"
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center">
-                      <svg className="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
-                      </svg>
+          <div className="grid lg:grid-cols-12 gap-8">
+            {/* Left Column: User Info */}
+            <div className="lg:col-span-4 space-y-6 animate-fade-in-up" style={{ animationDelay: '100ms' }}>
+              <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl rounded-3xl p-8 shadow-xl border border-white/20 dark:border-slate-700/50 text-center relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 pointer-events-none"></div>
+
+                <div className="relative inline-block mb-6 group">
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full blur opacity-75 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="relative w-32 h-32 rounded-full p-1 bg-white dark:bg-slate-800">
+                    <div className="w-full h-full rounded-full overflow-hidden relative">
+                      {user.avatar_url ? (
+                        <img
+                          src={user.avatar_url}
+                          alt="Avatar"
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 flex items-center justify-center">
+                          <span className="text-4xl font-bold text-blue-600 dark:text-blue-400">
+                            {user.name ? user.name.charAt(0).toUpperCase() : user.email.charAt(0).toUpperCase()}
+                          </span>
+                        </div>
+                      )}
+
+                      {/* Upload Overlay */}
+                      <label
+                        htmlFor="avatar-upload"
+                        className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 cursor-pointer backdrop-blur-sm"
+                      >
+                        {uploading ? (
+                          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mb-2"></div>
+                        ) : (
+                          <>
+                            <svg className="w-8 h-8 text-white mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            <span className="text-white text-xs font-medium">Đổi ảnh</span>
+                          </>
+                        )}
+                      </label>
+                      <input
+                        type="file"
+                        id="avatar-upload"
+                        accept="image/*"
+                        onChange={handleAvatarUpload}
+                        disabled={uploading}
+                        className="hidden"
+                      />
                     </div>
-                  )}
+                  </div>
                 </div>
-                <label
-                  htmlFor="avatar-upload"
-                  className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-full opacity-0 group-hover:opacity-100 cursor-pointer transition-opacity"
-                >
-                  {uploading ? (
-                    <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
-                  ) : (
-                    <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                  )}
-                </label>
-                <input
-                  type="file"
-                  id="avatar-upload"
-                  accept="image/*"
-                  onChange={handleAvatarUpload}
-                  disabled={uploading}
-                  className="hidden"
-                />
-              </div>
-              <div className="flex-1">
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-1">
+
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
                   {user.name || 'Học viên'}
                 </h2>
-                <p className="text-gray-600 dark:text-gray-400 mb-2">{user.email}</p>
-                <div className="flex items-center gap-2">
-                  <span className={`px-3 py-1 rounded-full text-sm font-medium ${user.role === 'admin'
-                    ? 'bg-purple-100 text-purple-700'
-                    : 'bg-blue-100 text-blue-700'
+                <p className="text-gray-500 dark:text-gray-400 mb-6 font-medium">{user.email}</p>
+
+                <div className="flex flex-wrap justify-center gap-2">
+                  <span className={`px-4 py-1.5 rounded-full text-sm font-semibold shadow-sm ${user.role === 'admin'
+                      ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300 border border-purple-200 dark:border-purple-800'
+                      : 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300 border border-blue-200 dark:border-blue-800'
                     }`}>
                     {user.role === 'admin' ? 'Quản trị viên' : 'Học viên'}
                   </span>
                   {user.user_metadata?.grade && (
-                    <span className="px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-700">
+                    <span className="px-4 py-1.5 rounded-full text-sm font-semibold bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300 border border-green-200 dark:border-green-800 shadow-sm">
                       Lớp {user.user_metadata.grade}
                     </span>
                   )}
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Stats Grid */}
-          <div className="grid md:grid-cols-4 gap-6 mb-6">
-            <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl p-6 text-white">
-              <div className="flex items-center justify-between mb-2">
-                <svg className="w-8 h-8 opacity-80" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
-                </svg>
-              </div>
-              <div className="text-3xl font-bold mb-1">{stats.totalSubmissions}</div>
-              <div className="text-blue-100 text-sm">Bài tập đã làm</div>
-            </div>
+            {/* Right Column: Stats & History */}
+            <div className="lg:col-span-8 space-y-8 animate-fade-in-up" style={{ animationDelay: '200ms' }}>
 
-            <div className="bg-gradient-to-br from-green-500 to-green-600 rounded-2xl p-6 text-white">
-              <div className="flex items-center justify-between mb-2">
-                <svg className="w-8 h-8 opacity-80" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                </svg>
-              </div>
-              <div className="text-3xl font-bold mb-1">{stats.completedQuizzes}</div>
-              <div className="text-green-100 text-sm">Bài tập hoàn thành</div>
-            </div>
-
-            <div className="bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl p-6 text-white">
-              <div className="flex items-center justify-between mb-2">
-                <svg className="w-8 h-8 opacity-80" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                </svg>
-              </div>
-              <div className="text-3xl font-bold mb-1">{stats.averageScore}%</div>
-              <div className="text-orange-100 text-sm">Điểm trung bình</div>
-            </div>
-
-            <div className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl p-6 text-white">
-              <div className="flex items-center justify-between mb-2">
-                <svg className="w-8 h-8 opacity-80" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
-                </svg>
-              </div>
-              <div className="text-3xl font-bold mb-1">{stats.totalTimeSpent}</div>
-              <div className="text-purple-100 text-sm">Giờ học tập</div>
-            </div>
-          </div>
-
-          {/* Recent Activity */}
-          <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 p-8">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">Hoạt động gần đây</h2>
-
-            {stats.recentSubmissions.length > 0 ? (
-              <div className="space-y-4">
-                {stats.recentSubmissions.map((submission, index) => {
-                  const percentage = submission.total > 0
-                    ? Math.round((submission.score / submission.total) * 100)
-                    : 0
-
-                  return (
-                    <div
-                      key={index}
-                      className="flex items-center justify-between p-4 rounded-xl border border-gray-200 dark:border-slate-700 hover:border-blue-300 dark:hover:border-blue-500 dark:hover:border-blue-600 transition-colors"
-                    >
-                      <div className="flex items-center gap-4 flex-1">
-                        <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${percentage >= 80 ? 'bg-green-100' : percentage >= 60 ? 'bg-yellow-100' : 'bg-red-100'
-                          }`}>
-                          <svg className={`w-6 h-6 ${percentage >= 80 ? 'text-green-600' : percentage >= 60 ? 'text-yellow-600' : 'text-red-600'
-                            }`} fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
-                          </svg>
-                        </div>
-                        <div className="flex-1">
-                          <p className="font-semibold text-gray-900 dark:text-gray-100 dark:text-gray-100">Bài tập #{submission.quiz_id}</p>
-                          <p className="text-sm text-gray-600 dark:text-gray-400">{formatDate(submission.created_at)}</p>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                          {submission.score}/{submission.total}
-                        </div>
-                        <div className={`text-sm font-medium ${percentage >= 80 ? 'text-green-600' : percentage >= 60 ? 'text-yellow-600' : 'text-red-600'
-                          }`}>
-                          {percentage}%
-                        </div>
-                      </div>
+              {/* Stats Grid */}
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                {[
+                  {
+                    label: 'Bài tập đã làm',
+                    value: stats.totalSubmissions,
+                    icon: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2',
+                    color: 'text-blue-600 dark:text-blue-400',
+                    bg: 'bg-blue-50 dark:bg-blue-900/20'
+                  },
+                  {
+                    label: 'Hoàn thành',
+                    value: stats.completedQuizzes,
+                    icon: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z',
+                    color: 'text-green-600 dark:text-green-400',
+                    bg: 'bg-green-50 dark:bg-green-900/20'
+                  },
+                  {
+                    label: 'Điểm trung bình',
+                    value: `${stats.averageScore}%`,
+                    icon: 'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6',
+                    color: 'text-orange-600 dark:text-orange-400',
+                    bg: 'bg-orange-50 dark:bg-orange-900/20'
+                  },
+                  {
+                    label: 'Giờ học tập',
+                    value: stats.totalTimeSpent,
+                    icon: 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z',
+                    color: 'text-purple-600 dark:text-purple-400',
+                    bg: 'bg-purple-50 dark:bg-purple-900/20'
+                  },
+                ].map((stat, index) => (
+                  <div key={index} className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-slate-700 hover:shadow-md transition-shadow">
+                    <div className={`w-10 h-10 ${stat.bg} rounded-xl flex items-center justify-center mb-4`}>
+                      <svg className={`w-6 h-6 ${stat.color}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={stat.icon} />
+                      </svg>
                     </div>
-                  )
-                })}
+                    <div className="text-2xl font-bold text-gray-900 dark:text-white mb-1">{stat.value}</div>
+                    <div className="text-sm text-gray-500 dark:text-gray-400 font-medium">{stat.label}</div>
+                  </div>
+                ))}
               </div>
-            ) : (
-              <div className="text-center py-12">
-                <div className="w-16 h-16 bg-gray-100 dark:bg-slate-700 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                  </svg>
-                </div>
-                <p className="text-gray-600 dark:text-gray-400 mb-4">Bạn chưa làm bài tập nào</p>
-                <Link
-                  to="/subjects"
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-medium hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg"
-                >
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                  Bắt đầu làm bài
-                </Link>
+
+              {/* Recent Activity */}
+              <div className="bg-white dark:bg-slate-800 rounded-3xl p-8 shadow-sm border border-gray-100 dark:border-slate-700">
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
+                  <span className="w-2 h-8 bg-gradient-to-b from-blue-600 to-purple-600 rounded-full"></span>
+                  Hoạt động gần đây
+                </h3>
+
+                {stats.recentSubmissions.length > 0 ? (
+                  <div className="space-y-6 relative before:absolute before:left-6 before:top-2 before:bottom-2 before:w-0.5 before:bg-gray-100 dark:before:bg-slate-700">
+                    {stats.recentSubmissions.map((submission, index) => {
+                      const percentage = submission.total > 0
+                        ? Math.round((submission.score / submission.total) * 100)
+                        : 0
+
+                      return (
+                        <div key={index} className="relative pl-16 group">
+                          {/* Timeline Dot */}
+                          <div className={`absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full border-4 border-white dark:border-slate-800 ${percentage >= 80 ? 'bg-green-500' : percentage >= 60 ? 'bg-yellow-500' : 'bg-red-500'
+                            } shadow-sm z-10 group-hover:scale-125 transition-transform`}></div>
+
+                          <div className="bg-gray-50 dark:bg-slate-700/50 rounded-2xl p-4 flex items-center justify-between hover:bg-white dark:hover:bg-slate-700 hover:shadow-md transition-all border border-transparent hover:border-gray-100 dark:hover:border-slate-600">
+                            <div>
+                              <h4 className="font-bold text-gray-900 dark:text-white mb-1">
+                                Bài tập #{submission.quiz_id}
+                              </h4>
+                              <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">
+                                {formatDate(submission.created_at)}
+                              </p>
+                            </div>
+                            <div className="text-right">
+                              <div className="text-lg font-bold text-gray-900 dark:text-white">
+                                {submission.score}/{submission.total}
+                              </div>
+                              <div className={`text-xs font-bold ${percentage >= 80 ? 'text-green-600 dark:text-green-400' : percentage >= 60 ? 'text-yellow-600 dark:text-yellow-400' : 'text-red-600 dark:text-red-400'
+                                }`}>
+                                {percentage}%
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      )
+                    })}
+                  </div>
+                ) : (
+                  <div className="text-center py-12">
+                    <div className="w-20 h-20 bg-gray-50 dark:bg-slate-700/50 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <svg className="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                      </svg>
+                    </div>
+                    <p className="text-gray-500 dark:text-gray-400 mb-6">Bạn chưa có hoạt động nào</p>
+                    <Link
+                      to="/subjects"
+                      className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-medium hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg hover:shadow-blue-500/25"
+                    >
+                      Bắt đầu học ngay
+                    </Link>
+                  </div>
+                )}
               </div>
-            )}
+            </div>
           </div>
         </div>
       </div>
