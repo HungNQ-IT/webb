@@ -4,7 +4,8 @@ import { supabase } from '../utils/supabase'
 import { Link } from 'react-router-dom'
 
 function Profile() {
-  const { user } = useAuth()
+  const { user, updateProfile } = useAuth()
+  const [uploading, setUploading] = useState(false)
   const [stats, setStats] = useState({
     totalSubmissions: 0,
     completedQuizzes: 0,
@@ -57,6 +58,69 @@ function Profile() {
     }
   }
 
+  const handleAvatarUpload = async (event) => {
+    try {
+      setUploading(true)
+
+      if (!event.target.files || event.target.files.length === 0) {
+        return // User cancelled selection
+      }
+
+      const file = event.target.files[0]
+
+      // Validate file type
+      if (!file.type.startsWith('image/')) {
+        throw new Error('Vui lòng chọn file hình ảnh (JPG, PNG, GIF, ...)')
+      }
+
+      // Validate file size (max 2MB)
+      if (file.size > 2 * 1024 * 1024) {
+        throw new Error('Kích thước ảnh không được vượt quá 2MB')
+      }
+
+      const fileExt = file.name.split('.').pop()
+      const fileName = `${user.id}/${Date.now()}.${fileExt}`
+      const filePath = `${fileName}`
+
+      // Upload image
+      const { error: uploadError } = await supabase.storage
+        .from('avatars')
+        .upload(filePath, file, {
+          cacheControl: '3600',
+          upsert: true
+        })
+
+      if (uploadError) {
+        console.error('Supabase storage upload error:', uploadError)
+        if (uploadError.message.includes('Bucket not found')) {
+          throw new Error('Lỗi hệ thống: Bucket "avatars" chưa được tạo. Vui lòng liên hệ admin chạy script setup.')
+        } else if (uploadError.message.includes('new row violates row-level security policy')) {
+          throw new Error('Lỗi quyền truy cập: Bạn không có quyền upload ảnh. Vui lòng kiểm tra lại đăng nhập.')
+        } else {
+          throw new Error(`Lỗi upload: ${uploadError.message}`)
+        }
+      }
+
+      // Get public URL
+      const { data } = supabase.storage.from('avatars').getPublicUrl(filePath)
+
+      if (data) {
+        // Update user profile
+        await updateProfile({
+          avatar_url: data.publicUrl
+        })
+        alert('Cập nhật ảnh đại diện thành công!')
+      }
+    } catch (error) {
+      console.error('Error uploading avatar:', error)
+      alert(error.message)
+    } finally {
+      setUploading(false)
+      // Reset input value to allow selecting the same file again
+      event.target.value = ''
+    }
+  }
+
   const formatDate = (dateString) => {
     const date = new Date(dateString)
     return date.toLocaleDateString('vi-VN', {
@@ -75,7 +139,7 @@ function Profile() {
           <div className="inline-block animate-bounce">
             <div className="w-20 h-20 bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
               <svg className="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z"/>
+                <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z" />
               </svg>
             </div>
           </div>
@@ -106,10 +170,43 @@ function Profile() {
           {/* Profile Card */}
           <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 p-8 mb-6">
             <div className="flex items-center gap-6">
-              <div className="w-24 h-24 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full flex items-center justify-center flex-shrink-0 shadow-lg">
-                <svg className="w-14 h-14 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd"/>
-                </svg>
+              <div className="relative group">
+                <div className="w-24 h-24 rounded-full overflow-hidden shadow-lg border-2 border-white dark:border-slate-600">
+                  {user.avatar_url ? (
+                    <img
+                      src={user.avatar_url}
+                      alt="Avatar"
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center">
+                      <svg className="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                  )}
+                </div>
+                <label
+                  htmlFor="avatar-upload"
+                  className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-full opacity-0 group-hover:opacity-100 cursor-pointer transition-opacity"
+                >
+                  {uploading ? (
+                    <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
+                  ) : (
+                    <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                  )}
+                </label>
+                <input
+                  type="file"
+                  id="avatar-upload"
+                  accept="image/*"
+                  onChange={handleAvatarUpload}
+                  disabled={uploading}
+                  className="hidden"
+                />
               </div>
               <div className="flex-1">
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-1">
@@ -117,11 +214,10 @@ function Profile() {
                 </h2>
                 <p className="text-gray-600 dark:text-gray-400 mb-2">{user.email}</p>
                 <div className="flex items-center gap-2">
-                  <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                    user.role === 'admin' 
-                      ? 'bg-purple-100 text-purple-700' 
-                      : 'bg-blue-100 text-blue-700'
-                  }`}>
+                  <span className={`px-3 py-1 rounded-full text-sm font-medium ${user.role === 'admin'
+                    ? 'bg-purple-100 text-purple-700'
+                    : 'bg-blue-100 text-blue-700'
+                    }`}>
                     {user.role === 'admin' ? 'Quản trị viên' : 'Học viên'}
                   </span>
                   {user.user_metadata?.grade && (
@@ -139,7 +235,7 @@ function Profile() {
             <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl p-6 text-white">
               <div className="flex items-center justify-between mb-2">
                 <svg className="w-8 h-8 opacity-80" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z"/>
+                  <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
                 </svg>
               </div>
               <div className="text-3xl font-bold mb-1">{stats.totalSubmissions}</div>
@@ -149,7 +245,7 @@ function Profile() {
             <div className="bg-gradient-to-br from-green-500 to-green-600 rounded-2xl p-6 text-white">
               <div className="flex items-center justify-between mb-2">
                 <svg className="w-8 h-8 opacity-80" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/>
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                 </svg>
               </div>
               <div className="text-3xl font-bold mb-1">{stats.completedQuizzes}</div>
@@ -159,7 +255,7 @@ function Profile() {
             <div className="bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl p-6 text-white">
               <div className="flex items-center justify-between mb-2">
                 <svg className="w-8 h-8 opacity-80" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                 </svg>
               </div>
               <div className="text-3xl font-bold mb-1">{stats.averageScore}%</div>
@@ -169,7 +265,7 @@ function Profile() {
             <div className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl p-6 text-white">
               <div className="flex items-center justify-between mb-2">
                 <svg className="w-8 h-8 opacity-80" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd"/>
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
                 </svg>
               </div>
               <div className="text-3xl font-bold mb-1">{stats.totalTimeSpent}</div>
@@ -180,27 +276,25 @@ function Profile() {
           {/* Recent Activity */}
           <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 p-8">
             <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">Hoạt động gần đây</h2>
-            
+
             {stats.recentSubmissions.length > 0 ? (
               <div className="space-y-4">
                 {stats.recentSubmissions.map((submission, index) => {
-                  const percentage = submission.total > 0 
-                    ? Math.round((submission.score / submission.total) * 100) 
+                  const percentage = submission.total > 0
+                    ? Math.round((submission.score / submission.total) * 100)
                     : 0
-                  
+
                   return (
                     <div
                       key={index}
                       className="flex items-center justify-between p-4 rounded-xl border border-gray-200 dark:border-slate-700 hover:border-blue-300 dark:hover:border-blue-500 dark:hover:border-blue-600 transition-colors"
                     >
                       <div className="flex items-center gap-4 flex-1">
-                        <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-                          percentage >= 80 ? 'bg-green-100' : percentage >= 60 ? 'bg-yellow-100' : 'bg-red-100'
-                        }`}>
-                          <svg className={`w-6 h-6 ${
-                            percentage >= 80 ? 'text-green-600' : percentage >= 60 ? 'text-yellow-600' : 'text-red-600'
-                          }`} fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z"/>
+                        <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${percentage >= 80 ? 'bg-green-100' : percentage >= 60 ? 'bg-yellow-100' : 'bg-red-100'
+                          }`}>
+                          <svg className={`w-6 h-6 ${percentage >= 80 ? 'text-green-600' : percentage >= 60 ? 'text-yellow-600' : 'text-red-600'
+                            }`} fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z" />
                           </svg>
                         </div>
                         <div className="flex-1">
@@ -212,9 +306,8 @@ function Profile() {
                         <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">
                           {submission.score}/{submission.total}
                         </div>
-                        <div className={`text-sm font-medium ${
-                          percentage >= 80 ? 'text-green-600' : percentage >= 60 ? 'text-yellow-600' : 'text-red-600'
-                        }`}>
+                        <div className={`text-sm font-medium ${percentage >= 80 ? 'text-green-600' : percentage >= 60 ? 'text-yellow-600' : 'text-red-600'
+                          }`}>
                           {percentage}%
                         </div>
                       </div>
@@ -226,7 +319,7 @@ function Profile() {
               <div className="text-center py-12">
                 <div className="w-16 h-16 bg-gray-100 dark:bg-slate-700 rounded-full flex items-center justify-center mx-auto mb-4">
                   <svg className="w-8 h-8 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
                 </div>
                 <p className="text-gray-600 dark:text-gray-400 mb-4">Bạn chưa làm bài tập nào</p>
@@ -235,7 +328,7 @@ function Profile() {
                   className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-medium hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg"
                 >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                   </svg>
                   Bắt đầu làm bài
                 </Link>

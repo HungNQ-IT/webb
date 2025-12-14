@@ -6,15 +6,16 @@ const AuthContext = createContext(null)
 // Hàm chuyển đổi Supabase user thành format app cần
 function mapSupabaseUser(supabaseUser) {
   if (!supabaseUser) return null
-  
+
   const metadata = supabaseUser.user_metadata || {}
   const adminEmails = (import.meta.env.VITE_ADMIN_EMAILS || '').split(',').map(s => s.trim()).filter(Boolean)
-  
+
   return {
     id: supabaseUser.id,
     email: supabaseUser.email,
     name: metadata.name || null,
     grade: metadata.grade || null,
+    avatar_url: metadata.avatar_url || null,
     role: adminEmails.includes(supabaseUser.email?.toLowerCase()) ? 'admin' : (metadata.role || 'student'),
     createdAt: supabaseUser.created_at
   }
@@ -73,7 +74,7 @@ export function AuthProvider({ children }) {
     if (!isSupabaseConfigured) {
       throw new Error('Supabase chưa được cấu hình. Vui lòng kiểm tra file .env hoặc liên hệ admin.')
     }
-    
+
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
         email: email.toLowerCase(),
@@ -107,17 +108,17 @@ export function AuthProvider({ children }) {
 
   const register = async (payload) => {
     const { email, password, name, grade } = payload
-    
+
     // Kiểm tra xem Supabase đã được cấu hình chưa
     if (!isSupabaseConfigured) {
       throw new Error('Supabase chưa được cấu hình. Vui lòng kiểm tra file .env hoặc liên hệ admin.')
     }
-    
+
     try {
       // Kiểm tra email có phải admin không
       const adminEmails = (import.meta.env.VITE_ADMIN_EMAILS || '').split(',').map(s => s.trim()).filter(Boolean)
       const userRole = adminEmails.includes(email.toLowerCase()) ? 'admin' : 'student'
-      
+
       // Đăng ký user với Supabase Auth
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email: email.toLowerCase(),
@@ -162,6 +163,25 @@ export function AuthProvider({ children }) {
     }
   }
 
+  const updateProfile = async (updates) => {
+    try {
+      const { data, error } = await supabase.auth.updateUser({
+        data: updates
+      })
+
+      if (error) throw error
+
+      if (data.user) {
+        const mappedUser = mapSupabaseUser(data.user)
+        setUser(mappedUser)
+        return mappedUser
+      }
+    } catch (error) {
+      console.error('Error updating profile:', error)
+      throw error
+    }
+  }
+
   const logout = async () => {
     const { error } = await supabase.auth.signOut()
     if (error) {
@@ -178,6 +198,7 @@ export function AuthProvider({ children }) {
     login,
     register,
     logout,
+    updateProfile,
     isAuthenticated: Boolean(user && session)
   }), [user, session, loading])
 
