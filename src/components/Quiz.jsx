@@ -229,9 +229,11 @@ function Quiz({ quizzes }) {
 
           {/* Question */}
           <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 p-8 mb-6">
-            <div className="mb-6">
-              <RichContent text={question.q} eq={question.eq} image={question.image} className="text-lg font-medium text-gray-900 dark:text-gray-100" />
-            </div>
+            {hasChoices && (
+              <div className="mb-6">
+                <RichContent text={question.q} eq={question.eq} image={question.image} className="text-lg font-medium text-gray-900 dark:text-gray-100" />
+              </div>
+            )}
             {hasChoices ? (
               <div className="space-y-3">
                 {question.choices.map((choice, index) => {

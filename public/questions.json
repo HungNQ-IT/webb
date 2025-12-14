@@ -1289,66 +1289,174 @@
     "id": 201,
     "subject": "Khoa Học Tự Nhiên",
     "grade": 6,
-    "title": "Cơ thể sống và môi trường",
-    "type": "tracnghiem",
-    "description": "Kiến thức cơ bản về sinh vật và môi trường sống",
-    "timeLimit": 15,
-    "difficulty": "easy",
+    "title": "Đề kiểm tra giữa kỳ - Mã đề 444",
+    "type": "mixed",
+    "description": "Đề thi giữa kỳ môn Khoa Học Tự Nhiên lớp 6 (Trắc nghiệm + Tự luận)",
+    "timeLimit": 75,
+    "difficulty": "medium",
     "questions": [
       {
-        "q": "Cơ thể sống cần những yếu tố nào để tồn tại?",
+        "type": "multiple-choice",
+        "q": "Tại sao gạch không nung thường được thiết kế có các lỗ hổng?",
         "choices": [
-          "Không khí, nước, thức ăn",
-          "Chỉ cần nước",
-          "Chỉ cần không khí",
-          "Chỉ cần ánh sáng"
+          "Để trang trí cho đẹp mắt",
+          "Để tăng trọng lượng của viên gạch",
+          "Để cách âm, cách nhiệt và gắn kết vữa tốt hơn",
+          "Để dễ dàng vận chuyển hơn"
         ],
-        "answer": 0,
-        "explain": "Cơ thể sống cần không khí để thở, nước để duy trì sự sống, và thức ăn để cung cấp năng lượng."
+        "answer": 2,
+        "explain": "Các lỗ hổng trong gạch giúp cách âm, cách nhiệt và gắn kết vữa tốt hơn."
       },
       {
-        "q": "Quá trình cây xanh tạo ra thức ăn từ ánh sáng mặt trời gọi là gì?",
+        "type": "multiple-choice",
+        "q": "Yếu tố nào sau đây giúp tăng tốc độ hòa tan của một chất rắn vào nước?",
         "choices": [
-          "Hô hấp",
-          "Quang hợp",
-          "Tiêu hóa",
-          "Tuần hoàn"
+          "Nghiền nhỏ chất rắn",
+          "Dùng nóng dung môi (nước)",
+          "Khuấy đều dung dịch",
+          "Cả 3 đáp án trên đều đúng"
+        ],
+        "answer": 3,
+        "explain": "Cả ba yếu tố: nghiền nhỏ, dùng nước nóng và khuấy đều đều giúp tăng tốc độ hòa tan."
+      },
+      {
+        "type": "multiple-choice",
+        "q": "Một tế bào mẹ thực hiện sinh sản (phân chia liên tiếp) 3 lần sẽ tạo ra bao nhiêu tế bào con?",
+        "choices": [
+          "3 tế bào",
+          "6 tế bào",
+          "8 tế bào",
+          "12 tế bào"
+        ],
+        "answer": 2,
+        "explain": "Sau 3 lần phân chia: 2³ = 8 tế bào con."
+      },
+      {
+        "type": "multiple-choice",
+        "q": "Khi quan sát tế bào biểu bì da ếch, thuốc nhuộm xanh methylene có tác dụng gì?",
+        "choices": [
+          "Giết chết tế bào làm cho tế bào dễ dàng quan sát hơn",
+          "Làm cho tế bào bắt màu để dễ dàng quan sát hơn",
+          "Làm tế bào phình to ra",
+          "Tách rời các tế bào khỏi mô"
         ],
         "answer": 1,
-        "explain": "Quang hợp là quá trình cây xanh sử dụng ánh sáng mặt trời, nước và CO2 để tạo ra thức ăn."
+        "explain": "Thuốc nhuộm giúp tế bào bắt màu để dễ quan sát hơn."
       },
       {
-        "q": "Động vật nào sau đây là động vật ăn thịt?",
+        "type": "multiple-choice",
+        "q": "Nguyên liệu chính để sản xuất gạch không nung là:",
         "choices": [
-          "Bò",
-          "Dê",
-          "Hổ",
-          "Thỏ"
+          "Đất sét nung ở nhiệt độ cao",
+          "Nhựa và rác thải tái chế",
+          "Xi măng và đá nghiền nhỏ",
+          "Gỗ và các loại lá cây"
         ],
         "answer": 2,
-        "explain": "Hổ là động vật ăn thịt, còn bò, dê, thỏ là động vật ăn cỏ."
+        "explain": "Gạch không nung được làm từ xi măng và đá nghiền nhỏ."
       },
       {
-        "q": "Nước chiếm bao nhiêu phần trăm bề mặt Trái Đất?",
+        "type": "multiple-choice",
+        "q": "Đơn vị đo độ dài, đo thời gian, đo khối lượng hợp pháp thường dùng ở nước ta là gì?",
         "choices": [
-          "50%",
-          "60%",
-          "70%",
-          "80%"
+          "mét, giờ, kg",
+          "mét, giây, kg",
+          "Cả 2 đáp án trên đều đúng",
+          "Cả 3 đáp án đều sai"
         ],
-        "answer": 2,
-        "explain": "Nước chiếm khoảng 70% bề mặt Trái Đất, phần lớn là nước biển."
+        "answer": 1,
+        "explain": "Đơn vị hợp pháp là: mét (m), giây (s), kilogram (kg)."
       },
       {
-        "q": "Khí nào cây xanh hấp thụ trong quá trình quang hợp?",
+        "type": "multiple-choice",
+        "q": "Trường hợp nào sau đây là biến đổi vật lý?",
         "choices": [
-          "Oxy (O2)",
-          "Nitơ (N2)",
-          "Carbon dioxide (CO2)",
-          "Hydro (H2)"
+          "Đốt cháy một mẩu giấy",
+          "Hòa tan muối ăn vào nước",
+          "Định sắt để ngoài không khí bị gỉ sét",
+          "Cơm để lâu ngày bị thiu"
         ],
-        "answer": 2,
-        "explain": "Cây xanh hấp thụ CO2 và thải ra O2 trong quá trình quang hợp."
+        "answer": 1,
+        "explain": "Hòa tan muối vào nước là biến đổi vật lý, không tạo ra chất mới."
+      },
+      {
+        "type": "multiple-choice",
+        "q": "Quá trình làm muối từ nước biển (cho nước biển bay hơi để thu được muối)",
+        "choices": [
+          "Quá trình vật lý",
+          "Quá trình hóa học",
+          "Cả 2 quá trình vật lý và hóa học",
+          "Cả 3 đáp án trên đều sai"
+        ],
+        "answer": 0,
+        "explain": "Làm muối từ nước biển là quá trình vật lý (bay hơi nước)."
+      },
+      {
+        "type": "multiple-choice",
+        "q": "Trong các phát biểu sau, phát biểu nào mô tả tính chất vật lý?",
+        "choices": [
+          "Xăng rất dễ cháy",
+          "Sắt tác dụng với oxygen trong không khí tạo ra gỉ sắt",
+          "Nước sôi ở 100°C"
+        ],
+        "answer": 0,
+        "explain": "Xăng dễ cháy là tính chất vật lý (mô tả trạng thái, không phải phản ứng hóa học)."
+      },
+      {
+        "type": "multiple-choice",
+        "q": "Tác dụng chính của kính lúp là:",
+        "choices": [
+          "Quan sát các vật nhỏ mà mắt thường vẫn nhìn thấy được nhưng chưa rõ chi tiết",
+          "Quan sát các vật rất nhỏ mà mắt thường vẫn nhìn thấy được nhưng đã nhìn rõ chi tiết",
+          "Quan sát các vật rất nhỏ mà mắt thường không nhìn thấy được nhưng chưa rõ chi tiết",
+          "Tất cả đáp án trên đều sai"
+        ],
+        "answer": 0,
+        "explain": "Kính lúp giúp quan sát các vật nhỏ mà mắt thường không nhìn thấy được rõ chi tiết."
+      },
+      {
+        "type": "multiple-choice",
+        "q": "Tác dụng chính của kính hiển vi là:",
+        "choices": [
+          "Quan sát các vật rất nhỏ (vi thể) mà mắt thường không thể nhìn thấy được",
+          "Quan sát các vật rất nhỏ (vi thể) mà mắt thường nhìn thấy được",
+          "Quan sát các vật rất nhỏ mà mắt thường vẫn nhìn thấy được nhưng chưa rõ chi tiết",
+          "Cả 3 đáp án trên đều sai"
+        ],
+        "answer": 0,
+        "explain": "Kính hiển vi giúp quan sát các vật rất nhỏ (vi thể) mà mắt thường không thể nhìn thấy."
+      },
+      {
+        "type": "multiple-choice",
+        "q": "Biện pháp nào sau đây không phải là cách sử dụng nguyên liệu an toàn và bền vững?",
+        "choices": [
+          "Tăng cường tái chế rác thải",
+          "Khai thác tài nguyên bừa bãi, tận thu tối đa",
+          "Sử dụng gạch không nung thay thế gạch đất nung",
+          "Đổi mới công nghệ khai thác để giảm ô nhiễm"
+        ],
+        "answer": 1,
+        "explain": "Khai thác bừa bãi không phải là cách sử dụng bền vững."
+      },
+      {
+        "type": "essay",
+        "q": "Câu 1 (2 điểm). Cho hình ảnh cây lạc sau và hãy trả lời các câu hỏi bên dưới:\n\na) Hãy kể tên các cơ quan của cây lạc\nb) Hãy xác định các hệ cơ quan của cây lạc",
+        "image": "/asset/5.png",
+        "rubric": "Điểm tối đa: 2 điểm\n\na) Kể tên các cơ quan (1 điểm):\n- Rễ (0.2đ)\n- Thân (0.2đ)\n- Lá (0.2đ)\n- Hoa (0.2đ)\n- Quả (0.2đ)\n\nb) Xác định hệ cơ quan (1 điểm):\n- Hệ cơ quan sinh dưỡng: rễ, thân, lá (0.5đ)\n- Hệ cơ quan sinh sản: hoa, quả (0.5đ)",
+        "maxScore": 2
+      },
+      {
+        "type": "essay",
+        "q": "Câu 2 (3 điểm). Quan sát sơ đồ dưới đây và hoàn thành các yêu cầu sau:\n\n[Sơ đồ A: Tế bào → ? → ? → ? → ?]\n[Sơ đồ B: (1) Tế bào → (2) Mô → (3) Cơ quan → (4) Hệ cơ quan → (5) Cơ thể]\n\na) Viết tên các cấp độ tổ chức trong cơ thể đa bào vào cột (A)\nb) Nối tên các cấp độ tổ chức trong cơ thể ở cột (A) tương ứng với các hình ở cột (B)",
+        "image": "/asset/6.png",
+        "rubric": "Điểm tối đa: 3 điểm\n\na) Viết tên các cấp độ (1.5 điểm):\n- Tế bào (0.3đ)\n- Mô (0.3đ)\n- Cơ quan (0.3đ)\n- Hệ cơ quan (0.3đ)\n- Cơ thể (0.3đ)\n\nb) Nối đúng các cấp độ với hình (1.5 điểm):\n- Tế bào → (1) (0.3đ)\n- Mô → (2) (0.3đ)\n- Cơ quan → (3) (0.3đ)\n- Hệ cơ quan → (4) (0.3đ)\n- Cơ thể → (5) (0.3đ)",
+        "maxScore": 3
+      },
+      {
+        "type": "essay",
+        "q": "Câu 3 (2 điểm). Hãy hoàn thành các yêu cầu sau:\n\na) Nêu hai đặc điểm khi nói về cơ thể đơn bào\nb) Nêu hai đặc điểm khi nói về cơ thể đa bào\nc) Nêu đặc điểm giống nhau giữa cơ thể đơn bào và cơ thể đa bào\nd) Dự đoán điều gì sẽ xảy ra nếu một trong những cơ quan thuộc hệ cơ quan số (4) bị tổn thương",
+        "rubric": "Điểm tối đa: 2 điểm\n\na) Cơ thể đơn bào (0.5 điểm):\n- Chỉ có một tế bào duy nhất (0.25đ)\n- Tế bào đó thực hiện tất cả các chức năng sống (0.25đ)\n\nb) Cơ thể đa bào (0.5 điểm):\n- Có nhiều tế bào (0.25đ)\n- Các tế bào phân công thực hiện các chức năng khác nhau (0.25đ)\n\nc) Đặc điểm giống nhau (0.5 điểm):\n- Đều được cấu tạo từ tế bào (0.25đ)\n- Đều thực hiện các chức năng sống cơ bản (0.25đ)\n\nd) Dự đoán (0.5 điểm):\n- Nếu một cơ quan trong hệ tiêu hóa bị tổn thương, quá trình tiêu hóa sẽ bị ảnh hưởng (0.25đ)\n- Có thể ảnh hưởng đến toàn bộ cơ thể (0.25đ)",
+        "maxScore": 2
       }
     ]
   },
