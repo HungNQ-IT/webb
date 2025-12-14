@@ -291,7 +291,7 @@ function QuizList({ quizzes, ieltsTests = [] }) {
                 return (
                 <div
                   key={quiz.id}
-                  className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-all"
+                  className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 overflow-hidden hover:shadow-md transition-all"
                 >
                   <div className={`bg-gradient-to-r ${colorClass} p-6 text-white`}>
                     <div className="flex items-start justify-between mb-3">
@@ -309,7 +309,7 @@ function QuizList({ quizzes, ieltsTests = [] }) {
                     </p>
                   </div>
                   <div className="p-6">
-                    <div className="flex items-center gap-4 text-sm text-gray-600 mb-4">
+                    <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400 mb-4">
                       <div className="flex items-center gap-1">
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
@@ -342,23 +342,23 @@ function QuizList({ quizzes, ieltsTests = [] }) {
           )}
 
           {subjectQuizzes.length === 0 && (
-            <div className="bg-white rounded-2xl p-12 text-center border border-gray-200">
-              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="bg-white dark:bg-slate-800 rounded-2xl p-12 text-center border border-gray-200 dark:border-slate-700">
+              <div className="w-16 h-16 bg-gray-100 dark:bg-slate-700 rounded-full flex items-center justify-center mx-auto mb-4">
                 <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                 </svg>
               </div>
-              <p className="text-gray-600">Chưa có bài tập nào cho môn học này.</p>
+              <p className="text-gray-600 dark:text-gray-400">Chưa có bài tập nào cho môn học này.</p>
             </div>
           )}
 
           {/* Modal thêm/sửa audio (Admin only) */}
           {showAudioModal && editingAudio.testId && (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-              <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full">
+              <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl max-w-2xl w-full">
                 <div className="p-6">
                   <div className="flex items-center justify-between mb-6">
-                    <h2 className="text-2xl font-bold text-gray-900">
+                    <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
                       🎧 Thêm Audio cho bài #{editingAudio.testId}
                     </h2>
                     <button
@@ -386,7 +386,7 @@ function QuizList({ quizzes, ieltsTests = [] }) {
                   </div>
 
                   <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Google Drive Link
                     </label>
                     <input
@@ -394,7 +394,7 @@ function QuizList({ quizzes, ieltsTests = [] }) {
                       value={editingAudio.url}
                       onChange={(e) => setEditingAudio(prev => ({ ...prev, url: e.target.value }))}
                       placeholder="https://drive.google.com/file/d/FILE_ID/view"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none"
+                      className="w-full px-4 py-3 border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-gray-900 dark:text-gray-100 rounded-lg focus:border-blue-500 focus:outline-none"
                     />
                   </div>
 
@@ -413,7 +413,7 @@ function QuizList({ quizzes, ieltsTests = [] }) {
 
                   {editingAudio.url && (
                     <div className="mb-4">
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                         Test Audio
                       </label>
                       <audio
@@ -455,7 +455,7 @@ function QuizList({ quizzes, ieltsTests = [] }) {
           {/* Modal chọn phần thi */}
           {showModal && selectedQuiz && (
             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-              <div className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+              <div className="bg-white dark:bg-slate-800 rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
                 <div className="p-8">
                   {/* Header */}
                   <div className="flex items-start gap-4 mb-6">
@@ -465,10 +465,10 @@ function QuizList({ quizzes, ieltsTests = [] }) {
                       </svg>
                     </div>
                     <div className="flex-1">
-                      <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                      <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
                         {selectedQuiz.title}
                       </h2>
-                      <div className="flex items-center gap-4 text-gray-600">
+                      <div className="flex items-center gap-4 text-gray-600 dark:text-gray-400">
                         <div className="flex items-center gap-1.5">
                           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -492,7 +492,7 @@ function QuizList({ quizzes, ieltsTests = [] }) {
 
                   {/* Chọn phần thi */}
                   <div className="mb-6">
-                    <h3 className="text-sm font-semibold text-gray-700 mb-3">
+                    <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
                       Chọn phần thi bạn muốn làm
                     </h3>
                     <div className="space-y-2">
@@ -502,7 +502,7 @@ function QuizList({ quizzes, ieltsTests = [] }) {
                           defaultChecked
                           className="w-5 h-5 text-blue-600 rounded"
                         />
-                        <span className="text-gray-900">
+                        <span className="text-gray-900 dark:text-gray-100">
                           Passage 1 ({selectedQuiz.passages?.[0]?.questions?.length || Math.ceil((selectedQuiz.questions?.length || 0) / 3)} câu hỏi)
                         </span>
                       </label>
@@ -512,7 +512,7 @@ function QuizList({ quizzes, ieltsTests = [] }) {
                           defaultChecked
                           className="w-5 h-5 text-blue-600 rounded"
                         />
-                        <span className="text-gray-900">
+                        <span className="text-gray-900 dark:text-gray-100">
                           Passage 2 ({selectedQuiz.passages?.[1]?.questions?.length || Math.ceil((selectedQuiz.questions?.length || 0) / 3)} câu hỏi)
                         </span>
                       </label>
@@ -522,7 +522,7 @@ function QuizList({ quizzes, ieltsTests = [] }) {
                           defaultChecked
                           className="w-5 h-5 text-blue-600 rounded"
                         />
-                        <span className="text-gray-900">
+                        <span className="text-gray-900 dark:text-gray-100">
                           Passage 3 ({selectedQuiz.passages?.[2]?.questions?.length || Math.ceil((selectedQuiz.questions?.length || 0) / 3)} câu hỏi)
                         </span>
                       </label>
@@ -531,13 +531,13 @@ function QuizList({ quizzes, ieltsTests = [] }) {
 
                   {/* Giới hạn thời gian */}
                   <div className="mb-8">
-                    <h3 className="text-sm font-semibold text-gray-700 mb-3">
+                    <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
                       Giới hạn thời gian
                     </h3>
                     <select 
                       value={customTimeLimit}
                       onChange={(e) => setCustomTimeLimit(e.target.value)}
-                      className="w-full p-3 border-2 border-gray-200 dark:border-slate-700 rounded-lg text-gray-600 focus:border-blue-500 focus:outline-none"
+                      className="w-full p-3 border-2 border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-700 rounded-lg text-gray-600 dark:text-gray-300 focus:border-blue-500 focus:outline-none"
                     >
                       <option value="">Dùng thời gian mặc định ({selectedQuiz?.timeLimit || 30} phút)</option>
                       <option value="30">30 phút</option>
