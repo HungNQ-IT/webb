@@ -42,4 +42,3 @@ body {
 .dark ::-webkit-scrollbar-thumb:hover {
   @apply bg-slate-500;
 }
-
