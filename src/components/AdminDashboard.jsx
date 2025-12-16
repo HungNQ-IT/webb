@@ -394,18 +394,24 @@ function AdminDashboard({ quizzes = [] }) {
                       const isCorrect = hasChoices && userAnswer === question.answer
 
                       return (
-                        <div key={index} className={`rounded-xl border p-5 ${isCorrect
-                            ? 'border-green-200 dark:border-green-900/50 bg-green-50/30 dark:bg-green-900/10'
-                            : 'border-red-200 dark:border-red-900/50 bg-red-50/30 dark:bg-red-900/10'
+                        <div key={index} className={`rounded-xl border p-5 ${hasChoices
+                            ? (isCorrect
+                              ? 'border-green-200 dark:border-green-900/50 bg-green-50/30 dark:bg-green-900/10'
+                              : 'border-red-200 dark:border-red-900/50 bg-red-50/30 dark:bg-red-900/10')
+                            : 'border-blue-200 dark:border-blue-900/50 bg-blue-50/30 dark:bg-blue-900/10'
                           }`}>
                           <div className="flex items-start justify-between mb-3">
                             <span className="font-bold text-gray-700 dark:text-gray-300">Câu {index + 1}</span>
-                            {hasChoices && (
+                            {hasChoices ? (
                               <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide ${isCorrect
                                   ? 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300'
                                   : 'bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300'
                                 }`}>
                                 {isCorrect ? 'Chính xác' : 'Sai'}
+                              </span>
+                            ) : (
+                              <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300">
+                                Tự luận
                               </span>
                             )}
                           </div>
@@ -460,17 +466,37 @@ function AdminDashboard({ quizzes = [] }) {
                               })}
                             </div>
                           ) : (
-                            <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4">
-                              <p className="text-sm text-amber-800 dark:text-amber-200 font-medium mb-2">
+                            <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+                              <p className="text-sm text-blue-800 dark:text-blue-200 font-medium mb-3 flex items-center gap-2">
+                                <span className="text-lg">✍️</span>
                                 Câu hỏi tự luận
                               </p>
-                              <div className="text-gray-900 dark:text-white">
-                                {userAnswer !== null ? (
-                                  <span>Học sinh chọn: <strong>{String.fromCharCode(65 + userAnswer)}</strong></span>
-                                ) : (
-                                  <span className="italic text-gray-500">Chưa có câu trả lời</span>
-                                )}
+                              
+                              {/* Hiển thị câu trả lời của học sinh */}
+                              <div className="mb-4">
+                                <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider font-semibold mb-2">
+                                  Câu trả lời của học sinh:
+                                </p>
+                                <div className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-600 rounded-lg p-4">
+                                  {userAnswer && typeof userAnswer === 'string' && userAnswer.trim() !== '' ? (
+                                    <p className="text-gray-900 dark:text-white whitespace-pre-wrap">{userAnswer}</p>
+                                  ) : (
+                                    <p className="italic text-gray-400 dark:text-gray-500">Học sinh chưa trả lời câu này</p>
+                                  )}
+                                </div>
                               </div>
+
+                              {/* Hiển thị đáp án mẫu nếu có */}
+                              {question.answer && (
+                                <div>
+                                  <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider font-semibold mb-2">
+                                    Đáp án mẫu:
+                                  </p>
+                                  <div className="bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-700 rounded-lg p-4">
+                                    <p className="text-green-800 dark:text-green-200 whitespace-pre-wrap">{question.answer}</p>
+                                  </div>
+                                </div>
+                              )}
                             </div>
                           )}
                         </div>
