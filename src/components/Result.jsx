@@ -6,7 +6,13 @@ import AIGradingResult from './AIGradingResult'
 
 function Result({ quizzes }) {
   const { id } = useParams()
-  const quiz = quizzes.find(q => q.id === parseInt(id))
+  // Support both numeric IDs and string IDs (from Supabase: db_xxx)
+  const quiz = quizzes.find(q => {
+    if (typeof q.id === 'string') {
+      return q.id === id
+    }
+    return q.id === parseInt(id)
+  })
   const [result, setResult] = useState(null)
 
   useEffect(() => {

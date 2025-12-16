@@ -39,7 +39,13 @@ async function saveSubmissionToSupabase(quizId, score, total, answers, questionC
 function Quiz({ quizzes }) {
   const { id } = useParams()
   const navigate = useNavigate()
-  const quiz = quizzes.find(q => q.id === parseInt(id))
+  // Support both numeric IDs and string IDs (from Supabase: db_xxx)
+  const quiz = quizzes.find(q => {
+    if (typeof q.id === 'string') {
+      return q.id === id
+    }
+    return q.id === parseInt(id)
+  })
   const { isAuthenticated } = useAuth()
 
   const [currentQuestion, setCurrentQuestion] = useState(0)
