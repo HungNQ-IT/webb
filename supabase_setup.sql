@@ -132,3 +132,85 @@ BEGIN
     ALTER PUBLICATION supabase_realtime ADD TABLE ielts_audio;
   END IF;
 END $;
+
+
+-- ============================================
+-- Bảng lưu bài tập (quizzes) từ Admin Dashboard
+-- ============================================
+
+-- Bước 11: Tạo bảng quizzes
+CREATE TABLE IF NOT EXISTS quizzes (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  subject TEXT NOT NULL,
+  grade INTEGER NOT NULL,
+  title TEXT NOT NULL,
+  description TEXT,
+  type TEXT DEFAULT 'tracnghiem',
+  time_limit INTEGER DEFAULT 30,
+  difficulty TEXT DEFAULT 'medium',
+  questions JSONB NOT NULL DEFAULT '[]',
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+-- Bước 12: Tạo index cho quizzes
+CREATE INDEX IF NOT EXISTS idx_quizzes_subject ON quizzes(subject);
+CREATE INDEX IF NOT EXISTS idx_quizzes_grade ON quizzes(grade);
+CREATE INDEX IF NOT EXISTS idx_quizzes_created_at ON quizzes(created_at DESC);
+
+-- Bước 13: Bật Row Level Security cho quizzes
+ALTER TABLE quizzes ENABLE ROW LEVEL SECURITY;
+
+-- Bước 14: Tạo policies cho quizzes
+
+-- Policy 1: Mọi người có thể đọc quizzes (để hiển thị bài tập)
+CREATE POLICY "Anyone can read quizzes"
+ON quizzes
+FOR SELECT
+TO authenticated, anon
+USING (true);
+
+-- Policy 2: Chỉ admin mới có thể thêm quizzes
+CREATE POLICY "Only admins can insert quizzes"
+ON quizzes
+FOR INSERT
+TO authenticated
+WITH CHECK (
+  (auth.jwt() ->> 'email')::text = 'hungquocnguyen252@gmail.com'
+  OR (auth.jwt() ->> 'email')::text = 'duchoang305007@gmail.com'
+  OR (auth.jwt() -> 'user_metadata' ->> 'role')::text = 'admin'
+);
+
+-- Policy 3: Chỉ admin mới có thể cập nhật quizzes
+CREATE POLICY "Only admins can update quizzes"
+ON quizzes
+FOR UPDATE
+TO authenticated
+USING (
+  (auth.jwt() ->> 'email')::text = 'hungquocnguyen252@gmail.com'
+  OR (auth.jwt() ->> 'email')::text = 'duchoang305007@gmail.com'
+  OR (auth.jwt() -> 'user_metadata' ->> 'role')::text = 'admin'
+);
+
+-- Policy 4: Chỉ admin mới có thể xóa quizzes
+CREATE POLICY "Only admins can delete quizzes"
+ON quizzes
+FOR DELETE
+TO authenticated
+USING (
+  (auth.jwt() ->> 'email')::text = 'hungquocnguyen252@gmail.com'
+  OR (auth.jwt() ->> 'email')::text = 'duchoang305007@gmail.com'
+  OR (auth.jwt() -> 'user_metadata' ->> 'role')::text = 'admin'
+);
+
+-- Bước 15: Bật realtime cho bảng quizzes
+DO $
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_publication_tables 
+    WHERE pubname = 'supabase_realtime' 
+    AND tablename = 'quizzes'
+  ) THEN
+    ALTER PUBLICATION supabase_realtime ADD TABLE quizzes;
+  END IF;
+END $;

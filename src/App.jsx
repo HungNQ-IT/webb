@@ -40,6 +40,7 @@ const Login = lazy(() => import('./components/Login'))
 const Register = lazy(() => import('./components/Register'))
 const AdminDashboard = lazy(() => import('./components/AdminDashboard'))
 const AdminAudioManager = lazy(() => import('./components/AdminAudioManager'))
+const AdminQuizManager = lazy(() => import('./components/AdminQuizManager'))
 const Profile = lazy(() => import('./components/Profile'))
 
 function App() {
@@ -51,8 +52,8 @@ function App() {
     const baseUrl = import.meta.env.BASE_URL || '/'
     const cacheTime = 5 * 60 * 1000 // 5 phút
     
-    // Load questions.json
-    const loadQuizzes = () => {
+    // Load questions.json + Supabase quizzes
+    const loadQuizzes = async () => {
       const cacheKey = 'quizzes_cache'
       const cached = localStorage.getItem(cacheKey)
       
@@ -62,33 +63,57 @@ function App() {
           if (Date.now() - timestamp < cacheTime) {
             console.log('App - Loaded quizzes from cache:', data.length)
             setQuizzes(data)
-            return Promise.resolve()
+            return
           }
         } catch (e) {
           console.error('Cache error for quizzes:', e)
         }
       }
       
-      console.log('App - Fetching questions.json from:', `${baseUrl}questions.json`)
-      return fetch(`${baseUrl}questions.json`, { cache: 'default' })
-        .then(res => {
-          if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
-          return res.json()
-        })
-        .then(data => {
-          if (Array.isArray(data)) {
-            console.log('App - Loaded quizzes:', data.length)
-            setQuizzes(data)
-            localStorage.setItem(cacheKey, JSON.stringify({ data, timestamp: Date.now() }))
-          } else {
-            console.error('Invalid data format:', data)
-            setQuizzes([])
+      try {
+        // Load from JSON file
+        console.log('App - Fetching questions.json from:', `${baseUrl}questions.json`)
+        const res = await fetch(`${baseUrl}questions.json`, { cache: 'default' })
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
+        const jsonQuizzes = await res.json()
+        
+        // Load from Supabase (optional - won't fail if table doesn't exist)
+        let supabaseQuizzes = []
+        try {
+          const { supabase } = await import('./utils/supabase')
+          const { data: dbQuizzes } = await supabase
+            .from('quizzes')
+            .select('*')
+            .order('created_at', { ascending: false })
+          
+          if (dbQuizzes && dbQuizzes.length > 0) {
+            // Convert Supabase format to app format
+            supabaseQuizzes = dbQuizzes.map(q => ({
+              id: `db_${q.id}`,
+              subject: q.subject,
+              grade: q.grade,
+              title: q.title,
+              description: q.description,
+              type: q.type,
+              timeLimit: q.time_limit,
+              difficulty: q.difficulty,
+              questions: q.questions || []
+            }))
+            console.log('App - Loaded quizzes from Supabase:', supabaseQuizzes.length)
           }
-        })
-        .catch(err => {
-          console.error('Error loading questions:', err)
-          setQuizzes([])
-        })
+        } catch (dbErr) {
+          console.log('Supabase quizzes not available:', dbErr.message)
+        }
+        
+        // Merge: JSON quizzes + Supabase quizzes
+        const allQuizzes = [...(Array.isArray(jsonQuizzes) ? jsonQuizzes : []), ...supabaseQuizzes]
+        console.log('App - Total quizzes:', allQuizzes.length)
+        setQuizzes(allQuizzes)
+        localStorage.setItem(cacheKey, JSON.stringify({ data: allQuizzes, timestamp: Date.now() }))
+      } catch (err) {
+        console.error('Error loading questions:', err)
+        setQuizzes([])
+      }
     }
     
     // Load ielts.json
@@ -186,6 +211,14 @@ function App() {
                 element={
                   <RequireAuth roles={['admin']}>
                     <AdminAudioManager ieltsTests={ieltsTests} />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/admin/quizzes"
+                element={
+                  <RequireAuth roles={['admin']}>
+                    <AdminQuizManager />
                   </RequireAuth>
                 }
               />

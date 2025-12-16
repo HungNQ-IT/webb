@@ -172,12 +172,20 @@ function AdminDashboard({ quizzes = [] }) {
               </h1>
               <p className="text-gray-500 dark:text-gray-400 mt-1">Quản lý kết quả học tập và tài nguyên hệ thống</p>
             </div>
-            <Link
-              to="/admin/audio"
-              className="px-6 py-3 bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-200 rounded-xl hover:bg-gray-50 dark:hover:bg-slate-700 transition-all shadow-sm border border-gray-200 dark:border-slate-700 flex items-center gap-2 font-medium"
-            >
-              <span className="text-xl">🎧</span> Quản lý Audio
-            </Link>
+            <div className="flex gap-3">
+              <Link
+                to="/admin/quizzes"
+                className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all shadow-sm flex items-center gap-2 font-medium"
+              >
+                <span className="text-xl">📝</span> Thêm bài tập
+              </Link>
+              <Link
+                to="/admin/audio"
+                className="px-6 py-3 bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-200 rounded-xl hover:bg-gray-50 dark:hover:bg-slate-700 transition-all shadow-sm border border-gray-200 dark:border-slate-700 flex items-center gap-2 font-medium"
+              >
+                <span className="text-xl">🎧</span> Quản lý Audio
+              </Link>
+            </div>
           </div>
 
           {/* Stats Grid */}
