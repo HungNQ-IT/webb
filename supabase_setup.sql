@@ -214,3 +214,19 @@ BEGIN
     ALTER PUBLICATION supabase_realtime ADD TABLE quizzes;
   END IF;
 END $;
+
+
+-- ============================================
+-- Policy cho phép Admin xóa submissions
+-- ============================================
+
+-- Policy: Admin có thể xóa submissions
+CREATE POLICY "Admins can delete submissions"
+ON submissions
+FOR DELETE
+TO authenticated
+USING (
+  (auth.jwt() ->> 'email')::text = 'hungquocnguyen252@gmail.com'
+  OR (auth.jwt() ->> 'email')::text = 'duchoang305007@gmail.com'
+  OR (auth.jwt() -> 'user_metadata' ->> 'role')::text = 'admin'
+);
