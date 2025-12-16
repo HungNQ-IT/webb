@@ -11,6 +11,8 @@ function AdminDashboard({ quizzes = [] }) {
   const [error, setError] = useState('')
   const [selectedSubmission, setSelectedSubmission] = useState(null)
   const [newSubmissionNotification, setNewSubmissionNotification] = useState(null)
+  const [selectedIds, setSelectedIds] = useState([])
+  const [deleting, setDeleting] = useState(false)
 
   useEffect(() => {
     let isMounted = true
@@ -135,6 +137,52 @@ function AdminDashboard({ quizzes = [] }) {
     }
   }, [])
 
+  // Toggle select submission
+  const toggleSelect = (id) => {
+    setSelectedIds(prev => 
+      prev.includes(id) 
+        ? prev.filter(i => i !== id)
+        : [...prev, id]
+    )
+  }
+
+  // Select all / Deselect all
+  const toggleSelectAll = () => {
+    if (selectedIds.length === submissions.length) {
+      setSelectedIds([])
+    } else {
+      setSelectedIds(submissions.map(s => s.id))
+    }
+  }
+
+  // Delete selected submissions
+  const deleteSelected = async () => {
+    if (selectedIds.length === 0) return
+    
+    const confirmMsg = `Bạn có chắc muốn xóa ${selectedIds.length} bài nộp đã chọn?\n\nHành động này không thể hoàn tác!`
+    if (!confirm(confirmMsg)) return
+
+    try {
+      setDeleting(true)
+      const { error } = await supabase
+        .from('submissions')
+        .delete()
+        .in('id', selectedIds)
+
+      if (error) throw error
+
+      // Update local state
+      setSubmissions(prev => prev.filter(s => !selectedIds.includes(s.id)))
+      setSelectedIds([])
+      alert(`Đã xóa ${selectedIds.length} bài nộp thành công!`)
+    } catch (err) {
+      console.error('Error deleting:', err)
+      alert('Lỗi khi xóa: ' + err.message)
+    } finally {
+      setDeleting(false)
+    }
+  }
+
   // Calculate Stats
   const stats = useMemo(() => {
     const totalSubmissions = submissions.length
@@ -212,19 +260,35 @@ function AdminDashboard({ quizzes = [] }) {
 
           {/* Main Content Card */}
           <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl rounded-3xl shadow-xl border border-white/20 dark:border-slate-700/50 overflow-hidden animate-fade-in-up" style={{ animationDelay: '200ms' }}>
-            <div className="p-6 border-b border-gray-100 dark:border-slate-700 flex items-center justify-between">
+            <div className="p-6 border-b border-gray-100 dark:border-slate-700 flex flex-wrap items-center justify-between gap-4">
               <h2 className="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
                 <span className="w-2 h-6 bg-gradient-to-b from-blue-600 to-purple-600 rounded-full"></span>
                 Danh sách bài nộp
               </h2>
 
-              {/* Notification */}
-              {newSubmissionNotification && (
-                <div className="bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 px-4 py-2 rounded-lg flex items-center gap-2 animate-pulse text-sm font-medium">
-                  <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                  {newSubmissionNotification.name} vừa nộp bài #{newSubmissionNotification.quizId}
-                </div>
-              )}
+              <div className="flex items-center gap-3">
+                {/* Delete button */}
+                {selectedIds.length > 0 && (
+                  <button
+                    onClick={deleteSelected}
+                    disabled={deleting}
+                    className="px-4 py-2 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 disabled:opacity-50 flex items-center gap-2 text-sm"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+                    {deleting ? 'Đang xóa...' : `Xóa ${selectedIds.length} đã chọn`}
+                  </button>
+                )}
+
+                {/* Notification */}
+                {newSubmissionNotification && (
+                  <div className="bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 px-4 py-2 rounded-lg flex items-center gap-2 animate-pulse text-sm font-medium">
+                    <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+                    {newSubmissionNotification.name} vừa nộp bài #{newSubmissionNotification.quizId}
+                  </div>
+                )}
+              </div>
             </div>
 
             <div className="overflow-x-auto">
@@ -255,20 +319,37 @@ function AdminDashboard({ quizzes = [] }) {
                 <table className="w-full text-left border-collapse">
                   <thead>
                     <tr className="border-b border-gray-100 dark:border-slate-700 text-xs uppercase tracking-wider text-gray-500 dark:text-gray-400 bg-gray-50/50 dark:bg-slate-800/50">
-                      <th className="px-6 py-4 font-semibold">Học sinh</th>
-                      <th className="px-6 py-4 font-semibold">Lớp</th>
-                      <th className="px-6 py-4 font-semibold">Bài tập</th>
-                      <th className="px-6 py-4 font-semibold">Điểm số</th>
-                      <th className="px-6 py-4 font-semibold">Thời gian</th>
-                      <th className="px-6 py-4 font-semibold text-right">Thao tác</th>
+                      <th className="px-4 py-4 font-semibold">
+                        <input
+                          type="checkbox"
+                          checked={selectedIds.length === submissions.length && submissions.length > 0}
+                          onChange={toggleSelectAll}
+                          className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                        />
+                      </th>
+                      <th className="px-4 py-4 font-semibold">Học sinh</th>
+                      <th className="px-4 py-4 font-semibold">Lớp</th>
+                      <th className="px-4 py-4 font-semibold">Bài tập</th>
+                      <th className="px-4 py-4 font-semibold">Điểm số</th>
+                      <th className="px-4 py-4 font-semibold">Thời gian</th>
+                      <th className="px-4 py-4 font-semibold text-right">Thao tác</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-100 dark:divide-slate-700">
                     {submissions.map((submission) => {
                       const percentage = submission.total > 0 ? (submission.score / submission.total) * 100 : 0
+                      const isSelected = selectedIds.includes(submission.id)
                       return (
-                        <tr key={submission.id} className="group hover:bg-blue-50/50 dark:hover:bg-slate-700/30 transition-colors">
-                          <td className="px-6 py-4">
+                        <tr key={submission.id} className={`group transition-colors ${isSelected ? 'bg-blue-50 dark:bg-blue-900/20' : 'hover:bg-blue-50/50 dark:hover:bg-slate-700/30'}`}>
+                          <td className="px-4 py-4">
+                            <input
+                              type="checkbox"
+                              checked={isSelected}
+                              onChange={() => toggleSelect(submission.id)}
+                              className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                            />
+                          </td>
+                          <td className="px-4 py-4">
                             <div className="flex items-center gap-3">
                               <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 flex items-center justify-center text-xs font-bold text-blue-700 dark:text-blue-300">
                                 {submission.user.name ? submission.user.name.charAt(0).toUpperCase() : submission.user.email.charAt(0).toUpperCase()}
@@ -279,15 +360,15 @@ function AdminDashboard({ quizzes = [] }) {
                               </div>
                             </div>
                           </td>
-                          <td className="px-6 py-4">
+                          <td className="px-4 py-4">
                             <span className="px-2 py-1 rounded text-xs font-medium bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-300">
                               {submission.user.grade || '—'}
                             </span>
                           </td>
-                          <td className="px-6 py-4 text-sm font-medium text-gray-700 dark:text-gray-300">
+                          <td className="px-4 py-4 text-sm font-medium text-gray-700 dark:text-gray-300">
                             #{submission.quizId}
                           </td>
-                          <td className="px-6 py-4">
+                          <td className="px-4 py-4">
                             <div className="flex items-center gap-2">
                               <span className={`text-sm font-bold ${percentage >= 80 ? 'text-green-600 dark:text-green-400' :
                                   percentage >= 50 ? 'text-yellow-600 dark:text-yellow-400' :
@@ -306,10 +387,10 @@ function AdminDashboard({ quizzes = [] }) {
                               </div>
                             </div>
                           </td>
-                          <td className="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
+                          <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-400">
                             {new Date(submission.createdAt).toLocaleString('vi-VN')}
                           </td>
-                          <td className="px-6 py-4 text-right">
+                          <td className="px-4 py-4 text-right">
                             <button
                               onClick={() => setSelectedSubmission(submission)}
                               className="text-blue-600 dark:text-blue-400 hover:text-purple-600 dark:hover:text-purple-400 font-medium text-sm transition-colors"
