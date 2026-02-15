@@ -2,6 +2,7 @@ import { Link, useParams, useNavigate } from 'react-router-dom'
 import { useMemo, useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { supabase } from '../utils/supabase'
+import EmptyState from './EmptyState'
 
 function QuizList({ quizzes, ieltsTests = [] }) {
   const { subject, grade, category } = useParams()
@@ -305,23 +306,16 @@ function QuizList({ quizzes, ieltsTests = [] }) {
 
           {/* Empty State */}
           {subjectQuizzes.length === 0 && (
-            <div className="flex flex-col items-center justify-center py-20 text-center">
-              <div className="w-24 h-24 bg-gray-100 dark:bg-slate-800 rounded-full flex items-center justify-center mb-6">
-                <svg className="w-12 h-12 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">Chưa có bài tập nào</h3>
-              <p className="text-gray-500 dark:text-gray-400 max-w-md">
-                Hiện tại chưa có bài tập nào cho mục này. Vui lòng quay lại sau hoặc chọn môn học khác.
-              </p>
-              <button
-                onClick={() => window.history.back()}
-                className="mt-8 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-              >
-                Quay lại
-              </button>
-            </div>
+            <EmptyState
+              type="quiz"
+              title="Chưa có bài tập nào"
+              description={`Hiện tại chưa có bài tập nào cho ${decodedSubject}${grade ? ` lớp ${grade}` : ''}. Vui lòng quay lại sau hoặc chọn môn học khác.`}
+              action={{
+                label: 'Quay lại',
+                onClick: () => window.history.back(),
+                icon: 'M10 19l-7-7m0 0l7-7m-7 7h18'
+              }}
+            />
           )}
 
           {/* Modal thêm/sửa audio (Admin only) - KEEP EXISTING LOGIC */}

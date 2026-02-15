@@ -4,7 +4,9 @@ import Home from './components/Home'
 import RequireAuth from './components/RequireAuth'
 import Layout from './components/Layout'
 import Loading from './components/Loading'
+import ScrollProgress from './components/ScrollProgress'
 import { AuthProvider } from './context/AuthContext'
+import { ToastProvider } from './context/ToastContext'
 
 // Component để xử lý redirect từ 404.html
 function RedirectHandler() {
@@ -175,9 +177,11 @@ function App() {
   return (
     <BrowserRouter basename={basename}>
       <AuthProvider>
-        <RedirectHandler />
-        <Suspense fallback={<Loading />}>
-          <Routes>
+        <ToastProvider>
+          <ScrollProgress />
+          <RedirectHandler />
+          <Suspense fallback={<Loading />}>
+            <Routes>
             <Route element={<Layout />}>
               <Route index element={<Home />} />
               <Route path="/subjects" element={<SubjectList quizzes={quizzes} />} />
@@ -228,6 +232,7 @@ function App() {
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </Suspense>
+        </ToastProvider>
       </AuthProvider>
     </BrowserRouter>
   )
