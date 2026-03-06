@@ -56,6 +56,62 @@ function SubjectList({ quizzes }) {
     })
   }, [subjectsData, activeTab, searchQuery])
 
+  const showSubjects = ['Tất cả', 'THPT Quốc Gia', 'IELTS', 'SAT'].includes(activeTab);
+
+  const examsList = useMemo(() => {
+    if (showSubjects) return []
+    const isHCM = activeTab === 'ĐGNL HCM'
+    const prefix = isHCM ? 'ĐGNL HCM' : 'ĐGNL HN'
+
+    return [
+      {
+        id: isHCM ? 'hcm-2024' : 'hn-2024',
+        title: `Đề thi ${prefix} 2024`,
+        year: '2024',
+        questionsCount: 120,
+        time: 150,
+        type: prefix,
+        isHot: true
+      },
+      {
+        id: isHCM ? 'hcm-2023' : 'hn-2023',
+        title: `Đề thi ${prefix} 2023`,
+        year: '2023',
+        questionsCount: 120,
+        time: 150,
+        type: prefix,
+        isHot: false
+      },
+      {
+        id: isHCM ? 'hcm-test-1' : 'hn-test-1',
+        title: `Đề thử ${prefix} số 1`,
+        year: '2025',
+        questionsCount: 120,
+        time: 150,
+        type: 'general',
+        isHot: false
+      },
+      {
+        id: isHCM ? 'hcm-test-2' : 'hn-test-2',
+        title: `Đề thử ${prefix} số 2`,
+        year: '2025',
+        questionsCount: 120,
+        time: 150,
+        type: 'general',
+        isHot: false
+      },
+      {
+        id: isHCM ? 'hcm-test-3' : 'hn-test-3',
+        title: `Đề thử ${prefix} số 3`,
+        year: '2025',
+        questionsCount: 120,
+        time: 150,
+        type: 'general',
+        isHot: false
+      }
+    ]
+  }, [activeTab, showSubjects])
+
 
   return (
     <div className="min-h-screen bg-neutral-50 dark:bg-slate-900 pb-20 selection:bg-primary-subtle selection:text-primary-base">
@@ -127,68 +183,100 @@ function SubjectList({ quizzes }) {
             ))}
           </div>
 
-          {/* Grid Layout */}
-          {filteredSubjects.length > 0 ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredSubjects.map((subject, index) => (
-                <Link
-                  key={index}
-                  to={activeTab !== 'Tất cả' ? `${subject.route}?exam=${encodeURIComponent(activeTab)}` : subject.route}
-                  className="group bg-surface dark:bg-slate-800 rounded-lg p-6 shadow-sm hover:shadow-md border border-neutral-200 dark:border-slate-700 transition-all duration-300 hover:-translate-y-1 flex flex-col relative overflow-hidden"
-                >
-                  {subject.isHot && (
-                    <div className="absolute top-0 right-0 py-1 px-3 bg-semantic-error-subtle text-semantic-error-base text-caption font-bold rounded-bl-sm border-b border-l border-semantic-error-border">
-                      HOT
-                    </div>
-                  )}
+          {/* Content Layout */}
+          {showSubjects ? (
+            filteredSubjects.length > 0 ? (
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredSubjects.map((subject, index) => (
+                  <Link
+                    key={index}
+                    to={activeTab !== 'Tất cả' ? `${subject.route}?exam=${encodeURIComponent(activeTab)}` : subject.route}
+                    className="group bg-surface dark:bg-slate-800 rounded-lg p-6 shadow-sm hover:shadow-md border border-neutral-200 dark:border-slate-700 transition-all duration-300 hover:-translate-y-1 flex flex-col relative overflow-hidden"
+                  >
+                    {subject.isHot && (
+                      <div className="absolute top-0 right-0 py-1 px-3 bg-semantic-error-subtle text-semantic-error-base text-caption font-bold rounded-bl-sm border-b border-l border-semantic-error-border">
+                        HOT
+                      </div>
+                    )}
 
-                  {/* Header: Icon + Name */}
-                  <div className="flex items-start gap-4 mb-4">
-                    <div className={`w-14 h-14 rounded-base flex items-center justify-center text-3xl border ${subject.colorClass} shadow-sm group-hover:scale-110 transition-transform`}>
-                      {subject.icon}
-                    </div>
-                    <div className="pt-1">
-                      <h2 className="text-h3 text-neutral-900 dark:text-white group-hover:text-primary-base transition-colors line-clamp-2">
-                        {subject.name}
-                      </h2>
-                      <div className="flex gap-2 mt-2 flex-wrap">
-                        {subject.exams.map(ex => (
-                          <button
-                            key={ex}
-                            onClick={(e) => { e.preventDefault(); setActiveTab(ex); }}
-                            className="px-2 py-0.5 rounded-sm bg-neutral-100 dark:bg-slate-700 border border-neutral-200 dark:border-slate-600 text-caption font-medium text-neutral-600 dark:text-neutral-300 hover:bg-primary-subtle hover:text-primary-base hover:border-primary-200 transition-colors z-10 relative"
-                          >
-                            {ex}
-                          </button>
-                        ))}
+                    {/* Header: Icon + Name */}
+                    <div className="flex items-start gap-4 mb-4">
+                      <div className={`w-14 h-14 rounded-base flex items-center justify-center text-3xl border ${subject.colorClass} shadow-sm group-hover:scale-110 transition-transform`}>
+                        {subject.icon}
+                      </div>
+                      <div className="pt-1">
+                        <h2 className="text-h3 text-neutral-900 dark:text-white group-hover:text-primary-base transition-colors line-clamp-2">
+                          {subject.name}
+                        </h2>
+                        <div className="flex gap-2 mt-2 flex-wrap">
+                          {subject.exams.map(ex => (
+                            <button
+                              key={ex}
+                              onClick={(e) => { e.preventDefault(); setActiveTab(ex); }}
+                              className="px-2 py-0.5 rounded-sm bg-neutral-100 dark:bg-slate-700 border border-neutral-200 dark:border-slate-600 text-caption font-medium text-neutral-600 dark:text-neutral-300 hover:bg-primary-subtle hover:text-primary-base hover:border-primary-200 transition-colors z-10 relative"
+                            >
+                              {ex}
+                            </button>
+                          ))}
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  <p className="text-body-sm text-neutral-500 dark:text-neutral-400 mb-6 flex-1">
-                    {subject.description}
-                  </p>
+                    <p className="text-body-sm text-neutral-500 dark:text-neutral-400 mb-6 flex-1">
+                      {subject.description}
+                    </p>
 
-                  <div className="border-t border-neutral-100 dark:border-slate-700 pt-4 flex flex-col gap-4">
-                    {/* Stats */}
-                    <div className="flex justify-between items-center text-caption font-medium text-neutral-500">
-                      <span className="flex items-center gap-1.5"><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg> {subject.stats.quizzes} Đề thi</span>
-                      <span className="flex items-center gap-1.5"><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> {subject.stats.parts} Câu hỏi</span>
+                    <div className="border-t border-neutral-100 dark:border-slate-700 pt-4 flex flex-col gap-4">
+                      {/* Stats */}
+                      <div className="flex justify-between items-center text-caption font-medium text-neutral-500">
+                        <span className="flex items-center gap-1.5"><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg> {subject.stats.quizzes} Đề thi</span>
+                        <span className="flex items-center gap-1.5"><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> {subject.stats.parts} Câu hỏi</span>
+                      </div>
+
+                      {/* Action Button */}
+                      <div className="w-full py-2.5 rounded-base bg-primary-subtle dark:bg-slate-700 text-primary-base dark:text-primary-400 font-semibold text-center text-body-sm group-hover:bg-primary-base group-hover:text-white transition-colors">
+                        Vào ôn luyện ngay &rarr;
+                      </div>
                     </div>
-
-                    {/* Action Button */}
-                    <div className="w-full py-2.5 rounded-base bg-primary-subtle dark:bg-slate-700 text-primary-base dark:text-primary-400 font-semibold text-center text-body-sm group-hover:bg-primary-base group-hover:text-white transition-colors">
-                      Vào ôn luyện ngay &rarr;
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
+                  </Link>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-20">
+                <div className="text-6xl mb-4">🔍</div>
+                <h3 className="text-h3 text-neutral-900 dark:text-white mb-2">Không tìm thấy môn học</h3>
+                <p className="text-neutral-500">Thử tìm kiếm bằng từ khóa khác hoặc chuyển khối thi.</p>
+              </div>
+            )
           ) : (
-            <div className="text-center py-20">
-              <div className="text-6xl mb-4">🔍</div>
-              <h3 className="text-h3 text-neutral-900 dark:text-white mb-2">Không tìm thấy môn học</h3>
-              <p className="text-neutral-500">Thử tìm kiếm bằng từ khóa khác hoặc chuyển khối thi.</p>
+            <div className="space-y-4">
+              {examsList.map((exam) => (
+                <div key={exam.id} className="group bg-surface dark:bg-slate-800 rounded-lg p-5 sm:p-6 shadow-sm hover:shadow-md border border-neutral-200 dark:border-slate-700 transition-all duration-300 flex flex-col sm:flex-row sm:items-center justify-between gap-6 hover:border-primary-base relative overflow-hidden">
+
+                  {/* Left side info */}
+                  <div className="flex-1 min-w-0 pr-4 sm:pr-0">
+                    <div className="flex items-center gap-2 mb-2">
+                      {exam.isHot && <span className="px-2 py-0.5 rounded-sm bg-semantic-error-subtle text-semantic-error-base text-[10px] uppercase font-black tracking-wider">MỚI</span>}
+                      {exam.type !== 'general' && <span className="px-2 py-0.5 rounded-sm bg-neutral-100 dark:bg-slate-700 text-neutral-600 dark:text-neutral-300 text-caption font-semibold">{exam.type}</span>}
+                      <span className="px-2 py-0.5 rounded-sm bg-neutral-100 dark:bg-slate-700 text-neutral-600 dark:text-neutral-300 text-caption font-semibold">Năm {exam.year}</span>
+                    </div>
+
+                    <h3 className="text-h3 font-bold text-neutral-900 dark:text-white mb-2 line-clamp-2 group-hover:text-primary-base transition-colors">{exam.title}</h3>
+
+                    <div className="flex items-center gap-4 text-caption font-medium text-neutral-500">
+                      <span className="flex items-center gap-1.5"><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> {exam.questionsCount} Câu hỏi</span>
+                      <span className="flex items-center gap-1.5"><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg> {exam.time} Phút</span>
+                    </div>
+                  </div>
+
+                  {/* Right side CTA */}
+                  <div className="flex-shrink-0 flex justify-end">
+                    <Link to={`/quiz/${exam.id}`} className="inline-flex items-center justify-center bg-primary-subtle text-primary-base hover:bg-primary-base hover:text-white font-bold px-6 py-2.5 rounded-base transition-colors w-full sm:w-auto shadow-sm">
+                      Làm bài <span className="ml-1 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300">&rarr;</span>
+                    </Link>
+                  </div>
+                </div>
+              ))}
             </div>
           )}
 
