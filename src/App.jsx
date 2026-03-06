@@ -12,7 +12,7 @@ import { ToastProvider } from './context/ToastContext'
 function RedirectHandler() {
   const navigate = useNavigate()
   const location = useLocation()
-  
+
   useEffect(() => {
     const redirectPath = sessionStorage.getItem('redirectPath')
     if (redirectPath) {
@@ -24,13 +24,13 @@ function RedirectHandler() {
       }
     }
   }, [navigate, location])
-  
+
   return null
 }
 
 // Lazy load các components để tải nhanh hơn
 const SubjectList = lazy(() => import('./components/SubjectList'))
-const GradeList = lazy(() => import('./components/GradeList'))
+const ExamList = lazy(() => import('./components/ExamList'))
 const CategoryList = lazy(() => import('./components/CategoryList'))
 const QuizList = lazy(() => import('./components/QuizList'))
 const Quiz = lazy(() => import('./components/Quiz'))
@@ -44,6 +44,7 @@ const AdminDashboard = lazy(() => import('./components/AdminDashboard'))
 const AdminAudioManager = lazy(() => import('./components/AdminAudioManager'))
 const AdminQuizManager = lazy(() => import('./components/AdminQuizManager'))
 const Profile = lazy(() => import('./components/Profile'))
+const ExamDetail = lazy(() => import('./components/ExamDetail'))
 
 function App() {
   const [quizzes, setQuizzes] = useState([])
@@ -53,12 +54,12 @@ function App() {
   useEffect(() => {
     const baseUrl = import.meta.env.BASE_URL || '/'
     const cacheTime = 5 * 60 * 1000 // 5 phút
-    
+
     // Load questions.json + Supabase quizzes
     const loadQuizzes = async () => {
       const cacheKey = 'quizzes_cache'
       const cached = localStorage.getItem(cacheKey)
-      
+
       if (cached) {
         try {
           const { data, timestamp } = JSON.parse(cached)
@@ -71,14 +72,14 @@ function App() {
           console.error('Cache error for quizzes:', e)
         }
       }
-      
+
       try {
         // Load from JSON file
         console.log('App - Fetching questions.json from:', `${baseUrl}questions.json`)
         const res = await fetch(`${baseUrl}questions.json`, { cache: 'default' })
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
         const jsonQuizzes = await res.json()
-        
+
         // Load from Supabase (optional - won't fail if table doesn't exist)
         let supabaseQuizzes = []
         try {
@@ -87,7 +88,7 @@ function App() {
             .from('quizzes')
             .select('*')
             .order('created_at', { ascending: false })
-          
+
           if (dbQuizzes && dbQuizzes.length > 0) {
             // Convert Supabase format to app format
             supabaseQuizzes = dbQuizzes.map(q => ({
@@ -106,7 +107,7 @@ function App() {
         } catch (dbErr) {
           console.log('Supabase quizzes not available:', dbErr.message)
         }
-        
+
         // Merge: JSON quizzes + Supabase quizzes
         const allQuizzes = [...(Array.isArray(jsonQuizzes) ? jsonQuizzes : []), ...supabaseQuizzes]
         console.log('App - Total quizzes:', allQuizzes.length)
@@ -117,12 +118,12 @@ function App() {
         setQuizzes([])
       }
     }
-    
+
     // Load ielts.json
     const loadIELTS = () => {
       const cacheKey = 'ielts_cache'
       const cached = localStorage.getItem(cacheKey)
-      
+
       if (cached) {
         try {
           const { data, timestamp } = JSON.parse(cached)
@@ -135,7 +136,7 @@ function App() {
           console.error('Cache error for IELTS:', e)
         }
       }
-      
+
       console.log('App - Fetching ielts.json from:', `${baseUrl}ielts.json`)
       return fetch(`${baseUrl}ielts.json`, { cache: 'default' })
         .then(res => {
@@ -157,7 +158,7 @@ function App() {
           setIeltsTests([])
         })
     }
-    
+
     // Load cả 2 file
     Promise.all([loadQuizzes(), loadIELTS()])
       .finally(() => {
@@ -182,56 +183,57 @@ function App() {
           <RedirectHandler />
           <Suspense fallback={<Loading />}>
             <Routes>
-            <Route element={<Layout />}>
-              <Route index element={<Home />} />
-              <Route path="/subjects" element={<SubjectList quizzes={quizzes} />} />
-              <Route path="/subject/:subject/grades" element={<GradeList />} />
-              <Route path="/subject/:subject/grade/:grade" element={<QuizList quizzes={quizzes} ieltsTests={ieltsTests} />} />
-              <Route path="/subject/:subject/category/:category" element={<QuizList quizzes={quizzes} ieltsTests={ieltsTests} />} />
-              <Route path="/subject/:subject" element={<CategoryList quizzes={quizzes} ieltsTests={ieltsTests} />} />
-              <Route path="/quiz/:id" element={<Quiz quizzes={quizzes} />} />
-              <Route path="/ielts/:id" element={<IELTSQuiz ieltsTests={ieltsTests} />} />
-              <Route path="/ielts-listening/:id" element={<IELTSListening ieltsTests={ieltsTests} />} />
-              <Route path="/ielts-result/:id" element={<IELTSResult />} />
-              <Route path="/result/:id" element={<Result quizzes={quizzes} />} />
-              <Route
-                path="/profile"
-                element={
-                  <RequireAuth>
-                    <Profile />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="/admin"
-                element={
-                  <RequireAuth roles={['admin']}>
-                    <AdminDashboard quizzes={quizzes} />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="/admin/audio"
-                element={
-                  <RequireAuth roles={['admin']}>
-                    <AdminAudioManager ieltsTests={ieltsTests} />
-                  </RequireAuth>
-                }
-              />
-              <Route
-                path="/admin/quizzes"
-                element={
-                  <RequireAuth roles={['admin']}>
-                    <AdminQuizManager />
-                  </RequireAuth>
-                }
-              />
-            </Route>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </Suspense>
+              <Route element={<Layout />}>
+                <Route index element={<Home />} />
+                <Route path="/exam/:examId" element={<ExamDetail />} />
+                <Route path="/subjects" element={<SubjectList quizzes={quizzes} />} />
+                <Route path="/subject/:subject/exams" element={<ExamList quizzes={quizzes} />} />
+                <Route path="/subject/:subject/grade/:grade" element={<QuizList quizzes={quizzes} ieltsTests={ieltsTests} />} />
+                <Route path="/subject/:subject/category/:category" element={<QuizList quizzes={quizzes} ieltsTests={ieltsTests} />} />
+                <Route path="/subject/:subject" element={<CategoryList quizzes={quizzes} ieltsTests={ieltsTests} />} />
+                <Route path="/quiz/:id" element={<Quiz quizzes={quizzes} />} />
+                <Route path="/ielts/:id" element={<IELTSQuiz ieltsTests={ieltsTests} />} />
+                <Route path="/ielts-listening/:id" element={<IELTSListening ieltsTests={ieltsTests} />} />
+                <Route path="/ielts-result/:id" element={<IELTSResult />} />
+                <Route path="/result/:id" element={<Result quizzes={quizzes} />} />
+                <Route
+                  path="/profile"
+                  element={
+                    <RequireAuth>
+                      <Profile />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/admin"
+                  element={
+                    <RequireAuth roles={['admin']}>
+                      <AdminDashboard quizzes={quizzes} />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/admin/audio"
+                  element={
+                    <RequireAuth roles={['admin']}>
+                      <AdminAudioManager ieltsTests={ieltsTests} />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/admin/quizzes"
+                  element={
+                    <RequireAuth roles={['admin']}>
+                      <AdminQuizManager />
+                    </RequireAuth>
+                  }
+                />
+              </Route>
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </Suspense>
         </ToastProvider>
       </AuthProvider>
     </BrowserRouter>

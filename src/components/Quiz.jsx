@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { saveQuizResult } from '../utils/storage'
 import RichContent from './RichContent'
@@ -6,12 +6,15 @@ import { useAuth } from '../context/AuthContext'
 import { supabase } from '../utils/supabase'
 import EssayQuestion from './EssayQuestion'
 
-// Hàm lưu submission vào Supabase
+/**
+ * Quiz Component with Modern Split Layout
+ * Supports multiple question types and mobile bottom-sheet navigation.
+ */
+
 async function saveSubmissionToSupabase(quizId, score, total, answers, questionCount) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) throw new Error('User not authenticated')
 
-  // Lưu thông tin user vào details để admin có thể xem
   const { data, error } = await supabase
     .from('submissions')
     .insert({
@@ -39,36 +42,32 @@ async function saveSubmissionToSupabase(quizId, score, total, answers, questionC
 function Quiz({ quizzes }) {
   const { id } = useParams()
   const navigate = useNavigate()
-  // Support both numeric IDs and string IDs (from Supabase: db_xxx)
+
   const quiz = quizzes.find(q => {
-    if (typeof q.id === 'string') {
-      return q.id === id
-    }
+    if (typeof q.id === 'string') return q.id === id
     return q.id === parseInt(id)
   })
+
   const { isAuthenticated } = useAuth()
 
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [answers, setAnswers] = useState([])
+  const [markedQuestions, setMarkedQuestions] = useState([]) // Array of indices
   const [timeRemaining, setTimeRemaining] = useState(null)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [submissionError, setSubmissionError] = useState('')
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false)
 
   useEffect(() => {
     if (!quiz) return
-
-    // Initialize answers array
     setAnswers(new Array(quiz.questions.length).fill(null))
-
-    // Initialize timer if timeLimit exists
     if (quiz.timeLimit) {
-      setTimeRemaining(quiz.timeLimit * 60) // Convert minutes to seconds
+      setTimeRemaining(quiz.timeLimit * 60)
     }
   }, [quiz])
 
   useEffect(() => {
     if (timeRemaining === null || timeRemaining <= 0) return
-
     const timer = setInterval(() => {
       setTimeRemaining(prev => {
         if (prev <= 1) {
@@ -78,15 +77,13 @@ function Quiz({ quizzes }) {
         return prev - 1
       })
     }, 1000)
-
     return () => clearInterval(timer)
   }, [timeRemaining])
 
   const handleAnswerSelect = (questionIndex, answerIndex) => {
     if (isSubmitted) return
     const question = quiz.questions[questionIndex]
-    const hasChoices = Array.isArray(question.choices) && question.choices.length > 0
-    if (!hasChoices) return
+    if (!Array.isArray(question.choices) || question.choices.length === 0) return
     const newAnswers = [...answers]
     newAnswers[questionIndex] = answerIndex
     setAnswers(newAnswers)
@@ -99,10 +96,15 @@ function Quiz({ quizzes }) {
     setAnswers(newAnswers)
   }
 
+  const toggleMarkQuestion = (index) => {
+    if (isSubmitted) return
+    setMarkedQuestions(prev =>
+      prev.includes(index) ? prev.filter(i => i !== index) : [...prev, index]
+    )
+  }
+
   const handleSubmit = () => {
     if (isSubmitted) return
-
-    // Kiểm tra số câu chưa làm
     const unansweredCount = answers.filter(a => a === null || a === undefined || a === '').length
 
     if (unansweredCount > 0) {
@@ -113,10 +115,9 @@ function Quiz({ quizzes }) {
     }
 
     setIsSubmitted(true)
-
-    // Calculate score for trắc nghiệm questions only
     let score = 0
     let autoGradedCount = 0
+
     quiz.questions.forEach((question, index) => {
       const hasChoices = Array.isArray(question.choices) && question.choices.length > 0
       if (hasChoices) {
@@ -127,7 +128,6 @@ function Quiz({ quizzes }) {
       }
     })
 
-    // Save result to localStorage
     const result = {
       score,
       total: autoGradedCount,
@@ -136,35 +136,30 @@ function Quiz({ quizzes }) {
       answers: [...answers],
       questions: quiz.questions
     }
-    saveQuizResult(quiz.id, result)
 
+    saveQuizResult(quiz.id, result)
     setSubmissionError('')
 
     if (isAuthenticated) {
-      // Lưu vào Supabase
       saveSubmissionToSupabase(quiz.id, score, autoGradedCount, answers, quiz.questions.length)
         .catch(err => {
           console.error('Failed to sync submission:', err)
           setSubmissionError('Không thể đồng bộ kết quả lên máy chủ. Vui lòng thử lại sau.')
         })
     }
-
-    // Navigate to result page
     navigate(`/result/${quiz.id}`)
   }
 
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60)
     const secs = seconds % 60
-    return `${mins}:${secs.toString().padStart(2, '0')}`
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
   }
 
   if (!quiz) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-slate-900 flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-gray-600 dark:text-gray-400">Không tìm thấy bài tập.</p>
-        </div>
+      <div className="min-h-screen bg-neutral-50 dark:bg-slate-900 flex items-center justify-center">
+        <p className="text-neutral-500">Không tìm thấy bài tập.</p>
       </div>
     )
   }
@@ -172,89 +167,91 @@ function Quiz({ quizzes }) {
   const question = quiz.questions[currentQuestion]
   const progress = ((currentQuestion + 1) / quiz.questions.length) * 100
   const hasChoices = Array.isArray(question.choices) && question.choices.length > 0
+  const isMarked = markedQuestions.includes(currentQuestion)
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-slate-900 py-6 md:py-8 font-sans">
-      <div className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto space-y-6">
+    <div className="h-screen flex flex-col bg-neutral-50 dark:bg-slate-900 overflow-hidden font-sans">
 
-          {/* Header Card */}
-          <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 p-6 relative overflow-hidden">
-            {/* Progress Bar Top */}
-            <div className="absolute top-0 left-0 w-full h-1 bg-gray-100 dark:bg-slate-700">
-              <div
-                className="h-full bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-300"
-                style={{ width: `${progress}%` }}
-              ></div>
+      {/* Top Header */}
+      <header className="h-16 flex-shrink-0 bg-surface dark:bg-slate-800 border-b border-neutral-200 dark:border-slate-700 flex items-center justify-between px-4 lg:px-6 z-20">
+        <div className="flex items-center gap-4">
+          <button onClick={() => window.history.back()} className="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-slate-700 transition-colors text-neutral-600 dark:text-neutral-400">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+          <h1 className="text-body font-bold text-neutral-900 dark:text-white line-clamp-1 max-w-[200px] sm:max-w-md">{quiz.title}</h1>
+        </div>
+
+        <div className="flex items-center gap-4">
+          {timeRemaining !== null && (
+            <div className="flex items-center gap-2 bg-semantic-error-subtle dark:bg-semantic-error-base/20 border border-semantic-error-border text-semantic-error-base px-3 py-1.5 rounded-base font-mono font-bold">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              {formatTime(timeRemaining)}
+            </div>
+          )}
+          <button
+            onClick={handleSubmit}
+            className="hidden sm:flex items-center gap-2 px-5 py-2 bg-primary-base hover:bg-primary-hover text-white rounded-base font-semibold shadow-sm transition-all text-body-sm"
+          >
+            Nộp bài
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+          </button>
+
+          {/* Mobile Nav Toggle */}
+          <button
+            className="lg:hidden p-2 text-neutral-600 dark:text-neutral-300 bg-neutral-100 dark:bg-slate-700 rounded-base border border-neutral-200 dark:border-slate-600"
+            onClick={() => setIsMobileNavOpen(true)}
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" /></svg>
+          </button>
+        </div>
+      </header>
+
+      {/* Progress Bar Top */}
+      <div className="h-1 w-full bg-neutral-200 dark:bg-slate-700 flex-shrink-0 z-20">
+        <div className="h-full bg-primary-base transition-all duration-300" style={{ width: `${progress}%` }}></div>
+      </div>
+
+      {/* Main Split Layout */}
+      <div className="flex-1 flex overflow-hidden lg:flex-row flex-col relative">
+
+        {/* Left Panel: Question Display (60%) */}
+        <div className="flex-1 lg:w-3/5 overflow-y-auto w-full flex flex-col">
+          <div className="max-w-3xl mx-auto w-full p-6 lg:p-10 pb-32 lg:pb-10 flex-1 flex flex-col">
+
+            <div className="flex items-center justify-between mb-8 pb-4 border-b border-neutral-200 dark:border-slate-700">
+              <div className="flex items-center gap-3">
+                <span className="text-display text-neutral-900 dark:text-neutral-100 font-bold leading-none">
+                  {currentQuestion + 1}
+                </span>
+                <span className="text-body text-neutral-500 font-medium self-end mb-1">
+                  / {quiz.questions.length}
+                </span>
+              </div>
+
+              <button
+                onClick={() => toggleMarkQuestion(currentQuestion)}
+                className={`flex items-center gap-2 px-3 py-1.5 rounded-sm border text-caption font-semibold transition-colors ${isMarked
+                    ? 'bg-semantic-warning-subtle text-semantic-warning-base border-semantic-warning-border'
+                    : 'bg-surface dark:bg-slate-800 text-neutral-500 border-neutral-300 dark:border-slate-600 hover:bg-neutral-100 dark:hover:bg-slate-700'
+                  }`}
+              >
+                <svg className="w-4 h-4" fill={isMarked ? 'currentColor' : 'none'} stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" /></svg>
+                {isMarked ? 'Đã đánh dấu' : 'Đánh dấu xem lại'}
+              </button>
             </div>
 
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-              <div className="flex-1">
-                <button
-                  onClick={() => window.history.back()}
-                  className="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 mb-2 flex items-center gap-1 text-sm font-medium transition-colors"
-                >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                  </svg>
-                  Quay lại
-                </button>
-                <h1 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-gray-100">{quiz.title}</h1>
-                <div className="flex items-center gap-3 mt-2 text-sm">
-                  <span className="text-gray-600 dark:text-gray-400">Câu {currentQuestion + 1} / {quiz.questions.length}</span>
-                  {/* Progress Percentage Badge */}
-                  <span className="px-2 py-0.5 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs font-semibold">
-                    {Math.round(progress)}% hoàn thành
-                  </span>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-4">
-                {timeRemaining !== null && (
-                  <div className="flex items-center gap-2 text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20 px-4 py-2 rounded-xl">
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <span className="text-lg font-bold font-mono">{formatTime(timeRemaining)}</span>
-                  </div>
-                )}
-
-                {!isSubmitted && (
-                  <button
-                    onClick={handleSubmit}
-                    className="px-6 py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-lg font-semibold transition-all shadow-md hover:shadow-lg flex items-center gap-2"
-                  >
-                    <span>Nộp bài</span>
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </button>
-                )}
-              </div>
-            </div>
-
-            {!isAuthenticated && (
-              <div className="mt-6 bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-900/50 rounded-lg p-3 flex items-start gap-3">
-                <svg className="w-5 h-5 text-orange-600 dark:text-orange-400 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                </svg>
-                <p className="text-sm text-orange-800 dark:text-orange-300">
-                  Bạn đang làm bài với tư cách khách. Hãy <span className="font-bold underline cursor-pointer hover:text-orange-900 dark:hover:text-orange-200">đăng nhập</span> để lưu kết quả cho giáo viên.
-                </p>
-              </div>
-            )}
-          </div>
-
-          {/* Question Card */}
-          <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 p-6 md:p-8 min-h-[400px] flex flex-col">
-            <h2 className="text-lg md:text-xl font-semibold text-gray-800 dark:text-gray-100 mb-6 leading-relaxed">
+            {/* Question Content */}
+            <div className="text-h3 lg:text-h2 font-medium text-neutral-800 dark:text-neutral-100 leading-relaxed mb-8">
               {hasChoices && (
                 <RichContent text={question.q} eq={question.eq} image={question.image} />
               )}
-            </h2>
+            </div>
 
+            {/* Answer Choices */}
             {hasChoices ? (
-              <div className="space-y-4 flex-1">
+              <div className="space-y-4">
                 {question.choices.map((choice, index) => {
                   const choiceObj = typeof choice === 'string' ? { text: choice } : choice
                   const isSelected = answers[currentQuestion] === index
@@ -262,104 +259,175 @@ function Quiz({ quizzes }) {
                     <div
                       key={index}
                       onClick={() => !isSubmitted && handleAnswerSelect(currentQuestion, index)}
-                      className={`group relative p-4 rounded-xl border-2 cursor-pointer transition-all duration-200 ${isSelected
-                          ? 'border-blue-500 bg-blue-50/50 dark:bg-blue-900/20 shadow-sm'
-                          : 'border-gray-200 dark:border-slate-700 hover:border-blue-300 dark:hover:border-slate-500 hover:bg-gray-50 dark:hover:bg-slate-700/50'
-                        } ${isSubmitted ? 'cursor-not-allowed opacity-80' : ''}`}
+                      className={`group relative p-5 rounded-lg border-2 cursor-pointer transition-all duration-200 flex items-center gap-4 ${isSelected
+                          ? 'border-primary-base bg-primary-subtle dark:bg-primary-900/10 shadow-sm'
+                          : 'border-neutral-200 dark:border-slate-700 bg-surface dark:bg-slate-800 hover:border-primary-300 dark:hover:border-slate-500 shadow-sm'
+                        }`}
                     >
-                      <div className="flex items-center gap-4">
-                        {/* Radio Circle */}
-                        <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${isSelected
-                            ? 'border-blue-500'
-                            : 'border-gray-300 dark:border-gray-500 group-hover:border-blue-400'
-                          }`}>
-                          <div className={`w-3 h-3 rounded-full bg-blue-500 transition-all transform ${isSelected ? 'scale-100' : 'scale-0'
-                            }`} />
-                        </div>
+                      {/* Custom Radio */}
+                      <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0 transition-colors ${isSelected ? 'border-primary-base' : 'border-neutral-300 dark:border-slate-500 group-hover:border-primary-400'
+                        }`}>
+                        <div className={`w-2.5 h-2.5 rounded-full bg-primary-base transform transition-transform ${isSelected ? 'scale-100' : 'scale-0'}`} />
+                      </div>
 
-                        {/* Option Text */}
-                        <div className="flex-1 text-gray-700 dark:text-gray-200 text-lg">
-                          <RichContent text={choiceObj.text} eq={choiceObj.eq} image={choiceObj.image} />
-                        </div>
+                      {/* Text */}
+                      <div className="text-body lg:text-body-lg text-neutral-700 dark:text-neutral-200 flex-1">
+                        <RichContent text={choiceObj.text} eq={choiceObj.eq} image={choiceObj.image} />
                       </div>
                     </div>
                   )
                 })}
               </div>
             ) : (
-              <EssayQuestion
-                question={question}
-                questionIndex={currentQuestion}
-                answer={answers[currentQuestion]}
-                onAnswerChange={handleEssayAnswer}
-                isSubmitted={isSubmitted}
-              />
+              <div className="flex-1">
+                <EssayQuestion
+                  question={question}
+                  questionIndex={currentQuestion}
+                  answer={answers[currentQuestion]}
+                  onAnswerChange={handleEssayAnswer}
+                  isSubmitted={isSubmitted}
+                />
+              </div>
             )}
 
-            {/* Nav Buttons (Next/Prev) */}
-            <div className="flex justify-between items-center mt-8 pt-6 border-t border-gray-100 dark:border-slate-700">
+            {/* Bottom Form Actions (Left Panel) */}
+            <div className="mt-auto pt-10 flex justify-between gap-4">
               <button
                 onClick={() => setCurrentQuestion(prev => Math.max(0, prev - 1))}
                 disabled={currentQuestion === 0 || isSubmitted}
-                className="px-5 py-2.5 rounded-lg border border-gray-200 dark:border-slate-600 text-gray-600 dark:text-gray-300 font-medium hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-6 py-3 rounded-base bg-surface border border-neutral-300 text-neutral-700 dark:bg-slate-800 dark:border-slate-600 dark:text-neutral-300 font-semibold hover:bg-neutral-50 dark:hover:bg-slate-700 transition disabled:opacity-50"
               >
-                Câu trước
+                &larr; Quay lại
               </button>
-
               {currentQuestion < quiz.questions.length - 1 ? (
                 <button
                   onClick={() => setCurrentQuestion(prev => prev + 1)}
                   disabled={isSubmitted}
-                  className="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-medium hover:shadow-lg hover:-translate-y-0.5 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-6 py-3 rounded-base bg-neutral-900 hover:bg-neutral-800 text-white dark:bg-neutral-100 dark:hover:bg-white dark:text-neutral-900 font-semibold shadow-md transition disabled:opacity-50"
                 >
-                  Câu tiếp theo
+                  Câu tiếp theo &rarr;
                 </button>
               ) : (
                 <button
                   onClick={handleSubmit}
                   disabled={isSubmitted}
-                  className="px-6 py-2.5 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 shadow-md transition-all disabled:opacity-50"
+                  className="lg:hidden px-6 py-3 bg-primary-base hover:bg-primary-hover text-white rounded-base font-semibold shadow-md transition"
                 >
-                  Hoàn thành
+                  Nộp bài ngay
                 </button>
               )}
             </div>
+
           </div>
+        </div>
 
-          {submissionError && (
-            <div className="bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-700 text-red-700 dark:text-red-300 px-4 py-3 rounded-xl">
-              {submissionError}
+        {/* Right Panel: Navigation Grid (40%) Desktop */}
+        <div className="hidden lg:flex w-2/5 border-l border-neutral-200 dark:border-slate-700 bg-surface dark:bg-slate-900 flex-col overflow-y-auto">
+          <div className="p-8">
+            <h3 className="text-h3 font-bold text-neutral-900 dark:text-white mb-6">Bảng điều hướng</h3>
+
+            <div className="flex gap-4 mb-6 flex-wrap">
+              <div className="flex items-center gap-2 text-caption font-medium text-neutral-600 dark:text-neutral-400">
+                <div className="w-3 h-3 rounded-sm border border-neutral-300 bg-white dark:bg-slate-800"></div> Chưa làm
+              </div>
+              <div className="flex items-center gap-2 text-caption font-medium text-neutral-600 dark:text-neutral-400">
+                <div className="w-3 h-3 rounded-sm bg-primary-base"></div> Đã làm
+              </div>
+              <div className="flex items-center gap-2 text-caption font-medium text-neutral-600 dark:text-neutral-400">
+                <div className="w-3 h-3 rounded-sm bg-semantic-warning-base"></div> Đánh dấu
+              </div>
             </div>
-          )}
 
-          {/* Pagination */}
-          <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-gray-200 dark:border-slate-700 p-6">
-            <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">Danh sách câu hỏi</h3>
-            <div className="flex flex-wrap gap-2">
+            <div className="grid grid-cols-5 xl:grid-cols-6 gap-3">
               {quiz.questions.map((_, index) => {
-                let statusClass = 'bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-slate-600' // Default
-                if (index === currentQuestion) {
-                  statusClass = 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md ring-2 ring-blue-200 dark:ring-blue-900' // Active
-                } else if (answers[index] !== null && answers[index] !== undefined && answers[index] !== '') {
-                  statusClass = 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800' // Answered
+                const isCurrent = index === currentQuestion
+                const isAnswered = answers[index] !== null && answers[index] !== undefined && answers[index] !== ''
+                const isMarkedItem = markedQuestions.includes(index)
+
+                let btnClass = 'bg-surface dark:bg-slate-800 text-neutral-700 dark:text-neutral-300 border border-neutral-200 dark:border-slate-700 hover:bg-neutral-100 dark:hover:bg-slate-700'
+
+                if (isCurrent) {
+                  btnClass = 'bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 shadow-md ring-2 ring-neutral-900/20'
+                } else if (isMarkedItem) {
+                  btnClass = 'bg-semantic-warning-subtle text-semantic-warning-base border-semantic-warning-border'
+                } else if (isAnswered) {
+                  btnClass = 'bg-primary-subtle text-primary-base border-primary-200 dark:border-primary-800 font-bold'
                 }
 
                 return (
                   <button
                     key={index}
                     onClick={() => setCurrentQuestion(index)}
-                    disabled={isSubmitted}
-                    className={`w-10 h-10 rounded-lg font-medium text-sm transition-all ${statusClass} ${isSubmitted ? 'cursor-not-allowed opacity-70' : ''}`}
+                    className={`h-12 w-full rounded-md font-semibold text-body-sm transition-all focus:outline-none focus:ring-2 focus:ring-primary-base focus:ring-offset-1 ${btnClass}`}
                   >
                     {index + 1}
                   </button>
                 )
               })}
             </div>
-          </div>
 
+            {/* Submit full button on desktop bottom */}
+            <div className="mt-12 bg-neutral-100 dark:bg-slate-800 rounded-lg p-5 border border-neutral-200 dark:border-slate-700 text-center">
+              <p className="text-body-sm text-neutral-600 dark:text-neutral-400 mb-4">
+                Đã hoàn thành: <span className="font-bold text-primary-base">{answers.filter(a => a !== null && a !== '').length}/{quiz.questions.length}</span> câu hỏi
+              </p>
+              <button
+                onClick={handleSubmit}
+                className="w-full py-3 bg-primary-base hover:bg-primary-hover text-white rounded-base font-bold shadow-md transition-all text-body"
+              >
+                Nộp bài & Kết thúc
+              </button>
+            </div>
+          </div>
         </div>
+
       </div>
+
+      {/* Mobile Bottom Navigation Panel */}
+      {isMobileNavOpen && (
+        <div className="lg:hidden fixed inset-0 z-50 flex flex-col justify-end">
+          <div className="absolute inset-0 bg-neutral-900/40 backdrop-blur-sm" onClick={() => setIsMobileNavOpen(false)}></div>
+          <div className="bg-surface dark:bg-slate-900 rounded-t-3xl w-full h-[70vh] flex flex-col relative animate-fade-in-up">
+            <div className="p-4 flex justify-between items-center border-b border-neutral-200 dark:border-slate-700">
+              <h3 className="font-bold text-body text-neutral-900 dark:text-white">Bảng điều hướng</h3>
+              <button onClick={() => setIsMobileNavOpen(false)} className="p-2 text-neutral-500 bg-neutral-100 dark:bg-slate-800 rounded-full">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+              </button>
+            </div>
+            <div className="flex-1 overflow-y-auto p-6">
+              <div className="grid grid-cols-5 gap-3 mb-8">
+                {quiz.questions.map((_, index) => {
+                  const isCurrent = index === currentQuestion
+                  const isAnswered = answers[index] !== null && answers[index] !== undefined && answers[index] !== ''
+                  const isMarkedItem = markedQuestions.includes(index)
+
+                  let btnClass = 'bg-surface dark:bg-slate-800 text-neutral-700 dark:text-neutral-300 border border-neutral-200 dark:border-slate-700'
+                  if (isCurrent) btnClass = 'bg-neutral-900 text-white shadow-md'
+                  else if (isMarkedItem) btnClass = 'bg-semantic-warning-subtle text-semantic-warning-base border-semantic-warning-border'
+                  else if (isAnswered) btnClass = 'bg-primary-subtle text-primary-base border-primary-200 font-bold'
+
+                  return (
+                    <button
+                      key={index}
+                      onClick={() => { setCurrentQuestion(index); setIsMobileNavOpen(false) }}
+                      className={`h-12 w-full rounded-md font-semibold text-body-sm ${btnClass}`}
+                    >
+                      {index + 1}
+                    </button>
+                  )
+                })}
+              </div>
+              <button
+                onClick={handleSubmit}
+                className="w-full py-3.5 bg-primary-base text-white rounded-base font-bold shadow-md text-body"
+              >
+                Nộp bài & Kết thúc
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   )
 }

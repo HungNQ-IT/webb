@@ -1,229 +1,124 @@
 import { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 
+/**
+ * Collapsible Study Sidebar
+ * Left panel shown when studying, toggleable.
+ */
 function Sidebar() {
   const [isOpen, setIsOpen] = useState(false)
-  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light')
-  const { isAuthenticated, user, logout } = useAuth()
-  const navigate = useNavigate()
+  const [activeTab, setActiveTab] = useState('lessons') // 'lessons' | 'notes'
+  const location = useLocation()
 
-  useEffect(() => {
-    const root = document.documentElement
-    root.classList.toggle('dark', theme === 'dark')
-    localStorage.setItem('theme', theme)
-  }, [theme])
+  // Hide global generic sidebar since we have Navbar. Only show this specific study sidebar when studying or browsing subjects.
+  const isStudyMode = location.pathname.includes('/quiz') || location.pathname.includes('/subject') || location.pathname.includes('/practice')
 
-  const cycleTheme = () => {
-    setTheme(theme === 'light' ? 'dark' : 'light')
-  }
+  if (!isStudyMode) return null
 
-  const handleLogout = () => {
-    logout()
-    setIsOpen(false)
-    navigate('/', { replace: true })
-  }
+  // Mock data for Course Content
+  const courseContent = [
+    { title: 'Bài 1: Khảo sát sự biến thiên', progress: 100, isCurrent: false },
+    { title: 'Bài 2: Cực trị của hàm số', progress: 100, isCurrent: false },
+    { title: 'Bài 3: Giá trị lớn nhất nhỏ nhất', progress: 65, isCurrent: true },
+    { title: 'Bài 4: Đường tiệm cận', progress: 0, isCurrent: false },
+    { title: 'Đề kiểm tra Chương 1', progress: 0, isCurrent: false },
+  ]
 
   return (
     <>
-      {/* Trigger zone - vùng kích hoạt bên trái màn hình */}
-      <div
-        className="fixed left-0 top-0 w-4 h-full z-40"
-        onMouseEnter={() => setIsOpen(true)}
-      />
-
       {/* Floating Toggle Button */}
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed left-6 top-1/2 -translate-y-1/2 z-40 w-16 h-16 bg-white/80 dark:bg-slate-800/80 backdrop-blur-md border-2 border-blue-500/30 dark:border-blue-400/30 rounded-full flex items-center justify-center shadow-xl hover:shadow-blue-500/40 hover:scale-110 transition-all duration-300 group"
-          aria-label="Open Menu"
+          className="fixed left-0 top-1/2 -translate-y-1/2 z-40 bg-white dark:bg-slate-800 border border-neutral-200 dark:border-slate-700 border-l-0 rounded-r-2xl py-4 px-2 shadow-lg hover:px-3 hover:text-primary-base transition-all duration-300 hidden lg:flex items-center group cursor-pointer"
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-full opacity-100 group-hover:opacity-100 transition-opacity"></div>
-          <svg
-            className="w-8 h-8 text-blue-600 dark:text-blue-400 relative z-10"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-
-          {/* Tooltip */}
-          <div className="absolute left-full ml-4 px-3 py-1.5 bg-gray-900/90 text-white text-xs font-medium rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none backdrop-blur-sm">
-            Menu
-          </div>
+          <svg className="w-5 h-5 text-neutral-500 group-hover:text-primary-base transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+          <span className="[writing-mode:vertical-lr] text-xs font-bold text-neutral-500 group-hover:text-primary-base uppercase tracking-widest mt-2 transform rotate-180">Mục lục</span>
         </button>
       )}
 
       {/* Overlay */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity"
+          className="fixed inset-0 bg-neutral-900/40 z-40 backdrop-blur-sm lg:hidden"
           onClick={() => setIsOpen(false)}
         />
       )}
 
-      {/* Sidebar */}
+      {/* Sidebar Panel */}
       <div
-        className={`fixed left-0 top-0 h-full w-80 bg-white dark:bg-slate-800 shadow-2xl z-50 transform transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'
+        className={`fixed left-0 top-[64px] lg:top-[64px] bottom-0 w-80 bg-surface dark:bg-slate-900 shadow-2xl z-50 transform transition-transform duration-300 ease-[cubic-bezier(0.25,0.1,0.25,1)] flex flex-col border-r border-neutral-200 dark:border-slate-800 pb-16 lg:pb-0 ${isOpen ? 'translate-x-0' : '-translate-x-full'
           }`}
-        onMouseLeave={() => setIsOpen(false)}
       >
-        <div className="flex flex-col h-full">
-          {/* Header */}
-          <div className="p-6 border-b border-gray-200 dark:border-slate-700">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
-                <svg className="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z" />
-                </svg>
-              </div>
-              <div>
-                <h2 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Gia Sư 10 Điểm</h2>
-                <p className="text-xs text-gray-600 dark:text-gray-400">Menu</p>
-              </div>
-            </div>
+        {/* Header */}
+        <div className="p-4 border-b border-neutral-200 dark:border-slate-800 flex items-center justify-between">
+          <div>
+            <h2 className="text-body font-bold text-neutral-900 dark:text-white leading-tight">Chương 1: Khảo sát hàm số</h2>
+            <div className="text-caption font-semibold text-primary-base mt-0.5">Toán học 12</div>
           </div>
+          <button onClick={() => setIsOpen(false)} className="p-2 bg-neutral-100 dark:bg-slate-800 text-neutral-500 rounded-full hover:bg-neutral-200 transition-colors">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M15 19l-7-7 7-7" /></svg>
+          </button>
+        </div>
 
-          {/* Menu Items */}
-          <nav className="flex-1 overflow-y-auto p-4">
-            <div className="space-y-2">
-              {/* Trang chủ */}
-              <Link
-                to="/"
-                onClick={() => setIsOpen(false)}
-                className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-50 dark:hover:bg-slate-700 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                </svg>
-                <span className="font-medium">Trang chủ</span>
-              </Link>
+        {/* Tab Toggle */}
+        <div className="flex p-3 gap-2 bg-neutral-50 dark:bg-slate-800/50 border-b border-neutral-200 dark:border-slate-800">
+          <button
+            onClick={() => setActiveTab('lessons')}
+            className={`flex-1 py-2 text-body-sm font-bold rounded-lg transition-all ${activeTab === 'lessons' ? 'bg-white dark:bg-slate-700 text-primary-base shadow-sm ring-1 ring-primary-100 dark:ring-primary-900/50' : 'text-neutral-500 hover:bg-neutral-100 dark:hover:bg-slate-700'}`}
+          >
+            Danh sách bài
+          </button>
+          <button
+            onClick={() => setActiveTab('notes')}
+            className={`flex-1 py-2 text-body-sm font-bold rounded-lg transition-all ${activeTab === 'notes' ? 'bg-white dark:bg-slate-700 text-primary-base shadow-sm ring-1 ring-primary-100 dark:ring-primary-900/50' : 'text-neutral-500 hover:bg-neutral-100 dark:hover:bg-slate-700'}`}
+          >
+            Ghi chú của tôi
+          </button>
+        </div>
 
-              {/* Môn học */}
-              <Link
-                to="/subjects"
-                onClick={() => setIsOpen(false)}
-                className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-50 dark:hover:bg-slate-700 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                </svg>
-                <span className="font-medium">Môn học</span>
-              </Link>
+        {/* Content Area */}
+        <div className="flex-1 overflow-y-auto p-4 custom-scrollbar">
+          {activeTab === 'lessons' ? (
+            <div className="space-y-1 relative before:absolute before:inset-y-0 before:left-4 before:w-[2px] before:bg-neutral-200 dark:before:bg-slate-700">
+              {courseContent.map((lesson, idx) => (
+                <div key={idx} className="relative pl-10 group cursor-pointer">
+                  <div className="py-3 group-hover:bg-neutral-50 dark:group-hover:bg-slate-800/50 -ml-10 pl-10 rounded-lg transition-colors border border-transparent group-hover:border-neutral-200 dark:group-hover:border-slate-700">
 
-              {/* Theme Toggle */}
-              <button
-                onClick={cycleTheme}
-                className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-700 text-gray-700 dark:text-gray-300 transition-colors w-full"
-              >
-                {theme === 'light' ? (
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                  </svg>
-                ) : (
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                  </svg>
-                )}
-                <span className="font-medium">
-                  {theme === 'light' ? 'Nền sáng' : 'Nền tối'}
-                </span>
-              </button>
+                    {/* Timeline Dot */}
+                    <div className={`absolute left-4 top-1/2 -translate-y-1/2 -ml-[7px] w-4 h-4 rounded-full border-[3px] shadow-sm z-10 transition-transform ${lesson.progress === 100 ? 'bg-semantic-success-base border-semantic-success-subtle' :
+                        lesson.progress > 0 ? 'bg-primary-base border-primary-subtle ring-2 ring-primary-base/20' :
+                          'bg-surface dark:bg-slate-800 border-neutral-300 dark:border-slate-600'
+                      }`}></div>
 
-              <div className="my-4 border-t border-gray-200 dark:border-slate-700"></div>
-
-              {/* Nếu chưa đăng nhập */}
-              {!isAuthenticated ? (
-                <>
-                  <Link
-                    to="/login"
-                    onClick={() => setIsOpen(false)}
-                    className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-blue-50 dark:hover:bg-slate-700 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
-                    </svg>
-                    <span className="font-medium">Đăng nhập</span>
-                  </Link>
-                  <Link
-                    to="/register"
-                    onClick={() => setIsOpen(false)}
-                    className="flex items-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
-                    </svg>
-                    <span className="font-medium">Đăng ký</span>
-                  </Link>
-                </>
-              ) : (
-                <>
-                  {/* Profile */}
-                  <Link
-                    to="/profile"
-                    onClick={() => setIsOpen(false)}
-                    className="block px-4 py-3 rounded-xl bg-blue-50 dark:bg-slate-700 border border-blue-200 dark:border-slate-600 hover:bg-blue-100 dark:hover:bg-slate-600 transition-colors"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full flex items-center justify-center shadow-lg">
-                        <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
-                        </svg>
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-semibold text-gray-900 dark:text-gray-100 truncate">
-                          {user.name || user.email}
-                        </p>
-                        <p className="text-xs text-gray-600 dark:text-gray-400">
-                          {user.role === 'admin' ? 'Quản trị viên' : 'Học viên'}
-                        </p>
-                      </div>
-                      <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
+                    <div className={`text-body-sm font-bold mb-1 leading-snug line-clamp-2 ${lesson.isCurrent ? 'text-primary-base' : 'text-neutral-700 dark:text-neutral-200 group-hover:text-primary-base transition-colors'}`}>
+                      {lesson.title}
                     </div>
-                  </Link>
 
-                  {/* Quản lý (chỉ admin) */}
-                  {user?.role === 'admin' && (
-                    <Link
-                      to="/admin"
-                      onClick={() => setIsOpen(false)}
-                      className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-purple-50 dark:hover:bg-slate-700 text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
-                    >
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                      </svg>
-                      <span className="font-medium">Quản lý</span>
-                    </Link>
-                  )}
+                    <div className="flex items-center gap-2">
+                      <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider">{lesson.progress}%</span>
+                      <div className="flex-1 h-1.5 bg-neutral-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                        <div className={`h-full rounded-full ${lesson.progress === 100 ? 'bg-semantic-success-base' : 'bg-primary-base'}`} style={{ width: `${lesson.progress}%` }}></div>
+                      </div>
+                    </div>
 
-                  <div className="my-4 border-t border-gray-200 dark:border-slate-700"></div>
-
-                  {/* Đăng xuất */}
-                  <button
-                    onClick={handleLogout}
-                    className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-red-50 dark:hover:bg-slate-700 text-gray-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 transition-colors"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                    </svg>
-                    <span className="font-medium">Đăng xuất</span>
-                  </button>
-                </>
-              )}
+                  </div>
+                </div>
+              ))}
             </div>
-          </nav>
-
-          {/* Footer */}
-          <div className="p-4 border-t border-gray-200 dark:border-slate-700">
-            <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
-              © 2024 Gia Sư 10 Điểm
-            </p>
-          </div>
+          ) : (
+            <div className="h-full flex flex-col">
+              <textarea
+                className="flex-1 w-full bg-yellow-50 dark:bg-amber-900/10 border border-yellow-200 dark:border-amber-800/50 rounded-xl p-4 text-body text-neutral-800 dark:text-neutral-200 placeholder-yellow-600/50 dark:placeholder-amber-600/50 focus:outline-none focus:ring-2 focus:ring-yellow-400 resize-none font-medium leading-relaxed"
+                placeholder="Thêm ghi chú cá nhân cho chương này..."
+                defaultValue="- Chú ý phần điều kiện của m\n- Đạo hàm hàm hợp luôn bị sai dấu hix"
+              ></textarea>
+              <button className="mt-4 py-2.5 w-full bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 rounded-md text-body-sm font-bold hover:opacity-90 transition-opacity">
+                Lưu ghi chú
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </>
