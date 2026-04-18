@@ -45,6 +45,7 @@ const AdminAudioManager = lazy(() => import('./components/AdminAudioManager'))
 const AdminQuizManager = lazy(() => import('./components/AdminQuizManager'))
 const Profile = lazy(() => import('./components/Profile'))
 const ExamDetail = lazy(() => import('./components/ExamDetail'))
+const GradeList = lazy(() => import('./components/GradeList'))
 
 function App() {
   const [quizzes, setQuizzes] = useState([])
@@ -188,9 +189,15 @@ function App() {
                 <Route path="/exam/:examId" element={<ExamDetail />} />
                 <Route path="/subjects" element={<SubjectList quizzes={quizzes} />} />
                 <Route path="/subject/:subject/exams" element={<ExamList quizzes={quizzes} />} />
+                <Route path="/subject/:subject/grades" element={<GradeList />} />
                 <Route path="/subject/:subject/grade/:grade" element={<QuizList quizzes={quizzes} ieltsTests={ieltsTests} />} />
                 <Route path="/subject/:subject/category/:category" element={<QuizList quizzes={quizzes} ieltsTests={ieltsTests} />} />
                 <Route path="/subject/:subject" element={<CategoryList quizzes={quizzes} ieltsTests={ieltsTests} />} />
+                <Route path="/exams" element={<Navigate to="/subjects" replace />} />
+                <Route path="/roadmap" element={<Navigate to="/subjects" replace />} />
+                <Route path="/practice" element={<Navigate to="/subjects" replace />} />
+                <Route path="/leaderboard" element={<Navigate to="/profile" replace />} />
+                <Route path="/progress" element={<Navigate to="/profile" replace />} />
                 <Route path="/quiz/:id" element={<Quiz quizzes={quizzes} />} />
                 <Route path="/ielts/:id" element={<IELTSQuiz ieltsTests={ieltsTests} />} />
                 <Route path="/ielts-listening/:id" element={<IELTSListening ieltsTests={ieltsTests} />} />
@@ -241,4 +248,3 @@ function App() {
 }
 
 export default App
-

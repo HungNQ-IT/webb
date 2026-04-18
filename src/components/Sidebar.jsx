@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext'
+import { useEffect, useMemo, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 
 /**
  * Collapsible Study Sidebar
@@ -16,14 +15,52 @@ function Sidebar() {
 
   if (!isStudyMode) return null
 
-  // Mock data for Course Content
-  const courseContent = [
-    { title: 'Bài 1: Khảo sát sự biến thiên', progress: 100, isCurrent: false },
-    { title: 'Bài 2: Cực trị của hàm số', progress: 100, isCurrent: false },
-    { title: 'Bài 3: Giá trị lớn nhất nhỏ nhất', progress: 65, isCurrent: true },
-    { title: 'Bài 4: Đường tiệm cận', progress: 0, isCurrent: false },
-    { title: 'Đề kiểm tra Chương 1', progress: 0, isCurrent: false },
-  ]
+  const pathSegments = useMemo(() => location.pathname.split('/').filter(Boolean), [location.pathname])
+  const decodedSubject = pathSegments[1] ? decodeURIComponent(pathSegments[1]) : 'Môn học'
+  const grade = pathSegments[3] || null
+  const category = pathSegments[3] ? decodeURIComponent(pathSegments[3]) : null
+
+  const sidebarTitle = useMemo(() => {
+    if (location.pathname.includes('/quiz/')) return `Làm bài ${decodedSubject}`
+    if (location.pathname.includes('/grade/')) return `${decodedSubject} lớp ${grade}`
+    if (location.pathname.includes('/category/')) return `${decodedSubject} - ${category}`
+    if (location.pathname.includes('/exams')) return `${decodedSubject} - Danh sách đề`
+    return decodedSubject
+  }, [location.pathname, decodedSubject, grade, category])
+
+  // Use neutral placeholder entries so the UI does not falsely show lessons as completed
+  // before the learner has actually started or submitted anything.
+  const courseContent = useMemo(() => {
+    if (location.pathname.includes('/grade/')) {
+      return [
+        { title: 'Kiến thức nền tảng', progress: 0, isCurrent: true },
+        { title: 'Luyện tập theo chuyên đề', progress: 0, isCurrent: false },
+        { title: 'Bộ đề tổng hợp', progress: 0, isCurrent: false }
+      ]
+    }
+
+    if (location.pathname.includes('/category/')) {
+      return [
+        { title: 'Chọn bộ bài phù hợp', progress: 0, isCurrent: true },
+        { title: 'Bắt đầu làm bài', progress: 0, isCurrent: false },
+        { title: 'Xem kết quả và ôn lại', progress: 0, isCurrent: false }
+      ]
+    }
+
+    if (location.pathname.includes('/quiz/')) {
+      return [
+        { title: 'Đọc kỹ đề bài', progress: 0, isCurrent: true },
+        { title: 'Làm từng câu hỏi', progress: 0, isCurrent: false },
+        { title: 'Nộp bài và xem đáp án', progress: 0, isCurrent: false }
+      ]
+    }
+
+    return [
+      { title: 'Chọn chuyên đề hoặc lớp học', progress: 0, isCurrent: true },
+      { title: 'Mở bài luyện tập đầu tiên', progress: 0, isCurrent: false },
+      { title: 'Theo dõi tiến độ sau khi làm bài', progress: 0, isCurrent: false }
+    ]
+  }, [location.pathname])
 
   return (
     <>
@@ -54,8 +91,8 @@ function Sidebar() {
         {/* Header */}
         <div className="p-4 border-b border-neutral-200 dark:border-slate-800 flex items-center justify-between">
           <div>
-            <h2 className="text-body font-bold text-neutral-900 dark:text-white leading-tight">Chương 1: Khảo sát hàm số</h2>
-            <div className="text-caption font-semibold text-primary-base mt-0.5">Toán học 12</div>
+            <h2 className="text-body font-bold text-neutral-900 dark:text-white leading-tight">{sidebarTitle}</h2>
+            <div className="text-caption font-semibold text-primary-base mt-0.5">Mục lục học tập</div>
           </div>
           <button onClick={() => setIsOpen(false)} className="p-2 bg-neutral-100 dark:bg-slate-800 text-neutral-500 rounded-full hover:bg-neutral-200 transition-colors">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M15 19l-7-7 7-7" /></svg>
@@ -112,7 +149,7 @@ function Sidebar() {
               <textarea
                 className="flex-1 w-full bg-yellow-50 dark:bg-amber-900/10 border border-yellow-200 dark:border-amber-800/50 rounded-xl p-4 text-body text-neutral-800 dark:text-neutral-200 placeholder-yellow-600/50 dark:placeholder-amber-600/50 focus:outline-none focus:ring-2 focus:ring-yellow-400 resize-none font-medium leading-relaxed"
                 placeholder="Thêm ghi chú cá nhân cho chương này..."
-                defaultValue="- Chú ý phần điều kiện của m\n- Đạo hàm hàm hợp luôn bị sai dấu hix"
+                defaultValue=""
               ></textarea>
               <button className="mt-4 py-2.5 w-full bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 rounded-md text-body-sm font-bold hover:opacity-90 transition-opacity">
                 Lưu ghi chú

@@ -14,7 +14,7 @@ const examData = {
             { name: 'Phần 3: Giải quyết vấn đề', details: 'Lý, Hóa, Sinh, Sử, Địa (Mỗi môn 10 câu)' },
         ],
         subjects: [
-            { name: 'Tiếng Việt', path: '/subject/Tiếng Việt/grades' },
+            { name: 'Tiếng Việt', path: '/subject/Ngữ Văn/grades' },
             { name: 'Tiếng Anh', path: '/subject/Tiếng Anh/grades' },
             { name: 'Toán Logic', path: '/subject/Toán/grades' },
             { name: 'Vật Lý', path: '/subject/Vật Lý/grades' },
@@ -81,10 +81,10 @@ const examData = {
             { name: 'Speaking', details: '3 part (11-14 phút)' },
         ],
         subjects: [
-            { name: 'IELTS Listening', path: '/subject/IELTS Listening' },
-            { name: 'IELTS Reading', path: '/subject/IELTS Reading' },
-            { name: 'IELTS Writing', path: '/subject/IELTS Writing' },
-            { name: 'IELTS Speaking', path: '/subject/IELTS Speaking' }
+            { name: 'IELTS Listening', path: '/subject/IELTS/category/Listening' },
+            { name: 'IELTS Reading', path: '/subject/IELTS/category/Reading' },
+            { name: 'IELTS Writing', path: '/subject/IELTS/category/Writing' },
+            { name: 'IELTS Speaking', path: '/subject/IELTS/category/Speaking' }
         ]
     },
     'sat': {
@@ -98,9 +98,9 @@ const examData = {
             { name: 'Math', details: 'Toán học (Có máy tính và Không máy tính)' },
         ],
         subjects: [
-            { name: 'SAT Math', path: '/subject/SAT Math' },
-            { name: 'SAT Reading', path: '/subject/SAT Reading' },
-            { name: 'SAT Writing', path: '/subject/SAT Writing' }
+            { name: 'SAT Math', path: '/subject/Toán/exams?exam=SAT' },
+            { name: 'SAT Reading', path: '/subject/Tiếng Anh/exams?exam=SAT' },
+            { name: 'SAT Writing', path: '/subject/Tiếng Anh/exams?exam=SAT' }
         ]
     }
 }

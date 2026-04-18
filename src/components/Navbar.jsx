@@ -17,10 +17,10 @@ function Navbar() {
   }, [])
 
   const navLinks = [
-    { path: '/subjects', label: 'Môn học' },
-    { path: '/exams', label: 'Đề thi' },
-    { path: '/roadmap', label: 'Lộ trình ôn' },
-    { path: '/leaderboard', label: 'Bảng xếp hạng' },
+    { key: 'subjects', path: '/subjects', label: 'Môn học' },
+    { key: 'exams', path: '/exams', label: 'Đề thi' },
+    { key: 'roadmap', path: '/roadmap', label: 'Lộ trình ôn' },
+    { key: 'leaderboard', path: '/leaderboard', label: 'Bảng xếp hạng' },
   ]
 
   return (
@@ -44,7 +44,7 @@ function Navbar() {
               const isActive = location.pathname.startsWith(link.path)
               return (
                 <Link
-                  key={link.path}
+                  key={link.key}
                   to={link.path}
                   className={`relative py-5 transition-colors ${isActive ? 'text-primary-base' : 'text-neutral-600 dark:text-neutral-300 hover:text-primary-base dark:hover:text-primary-400'}`}
                 >
