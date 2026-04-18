@@ -1,13 +1,19 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 
 function Register() {
-  const { register } = useAuth()
+  const { register, isAuthenticated, loading: authLoading } = useAuth()
   const navigate = useNavigate()
   const [form, setForm] = useState({ name: '', email: '', password: '', grade: '' })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    if (!authLoading && isAuthenticated) {
+      navigate('/subjects', { replace: true })
+    }
+  }, [authLoading, isAuthenticated, navigate])
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -202,4 +208,3 @@ function Register() {
 }
 
 export default Register
-

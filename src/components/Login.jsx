@@ -1,9 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 
 function Login() {
-  const { login } = useAuth()
+  const { login, isAuthenticated, loading: authLoading } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
   const [form, setForm] = useState({ email: '', password: '' })
@@ -27,6 +27,13 @@ function Login() {
   const emailError = touched.email ? validateEmail(form.email) : ''
   const passwordError = touched.password ? validatePassword(form.password) : ''
   const isFormValid = !emailError && !passwordError && form.email && form.password
+
+  useEffect(() => {
+    if (!authLoading && isAuthenticated) {
+      const redirect = location.state?.from || '/subjects'
+      navigate(redirect, { replace: true })
+    }
+  }, [authLoading, isAuthenticated, location.state, navigate])
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -264,4 +271,3 @@ function Login() {
 }
 
 export default Login
-

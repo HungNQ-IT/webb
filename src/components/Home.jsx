@@ -1,9 +1,15 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import { useAuth } from '../context/AuthContext'
 
 function Home() {
+  const navigate = useNavigate()
+  const { isAuthenticated } = useAuth()
+
   // Countdown Timer Logic
   const [timeLeft, setTimeLeft] = useState({ days: 45, hours: 12, minutes: 30, seconds: 0 })
+
+  const practiceStartPath = isAuthenticated ? '/subjects' : '/register'
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -69,7 +75,7 @@ function Home() {
 
               <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 animate-fade-in-up animation-delay-600">
                 <Link
-                  to="/register"
+                  to={practiceStartPath}
                   className="w-full sm:w-auto px-8 py-3.5 bg-primary-base text-white rounded-base font-semibold transition-all hover:bg-primary-hover shadow-base hover:shadow-md hover:-translate-y-0.5 text-center"
                 >
                   Luyện thi ngay — Miễn phí
@@ -383,7 +389,13 @@ function Home() {
             </p>
 
             {/* Inline Registration Form Mock */}
-            <form className="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto lg:mx-0" onSubmit={(e) => { e.preventDefault(); window.location.href = '/register' }}>
+            <form
+              className="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto lg:mx-0"
+              onSubmit={(e) => {
+                e.preventDefault()
+                navigate(practiceStartPath)
+              }}
+            >
               <input
                 type="email"
                 placeholder="Nhập email của bạn..."
