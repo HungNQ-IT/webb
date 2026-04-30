@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
 import ThemeToggle from './ThemeToggle'
@@ -8,7 +8,8 @@ import ThemeToggle from './ThemeToggle'
  * Designed to feel like a modern Gamified Edtech dashboard.
  */
 function Profile() {
-  const { user } = useAuth()
+  const { user, logout } = useAuth()
+  const navigate = useNavigate()
   const [loading, setLoading] = useState(true)
 
   // Mock data for new Dashboard features
@@ -43,6 +44,11 @@ function Profile() {
     setTimeout(() => setLoading(false), 500)
   }, [])
 
+  const handleLogout = async () => {
+    await logout()
+    navigate('/login', { replace: true })
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen bg-neutral-50 dark:bg-slate-900 flex items-center justify-center">
@@ -64,9 +70,21 @@ function Profile() {
               </h1>
               <p className="text-body-lg text-neutral-600 dark:text-neutral-400 mt-2">Hôm nay là một ngày tuyệt vời để chinh phục tri thức.</p>
             </div>
-            {/* Theme Toggle for mobile */}
-            <div className="lg:hidden">
-              <ThemeToggle />
+            <div className="flex items-center gap-3 self-start md:self-auto">
+              {/* Theme Toggle for mobile */}
+              <div className="lg:hidden">
+                <ThemeToggle />
+              </div>
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="inline-flex items-center gap-2 rounded-base border border-semantic-error-border bg-white px-4 py-2.5 text-body-sm font-bold text-semantic-error-base shadow-sm transition-colors hover:bg-semantic-error-subtle dark:bg-slate-800 dark:hover:bg-semantic-error-base/10"
+              >
+                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H9m4 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                </svg>
+                Đăng xuất
+              </button>
             </div>
           </div>
 
