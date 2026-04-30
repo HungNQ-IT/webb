@@ -6,61 +6,60 @@ import { useLocation } from 'react-router-dom'
  * Left panel shown when studying, toggleable.
  */
 function Sidebar() {
+  const location = useLocation()
   const [isOpen, setIsOpen] = useState(false)
   const [activeTab, setActiveTab] = useState('lessons') // 'lessons' | 'notes'
-  const location = useLocation()
 
   // Hide global generic sidebar since we have Navbar. Only show this specific study sidebar when studying or browsing subjects.
   const isStudyMode = location.pathname.includes('/quiz') || location.pathname.includes('/subject') || location.pathname.includes('/practice')
 
-  if (!isStudyMode) return null
-
-  const pathSegments = useMemo(() => location.pathname.split('/').filter(Boolean), [location.pathname])
+  // IMPORTANT: All hooks must be called before any conditional returns
+  const pathSegments = location.pathname.split('/').filter(Boolean)
   const decodedSubject = pathSegments[1] ? decodeURIComponent(pathSegments[1]) : 'Môn học'
   const grade = pathSegments[3] || null
   const category = pathSegments[3] ? decodeURIComponent(pathSegments[3]) : null
 
-  const sidebarTitle = useMemo(() => {
-    if (location.pathname.includes('/quiz/')) return `Làm bài ${decodedSubject}`
-    if (location.pathname.includes('/grade/')) return `${decodedSubject} lớp ${grade}`
-    if (location.pathname.includes('/category/')) return `${decodedSubject} - ${category}`
-    if (location.pathname.includes('/exams')) return `${decodedSubject} - Danh sách đề`
-    return decodedSubject
-  }, [location.pathname, decodedSubject, grade, category])
+  let sidebarTitle = decodedSubject
+  if (location.pathname.includes('/quiz/')) {
+    sidebarTitle = `Làm bài ${decodedSubject}`
+  } else if (location.pathname.includes('/grade/')) {
+    sidebarTitle = `${decodedSubject} lớp ${grade}`
+  } else if (location.pathname.includes('/category/')) {
+    sidebarTitle = `${decodedSubject} - ${category}`
+  } else if (location.pathname.includes('/exams')) {
+    sidebarTitle = `${decodedSubject} - Danh sách đề`
+  }
 
-  // Use neutral placeholder entries so the UI does not falsely show lessons as completed
-  // before the learner has actually started or submitted anything.
-  const courseContent = useMemo(() => {
-    if (location.pathname.includes('/grade/')) {
-      return [
-        { title: 'Kiến thức nền tảng', progress: 0, isCurrent: true },
-        { title: 'Luyện tập theo chuyên đề', progress: 0, isCurrent: false },
-        { title: 'Bộ đề tổng hợp', progress: 0, isCurrent: false }
-      ]
-    }
-
-    if (location.pathname.includes('/category/')) {
-      return [
-        { title: 'Chọn bộ bài phù hợp', progress: 0, isCurrent: true },
-        { title: 'Bắt đầu làm bài', progress: 0, isCurrent: false },
-        { title: 'Xem kết quả và ôn lại', progress: 0, isCurrent: false }
-      ]
-    }
-
-    if (location.pathname.includes('/quiz/')) {
-      return [
-        { title: 'Đọc kỹ đề bài', progress: 0, isCurrent: true },
-        { title: 'Làm từng câu hỏi', progress: 0, isCurrent: false },
-        { title: 'Nộp bài và xem đáp án', progress: 0, isCurrent: false }
-      ]
-    }
-
-    return [
+  // Determine course content based on path
+  let courseContent = []
+  if (location.pathname.includes('/grade/')) {
+    courseContent = [
+      { title: 'Kiến thức nền tảng', progress: 0, isCurrent: true },
+      { title: 'Luyện tập theo chuyên đề', progress: 0, isCurrent: false },
+      { title: 'Bộ đề tổng hợp', progress: 0, isCurrent: false }
+    ]
+  } else if (location.pathname.includes('/category/')) {
+    courseContent = [
+      { title: 'Chọn bộ bài phù hợp', progress: 0, isCurrent: true },
+      { title: 'Bắt đầu làm bài', progress: 0, isCurrent: false },
+      { title: 'Xem kết quả và ôn lại', progress: 0, isCurrent: false }
+    ]
+  } else if (location.pathname.includes('/quiz/')) {
+    courseContent = [
+      { title: 'Đọc kỹ đề bài', progress: 0, isCurrent: true },
+      { title: 'Làm từng câu hỏi', progress: 0, isCurrent: false },
+      { title: 'Nộp bài và xem đáp án', progress: 0, isCurrent: false }
+    ]
+  } else {
+    courseContent = [
       { title: 'Chọn chuyên đề hoặc lớp học', progress: 0, isCurrent: true },
       { title: 'Mở bài luyện tập đầu tiên', progress: 0, isCurrent: false },
       { title: 'Theo dõi tiến độ sau khi làm bài', progress: 0, isCurrent: false }
     ]
-  }, [location.pathname])
+  }
+
+  // NOW we can return null if not in study mode
+  if (!isStudyMode) return null
 
   return (
     <>

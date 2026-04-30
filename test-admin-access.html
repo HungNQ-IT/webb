@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Admin Access</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        button:hover {
+            transform: translateY(-2px);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+        .result h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        .label {
+            font-weight: 600;
+            color: #555;
+        }
+        .value {
+            color: #333;
+            font-family: 'Courier New', monospace;
+        }
+        .success {
+            color: #28a745;
+            font-weight: bold;
+        }
+        .error {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        .warning {
+            color: #ffc107;
+            font-weight: bold;
+        }
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .alert-success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        .alert-danger {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        .alert-warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Test Admin Access</h1>
+        <p class="subtitle">Công cụ kiểm tra quyền truy cập Admin</p>
+
+        <div class="btn-group">
+            <button onclick="checkAuth()">1️⃣ Kiểm tra đăng nhập</button>
+            <button onclick="checkAdminRole()">2️⃣ Kiểm tra role Admin</button>
+            <button onclick="checkEnvVars()">3️⃣ Kiểm tra biến môi trường</button>
+            <button onclick="runFullTest()">🚀 Chạy test đầy đủ</button>
+        </div>
+
+        <div class="btn-group">
+            <button onclick="forceSetAdmin()" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                ⚠️ Force set Admin (Test only)
+            </button>
+            <button onclick="clearCache()" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                🗑️ Xóa cache & đăng xuất
+            </button>
+        </div>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const ADMIN_EMAILS = ['hungquocnguyen252@gmail.com', 'duchoang305007@gmail.com'];
+        const AUTH_KEY = 'sb-cocnanimvgcwzwgteaax-auth-token';
+
+        function showResult(html) {
+            document.getElementById('result').innerHTML = html;
+        }
+
+        function checkAuth() {
+            const authData = localStorage.getItem(AUTH_KEY);
+            
+            if (!authData) {
+                showResult(`
+                    <div class="alert alert-danger">
+                        <strong>❌ Chưa đăng nhập</strong>
+                        <p>Không tìm thấy thông tin đăng nhập trong localStorage.</p>
+                        <p>Vui lòng đăng nhập trước khi test.</p>
+                    </div>
+                `);
+                return null;
+            }
+
+            try {
+                const parsed = JSON.parse(authData);
+                const user = parsed.user;
+                
+                showResult(`
+                    <div class="alert alert-success">
+                        <strong>✅ Đã đăng nhập</strong>
+                    </div>
+                    <div class="result">
+                        <h3>Thông tin User</h3>
+                        <div class="info-row">
+                            <span class="label">Email:</span>
+                            <span class="value">${user?.email || 'N/A'}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="label">User ID:</span>
+                            <span class="value">${user?.id || 'N/A'}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="label">Name:</span>
+                            <span class="value">${user?.user_metadata?.name || 'N/A'}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="label">Grade:</span>
+                            <span class="value">${user?.user_metadata?.grade || 'N/A'}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="label">Role:</span>
+                            <span class="value ${user?.user_metadata?.role === 'admin' ? 'success' : 'error'}">
+                                ${user?.user_metadata?.role || 'N/A'}
+                            </span>
+                        </div>
+                    </div>
+                `);
+                
+                return parsed;
+            } catch (e) {
+                showResult(`
+                    <div class="alert alert-danger">
+                        <strong>❌ Lỗi parse dữ liệu</strong>
+                        <p>${e.message}</p>
+                    </div>
+                `);
+                return null;
+            }
+        }
+
+        function checkAdminRole() {
+            const authData = localStorage.getItem(AUTH_KEY);
+            
+            if (!authData) {
+                showResult(`<div class="alert alert-danger">❌ Chưa đăng nhập</div>`);
+                return;
+            }
+
+            try {
+                const parsed = JSON.parse(authData);
+                const user = parsed.user;
+                const email = user?.email?.toLowerCase();
+                const role = user?.user_metadata?.role;
+                
+                const isAdminEmail = ADMIN_EMAILS.some(adminEmail => 
+                    adminEmail.toLowerCase() === email
+                );
+                const hasAdminRole = role === 'admin';
+                
+                let alertClass = 'alert-danger';
+                let icon = '❌';
+                let message = 'Không có quyền Admin';
+                
+                if (isAdminEmail && hasAdminRole) {
+                    alertClass = 'alert-success';
+                    icon = '✅';
+                    message = 'Có đầy đủ quyền Admin';
+                } else if (isAdminEmail && !hasAdminRole) {
+                    alertClass = 'alert-warning';
+                    icon = '⚠️';
+                    message = 'Email đúng nhưng role chưa được set';
+                }
+                
+                showResult(`
+                    <div class="alert ${alertClass}">
+                        <strong>${icon} ${message}</strong>
+                    </div>
+                    <div class="result">
+                        <h3>Chi tiết kiểm tra</h3>
+                        <div class="info-row">
+                            <span class="label">Email hiện tại:</span>
+                            <span class="value">${email || 'N/A'}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="label">Có trong danh sách Admin?</span>
+                            <span class="value ${isAdminEmail ? 'success' : 'error'}">
+                                ${isAdminEmail ? '✅ Có' : '❌ Không'}
+                            </span>
+                        </div>
+                        <div class="info-row">
+                            <span class="label">Role hiện tại:</span>
+                            <span class="value ${hasAdminRole ? 'success' : 'error'}">
+                                ${role || 'N/A'}
+                            </span>
+                        </div>
+                        <div class="info-row">
+                            <span class="label">Có quyền truy cập /admin?</span>
+                            <span class="value ${isAdminEmail && hasAdminRole ? 'success' : 'error'}">
+                                ${isAdminEmail && hasAdminRole ? '✅ Có' : '❌ Không'}
+                            </span>
+                        </div>
+                    </div>
+                    ${!hasAdminRole && isAdminEmail ? `
+                        <div class="alert alert-warning" style="margin-top: 20px;">
+                            <strong>💡 Giải pháp:</strong>
+                            <p>Email của bạn nằm trong danh sách admin nhưng role chưa được set.</p>
+                            <p>Thử các cách sau:</p>
+                            <ol style="margin-left: 20px; margin-top: 10px;">
+                                <li>Nhấn nút "Force set Admin" ở trên (tạm thời)</li>
+                                <li>Đăng xuất và đăng nhập lại</li>
+                                <li>Update role trong Supabase Dashboard</li>
+                            </ol>
+                        </div>
+                    ` : ''}
+                `);
+            } catch (e) {
+                showResult(`
+                    <div class="alert alert-danger">
+                        <strong>❌ Lỗi</strong>
+                        <p>${e.message}</p>
+                    </div>
+                `);
+            }
+        }
+
+        function checkEnvVars() {
+            showResult(`
+                <div class="result">
+                    <h3>Biến môi trường</h3>
+                    <div class="info-row">
+                        <span class="label">VITE_ADMIN_EMAILS:</span>
+                        <span class="value">${ADMIN_EMAILS.join(', ')}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="label">Số lượng admin:</span>
+                        <span class="value">${ADMIN_EMAILS.length}</span>
+                    </div>
+                </div>
+                <div class="alert alert-warning" style="margin-top: 20px;">
+                    <strong>⚠️ Lưu ý:</strong>
+                    <p>Nếu bạn vừa thay đổi file .env, cần restart server để áp dụng.</p>
+                </div>
+            `);
+        }
+
+        function runFullTest() {
+            const authData = localStorage.getItem(AUTH_KEY);
+            
+            if (!authData) {
+                showResult(`<div class="alert alert-danger">❌ Chưa đăng nhập. Vui lòng đăng nhập trước.</div>`);
+                return;
+            }
+
+            try {
+                const parsed = JSON.parse(authData);
+                const user = parsed.user;
+                const email = user?.email?.toLowerCase();
+                const role = user?.user_metadata?.role;
+                
+                const isAdminEmail = ADMIN_EMAILS.some(adminEmail => 
+                    adminEmail.toLowerCase() === email
+                );
+                const hasAdminRole = role === 'admin';
+                const canAccessAdmin = isAdminEmail && hasAdminRole;
+                
+                let finalVerdict = '';
+                let alertClass = '';
+                
+                if (canAccessAdmin) {
+                    finalVerdict = '✅ BẠN CÓ THỂ VÀO TRANG ADMIN';
+                    alertClass = 'alert-success';
+                } else if (isAdminEmail && !hasAdminRole) {
+                    finalVerdict = '⚠️ CẦN CẬP NHẬT ROLE';
+                    alertClass = 'alert-warning';
+                } else {
+                    finalVerdict = '❌ KHÔNG CÓ QUYỀN ADMIN';
+                    alertClass = 'alert-danger';
+                }
+                
+                showResult(`
+                    <div class="alert ${alertClass}">
+                        <strong>${finalVerdict}</strong>
+                    </div>
+                    <div class="result">
+                        <h3>📊 Kết quả kiểm tra đầy đủ</h3>
+                        <div class="info-row">
+                            <span class="label">1. Đã đăng nhập:</span>
+                            <span class="value success">✅ Có</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="label">2. Email:</span>
+                            <span class="value">${email}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="label">3. Email trong danh sách Admin:</span>
+                            <span class="value ${isAdminEmail ? 'success' : 'error'}">
+                                ${isAdminEmail ? '✅ Có' : '❌ Không'}
+                            </span>
+                        </div>
+                        <div class="info-row">
+                            <span class="label">4. Role = admin:</span>
+                            <span class="value ${hasAdminRole ? 'success' : 'error'}">
+                                ${hasAdminRole ? '✅ Có' : '❌ Không (hiện tại: ' + (role || 'N/A') + ')'}
+                            </span>
+                        </div>
+                        <div class="info-row">
+                            <span class="label">5. Có thể vào /admin/quizzes:</span>
+                            <span class="value ${canAccessAdmin ? 'success' : 'error'}">
+                                ${canAccessAdmin ? '✅ Có' : '❌ Không'}
+                            </span>
+                        </div>
+                    </div>
+                    ${!canAccessAdmin ? `
+                        <div class="alert alert-warning" style="margin-top: 20px;">
+                            <strong>🔧 Cách khắc phục:</strong>
+                            ${isAdminEmail && !hasAdminRole ? `
+                                <p><strong>Vấn đề:</strong> Email đúng nhưng role chưa được set.</p>
+                                <p><strong>Giải pháp:</strong></p>
+                                <ol style="margin-left: 20px; margin-top: 10px;">
+                                    <li>Nhấn nút "Force set Admin" ở trên (test tạm thời)</li>
+                                    <li>Hoặc đăng xuất và đăng ký lại tài khoản</li>
+                                    <li>Hoặc update role trong Supabase Dashboard</li>
+                                </ol>
+                            ` : `
+                                <p><strong>Vấn đề:</strong> Email không nằm trong danh sách admin.</p>
+                                <p><strong>Giải pháp:</strong></p>
+                                <ol style="margin-left: 20px; margin-top: 10px;">
+                                    <li>Thêm email vào file .env: VITE_ADMIN_EMAILS</li>
+                                    <li>Restart server</li>
+                                    <li>Đăng xuất và đăng nhập lại</li>
+                                </ol>
+                            `}
+                        </div>
+                    ` : ''}
+                `);
+            } catch (e) {
+                showResult(`
+                    <div class="alert alert-danger">
+                        <strong>❌ Lỗi khi chạy test</strong>
+                        <p>${e.message}</p>
+                    </div>
+                `);
+            }
+        }
+
+        function forceSetAdmin() {
+            const authData = localStorage.getItem(AUTH_KEY);
+            
+            if (!authData) {
+                alert('Chưa đăng nhập!');
+                return;
+            }
+
+            if (!confirm('⚠️ Chức năng này chỉ dùng để test.\n\nBạn có chắc muốn force set role = admin?')) {
+                return;
+            }
+
+            try {
+                const parsed = JSON.parse(authData);
+                parsed.user.user_metadata.role = 'admin';
+                localStorage.setItem(AUTH_KEY, JSON.stringify(parsed));
+                
+                showResult(`
+                    <div class="alert alert-success">
+                        <strong>✅ Đã set role = admin</strong>
+                        <p>Reload trang để áp dụng...</p>
+                    </div>
+                `);
+                
+                setTimeout(() => {
+                    location.reload();
+                }, 1500);
+            } catch (e) {
+                showResult(`
+                    <div class="alert alert-danger">
+                        <strong>❌ Lỗi</strong>
+                        <p>${e.message}</p>
+                    </div>
+                `);
+            }
+        }
+
+        function clearCache() {
+            if (!confirm('⚠️ Bạn có chắc muốn xóa toàn bộ cache và đăng xuất?')) {
+                return;
+            }
+
+            localStorage.clear();
+            sessionStorage.clear();
+            
+            showResult(`
+                <div class="alert alert-success">
+                    <strong>✅ Đã xóa cache</strong>
+                    <p>Vui lòng đăng nhập lại.</p>
+                </div>
+            `);
+        }
+
+        // Auto run on load
+        window.onload = function() {
+            showResult(`
+                <div class="alert alert-warning">
+                    <strong>👋 Chào mừng!</strong>
+                    <p>Nhấn các nút ở trên để kiểm tra quyền Admin của bạn.</p>
+                    <p>Khuyến nghị: Nhấn nút "🚀 Chạy test đầy đủ" để kiểm tra toàn bộ.</p>
+                </div>
+            `);
+        };
+    </script>
+</body>
+</html>

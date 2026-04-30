@@ -228,6 +228,12 @@ function AdminDashboard({ quizzes = [] }) {
                 <span className="text-xl">📝</span> Thêm bài tập
               </Link>
               <Link
+                to="/admin/documents"
+                className="px-6 py-3 bg-gradient-to-r from-green-600 to-teal-600 text-white rounded-xl hover:from-green-700 hover:to-teal-700 transition-all shadow-sm flex items-center gap-2 font-medium"
+              >
+                <span className="text-xl">📄</span> Quản lý Tài liệu
+              </Link>
+              <Link
                 to="/admin/audio"
                 className="px-6 py-3 bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-200 rounded-xl hover:bg-gray-50 dark:hover:bg-slate-700 transition-all shadow-sm border border-gray-200 dark:border-slate-700 flex items-center gap-2 font-medium"
               >

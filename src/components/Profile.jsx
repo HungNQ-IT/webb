@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
+import ThemeToggle from './ThemeToggle'
 
 /**
  * User Dashboard Component
@@ -62,6 +63,10 @@ function Profile() {
                 Chào buổi sáng, <span className="text-primary-base">{user?.name || user?.email?.split('@')[0] || 'Học viên'}</span>! ✌️
               </h1>
               <p className="text-body-lg text-neutral-600 dark:text-neutral-400 mt-2">Hôm nay là một ngày tuyệt vời để chinh phục tri thức.</p>
+            </div>
+            {/* Theme Toggle for mobile */}
+            <div className="lg:hidden">
+              <ThemeToggle />
             </div>
           </div>
 

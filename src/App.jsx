@@ -44,6 +44,7 @@ const Register = lazy(() => import('./components/Register'))
 const AdminDashboard = lazy(() => import('./components/AdminDashboard'))
 const AdminAudioManager = lazy(() => import('./components/AdminAudioManager'))
 const AdminQuizManager = lazy(() => import('./components/AdminQuizManager'))
+const AdminDocumentManager = lazy(() => import('./components/AdminDocumentManager'))
 const Profile = lazy(() => import('./components/Profile'))
 const ExamDetail = lazy(() => import('./components/ExamDetail'))
 const GradeList = lazy(() => import('./components/GradeList'))
@@ -233,6 +234,14 @@ function App() {
                   element={
                     <RequireAuth roles={['admin']}>
                       <AdminQuizManager />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/admin/documents"
+                  element={
+                    <RequireAuth roles={['admin']}>
+                      <AdminDocumentManager />
                     </RequireAuth>
                   }
                 />
