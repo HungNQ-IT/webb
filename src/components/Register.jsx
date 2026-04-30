@@ -11,7 +11,7 @@ function Register() {
 
   useEffect(() => {
     if (!authLoading && isAuthenticated) {
-      navigate('/subjects', { replace: true })
+      navigate('/exams', { replace: true })
     }
   }, [authLoading, isAuthenticated, navigate])
 

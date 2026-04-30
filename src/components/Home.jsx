@@ -9,7 +9,7 @@ function Home() {
   // Countdown Timer Logic
   const [timeLeft, setTimeLeft] = useState({ days: 45, hours: 12, minutes: 30, seconds: 0 })
 
-  const practiceStartPath = isAuthenticated ? '/subjects' : '/register'
+  const practiceStartPath = isAuthenticated ? '/exams' : '/register'
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -301,8 +301,8 @@ function Home() {
               <h2 className="text-h2 text-neutral-900 dark:text-white mb-2 tracking-tight">Kỳ thi trọng tâm</h2>
               <p className="text-body text-neutral-600 dark:text-neutral-400">Chọn kỳ thi của bạn để xem cấu trúc và bắt đầu luyện tập phân môn.</p>
             </div>
-            <Link to="/subjects" className="inline-flex items-center gap-2 text-primary-base hover:text-primary-hover font-semibold transition-colors">
-              Xem toàn bộ môn học <span className="text-lg">&rarr;</span>
+            <Link to="/exams" className="inline-flex items-center gap-2 text-primary-base hover:text-primary-hover font-semibold transition-colors">
+              Xem toàn bộ đề thi <span className="text-lg">&rarr;</span>
             </Link>
           </div>
 

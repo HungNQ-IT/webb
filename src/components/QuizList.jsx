@@ -113,8 +113,7 @@ function QuizList({ quizzes, ieltsTests = [] }) {
   }
 
   const subjectQuizzes = useMemo(() => {
-    // Nếu là IELTS hoặc Ngoại ngữ, lấy từ ieltsTests
-    if (decodedSubject === 'IELTS' || decodedSubject === 'Ngoại ngữ') {
+    if (decodedSubject === 'IELTS') {
       let filtered = ieltsTests.filter(q => q.subject === decodedSubject)
       if (decodedCategory) {
         filtered = filtered.filter(q => q.category === decodedCategory)
@@ -125,7 +124,9 @@ function QuizList({ quizzes, ieltsTests = [] }) {
     // Các môn khác lấy từ quizzes
     let filtered = quizzes.filter(q => q.subject === decodedSubject)
 
-    if (grade) {
+    if (grade === 'all') {
+      filtered = filtered.filter(q => q.grade === undefined || q.grade === null)
+    } else if (grade) {
       filtered = filtered.filter(q => q.grade === parseInt(grade))
     }
 
@@ -243,7 +244,7 @@ function QuizList({ quizzes, ieltsTests = [] }) {
                     {/* Action Button */}
                     <button
                       onClick={() => {
-                        if (decodedCategory) {
+                        if (decodedCategory || quiz.type?.startsWith('ielts-')) {
                           setSelectedQuiz(quiz)
                           setCustomTimeLimit('')
                           setShowModal(true)
@@ -486,4 +487,3 @@ function QuizList({ quizzes, ieltsTests = [] }) {
 }
 
 export default QuizList
-

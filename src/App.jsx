@@ -32,6 +32,7 @@ function RedirectHandler() {
 const SubjectList = lazy(() => import('./components/SubjectList'))
 const ExamList = lazy(() => import('./components/ExamList'))
 const CategoryList = lazy(() => import('./components/CategoryList'))
+const SubjectEntry = lazy(() => import('./components/SubjectEntry'))
 const QuizList = lazy(() => import('./components/QuizList'))
 const Quiz = lazy(() => import('./components/Quiz'))
 const IELTSQuiz = lazy(() => import('./components/IELTSQuiz'))
@@ -187,15 +188,15 @@ function App() {
               <Route element={<Layout />}>
                 <Route index element={<Home />} />
                 <Route path="/exam/:examId" element={<ExamDetail />} />
-                <Route path="/subjects" element={<SubjectList quizzes={quizzes} />} />
+                <Route path="/subjects" element={<SubjectList quizzes={quizzes} ieltsTests={ieltsTests} />} />
                 <Route path="/subject/:subject/exams" element={<ExamList quizzes={quizzes} />} />
-                <Route path="/subject/:subject/grades" element={<GradeList />} />
+                <Route path="/subject/:subject/grades" element={<GradeList quizzes={quizzes} ieltsTests={ieltsTests} />} />
                 <Route path="/subject/:subject/grade/:grade" element={<QuizList quizzes={quizzes} ieltsTests={ieltsTests} />} />
                 <Route path="/subject/:subject/category/:category" element={<QuizList quizzes={quizzes} ieltsTests={ieltsTests} />} />
-                <Route path="/subject/:subject" element={<CategoryList quizzes={quizzes} ieltsTests={ieltsTests} />} />
-                <Route path="/exams" element={<Navigate to="/subjects" replace />} />
-                <Route path="/roadmap" element={<Navigate to="/subjects" replace />} />
-                <Route path="/practice" element={<Navigate to="/subjects" replace />} />
+                <Route path="/subject/:subject" element={<SubjectEntry quizzes={quizzes} ieltsTests={ieltsTests} />} />
+                <Route path="/exams" element={<SubjectList quizzes={quizzes} ieltsTests={ieltsTests} initialView="exams" />} />
+                <Route path="/roadmap" element={<SubjectList quizzes={quizzes} ieltsTests={ieltsTests} initialView="roadmap" />} />
+                <Route path="/practice" element={<Navigate to="/exams" replace />} />
                 <Route path="/leaderboard" element={<Navigate to="/profile" replace />} />
                 <Route path="/progress" element={<Navigate to="/profile" replace />} />
                 <Route path="/quiz/:id" element={<Quiz quizzes={quizzes} />} />

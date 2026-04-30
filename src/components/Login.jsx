@@ -30,7 +30,7 @@ function Login() {
 
   useEffect(() => {
     if (!authLoading && isAuthenticated) {
-      const redirect = location.state?.from || '/subjects'
+      const redirect = location.state?.from || '/exams'
       navigate(redirect, { replace: true })
     }
   }, [authLoading, isAuthenticated, location.state, navigate])

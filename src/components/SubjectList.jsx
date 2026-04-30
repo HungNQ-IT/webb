@@ -2,16 +2,42 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useMemo, useState } from 'react'
 import Breadcrumb from './Breadcrumb'
 
-function SubjectList({ quizzes }) {
+function SubjectList({ quizzes = [], ieltsTests = [], initialView = 'subjects' }) {
+  const defaultSection = initialView === 'exams' ? 'exams' : initialView === 'roadmap' ? 'roadmap' : 'subjects'
+  const [activeSection, setActiveSection] = useState(defaultSection)
   const [activeTab, setActiveTab] = useState('Tất cả')
   const [searchQuery, setSearchQuery] = useState('')
   const navigate = useNavigate()
 
   const tabs = ['Tất cả', 'ĐGNL HCM', 'ĐGNL HN', 'THPT Quốc Gia', 'IELTS', 'SAT']
+  const sectionTabs = [
+    { key: 'subjects', label: 'Môn học', description: 'Chọn môn và lớp để luyện đúng dữ liệu đang có.' },
+    { key: 'exams', label: 'Đề thi', description: 'Xem cấu trúc các kỳ thi và nhóm môn cần ôn.' },
+    { key: 'roadmap', label: 'Lộ trình ôn', description: 'Bắt đầu theo mục tiêu thi thay vì tự mò từng phần.' }
+  ]
+  const examCards = [
+    { title: 'ĐGNL ĐHQG HCM', subtitle: 'Ngôn ngữ, Toán logic, số liệu và giải quyết vấn đề.', path: '/exam/dgnl-hcm', badge: '150 phút', icon: '🎯' },
+    { title: 'ĐGNL ĐHQG Hà Nội', subtitle: 'Tư duy định lượng, định tính và khoa học.', path: '/exam/dgnl-hn', badge: 'HSA', icon: '🏛️' },
+    { title: 'THPT Quốc Gia', subtitle: 'Toán, Văn, Ngoại ngữ và tổ hợp KHTN/KHXH.', path: '/exam/thpt-qg', badge: 'Chuẩn Bộ', icon: '🎓' },
+    { title: 'IELTS', subtitle: 'Reading, Listening, Writing và Speaking.', path: '/exam/ielts', badge: '4 kỹ năng', icon: '🌏' },
+    { title: 'SAT', subtitle: 'Digital SAT Reading & Writing và Math.', path: '/exam/sat', badge: 'Quốc tế', icon: '📚' }
+  ]
+  const roadmapCards = [
+    { title: 'Mất gốc Toán', subtitle: 'Đi từ lớp 10, củng cố nền trước khi luyện đề.', path: '/subject/Toán/grades', badge: 'Nền tảng' },
+    { title: 'Ôn THPT Quốc Gia', subtitle: 'Chọn môn theo lớp 12 và luyện đề theo thời gian.', path: '/exam/thpt-qg', badge: 'Thi tốt nghiệp' },
+    { title: 'Ôn ĐGNL', subtitle: 'Nắm cấu trúc bài thi rồi luyện theo từng nhóm năng lực.', path: '/exam/dgnl-hcm', badge: 'Đại học' },
+    { title: 'IELTS Skills', subtitle: 'Tách Reading, Listening, Writing, Speaking để luyện đúng kỹ năng.', path: '/subject/IELTS', badge: 'Ngoại ngữ' }
+  ]
 
   const subjectsData = useMemo(() => {
-    // Pure subjects hardcoded for now, or derived if exams have metadata
-    const pureSubjects = ['Toán', 'Vật Lý', 'Hóa Học', 'Sinh Học', 'Tiếng Anh', 'Ngữ Văn', 'Lịch Sử', 'Địa Lý']
+    const baseSubjects = ['Toán', 'Vật Lý', 'Hóa Học', 'Sinh Học', 'Tiếng Anh', 'Ngữ Văn', 'Lịch Sử', 'Địa Lý']
+    const dataSubjects = [
+      ...new Set([
+        ...quizzes.map((quiz) => quiz.subject).filter(Boolean),
+        ...ieltsTests.map((test) => test.subject).filter(Boolean)
+      ])
+    ]
+    const pureSubjects = [...new Set([...baseSubjects, ...dataSubjects])]
 
     return pureSubjects.map(sub => {
       let data = {
@@ -22,7 +48,9 @@ function SubjectList({ quizzes }) {
         isHot: false,
         icon: '📚',
         colorClass: 'text-neutral-600 bg-neutral-100',
-        route: `/subject/${encodeURIComponent(sub)}/exams` // default route for exams list
+        route: sub === 'IELTS'
+          ? `/subject/${encodeURIComponent(sub)}`
+          : `/subject/${encodeURIComponent(sub)}/grades`
       }
 
       if (sub === 'Toán') {
@@ -34,18 +62,20 @@ function SubjectList({ quizzes }) {
       } else if (sub.includes('Sinh Học')) {
         data = { ...data, exams: ['THPT Quốc Gia', 'ĐGNL HCM', 'ĐGNL HN'], description: 'Di truyền học, Tế bào và Tiến hóa sinh học.', stats: { quizzes: '250+', parts: '80+' }, icon: '🧬', colorClass: 'text-teal-600 bg-teal-100 border-teal-200' }
       } else if (sub.includes('Tiếng Anh')) {
-        data = { ...data, exams: ['THPT Quốc Gia', 'ĐGNL HCM', 'IELTS', 'SAT'], description: 'Ngữ pháp, từ vựng, đọc hiểu, IELTS Listening & Reading.', stats: { quizzes: '650+', parts: '230+' }, icon: '📝', colorClass: 'text-semantic-warning-base bg-semantic-warning-subtle border-semantic-warning-border', isHot: true }
+        data = { ...data, exams: ['THPT Quốc Gia', 'ĐGNL HCM', 'SAT'], description: 'Ngữ pháp, từ vựng, đọc hiểu và luyện đề tiếng Anh.', stats: { quizzes: '650+', parts: '230+' }, icon: '📝', colorClass: 'text-semantic-warning-base bg-semantic-warning-subtle border-semantic-warning-border', isHot: true }
       } else if (sub === 'Ngữ Văn' || sub === 'Tiếng Việt') {
         data = { ...data, name: 'Ngữ Văn', exams: ['THPT Quốc Gia', 'ĐGNL HCM', 'ĐGNL HN'], description: 'Phân tích tác phẩm, đọc hiểu và nghị luận xã hội.', stats: { quizzes: '200+', parts: '50+' }, icon: '📖', colorClass: 'text-rose-600 bg-rose-100 border-rose-200' }
       } else if (sub === 'Lịch Sử') {
         data = { ...data, exams: ['THPT Quốc Gia', 'ĐGNL HCM', 'ĐGNL HN'], description: 'Lịch sử Việt Nam và Lịch sử Thế giới hiện đại.', stats: { quizzes: '150+', parts: '40+' }, icon: '⏳', colorClass: 'text-amber-700 bg-amber-100 border-amber-200' }
       } else if (sub === 'Địa Lý') {
         data = { ...data, exams: ['THPT Quốc Gia', 'ĐGNL HCM', 'ĐGNL HN'], description: 'Địa lý tự nhiên, dân cư và kinh tế Việt Nam.', stats: { quizzes: '150+', parts: '40+' }, icon: '🌍', colorClass: 'text-emerald-700 bg-emerald-100 border-emerald-200' }
+      } else if (sub === 'IELTS') {
+        data = { ...data, exams: ['IELTS'], description: 'Reading, Listening, Writing và Speaking theo định dạng IELTS.', stats: { quizzes: `${ieltsTests.length}+`, parts: '4 kỹ năng' }, icon: '🎧', colorClass: 'text-sky-700 bg-sky-100 border-sky-200', isHot: true }
       }
 
       return data
     })
-  }, [quizzes])
+  }, [quizzes, ieltsTests])
 
   // Filter Logic
   const filteredSubjects = useMemo(() => {
@@ -112,6 +142,14 @@ function SubjectList({ quizzes }) {
     ]
   }, [activeTab, showSubjects])
 
+  const getSubjectPath = (subject) => {
+    if (activeTab === 'ĐGNL HCM' || activeTab === 'ĐGNL HN' || activeTab === 'SAT') {
+      return `/subject/${encodeURIComponent(subject.name)}/exams?exam=${encodeURIComponent(activeTab)}`
+    }
+
+    return subject.route
+  }
+
 
   return (
     <div className="min-h-screen bg-neutral-50 dark:bg-slate-900 pb-20 selection:bg-primary-subtle selection:text-primary-base">
@@ -167,30 +205,97 @@ function SubjectList({ quizzes }) {
       <div className="container mx-auto px-4 mt-8">
         <div className="max-w-6xl mx-auto">
 
-          {/* Tabs Filter */}
-          <div className="flex overflow-x-auto pb-4 mb-8 scrollbar-hide gap-2">
-            {tabs.map(tab => (
+          <div className="grid md:grid-cols-3 gap-4 mb-8">
+            {sectionTabs.map(section => (
               <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`whitespace-nowrap px-5 py-2.5 rounded-full text-body-sm font-semibold transition-all ${activeTab === tab
-                  ? 'bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 shadow-md'
-                  : 'bg-surface dark:bg-slate-800 text-neutral-600 dark:text-neutral-400 border border-neutral-200 dark:border-slate-700 hover:bg-neutral-100 dark:hover:bg-slate-700'
+                key={section.key}
+                onClick={() => setActiveSection(section.key)}
+                className={`text-left rounded-lg border p-5 shadow-sm transition-all ${activeSection === section.key
+                  ? 'bg-neutral-900 text-white border-neutral-900 dark:bg-white dark:text-neutral-900 dark:border-white'
+                  : 'bg-surface dark:bg-slate-800 border-neutral-200 dark:border-slate-700 text-neutral-700 dark:text-neutral-300 hover:border-primary-base'
                   }`}
               >
-                {tab}
+                <span className="block text-body font-bold mb-1">{section.label}</span>
+                <span className={`block text-body-sm ${activeSection === section.key ? 'text-white/75 dark:text-neutral-600' : 'text-neutral-500 dark:text-neutral-400'}`}>
+                  {section.description}
+                </span>
               </button>
             ))}
           </div>
 
-          {/* Content Layout */}
-          {showSubjects ? (
+          {activeSection === 'subjects' && (
+            <div className="flex overflow-x-auto pb-4 mb-8 scrollbar-hide gap-2">
+              {tabs.map(tab => (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab)}
+                  className={`whitespace-nowrap px-5 py-2.5 rounded-full text-body-sm font-semibold transition-all ${activeTab === tab
+                    ? 'bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 shadow-md'
+                    : 'bg-surface dark:bg-slate-800 text-neutral-600 dark:text-neutral-400 border border-neutral-200 dark:border-slate-700 hover:bg-neutral-100 dark:hover:bg-slate-700'
+                    }`}
+                >
+                  {tab}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {activeSection === 'exams' && (
+            <div className="grid md:grid-cols-2 gap-6">
+              {examCards.map((exam) => (
+                <Link
+                  key={exam.path}
+                  to={exam.path}
+                  className="group bg-surface dark:bg-slate-800 rounded-lg p-6 shadow-sm hover:shadow-md border border-neutral-200 dark:border-slate-700 hover:border-primary-base transition-all"
+                >
+                  <div className="flex items-start justify-between gap-4 mb-5">
+                    <div className="flex items-center gap-4">
+                      <div className="w-14 h-14 rounded-base bg-primary-subtle text-3xl flex items-center justify-center border border-primary-200">
+                        {exam.icon}
+                      </div>
+                      <div>
+                        <h2 className="text-h3 text-neutral-900 dark:text-white group-hover:text-primary-base transition-colors">{exam.title}</h2>
+                        <span className="inline-block mt-2 px-2 py-0.5 rounded-sm bg-neutral-100 dark:bg-slate-700 text-caption font-semibold text-neutral-600 dark:text-neutral-300">
+                          {exam.badge}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <p className="text-body-sm text-neutral-500 dark:text-neutral-400 mb-5">{exam.subtitle}</p>
+                  <div className="text-body-sm font-semibold text-primary-base">Xem cấu trúc đề &rarr;</div>
+                </Link>
+              ))}
+            </div>
+          )}
+
+          {activeSection === 'roadmap' && (
+            <div className="grid md:grid-cols-2 gap-6">
+              {roadmapCards.map((roadmap) => (
+                <Link
+                  key={roadmap.path}
+                  to={roadmap.path}
+                  className="group bg-surface dark:bg-slate-800 rounded-lg p-6 shadow-sm hover:shadow-md border border-neutral-200 dark:border-slate-700 hover:border-primary-base transition-all"
+                >
+                  <div className="flex items-center justify-between gap-4 mb-3">
+                    <h2 className="text-h3 text-neutral-900 dark:text-white group-hover:text-primary-base transition-colors">{roadmap.title}</h2>
+                    <span className="px-2 py-0.5 rounded-sm bg-semantic-info-subtle text-semantic-info-base border border-semantic-info-border text-caption font-bold">
+                      {roadmap.badge}
+                    </span>
+                  </div>
+                  <p className="text-body-sm text-neutral-500 dark:text-neutral-400 mb-5">{roadmap.subtitle}</p>
+                  <div className="text-body-sm font-semibold text-primary-base">Bắt đầu lộ trình &rarr;</div>
+                </Link>
+              ))}
+            </div>
+          )}
+
+          {activeSection === 'subjects' && (showSubjects ? (
             filteredSubjects.length > 0 ? (
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredSubjects.map((subject, index) => (
                   <Link
                     key={index}
-                    to={activeTab !== 'Tất cả' ? `${subject.route}?exam=${encodeURIComponent(activeTab)}` : subject.route}
+                    to={getSubjectPath(subject)}
                     className="group bg-surface dark:bg-slate-800 rounded-lg p-6 shadow-sm hover:shadow-md border border-neutral-200 dark:border-slate-700 transition-all duration-300 hover:-translate-y-1 flex flex-col relative overflow-hidden"
                   >
                     {subject.isHot && (
@@ -278,7 +383,7 @@ function SubjectList({ quizzes }) {
                 </div>
               ))}
             </div>
-          )}
+          ))}
 
         </div>
       </div>

@@ -6,8 +6,7 @@ function CategoryList({ quizzes, ieltsTests = [] }) {
   const decodedSubject = decodeURIComponent(subject)
 
   const categories = useMemo(() => {
-    // Nếu là IELTS hoặc Ngoại ngữ, lấy từ ieltsTests
-    const allTests = decodedSubject === 'IELTS' || decodedSubject === 'Ngoại ngữ'
+    const allTests = decodedSubject === 'IELTS'
       ? ieltsTests
       : quizzes
 
@@ -106,7 +105,7 @@ function CategoryList({ quizzes, ieltsTests = [] }) {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 animate-fade-in-up" style={{ animationDelay: '100ms' }}>
             {categories.map((category, index) => {
               const config = getCategoryConfig(category)
-              const allTests = decodedSubject === 'IELTS' || decodedSubject === 'Ngoại ngữ'
+              const allTests = decodedSubject === 'IELTS'
                 ? ieltsTests
                 : quizzes
               const categoryQuizzes = allTests.filter(

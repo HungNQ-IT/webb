@@ -98,7 +98,7 @@ function Profile() {
                     </div>
                   </div>
 
-                  <Link to="/subjects" className="inline-flex items-center gap-2 px-6 py-3 bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 font-bold rounded-base hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-colors shadow-md text-body">
+                  <Link to="/exams" className="inline-flex items-center gap-2 px-6 py-3 bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 font-bold rounded-base hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-colors shadow-md text-body">
                     Vào học tiếp <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                   </Link>
                 </div>

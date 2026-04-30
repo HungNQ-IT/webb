@@ -17,7 +17,6 @@ function Navbar() {
   }, [])
 
   const navLinks = [
-    { key: 'subjects', path: '/subjects', label: 'Môn học' },
     { key: 'exams', path: '/exams', label: 'Đề thi' },
     { key: 'roadmap', path: '/roadmap', label: 'Lộ trình ôn' },
     { key: 'leaderboard', path: '/leaderboard', label: 'Bảng xếp hạng' },
