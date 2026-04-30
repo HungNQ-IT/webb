@@ -1,10 +1,11 @@
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import { useMemo } from 'react'
 
-function GradeList({ quizzes = [], ieltsTests = [] }) {
+function GradeList({ quizzes = [], ieltsTests = [], initialView = 'quizzes' }) {
   const { subject } = useParams()
   const decodedSubject = decodeURIComponent(subject)
   const navigate = useNavigate()
+  const isDocumentsView = initialView === 'documents'
 
   const subjectQuizzes = useMemo(() => {
     if (decodedSubject === 'IELTS') {
@@ -26,6 +27,22 @@ function GradeList({ quizzes = [], ieltsTests = [] }) {
   }, [subjectQuizzes])
 
   const roadmapCards = useMemo(() => {
+    // Nếu là documents view, tạo cards cho tất cả các lớp
+    if (isDocumentsView) {
+      const grades = [6, 7, 8, 9, 10, 11, 12]
+      return grades.map(grade => ({
+        key: `grade-${grade}`,
+        title: `Lớp ${grade}`,
+        subtitle: `Tài liệu PDF cho lớp ${grade}`,
+        stats: `Xem tài liệu`,
+        to: `/documents/${encodeURIComponent(decodedSubject)}/${grade}`,
+        badge: grade >= 10 ? 'THPT' : 'Nền tảng',
+        color: grade >= 10
+          ? 'border-semantic-warning-border text-semantic-warning-base bg-semantic-warning-subtle'
+          : 'border-semantic-success-border text-semantic-success-base bg-semantic-success-subtle'
+      }))
+    }
+
     const cards = availableGrades.map((grade) => {
       const items = subjectQuizzes.filter((item) => item.grade === grade)
       const totalQuestions = items.reduce((sum, item) => sum + (item.questions?.length || item.passages?.length || 0), 0)
@@ -61,14 +78,17 @@ function GradeList({ quizzes = [], ieltsTests = [] }) {
     }
 
     return cards
-  }, [availableGrades, decodedSubject, hasGeneralContent, subjectQuizzes])
+  }, [availableGrades, decodedSubject, hasGeneralContent, subjectQuizzes, isDocumentsView])
 
   const recommendation = useMemo(() => {
+    if (isDocumentsView) {
+      return `Chọn lớp để xem tài liệu PDF cho môn ${decodedSubject}.`
+    }
     if (roadmapCards.length > 0) {
       return `Hệ thống đang có ${subjectQuizzes.length} bài cho ${decodedSubject}. Mình đã lọc sẵn những lớp/bộ bài thực sự có nội dung để bạn bấm vào là thấy ngay.`
     }
     return `Hiện tại ${decodedSubject} chưa có dữ liệu bài tập trong thư viện. Khi thêm đề cho môn này, trang sẽ tự hiện các lớp hoặc bộ bài tương ứng.`
-  }, [decodedSubject, roadmapCards.length, subjectQuizzes.length])
+  }, [decodedSubject, roadmapCards.length, subjectQuizzes.length, isDocumentsView])
 
   return (
     <div className="min-h-screen bg-neutral-50 dark:bg-slate-900 pb-20 selection:bg-primary-subtle selection:text-primary-base">

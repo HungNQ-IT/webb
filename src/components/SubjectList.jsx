@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react'
 import Breadcrumb from './Breadcrumb'
 
 function SubjectList({ quizzes = [], ieltsTests = [], initialView = 'subjects' }) {
-  const defaultSection = initialView === 'exams' ? 'exams' : initialView === 'roadmap' ? 'roadmap' : 'subjects'
+  const defaultSection = initialView === 'exams' ? 'exams' : initialView === 'roadmap' ? 'roadmap' : initialView === 'documents' ? 'documents' : 'subjects'
   const [activeSection, setActiveSection] = useState(defaultSection)
   const [activeTab, setActiveTab] = useState('Tất cả')
   const [searchQuery, setSearchQuery] = useState('')
@@ -13,7 +13,8 @@ function SubjectList({ quizzes = [], ieltsTests = [], initialView = 'subjects' }
   const sectionTabs = [
     { key: 'subjects', label: 'Môn học', description: 'Chọn môn và lớp để luyện đúng dữ liệu đang có.' },
     { key: 'exams', label: 'Đề thi', description: 'Xem cấu trúc các kỳ thi và nhóm môn cần ôn.' },
-    { key: 'roadmap', label: 'Lộ trình ôn', description: 'Bắt đầu theo mục tiêu thi thay vì tự mò từng phần.' }
+    { key: 'roadmap', label: 'Lộ trình ôn', description: 'Bắt đầu theo mục tiêu thi thay vì tự mò từng phần.' },
+    { key: 'documents', label: 'Tài liệu', description: 'Xem và tải tài liệu PDF theo môn học.' }
   ]
   const examCards = [
     { title: 'ĐGNL ĐHQG HCM', subtitle: 'Ngôn ngữ, Toán logic, số liệu và giải quyết vấn đề.', path: '/exam/dgnl-hcm', badge: '150 phút', icon: '🎯' },
@@ -284,6 +285,40 @@ function SubjectList({ quizzes = [], ieltsTests = [], initialView = 'subjects' }
                   </div>
                   <p className="text-body-sm text-neutral-500 dark:text-neutral-400 mb-5">{roadmap.subtitle}</p>
                   <div className="text-body-sm font-semibold text-primary-base">Bắt đầu lộ trình &rarr;</div>
+                </Link>
+              ))}
+            </div>
+          )}
+
+          {activeSection === 'documents' && (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredSubjects.map((subject, index) => (
+                <Link
+                  key={index}
+                  to={`/documents/${encodeURIComponent(subject.name)}`}
+                  className="group bg-surface dark:bg-slate-800 rounded-lg p-6 shadow-sm hover:shadow-md border border-neutral-200 dark:border-slate-700 transition-all duration-300 hover:-translate-y-1 flex flex-col"
+                >
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className={`w-14 h-14 rounded-base flex items-center justify-center text-3xl border ${subject.colorClass} shadow-sm group-hover:scale-110 transition-transform`}>
+                      📚
+                    </div>
+                    <div className="pt-1 flex-1">
+                      <h2 className="text-h3 text-neutral-900 dark:text-white group-hover:text-primary-base transition-colors">
+                        {subject.name}
+                      </h2>
+                      <p className="text-caption text-neutral-500 dark:text-neutral-400 mt-1">
+                        Tài liệu PDF
+                      </p>
+                    </div>
+                  </div>
+
+                  <p className="text-body-sm text-neutral-500 dark:text-neutral-400 mb-6 flex-1">
+                    Xem và tải tài liệu học tập cho môn {subject.name}
+                  </p>
+
+                  <div className="w-full py-2.5 rounded-base bg-primary-subtle dark:bg-slate-700 text-primary-base dark:text-primary-400 font-semibold text-center text-body-sm group-hover:bg-primary-base group-hover:text-white transition-colors">
+                    Xem tài liệu &rarr;
+                  </div>
                 </Link>
               ))}
             </div>
