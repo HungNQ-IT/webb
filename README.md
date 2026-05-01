@@ -1,241 +1,207 @@
-# Gia Sư 10 Điểm
+# 🎓 Gia Sư 10 Điểm
 
-Nền tảng luyện bài tập online serverless - chỉ có frontend, không cần backend.
+Nền tảng luyện thi online với Quiz, IELTS Tests, và AI Grading.
 
-## 🎯 Tính năng
+## ✨ Tính năng
 
-- ✅ **Serverless**: Chạy hoàn toàn trên client-side, không cần backend
-- ✅ **GitHub Pages**: Host miễn phí trên GitHub Pages
-- ✅ **JSON Database**: Dữ liệu bài tập lưu trong file JSON
-- ✅ **Chấm điểm tự động**: Tự động chấm bài và hiển thị kết quả
-- ✅ **Lời giải chi tiết**: Xem giải thích cho từng câu hỏi
-- ✅ **Lịch sử làm bài**: Lưu kết quả trong localStorage
-- ✅ **Responsive**: Giao diện thân thiện trên mobile và desktop
+### 📚 Quiz System
+- ✅ Multiple choice, True/False, Essay questions
+- ✅ Timer đếm ngược
+- ✅ Chấm điểm tự động
+- ✅ Lời giải chi tiết
+- ✅ Lịch sử làm bài
 
-## 🚀 Cài đặt và chạy local
+### 🎧 IELTS Tests
+- ✅ Reading & Listening tests
+- ✅ Audio player với Google Drive
+- ✅ Multiple question types (Form completion, Multiple choice, Matching, Note completion)
+- ✅ Real-time scoring
 
-### Yêu cầu
+### 🤖 AI Grading
+- ✅ Tự động chấm bài tự luận
+- ✅ Phân tích nội dung, ngữ pháp, từ vựng
+- ✅ Feedback chi tiết
 
-- Node.js 16+ và npm/yarn
+### 📄 Document Library
+- ✅ Upload & manage PDF documents
+- ✅ Categorize by subject & grade
+- ✅ Search & filter
 
-### Các bước
+### 👥 User Management
+- ✅ Authentication với Supabase
+- ✅ User profiles & progress tracking
+- ✅ Admin dashboard với real-time updates
 
-1. **Clone repository**
-```bash
-git clone <your-repo-url>
-cd "Gia sư 10 điểm (2)"
-```
+### 🌙 Dark Theme
+- ✅ Toggle light/dark mode
+- ✅ High contrast for accessibility
+- ✅ Persistent preference
 
-2. **Cài đặt dependencies**
+---
+
+## 🚀 Quick Start
+
+### 1. Cài đặt
 ```bash
 npm install
 ```
 
-3. **Chạy development server**
+### 2. Cấu hình
+```bash
+cp .env.example .env
+```
+
+Điền thông tin Supabase vào `.env`:
+```
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_ANON_KEY=your_anon_key
+```
+
+### 3. Setup Database
+```bash
+# Copy nội dung từ database/supabase_setup.sql
+# Paste vào Supabase SQL Editor và Run
+```
+
+### 4. Chạy
 ```bash
 npm run dev
 ```
 
-4. **Mở trình duyệt**
-```
-http://localhost:5173
-```
+Mở: **http://localhost:5173**
 
-## 📦 Build cho production
+---
 
+## 📦 Build & Deploy
+
+### Build
 ```bash
 npm run build
 ```
 
-File build sẽ được tạo trong thư mục `dist/`.
-
-## 🚀 Deploy lên GitHub Pages
-
-### Bước 1: Chuẩn bị repository
-
-1. Tạo repository mới trên GitHub (ví dụ: `Gia-su-10-diem`)
-2. Push code lên repository
-
-### Bước 2: Cập nhật base path
-
-Trong file `vite.config.js`, cập nhật `base` path theo tên repository của bạn:
-
-```js
-export default defineConfig({
-  plugins: [react()],
-  base: '/Gia-su-10-diem/', // Thay bằng tên repo của bạn
-})
-```
-
-Trong file `src/App.jsx`, cập nhật `basename` trong BrowserRouter:
-
-```js
-<BrowserRouter basename="/Gia-su-10-diem">
-```
-
-### Bước 3: Setup GitHub Pages
-
-**Cách 1: Sử dụng GitHub Actions (Khuyến nghị)**
-
-1. Tạo file `.github/workflows/deploy.yml`:
-
-```yaml
-name: Deploy to GitHub Pages
-
-on:
-  push:
-    branches: [ main ]
-
-jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-          
-      - name: Install dependencies
-        run: npm install
-        
-      - name: Build
-        run: npm run build
-        
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-```
-
-2. Push code lên GitHub
-3. Vào Settings → Pages → Source: chọn "GitHub Actions"
-
-**Cách 2: Deploy thủ công**
-
-1. Build project:
+### Deploy lên GitHub Pages
 ```bash
-npm run build
+git push origin main
 ```
 
-2. Cài đặt gh-pages:
-```bash
-npm install --save-dev gh-pages
-```
+GitHub Actions sẽ tự động deploy.
 
-3. Thêm script vào `package.json`:
-```json
-{
-  "scripts": {
-    "deploy": "gh-pages -d dist"
-  }
-}
-```
+**Lưu ý**: Cập nhật base path trong 3 file:
+- `vite.config.js`
+- `src/App.jsx`
+- `public/404.html`
 
-4. Deploy:
-```bash
-npm run deploy
-```
+---
 
-5. Vào Settings → Pages → Source: chọn branch `gh-pages`
+## 📚 Documentation
 
-### Bước 4: Cấu hình 404.html (Quan trọng!)
+Xem thư mục `docs/` để biết thêm chi tiết:
 
-Để React Router hoạt động trên GitHub Pages, cần tạo file `404.html` trong thư mục `public/`:
+- **[SETUP.md](docs/SETUP.md)** - Hướng dẫn cài đặt & deploy
+- **[FEATURES.md](docs/FEATURES.md)** - Danh sách tính năng
+- **[SUPABASE.md](docs/SUPABASE.md)** - Hướng dẫn database
+- **[TEMPLATES.md](docs/TEMPLATES.md)** - Mẫu câu hỏi
 
-```html
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Gia Sư 10 Điểm</title>
-    <script>
-      var path = window.location.pathname;
-      if (path.startsWith('/Gia-su-10-diem')) {
-        window.location.href = '/Gia-su-10-diem/index.html' + window.location.search + window.location.hash;
-      }
-    </script>
-  </head>
-  <body>
-    <script>
-      var path = window.location.pathname;
-      var redirect = '/Gia-su-10-diem/index.html' + window.location.search + window.location.hash;
-      window.location.replace(redirect);
-    </script>
-  </body>
-</html>
-```
+---
 
-Sau khi build, copy file này vào thư mục `dist/` và rename thành `404.html`.
-
-## 📝 Thêm bài tập mới
-
-Để thêm bài tập mới, chỉ cần chỉnh sửa file `public/questions.json`:
-
-```json
-{
-  "id": 5,
-  "subject": "Toán",
-  "title": "Tên bài tập",
-  "type": "tracnghiem",
-  "description": "Mô tả bài tập",
-  "timeLimit": 15,
-  "questions": [
-    {
-      "q": "Câu hỏi?",
-      "choices": ["Lựa chọn 1", "Lựa chọn 2", "Lựa chọn 3", "Lựa chọn 4"],
-      "answer": 0,
-      "explain": "Giải thích đáp án"
-    }
-  ]
-}
-```
-
-Sau đó commit và push lên GitHub. Website sẽ tự động cập nhật!
-
-## 🎨 Cấu trúc project
+## 📁 Cấu trúc Project
 
 ```
 .
-├── public/
-│   └── questions.json      # File chứa dữ liệu bài tập
+├── docs/                   # Documentation
+├── database/               # SQL setup files
+├── templates/              # Question templates
+├── public/                 # Static assets
+│   ├── questions.json      # Quiz data
+│   └── ielts.json         # IELTS tests data
 ├── src/
-│   ├── components/
-│   │   ├── Home.jsx        # Trang chủ
-│   │   ├── SubjectList.jsx # Danh sách môn học
-│   │   ├── QuizList.jsx    # Danh sách bài tập
-│   │   ├── Quiz.jsx        # Trang làm bài
-│   │   └── Result.jsx      # Trang kết quả
-│   ├── utils/
-│   │   └── storage.js      # Utility cho localStorage
-│   ├── App.jsx             # Main app component
-│   ├── main.jsx            # Entry point
-│   └── index.css           # Tailwind CSS
-├── index.html
+│   ├── components/        # React components
+│   ├── context/           # React context
+│   ├── utils/             # Utilities
+│   ├── App.jsx
+│   └── main.jsx
+├── .env.example           # Environment template
 ├── package.json
-├── vite.config.js          # Vite config
-└── tailwind.config.js      # Tailwind config
+├── vite.config.js
+└── tailwind.config.js
 ```
 
-## 🔧 Công nghệ sử dụng
+---
 
-- **React 18**: UI framework
-- **React Router**: Routing
-- **Vite**: Build tool
-- **Tailwind CSS**: Styling
-- **LocalStorage**: Lưu lịch sử làm bài
+## 🔧 Tech Stack
+
+- **Frontend**: React 18, React Router v6
+- **Styling**: Tailwind CSS
+- **Backend**: Supabase (Auth, Database, Storage)
+- **Build**: Vite
+- **Deploy**: GitHub Pages
+- **AI**: OpenAI API (for grading)
+
+---
+
+## 📝 Thêm Nội Dung Mới
+
+### Thêm Quiz
+Chỉnh sửa `public/questions.json`:
+```json
+{
+  "id": 1,
+  "subject": "Toán",
+  "title": "Bài tập mới",
+  "questions": [...]
+}
+```
+
+### Thêm IELTS Test
+Chỉnh sửa `public/ielts.json` hoặc dùng Admin Dashboard.
+
+### Thêm Audio
+Upload lên Google Drive và thêm link vào database qua Admin Dashboard.
+
+Xem `docs/TEMPLATES.md` để biết format chi tiết.
+
+---
+
+## 🐛 Troubleshooting
+
+### Màn hình trắng?
+- Kiểm tra console (F12) xem lỗi
+- Kiểm tra base path có đúng không
+- Chạy `npm run dev` thay vì mở file HTML trực tiếp
+
+### Không load được data?
+- Kiểm tra file JSON trong `public/`
+- Kiểm tra Supabase config trong `.env`
+- Xem Network tab (F12)
+
+### Lỗi 404 trên GitHub Pages?
+- Kiểm tra file `public/404.html`
+- Kiểm tra base path trong 3 file
+
+Xem thêm trong `docs/SETUP.md`
+
+---
 
 ## 📄 License
 
 MIT
 
-## 👨‍💻 Tác giả
+## 👨‍💻 Author
 
 Gia Sư 10 Điểm Team
 
 ---
 
-**Lưu ý**: Nhớ cập nhật `base` path trong `vite.config.js` và `basename` trong `App.jsx` theo tên repository của bạn!
+## 🔗 Links
 
+- **Live Demo**: [Your GitHub Pages URL]
+- **Documentation**: [docs/](docs/)
+- **Issues**: [GitHub Issues]
+
+---
+
+**⚡ Quick Links:**
+- [Setup Guide](docs/SETUP.md)
+- [Features](docs/FEATURES.md)
+- [Database Guide](docs/SUPABASE.md)
+- [Templates](docs/TEMPLATES.md)
