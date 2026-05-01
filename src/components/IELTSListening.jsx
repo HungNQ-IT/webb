@@ -237,7 +237,7 @@ function IELTSListening({ ieltsTests = [] }) {
                 className={`px-6 py-3 font-medium border-b-2 whitespace-nowrap ${
                   currentSection === index
                     ? 'border-blue-600 text-blue-600'
-                    : 'border-transparent text-gray-600 hover:text-gray-900'
+                    : 'border-transparent text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
                 }`}
               >
                 {s.title}
@@ -264,33 +264,33 @@ function IELTSListening({ ieltsTests = [] }) {
           )}
 
           {/* Section Info */}
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+          <div className="bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-700 rounded-lg p-4">
             <h2 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-2">{section.title}</h2>
-            <p className="text-sm text-gray-700">{section.instruction}</p>
+            <p className="text-sm text-gray-700 dark:text-gray-300">{section.instruction}</p>
           </div>
 
           {/* Questions */}
           <div className="space-y-6">
             {section.questions?.map((question, qIndex) => (
-              <div key={qIndex} className="bg-white dark:bg-slate-800 rounded-lg border p-6">
+              <div key={qIndex} className="bg-white dark:bg-slate-800 rounded-lg border border-gray-200 dark:border-slate-700 p-6">
                 {/* Form Completion */}
                 {question.type === 'form-completion' && (
                   <div>
-                    <div className="mb-4 text-sm text-gray-700 font-medium">
+                    <div className="mb-4 text-sm text-gray-700 dark:text-gray-300 font-medium">
                       {question.instruction}
                     </div>
-                    <div className="border rounded-lg p-6 bg-gray-50">
-                      <h3 className="text-lg font-bold text-center mb-6">{question.form.title}</h3>
+                    <div className="border border-gray-200 dark:border-slate-600 rounded-lg p-6 bg-gray-50 dark:bg-slate-700/50">
+                      <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 text-center mb-6">{question.form.title}</h3>
                       <div className="space-y-4">
                         {question.form.fields.map((field, fIndex) => (
                           <div key={fIndex} className="flex items-center gap-4">
-                            <label className="w-1/3 text-sm font-medium">{field.label}:</label>
+                            <label className="w-1/3 text-sm font-medium text-gray-900 dark:text-gray-100">{field.label}:</label>
                             <input
                               type="text"
                               value={answers[`${section.id}-${qIndex}-${fIndex}`] || ''}
                               onChange={(e) => handleAnswerChange(section.id, qIndex, fIndex, e.target.value)}
                               disabled={isSubmitted}
-                              className="flex-1 px-4 py-2 border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-gray-900 dark:text-gray-100 rounded-lg focus:border-blue-500 focus:outline-none disabled:bg-gray-100"
+                              className="flex-1 px-4 py-2 border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-gray-900 dark:text-gray-100 rounded-lg focus:border-blue-500 focus:outline-none disabled:bg-gray-100 dark:disabled:bg-slate-600"
                               placeholder="Your answer"
                             />
                           </div>
@@ -303,18 +303,18 @@ function IELTSListening({ ieltsTests = [] }) {
                 {/* Multiple Choice */}
                 {question.type === 'multiple-choice' && (
                   <div>
-                    <div className="mb-4 text-sm text-gray-700 font-medium">
+                    <div className="mb-4 text-sm text-gray-700 dark:text-gray-300 font-medium">
                       {question.instruction}
                     </div>
                     <div className="space-y-4">
                       {question.items.map((item, iIndex) => (
-                        <div key={iIndex} className="border rounded-lg p-4">
-                          <div className="mb-3 text-sm font-medium">
+                        <div key={iIndex} className="border border-gray-200 dark:border-slate-600 rounded-lg p-4 bg-gray-50 dark:bg-slate-700/50">
+                          <div className="mb-3 text-sm font-medium text-gray-900 dark:text-gray-100">
                             Question {iIndex + 1}: {item.question}
                           </div>
                           <div className="space-y-2">
                             {item.options.map((option, oIndex) => (
-                              <label key={oIndex} className="flex items-center gap-3 p-3 border-2 border-gray-200 dark:border-slate-700 rounded-lg hover:border-blue-300 dark:hover:border-blue-500 cursor-pointer">
+                              <label key={oIndex} className="flex items-center gap-3 p-3 border-2 border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 rounded-lg hover:border-blue-300 dark:hover:border-blue-500 cursor-pointer">
                                 <input
                                   type="radio"
                                   name={`${section.id}-q${qIndex}-${iIndex}`}
@@ -324,7 +324,7 @@ function IELTSListening({ ieltsTests = [] }) {
                                   disabled={isSubmitted}
                                   className="w-5 h-5"
                                 />
-                                <span className="text-sm flex-1">
+                                <span className="text-sm flex-1 text-gray-900 dark:text-gray-100">
                                   <span className="font-semibold">{String.fromCharCode(65 + oIndex)}.</span> {option}
                                 </span>
                               </label>
@@ -339,11 +339,11 @@ function IELTSListening({ ieltsTests = [] }) {
                 {/* Note Completion */}
                 {question.type === 'note-completion' && (
                   <div>
-                    <div className="mb-4 text-sm text-gray-700 font-medium">
+                    <div className="mb-4 text-sm text-gray-700 dark:text-gray-300 font-medium">
                       {question.instruction}
                     </div>
-                    <div className="border rounded-lg p-6 bg-gray-50">
-                      <h3 className="text-lg font-bold mb-4">{question.notes.title}</h3>
+                    <div className="border border-gray-200 dark:border-slate-600 rounded-lg p-6 bg-gray-50 dark:bg-slate-700/50">
+                      <h3 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-4">{question.notes.title}</h3>
                       <ul className="space-y-3">
                         {question.notes.items.map((item, iIndex) => {
                           const match = item.match(/(\d+)______/)
@@ -351,7 +351,7 @@ function IELTSListening({ ieltsTests = [] }) {
                             const questionNum = parseInt(match[1])
                             const parts = item.split(/\d+______/)
                             return (
-                              <li key={iIndex} className="text-sm flex items-center gap-2">
+                              <li key={iIndex} className="text-sm text-gray-900 dark:text-gray-100 flex items-center gap-2">
                                 <span>•</span>
                                 <span>{parts[0]}</span>
                                 <input
@@ -359,14 +359,14 @@ function IELTSListening({ ieltsTests = [] }) {
                                   value={answers[`${section.id}-${qIndex}-${questionNum - 1}`] || ''}
                                   onChange={(e) => handleAnswerChange(section.id, qIndex, questionNum - 1, e.target.value)}
                                   disabled={isSubmitted}
-                                  className="px-3 py-1.5 border rounded focus:border-blue-500 focus:outline-none disabled:bg-gray-100 w-40"
+                                  className="px-3 py-1.5 border border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-700 text-gray-900 dark:text-gray-100 rounded focus:border-blue-500 focus:outline-none disabled:bg-gray-100 dark:disabled:bg-slate-600 w-40"
                                   placeholder={`Answer ${questionNum}`}
                                 />
                                 <span>{parts[1]}</span>
                               </li>
                             )
                           }
-                          return <li key={iIndex} className="text-sm">• {item}</li>
+                          return <li key={iIndex} className="text-sm text-gray-900 dark:text-gray-100">• {item}</li>
                         })}
                       </ul>
                     </div>
@@ -376,16 +376,16 @@ function IELTSListening({ ieltsTests = [] }) {
                 {/* Matching */}
                 {question.type === 'matching' && (
                   <div>
-                    <div className="mb-4 text-sm text-gray-700 font-medium">
+                    <div className="mb-4 text-sm text-gray-700 dark:text-gray-300 font-medium">
                       {question.instruction}
                     </div>
                     <div className="space-y-3">
                       {question.items.map((item, iIndex) => (
-                        <div key={iIndex} className="border rounded-lg p-4">
-                          <div className="mb-3 text-sm font-medium">{item.question}</div>
+                        <div key={iIndex} className="border border-gray-200 dark:border-slate-600 rounded-lg p-4 bg-gray-50 dark:bg-slate-700/50">
+                          <div className="mb-3 text-sm font-medium text-gray-900 dark:text-gray-100">{item.question}</div>
                           <div className="space-y-2">
                             {item.options.map((option, oIndex) => (
-                              <label key={oIndex} className="flex items-center gap-3 p-3 border-2 border-gray-200 dark:border-slate-700 rounded-lg hover:border-blue-300 dark:hover:border-blue-500 cursor-pointer">
+                              <label key={oIndex} className="flex items-center gap-3 p-3 border-2 border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-800 rounded-lg hover:border-blue-300 dark:hover:border-blue-500 cursor-pointer">
                                 <input
                                   type="radio"
                                   name={`${section.id}-q${qIndex}-${iIndex}`}
@@ -395,7 +395,7 @@ function IELTSListening({ ieltsTests = [] }) {
                                   disabled={isSubmitted}
                                   className="w-5 h-5"
                                 />
-                                <span className="text-sm flex-1">{option}</span>
+                                <span className="text-sm flex-1 text-gray-900 dark:text-gray-100">{option}</span>
                               </label>
                             ))}
                           </div>
@@ -408,7 +408,7 @@ function IELTSListening({ ieltsTests = [] }) {
             ))}
 
             {/* Submit */}
-            <div className="bg-white dark:bg-slate-800 rounded-lg border p-6">
+            <div className="bg-white dark:bg-slate-800 rounded-lg border border-gray-200 dark:border-slate-700 p-6">
               <button
                 onClick={handleSubmit}
                 disabled={isSubmitted}
