@@ -260,7 +260,7 @@ function Login() {
 
           <p className="text-center text-sm text-gray-600 dark:text-gray-400">
             Chưa có tài khoản?{' '}
-            <Link to="/register" className="font-semibold text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300 transition-colors duration-200">
+            <Link to="/register" state={location.state} className="font-semibold text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300 transition-colors duration-200">
               Đăng ký ngay
             </Link>
           </p>

@@ -196,9 +196,30 @@ function App() {
                 <Route path="/subject/:subject/grade/:grade" element={<QuizList quizzes={quizzes} ieltsTests={ieltsTests} />} />
                 <Route path="/subject/:subject/category/:category" element={<QuizList quizzes={quizzes} ieltsTests={ieltsTests} />} />
                 <Route path="/subject/:subject" element={<SubjectEntry quizzes={quizzes} ieltsTests={ieltsTests} />} />
-                <Route path="/documents" element={<SubjectList initialView="documents" />} />
-                <Route path="/documents/:subject" element={<GradeList initialView="documents" />} />
-                <Route path="/documents/:subject/:grade" element={<DocumentList />} />
+                <Route
+                  path="/documents"
+                  element={
+                    <RequireAuth>
+                      <SubjectList initialView="documents" />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/documents/:subject"
+                  element={
+                    <RequireAuth>
+                      <GradeList initialView="documents" />
+                    </RequireAuth>
+                  }
+                />
+                <Route
+                  path="/documents/:subject/:grade"
+                  element={
+                    <RequireAuth>
+                      <DocumentList />
+                    </RequireAuth>
+                  }
+                />
                 <Route path="/exams" element={<SubjectList quizzes={quizzes} ieltsTests={ieltsTests} initialView="exams" />} />
                 <Route path="/roadmap" element={<SubjectList quizzes={quizzes} ieltsTests={ieltsTests} initialView="roadmap" />} />
                 <Route path="/practice" element={<Navigate to="/exams" replace />} />

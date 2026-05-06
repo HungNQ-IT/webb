@@ -1,19 +1,21 @@
 import { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 
 function Register() {
   const { register, isAuthenticated, loading: authLoading } = useAuth()
   const navigate = useNavigate()
+  const location = useLocation()
   const [form, setForm] = useState({ name: '', email: '', password: '', grade: '' })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     if (!authLoading && isAuthenticated) {
-      navigate('/exams', { replace: true })
+      const redirect = location.state?.from || '/exams'
+      navigate(redirect, { replace: true })
     }
-  }, [authLoading, isAuthenticated, navigate])
+  }, [authLoading, isAuthenticated, location.state, navigate])
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -26,7 +28,8 @@ function Register() {
     setError('')
     try {
       await register(form)
-      navigate('/', { replace: true })
+      const redirect = location.state?.from || '/'
+      navigate(redirect, { replace: true })
     } catch (err) {
       setError(err.message || 'Đăng ký thất bại')
     } finally {
